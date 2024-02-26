@@ -23,6 +23,10 @@ const { centered = false } = Astro.props;
       </LinkButton>
     ))
   }
+  <LinkButton href={"/rss.xml"} className="link-button" title={"RSS Feed"}>
+    <Fragment set:html={socialIcons["RSS"]} />
+    <span class="sr-only">RSS Feed</span>
+  </LinkButton>
 </div>
 
 <style>

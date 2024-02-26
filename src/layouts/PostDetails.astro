@@ -20,11 +20,14 @@ const {
   author,
   description,
   ogImage,
+  readingTime,
   canonicalURL,
   pubDatetime,
   modDatetime,
   tags,
 } = post.data;
+
+console.log(post.data);
 
 const { Content } = await post.render();
 
@@ -73,6 +76,7 @@ const layoutProps = {
       size="lg"
       className="my-2"
     />
+    <span>Estimated Reading Time: ({readingTime})</span>
     <article id="article" role="article" class="prose mx-auto mt-8 max-w-3xl">
       <Content />
     </article>
