@@ -6,6 +6,7 @@ import "@fontsource/inconsolata";
 
 const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
 const googleAnalyticsId = import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID || GA_ID;
+const googleAnalyticsUrl = `https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`;
 
 export interface Props {
   title?: string;
@@ -109,7 +110,7 @@ const socialImageURL = new URL(
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script
       type="text/partytown"
-      src="https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}"
+      src=`https://www.googletagmanager.com/gtag/js?${googleAnalyticsId}`
     ></script>
     <script define:vars={{ googleAnalyticsId }}>
       window.dataLayer = window.dataLayer || [];
