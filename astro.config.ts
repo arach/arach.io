@@ -6,6 +6,7 @@ import remarkCollapse from "remark-collapse";
 import sitemap from "@astrojs/sitemap";
 import { SITE } from "./src/config";
 import { remarkReadingTime } from "./src/utils/remark-reading-time.mjs";
+import partytown from "@astrojs/partytown";
 
 // https://astro.build/config
 export default defineConfig({
@@ -16,11 +17,12 @@ export default defineConfig({
     }),
     react(),
     sitemap(),
+    partytown(),
   ],
   markdown: {
     remarkPlugins: [
       remarkToc,
-      remarkReadingTime, // 👈🏻 our plugin
+      remarkReadingTime,
       [
         remarkCollapse,
         {

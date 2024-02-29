@@ -145,3 +145,7 @@ export const SOCIALS: SocialObjects = [
     active: false,
   },
 ];
+
+export const GA_ID = {
+  id: "G-995N2YP1J0",
+};
