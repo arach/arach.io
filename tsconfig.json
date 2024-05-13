@@ -1,17 +1,26 @@
 {
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
-    "baseUrl": "src",
-    "jsx": "react-jsx",
-    "paths": {
-      "@assets/*": ["assets/*"],
-      "@config": ["config.ts"],
-      "@components/*": ["components/*"],
-      "@content/*": ["content/*"],
-      "@layouts/*": ["layouts/*"],
-      "@pages/*": ["pages/*"],
-      "@styles/*": ["styles/*"],
-      "@utils/*": ["utils/*"],
-    },
+    "module": "ESNext", // For ES modules, use "CommonJS" for traditional Node.js style
+    "target": "ES2020", // Target modern JavaScript (Node.js 14.x and above)
+    "moduleResolution": "node",
+    "outDir": "./dist", // Output directory for compiled JS files
+    "esModuleInterop": true,
+    "strict": true, // Enables a strict type-checking options
+    "skipLibCheck": true // Skips type checking of all declaration files (*.d.ts)
   },
+  "include": ["src/**/*"], // Include all TypeScript files in src directory
+  "exclude": ["node_modules"], // Exclude the node_modules directory
+  "baseUrl": "src",
+  "jsx": "react-jsx",
+  "paths": {
+    "@assets/*": ["assets/*"],
+    "@config": ["config.ts"],
+    "@components/*": ["components/*"],
+    "@content/*": ["content/*"],
+    "@layouts/*": ["layouts/*"],
+    "@pages/*": ["pages/*"],
+    "@styles/*": ["styles/*"],
+    "@utils/*": ["utils/*"]
+  }
 }

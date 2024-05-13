@@ -1,4 +1,4 @@
-import type socialIcons from "@assets/socialIcons";
+import socialIcons from "../src/assets/socialIcons";
 
 export type Site = {
   website: string;
