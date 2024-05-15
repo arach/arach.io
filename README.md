@@ -2,7 +2,7 @@
 
 This is the repository for the website [Arach.io](https://arach.io).
 
-![Arach.io Screenshot](./assets/images/arach.io-screenshot.png)
+![Arach.io Screenshot](src/assets/images/arach.io-screenshot.png)
 
 
 ## Installation
