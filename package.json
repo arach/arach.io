@@ -1,5 +1,6 @@
 {
-  "name": "astro-paper",
+  "packageManager": "yarn@1.22.19",
+  "name": "arach-io",
   "version": "4.2.0",
   "private": false,
   "scripts": {
@@ -13,7 +14,8 @@
     "format": "prettier --write . --plugin=prettier-plugin-astro",
     "cz": "cz",
     "prepare": "husky install",
-    "lint": "eslint ."
+    "lint": "eslint",
+    "postinstall": "node scripts/install-sharp.js"
   },
   "dependencies": {
     "@astrojs/check": "^0.4.1",
