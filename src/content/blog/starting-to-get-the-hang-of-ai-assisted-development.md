@@ -1,5 +1,6 @@
 ---
 title: "Starting to get the hang of AI assisted development"
+
 pubDatetime: 2024-05-13T23:11:41.419Z
 author: "Author"
 description: "After roughly a month of writing code with cursor + copilot + GPT4"
@@ -21,7 +22,7 @@ After roughly a month of writing code with these AI tools, a noticeable shift oc
 
 Recently, I've been able to ship complete feature ideas in just a few hours, with a level of joy and quality I never expected. This is so much fun!
 
-![IDE Shortcuts](assets/images/ide-shortcuts.png)
+![IDE Shortcuts](../../assets/images/ide-shortcuts.png)
 
 ## Enhanced Code Quality
 

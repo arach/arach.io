@@ -19,6 +19,15 @@ export default defineConfig({
     sitemap(),
     partytown(),
   ],
+  image: {
+    // Example: Enable the Sharp-based image service with a custom config
+    service: {
+      entrypoint: 'astro/assets/services/sharp',
+      config: {
+        limitInputPixels: false,
+      },
+    },
+  },
   markdown: {
     remarkPlugins: [
       remarkToc,
