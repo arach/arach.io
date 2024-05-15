@@ -5,7 +5,7 @@ pubDatetime: 2024-04-30T15:33:05.569Z
 slug: api-for-the-ai-age.md
 featured: true
 draft: false
-description: The evolution of the digital landscape and the emergence of AI agents and complex automation workflows necessitate a reassessment of traditional APIs and integration frameworks to meet the dynamic needs of modern software development.
+description: We need to reassess the gap between UIs and APIs in the age of AI
 ---
 
 # **Memo: Enhancing Automation and Integration in the AI-driven Era**
