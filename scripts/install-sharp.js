@@ -9,19 +9,28 @@ try {
     const sharp = require('sharp');
     console.log("sharp is installed")
 } catch (error) {
-    console.log("installing sharp")
-    exec('yarn add sharp --ignore-engines', (error, stdout, stderr) => {
-        if (error) {
-            console.error(`Error installing sharp: ${error.message}`);
-            return;
-        }
+    try {
+        console.log("error attempting to install sharp!")
+        exec('echo $PATH; yarn add sharp --ignore-engines', (error, stdout, stderr) => {
+            console.log("oops, not good")
+            if (error) {
+                console.error(`Error installing sharp: ${error}`);
+                return;
+            }
 
-        if (stderr) {
-            console.error(`stderr: ${stderr}`);
-            return;
-        }
+            if (stderr) {
+                console.error(`stderr: ${stderr}`);
+                return;
+            }
 
-        console.log(`stdout: ${stdout}`);
-    });
+            console.log(`stdout: ${stdout}`);
+        });
+
+    }
+    catch (error) {
+        console.error(`Error installing sharp: ${error}`);
+    }
+    const sharp = require('sharp');
+    console.log("sharp is installed!")
 }
 
