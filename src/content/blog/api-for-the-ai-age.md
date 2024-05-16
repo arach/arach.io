@@ -2,7 +2,7 @@
 title: Enhancing Automation and Integration in the AI-driven Era
 author: Arach Tchoupani
 pubDatetime: 2024-04-30T15:33:05.569Z
-slug: api-for-the-ai-age.md
+slug: api-for-the-ai-age
 featured: true
 draft: false
 description: We need to reassess the gap between UIs and APIs in the age of AI
