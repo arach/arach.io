@@ -3,7 +3,7 @@ title: "Starting to get the hang of AI assisted development"
 
 pubDatetime: 2024-05-13T23:11:41.419Z
 author: "Author"
-description: "After roughly a month of writing code with cursor + copilot + GPT4"
+description: "cursor + copilot + GPT4 = 🚀 -> Notes on AI amplified development"
 tags: []
 excerpt: ""
 thumbnail: "defaultThumbnail.jpg"

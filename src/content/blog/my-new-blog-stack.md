@@ -8,6 +8,7 @@ tags:
   - Astro.js
   - libraries
   - Blog
+featured: true
 ---
 
 # Describing My Blog Stack

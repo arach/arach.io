@@ -1,11 +1,13 @@
 ---
 layout: ../layouts/AboutLayout.astro
-title: "About"
+title: "About Arach Tchoupani"
 ---
 
-Hi, I'm Arach 👋🏻</h1>
+![Arach Tchoupani](/assets/arach.jpg)
 
+# BIO
 
-I'm an entrepreneur, technologist, investor and advisor. I'm currently diving into the experience of building with AI and immersing myself in the SF tech scene. I'm recently ex-Meta after 1 1/2 years building
-Bulletin and supporting engineering teams on the FB Creators Org. I also co-founded Breathe Life, a B2B SaaS company that offered a digital storefront and sales enablement platform for Life Insurance Carriers and
-Distributors. I write and speak about software development, leadership in venture backed startups and the future of work 🙌
+Arach Tchoupani is a software engineer, currently working on AI engineering projects. I've spent most of my career building startups from the ground up. Having said that, I recently spent a couple of years at Facebook, where I led teams driving long form content initiatives and supporting Facebook Creators with monetization, education & support. Before that, I co-founded Breathe Life, a B2B SaaS company pulling forward digitization of life insurance distribution by providing carriers and agencies with a hybrid distribution model.
+        
+This blog is a place for me to share ideas, research, ongoing projects. You can find me on X or LinkedIn or Github [@arach](https://x.com/arach")🙌
+
