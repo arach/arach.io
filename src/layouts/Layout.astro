@@ -114,7 +114,8 @@ const socialImageURL = new URL(
         dataLayer.push(arguments);
       }
       gtag("js", new Date());
-      gtag("config", { googleAnalyticsId });
+      console.log("Google Analytics ID:", googleAnalyticsId);
+      gtag("config", googleAnalyticsId);
     </script>
 
     <ViewTransitions />
