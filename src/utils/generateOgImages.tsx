@@ -6,9 +6,11 @@ import postOgImage from "./og-templates/post";
 import siteOgImage from "./og-templates/site";
 import path from "path";
 
-const fontRegularPath = path.resolve("public/fonts/FiraSans/FiraSans-Black.ttf");
-const fontBoldPath = path.resolve("public/fonts/FiraSans/FiraSans-Bold.ttf");
+// const fontRegularPath = path.resolve("public/fonts/FiraSans/FiraSans-Black.ttf");
+// const fontBoldPath = path.resolve("public/fonts/FiraSans/FiraSans-Bold.ttf");
 
+const fontRegularPath = path.resolve("public/fonts/Fira_Mono/FiraMono-Regular.ttf");
+const fontBoldPath = path.resolve("public/fonts/Fira_Mono/FiraMono-Bold.ttf");
 const fontRegular = await readFile(fontRegularPath);
 const fontBold = await readFile(fontBoldPath);
 const options: SatoriOptions = {

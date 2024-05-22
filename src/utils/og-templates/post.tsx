@@ -25,9 +25,8 @@ export default (post: CollectionEntry<"blog">) => {
       >
         <div
           style={{
-            border: "1px solid #000",
             background: "#fefbfb",
-            borderRadius: "4px",
+            borderRadius: "2px",
             display: "flex",
             justifyContent: "center",
             margin: "2rem",
@@ -40,14 +39,15 @@ export default (post: CollectionEntry<"blog">) => {
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
-              margin: "5px",
+              margin: "10px",
               width: "90%",
               height: "90%",
             }}
           >
             <p
               style={{
-                fontSize: 72,
+                marginTop: "60px",
+                fontSize: 59,
                 fontWeight: "bold",
                 maxHeight: "84%",
                 overflow: "hidden",
@@ -101,7 +101,7 @@ export default (post: CollectionEntry<"blog">) => {
           height={420}
           width={420}
           style={{
-            border: "1px solid rgba(20, 20, 20, 0.8)",
+            border: "1px solid rgba(150, 150, 150, 0.8)",
             borderRadius: "50%",
           }}
         />
