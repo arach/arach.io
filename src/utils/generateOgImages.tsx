@@ -1,7 +1,8 @@
 import satori, { type SatoriOptions } from "satori";
 import { Resvg } from "@resvg/resvg-js";
-import { readFile, writeFile } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import { type CollectionEntry } from "astro:content";
+
 import postOgImage from "./og-templates/post";
 import siteOgImage from "./og-templates/site";
 import path from "path";
@@ -11,8 +12,10 @@ import path from "path";
 
 const fontRegularPath = path.resolve("public/fonts/Fira_Mono/FiraMono-Regular.ttf");
 const fontBoldPath = path.resolve("public/fonts/Fira_Mono/FiraMono-Bold.ttf");
+
 const fontRegular = await readFile(fontRegularPath);
 const fontBold = await readFile(fontBoldPath);
+
 const options: SatoriOptions = {
   width: 1200,
   height: 630,
