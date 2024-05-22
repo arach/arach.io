@@ -1,40 +1,28 @@
 import satori, { type SatoriOptions } from "satori";
 import { Resvg } from "@resvg/resvg-js";
+import { readFile, writeFile } from "node:fs/promises";
 import { type CollectionEntry } from "astro:content";
 import postOgImage from "./og-templates/post";
 import siteOgImage from "./og-templates/site";
+import path from "path";
 
-const fetchFonts = async () => {
-  // Regular Font
-  const fontFileRegular = await fetch(
-    "https://www.1001fonts.com/download/font/ibm-plex-mono.regular.ttf"
-  );
-  const fontRegular: ArrayBuffer = await fontFileRegular.arrayBuffer();
+const fontRegularPath = path.resolve("public/fonts/FiraSans/FiraSans-Black.ttf");
+const fontBoldPath = path.resolve("public/fonts/FiraSans/FiraSans-Bold.ttf");
 
-  // Bold Font
-  const fontFileBold = await fetch(
-    "https://www.1001fonts.com/download/font/ibm-plex-mono.bold.ttf"
-  );
-  const fontBold: ArrayBuffer = await fontFileBold.arrayBuffer();
-
-  return { fontRegular, fontBold };
-};
-
-const { fontRegular, fontBold } = await fetchFonts();
-
+const fontRegular = await readFile(fontRegularPath);
+const fontBold = await readFile(fontBoldPath);
 const options: SatoriOptions = {
   width: 1200,
   height: 630,
-  embedFont: true,
   fonts: [
     {
-      name: "IBM Plex Mono",
-      data: fontRegular,
+      name: "Inter",
       weight: 400,
-      style: "normal",
+      data: fontRegular,
+      style: "normal"
     },
     {
-      name: "IBM Plex Mono",
+      name: "Inter",
       data: fontBold,
       weight: 600,
       style: "normal",

@@ -1,12 +1,12 @@
 ---
 title: "Starting to get the hang of AI assisted development"
 
+slug: "get-the-hang-of-AI-assisted-development"
 pubDatetime: 2024-05-13T23:11:41.419Z
-author: "Author"
+author: "Arach Tchoupani"
 description: "cursor + copilot + GPT4 = 🚀 -> Notes on AI amplified development"
 tags: []
 excerpt: ""
-thumbnail: "defaultThumbnail.jpg"
 categories: []
 featured: true
 draft: false
