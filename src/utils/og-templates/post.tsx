@@ -96,7 +96,7 @@ export default (post: CollectionEntry<"blog">) => {
         }}
       >
         <img
-          src={"https://fe96-73-170-25-28.ngrok-free.app/assets/arach.jpg"}
+          src={"https://arach.io/assets/arach.jpg"}
           alt={SITE.author}
           height={420}
           width={420}
