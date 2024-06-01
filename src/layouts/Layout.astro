@@ -8,8 +8,6 @@ const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
 const googleAnalyticsId =
   import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID || GA_ID.id;
 const googleAnalyticsUrl = `https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`;
-console.log(googleAnalyticsUrl);
-console.log("GA_ID", GA_ID);
 
 export interface Props {
   title?: string;
