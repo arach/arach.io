@@ -6,6 +6,7 @@ import Footer from "@components/Footer.astro";
 import LinkButton from "@components/LinkButton.astro";
 import Hr from "@components/Hr.astro";
 import Card from "@components/Card";
+import Hero from "@components/Hero.astro";
 import Socials from "@components/Socials.astro";
 import getSortedPosts from "@utils/getSortedPosts";
 import { SOCIALS } from "@config";
@@ -24,33 +25,35 @@ const socialCount = SOCIALS.filter(social => social.active).length;
   <Header />
   <main id="main-content">
     <section id="hero">
-      <h1>Hi, I'm Arach 👋🏻</h1>
-
-      <p>
-        I'm a software engineer, currently working on AI engineering projects.
-        I've spent most of my career building startups from the ground up.
-        Having said that, I recently spent a couple of years at Facebook (Meta),
-        where I led teams driving long form content initiatives and supporting
-        Facebook Creators with monetization, education & support. Before that, I
-        co-founded Breathe Life, a B2B SaaS company pulling forward digitization
-        of life insurance distribution by providing carriers and agencies with a
-        hybrid distribution model.
-        <div>
-          This blog is a place for me to share ideas, research, ongoing
-          projects. You can find me on X or LinkedIn or Github <a
-            href="https://x.com/arach">@arach</a
-          >
+      <div class="content-row flex justify-between">
+        <div class="w-full">
+          <p>
+            Hi, I'm Arach 👋🏻, a software engineer currently hanging out in SF
+            and hacking on personal projects. I've spent most of my career
+            building startups from the ground up but also spent a couple of
+            years at Facebook, where I led engineering teams working on various
+            creator initiatives. I also co-founded Breathe Life, an InsurTech
+            startup that developed an industry leading hybrid distribution model
+            for life insurance carriers and agenices.
+          </p>
+          <div>
+            This blog is a place for me to share ideas, research, ongoing
+            projects. You can find me on all the social platforms below.
+          </div>
+          {
+            // only display if at least one social link is enabled
+            socialCount > 0 && (
+              <div class="social-wrapper">
+                <div class="social-links">Social Links:</div>
+                <Socials />
+              </div>
+            )
+          }
         </div>
-        {
-          // only display if at least one social link is enabled
-          socialCount > 0 && (
-            <div class="social-wrapper">
-              <div class="social-links">Social Links:</div>
-              <Socials />
-            </div>
-          )
-        }
-      </p>
+        <div class="min-w-50 ml-4">
+          <Hero imageUrl="/assets/arach-filter.png" />
+        </div>
+      </div>
 
       <Hr />
 

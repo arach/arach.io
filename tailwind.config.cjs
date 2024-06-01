@@ -14,6 +14,14 @@ module.exports = {
   theme: {
     // Remove the following screen breakpoint or add other breakpoints
     // if one breakpoint is not enough for you
+    extend: {
+      fontFamily: {
+        sans: ["Inter var", "system-ui", "sans-serif"],
+        serif: ["Merriweather", "Georgia", "serif"],
+        mono: ["Menlo", "Monaco", "ui-monospace"],
+        body: ["Berkeley", "ui-monospace"],
+      }
+    },
     screens: {
       sm: "640px",
     },

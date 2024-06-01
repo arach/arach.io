@@ -1,0 +1,13 @@
+---
+import { Image } from "astro:assets";
+
+export interface Props {
+  imageUrl: string;
+}
+
+const { imageUrl = "/arach-filter.png" } = Astro.props;
+---
+
+<div class={``}>
+  <Image src={imageUrl} alt=`arach` width={250} height={250} />
+</div>

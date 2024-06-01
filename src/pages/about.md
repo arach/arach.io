@@ -1,13 +1,12 @@
 ---
 layout: ../layouts/AboutLayout.astro
-title: "About Arach Tchoupani"
+title: "Arach Tchoupani"
 ---
 
-![Arach Tchoupani](/assets/arach.jpg)
+![Arach Tchoupani](/assets/arach-circle.png)
 
 # BIO
 
-Arach Tchoupani is a software engineer, currently working on AI engineering projects. I've spent most of my career building startups from the ground up. Having said that, I recently spent a couple of years at Facebook, where I led teams driving long form content initiatives and supporting Facebook Creators with monetization, education & support. Before that, I co-founded Breathe Life, a B2B SaaS company pulling forward digitization of life insurance distribution by providing carriers and agencies with a hybrid distribution model.
-        
-This blog is a place for me to share ideas, research, ongoing projects. You can find me on X or LinkedIn or Github [@arach](https://x.com/arach")🙌
+With a 15-year track record in technology leadership in fast-growing startups, Arach has held various roles from Software Engineer to CTO, leading engineering for 4 venture-backed companies in NY and Montreal. He co-founded Breathe Life in 2018 in Montreal, supported by Diagram Ventures and Real Ventures, and rapidly grew its InsurTech product until its acquisition by Zinnia in 2022. He later joined Meta to work on their Creators initiatives. Since 2024, he has been based in San Francisco, at the early stages of launching his next venture.
+
 
