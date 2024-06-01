@@ -1,7 +1,7 @@
 ---
-title: Describing My Blog Stack
+title: My New Blog, Powered by Astro 🚀 
 pubDatetime: 2024-01-31T15:14:00.000Z
-description: A detailed overview of the tech stack behind my blog.
+description: An overview of the new stack behind my blog.
 slug: my-new-blog-stack
 tags:
   - tech stack

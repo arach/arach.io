@@ -44,7 +44,7 @@
     --color-accent: 226, 226, 226;
     --color-card: 52, 63, 96;
     --color-card-muted: 138, 51, 2;
-    --color-border: 171, 75, 8;
+    --color-border: 240, 240, 240;
 
   }
 
@@ -60,7 +60,7 @@
 
   body {
     @apply flex min-h-[100svh] flex-col bg-skin-fill font-mono text-skin-base selection:bg-skin-accent selection:bg-opacity-70 selection:text-skin-inverted;
-    font-family: 'Berkeley';
+    font-family: 'Berkeley', 'Geist Mono', monospace;
     font-size: 0.75rem;
   }
 
