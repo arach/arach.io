@@ -28,13 +28,21 @@ const socialCount = SOCIALS.filter(social => social.active).length;
       <div class="content-row flex justify-between">
         <div class="w-full">
           <p>
-            Hi, I'm Arach 👋🏻, a software engineer currently hanging out in SF
-            and hacking on personal projects. I've spent most of my career
+            Hi 👋🏻, welcome! I'm Arach, a software engineer currently hanging out
+            in SF and spending most of my time 🏃🏻running, 🏊🏻 swimming, hooping
+            🏀 and most importantly coding 👨🏻‍💻. I've spent most of my career
             building startups from the ground up but also spent a couple of
             years at Facebook, where I led engineering teams working on various
-            creator initiatives. I also co-founded Breathe Life, an InsurTech
-            startup that developed an industry leading hybrid distribution model
-            for life insurance carriers and agenices.
+            creator initiatives, most notably: Bulletin a publishing platform
+            for independent authors and FB Creators Support & Education.
+          </p>
+          <p>
+            Prior to that, I co-founded Breathe Life, an InsurTech startup that
+            developed an industry leading hybrid distribution model for life
+            insurance carriers and agencies. It was an awesome experience to go
+            from inception to mid 8 figures exit in 4 years! I'm currently
+            jamming on ideas for new products and will reply if you reach out
+            via email or X. 🚀
           </p>
           <div>
             This blog is a place for me to share ideas, research, ongoing
@@ -51,11 +59,14 @@ const socialCount = SOCIALS.filter(social => social.active).length;
           }
         </div>
         <div class="min-w-50 ml-4">
-          <Hero imageUrl="/assets/arach-filter.png" />
+          <Hero
+            imageUrl={"/assets/arach-filter.png"}
+            onHoverImageUrl={"/assets/arach-filter-hover.png"}
+          />
         </div>
       </div>
 
-      <Hr />
+      <Hr noPadding={true} />
 
       {
         featuredPosts.length > 0 && (

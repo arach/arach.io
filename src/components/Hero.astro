@@ -1,13 +1,40 @@
 ---
 import { Image } from "astro:assets";
-
+import { HoverHero } from "./HoverHero";
 export interface Props {
   imageUrl: string;
+  onHoverImageUrl: string;
 }
 
-const { imageUrl = "/arach-filter.png" } = Astro.props;
+const { imageUrl, onHoverImageUrl } = Astro.props;
 ---
 
-<div class={``}>
-  <Image src={imageUrl} alt=`arach` width={250} height={250} />
+<div>
+  <img
+    data-hover-image={onHoverImageUrl}
+    data-src-image={imageUrl}
+    src={imageUrl}
+    height="250"
+    width="250"
+    alt="Test"
+  />
 </div>
+
+<script>
+  const image = document.querySelectorAll("[data-src-image]");
+  image.forEach(img => {
+    img.addEventListener("mouseover", () => {
+      const hoverImage = img.getAttribute("data-hover-image");
+      if (hoverImage) {
+        img.setAttribute("src", hoverImage);
+      }
+    });
+    img.addEventListener("mouseout", () => {
+      const srcImage = img.getAttribute("data-src-image");
+      if (srcImage) {
+        img.setAttribute("src", srcImage);
+      }
+    });
+  });
+  const hoverImages = document.querySelectorAll("[data-hover-image]");
+</script>
