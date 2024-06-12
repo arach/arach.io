@@ -1,11 +1,11 @@
 ---
 title: "The Lasting Impact of Plaid's Innovation"
 pubDatetime: 2024-06-03T21:02:04.426Z
-author: "Arach"
-description: ""
+author: "Arach Tchoupani"
+description: "Four years ago, I wrote about Plaid’s quirky yet groundbreaking approach to innovation, right around the time of their $5.5B acquisition attempt by Visa that got blocked. Now, I’m diving back in to see how those strategies are shaping the new wave of AI Agents & Automation. \n\nIn this article, I’ll show you how Plaid’s way of empowering developers, hacking their way to success, and betting big on market potential aligns perfectly with what’s happening in the world of RPA."
 tags: []
 excerpt: ""
-thumbnail: "defaultThumbnail.jpg"
+thumbnail: "assets/images/plaid-innovation.webp"
 categories: []
 featured: true 
 draft: false

@@ -9,7 +9,7 @@ export interface Props {
 }
 
 export default function Card({ href, frontmatter, secHeading = true }: Props) {
-  const { title, pubDatetime, modDatetime, description } = frontmatter;
+  const { title, pubDatetime, modDatetime, description, thumbnail } = frontmatter;
 
   const headerProps = {
     style: { viewTransitionName: slugifyStr(title) },
@@ -29,7 +29,17 @@ export default function Card({ href, frontmatter, secHeading = true }: Props) {
         )}
       </a>
       <Datetime pubDatetime={pubDatetime} modDatetime={modDatetime} />
-      <p>{description}</p>
+      <div className="flex flex-row">
+
+        <div className="flex-1">
+          <p>{description}</p>
+        </div>
+        {thumbnail && (
+          <div className="item-end">
+            <img src={thumbnail.src} alt={title} height={120} width={120} />
+          </div>
+        )}
+      </div>
     </li>
   );
 }
