@@ -4,84 +4,78 @@ export default () => {
   return (
     <div
       style={{
-        background: "#fefbfb",
+        display: "flex",
         width: "100%",
         height: "100%",
-        display: "flex",
         alignItems: "center",
         justifyContent: "center",
       }}
     >
       <div
         style={{
-          position: "absolute",
-          top: "-1px",
-          right: "-1px",
-          border: "4px solid #000",
-          background: "#ecebeb",
-          opacity: "0.9",
-          borderRadius: "4px",
-          display: "flex",
-          justifyContent: "center",
-          margin: "2.5rem",
-          width: "88%",
-          height: "80%",
-        }}
-      />
-
-      <div
-        style={{
-          border: "4px solid #000",
           background: "#fefbfb",
-          borderRadius: "4px",
+          width: "60%",
+          height: "100%",
           display: "flex",
+          alignItems: "center",
           justifyContent: "center",
-          margin: "2rem",
-          width: "88%",
-          height: "80%",
         }}
       >
         <div
           style={{
             display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            margin: "20px",
-            width: "90%",
-            height: "90%",
+            background: "#fefbfb",
+            height: "100%",
+            width: "100%",
           }}
         >
           <div
             style={{
+              border: "1px dashed rgba(12, 12, 12, 1)",
               display: "flex",
               flexDirection: "column",
-              justifyContent: "center",
               alignItems: "center",
-              height: "90%",
-              maxHeight: "90%",
-              overflow: "hidden",
-              textAlign: "center",
+              justifyContent: "center",
+              margin: "1rem",
+              width: "96%",
             }}
           >
-            <p style={{ fontSize: 72, fontWeight: "bold" }}>{SITE.title}</p>
-            <p style={{ fontSize: 28 }}>{SITE.desc}</p>
-          </div>
-
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              width: "100%",
-              marginBottom: "8px",
-              fontSize: 28,
-            }}
-          >
-            <span style={{ overflow: "hidden", fontWeight: "bold" }}>
-              {new URL(SITE.website).hostname}
-            </span>
+            <p
+              style={{
+                fontSize: 59,
+                fontWeight: "bold",
+                overflow: "hidden",
+              }}
+            >
+              {SITE.author}
+            </p>
+            <p>
+              Entrepreneur, software engineer
+            </p>
           </div>
         </div>
       </div>
-    </div>
+      <div
+        style={{
+          width: "40%",
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "#313131",
+        }}
+      >
+        <img
+          src={"https://arach.io/assets/arach-filter.png"}
+          alt={SITE.author}
+          height={360}
+          width={360}
+          style={{
+            border: "3px solid rgba(255, 255, 255)",
+            borderRadius: "50%",
+          }}
+        />
+      </div>
+    </div >
   );
 };

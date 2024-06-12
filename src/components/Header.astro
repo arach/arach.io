@@ -12,7 +12,7 @@ const { activeNav } = Astro.props;
 
 <header>
   <a id="skip-to-content" href="#main-content">Skip to content</a>
-  <div class="nav-container">
+  <div class="nav-container h-12 sm:h-24">
     <div class="top-nav-wrap md:shrink-0 my-0 py-0">
       <a href="/" class="logo whitespace-nowrap">
         {
@@ -20,7 +20,7 @@ const { activeNav } = Astro.props;
             <img
               src={`/assets/${LOGO_IMAGE.svg ? "logo.svg" : "logo.png"}`}
               alt={SITE.title}
-              class="w-20 px-4 sm:h-auto sm:w-48"
+              class="w-24 px-4 sm:h-auto sm:w-48"
             />
           ) : (
             SITE.title

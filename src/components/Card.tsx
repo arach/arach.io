@@ -35,8 +35,8 @@ export default function Card({ href, frontmatter, secHeading = true }: Props) {
           <p>{description}</p>
         </div>
         {thumbnail && (
-          <div className="item-end">
-            <img src={thumbnail.src} alt={title} height={120} width={120} />
+          <div className="item-end px-2">
+            <img src={thumbnail.src} alt={title} height={100} width={100} />
           </div>
         )}
       </div>
