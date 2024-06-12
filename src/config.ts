@@ -5,7 +5,7 @@ export const SITE: Site = {
   author: "Arach Tchoupani",
   desc: "Arach Tchoupani - Engineer & Entrepreneur",
   title: "Arach.io",
-  ogImage: "assets/arach-io-screenshot.png",
+  ogImage: "/og.png",
   lightAndDarkMode: true,
   postPerPage: 8,
   scheduledPostMargin: 15 * 60 * 1000, // 15 minutes
