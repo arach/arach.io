@@ -162,3 +162,10 @@ html[data-theme='dark'] {
     --tw-prose-counters: var(--tw-prose-body)
   }
 }
+
+html {
+  .prose {
+    font-size: 0.85rem;
+
+  }
+}
