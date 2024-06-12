@@ -2,7 +2,7 @@
 title: "AI-Driven Web Automation: Building the Action Layer"
 pubDatetime: 2024-06-11T19:46:26.130Z
 author: "Arach Tchoupani"
-description: "AI currently lacks an effective action layer, limiting its potential in web automation. This article introduces a groundbreaking architecture to address this gap, offering innovative solutions to enhance AI-driven workflows and interactions with web applications. Discover the building blocks needed to revolutionize AI’s integration with the web, driving unprecedented innovation and productivity."
+description: "AI currently lacks an effective action layer, limiting its potential in web automation. This article introduces an architecture to address this gap, offering innovative solutions to enhance AI-driven workflows and interactions with web applications. "
 tags: ["AI", "AI Agents", "Browser Automation", "Web Automation", "Web Development"]
 excerpt: ""
 thumbnail: "assets/images/automation-thumbnail.png"
