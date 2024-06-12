@@ -39,9 +39,9 @@
 
   :root,
   html[data-theme="light"] {
-    --color-fill: 245, 245, 245;
+    --color-fill: 255, 255, 255;
     /* Soft White */
-    --color-text-base: 33, 37, 41;
+    --color-text-base: 12, 12, 12;
     /* Charcoal */
     --color-accent: 52, 152, 219;
     /* Azure Blue */
