@@ -25,7 +25,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
   <Header />
   <main id="main-content">
     <section id="hero">
-      <div class="md:flex-row flex flex-col gap-4">
+      <div class="flex flex-col gap-4 sm:flex-row">
         <div class="flex-1">
           <p>
             Hi 👋🏻, welcome to my personal website! I’m Arach, a software
@@ -52,20 +52,32 @@ const socialCount = SOCIALS.filter(social => social.active).length;
             AI). If you’re working on something cool or investing in innovative
             projects, I’d love to connect and collaborate 🚀.
           </p>
-          {
-            // only display if at least one social link is enabled
-            socialCount > 0 && (
-              <div class="social-wrapper">
-                <div class="social-links">Social Links:</div>
-                <Socials />
-              </div>
-            )
-          }
+          <div class="flex flex-row">
+            {
+              // only display if at least one social link is enabled
+              socialCount > 0 && (
+                <div class="social-wrapper flex-1">
+                  <div class="social-links">Social Links:</div>
+                  <Socials />
+                </div>
+              )
+            }
+            <div class="max-w-lg sm:hidden">
+              <Hero
+                imageUrl={"/assets/arach-filter.png"}
+                onHoverImageUrl={"/assets/arach-filter-hover.png"}
+                height={"145px"}
+                width={"145px"}
+              />
+            </div>
+          </div>
         </div>
-        <div class="md:flex hidden max-w-lg">
+        <div class="sm:item-end hidden max-w-lg pt-2 sm:flex">
           <Hero
             imageUrl={"/assets/arach-filter.png"}
             onHoverImageUrl={"/assets/arach-filter-hover.png"}
+            height={"175px"}
+            width={"175px"}
           />
         </div>
       </div>

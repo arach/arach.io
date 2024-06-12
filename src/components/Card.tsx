@@ -17,29 +17,32 @@ export default function Card({ href, frontmatter, secHeading = true }: Props) {
   };
 
   return (
-    <li className="my-6">
-      <a
-        href={href}
-        className="inline-block text-lg font-medium text-skin-accent decoration-dashed underline-offset-4 focus-visible:no-underline focus-visible:underline-offset-0"
-      >
-        {secHeading ? (
-          <h2 {...headerProps}>{title}</h2>
-        ) : (
-          <h3 {...headerProps}>{title}</h3>
-        )}
-      </a>
-      <Datetime pubDatetime={pubDatetime} modDatetime={modDatetime} />
-      <div className="flex flex-row">
+    <li className="my-6 flex flex-row">
+      <div className="flex-1">
+        <a
+          href={href}
+          className="inline-block text-lg font-medium text-skin-accent decoration-dashed underline-offset-4 focus-visible:no-underline focus-visible:underline-offset-0"
+        >
+          {secHeading ? (
+            <h2 {...headerProps}>{title}</h2>
+          ) : (
+            <h3 {...headerProps}>{title}</h3>
+          )}
+        </a>
+        <Datetime pubDatetime={pubDatetime} modDatetime={modDatetime} />
+        <div >
 
-        <div className="flex-1">
-          <p>{description}</p>
-        </div>
-        {thumbnail && (
-          <div className="item-end px-2">
-            <img src={thumbnail.src} alt={title} height={100} width={100} />
+          <div className="flex-1">
+            <p>{description}</p>
           </div>
-        )}
+
+        </div>
       </div>
+      {thumbnail && (
+        <div className="item-end px-2 ">
+          <img data-card-thumbnail={true} src={thumbnail.src} alt={title} height={100} width={140} />
+        </div>
+      )}
     </li>
   );
 }

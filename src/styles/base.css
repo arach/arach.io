@@ -166,6 +166,20 @@ html[data-theme='dark'] {
 html {
   .prose {
     font-size: 0.85rem;
+  }
+}
 
+html {
+  section#hero {
+    @apply pt-1
+  }
+
+  img[data-card-thumbnail='true'] {
+    width: 100px;
+    border: 1px solid black;
+
+    @media screen and (max-width: 768px) {
+      width: 80px;
+    }
   }
 }

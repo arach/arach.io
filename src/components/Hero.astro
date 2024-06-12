@@ -1,12 +1,13 @@
 ---
 import { Image } from "astro:assets";
-import { HoverHero } from "./HoverHero";
 export interface Props {
   imageUrl: string;
   onHoverImageUrl: string;
+  height: string;
+  width: string;
 }
 
-const { imageUrl, onHoverImageUrl } = Astro.props;
+const { imageUrl, onHoverImageUrl, height, width } = Astro.props;
 ---
 
 <div>
@@ -14,8 +15,8 @@ const { imageUrl, onHoverImageUrl } = Astro.props;
     data-hover-image={onHoverImageUrl}
     data-src-image={imageUrl}
     src={imageUrl}
-    height="145"
-    width="145"
+    height={height}
+    width={width}
     alt="Arach's Face"
   />
 </div>
