@@ -15,8 +15,8 @@ const { imageUrl, onHoverImageUrl, height, width } = Astro.props;
     data-hover-image={onHoverImageUrl}
     data-src-image={imageUrl}
     src={imageUrl}
-    height={height}
-    width={width}
+    height={height || "145px"}
+    width={width || "145px"}
     alt="Arach's Face"
   />
 </div>
