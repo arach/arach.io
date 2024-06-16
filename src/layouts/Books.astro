@@ -1,0 +1,41 @@
+---
+import type { CollectionEntry } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import Main from "@layouts/Main.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import Pagination from "@components/Pagination.astro";
+import Card from "@components/Card";
+import { SITE } from "@config";
+
+export interface Props {
+  currentPage: number;
+  totalPages: number;
+  paginatedItems: CollectionEntry<"book">[];
+}
+
+const { currentPage, totalPages, paginatedItems } = Astro.props;
+console.log(paginatedItems);
+---
+
+<Layout title={`Books | ${SITE.title}`}>
+  <!-- <Header activeNav="books" /> -->
+  <Main pageTitle="Books" pageDesc="All the books I've added.">
+    <ul>
+      {
+        paginatedItems.map(({ data, slug }) => (
+          <Card href={`/books/${slug}/`} frontmatter={data} />
+        ))
+      }
+    </ul>
+  </Main>
+
+  <Pagination
+    {currentPage}
+    {totalPages}
+    prevUrl={`/books${currentPage - 1 !== 1 ? "/" + (currentPage - 1) : ""}/`}
+    nextUrl={`/books/${currentPage + 1}/`}
+  />
+
+  <Footer noMarginTop={totalPages > 1} />
+</Layout>

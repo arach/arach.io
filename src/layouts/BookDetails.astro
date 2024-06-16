@@ -1,0 +1,114 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import Tag from "@components/Tag.astro";
+import Datetime from "@components/Datetime";
+import type { CollectionEntry } from "astro:content";
+import { slugifyStr } from "@utils/slugify";
+import ShareLinks from "@components/ShareLinks.astro";
+import { SITE } from "@config";
+
+export interface Props {
+  book: CollectionEntry<"book">;
+}
+
+const { book } = Astro.props;
+
+const {
+  title,
+  author,
+  description,
+  ogImage,
+  readingTime,
+  canonicalURL,
+  addedDatetime,
+  modDatetime,
+  tags,
+} = book.data;
+
+const { Content } = await book.render();
+
+const ogImageUrl = typeof ogImage === "string" ? ogImage : ogImage?.src;
+const ogUrl = new URL(
+  ogImageUrl ?? `/books/${slugifyStr(title)}.png`,
+  Astro.url.origin
+).href;
+
+const layoutProps = {
+  title: `${title} | ${SITE.title}`,
+  author,
+  description,
+  pubDatetime: addedDatetime,
+  modDatetime,
+  canonicalURL,
+  ogImage: ogUrl,
+  scrollSmooth: true,
+};
+---
+
+<Layout {...layoutProps}>
+  <Header />
+
+  <div class="mx-auto flex w-full max-w-3xl justify-start px-2">
+    <button
+      class="focus-outline mb-2 mt-8 flex hover:opacity-75"
+      onclick="(() => (history.length === 1) ? window.location = '/' : history.back())()"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg"
+        ><path
+          d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"
+        ></path>
+      </svg><span>Go back</span>
+    </button>
+  </div>
+  <main id="main-content">
+    <h1 transition:name={slugifyStr(title)} class="book-title">{title}</h1>
+    <Datetime
+      pubDatetime={addedDatetime}
+      modDatetime={modDatetime}
+      size="lg"
+      className="my-2"
+    />
+    <span>Estimated Reading Time: ({readingTime})</span>
+    <article id="article" role="article" class="prose mx-auto mt-8 max-w-3xl">
+      <Content />
+    </article>
+
+    <ul class="my-8">
+      {tags.map(tag => <Tag tag={slugifyStr(tag)} />)}
+    </ul>
+
+    <div
+      class="flex flex-col-reverse items-center justify-between gap-6 sm:flex-row-reverse sm:items-end sm:gap-4"
+    >
+      <button
+        id="back-to-top"
+        class="focus-outline whitespace-nowrap py-1 hover:opacity-75"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="rotate-90">
+          <path
+            d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"
+          ></path>
+        </svg>
+        <span>Back to Top</span>
+      </button>
+
+      <ShareLinks />
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  main {
+    @apply mx-auto w-full max-w-3xl px-4 pb-12;
+  }
+  .book-title {
+    @apply text-2xl font-semibold text-skin-accent;
+  }
+</style>
+
+<script is:inline>
+  // JavaScript functions remain the same as they are generic and not specific to books or blog posts
+</script>

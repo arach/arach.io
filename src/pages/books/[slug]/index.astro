@@ -1,0 +1,43 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import BookPosts from "@layouts/BookPosts.astro";
+import BookDetails from "@layouts/BookDetails.astro";
+import getSortedBooks from "@utils/getSortedBooks";
+import getPageNumbers from "@utils/getPageNumbers";
+import getPagination from "@utils/getPagination";
+import getBooksWithRT from "@utils/getBooksWithRT";
+
+export interface Props {
+  book: CollectionEntry<"books">;
+}
+
+export async function getStaticPaths() {
+  const books = await getCollection("book", ({ data }) => !data.draft);
+  const booksWithRT = await getBooksWithRT(books);
+
+  const bookResult = booksWithRT.map((book: any) => ({
+    params: { slug: book.slug },
+    props: { book },
+  }));
+
+  const pagePaths = getPageNumbers(books.length).map(pageNum => ({
+    params: { slug: String(pageNum) },
+  }));
+
+  return [...bookResult, ...pagePaths];
+}
+
+const { slug } = Astro.params;
+const { book } = Astro.props;
+
+const books = await getCollection("book");
+
+const sortedBooks = getSortedBooks(books);
+
+const pagination = getPagination({
+  posts: sortedBooks,
+  page: slug,
+});
+---
+
+{book ? <BookDetails book={book} /> : <BookPosts {...pagination} />}

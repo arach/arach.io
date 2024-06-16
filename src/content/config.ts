@@ -25,4 +25,34 @@ const blog = defineCollection({
     }),
 });
 
-export const collections = { blog };
+const book = defineCollection({
+  type: "content",
+  schema: ({ image }) =>
+    z.object({
+      addedDatetime: z.date(),
+      pubDatetime: z.date(),
+      modDatetime: z.date().optional().nullable(),
+      author: z.string().default(SITE.author),
+      description: z.string(),
+      draft: z.boolean().optional(),
+      isbn: z.string(),
+      ogImage: image()
+        .refine(img => img.width >= 1200 && img.height >= 630, {
+          message: "OpenGraph image must be at least 1200 X 630 pixels!",
+        })
+        .or(z.string())
+        .optional(),
+      tags: z.array(z.string()).default(["others"]),
+      title: z.string(),
+      canonicalURL: z.string().optional(),
+      featured: z.boolean().optional(),
+      rating: z.number().optional(),
+      readingTime: z.string().optional(),
+      thumbnail: image().optional(),
+    }),
+});
+
+export const collections = {
+  'blog': blog,
+  'book': book
+};
