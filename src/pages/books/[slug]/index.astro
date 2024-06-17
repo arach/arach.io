@@ -1,19 +1,19 @@
 ---
 import { type CollectionEntry, getCollection } from "astro:content";
-import BookPosts from "@layouts/BookPosts.astro";
+import BookPosts from "@layouts/Books.astro";
 import BookDetails from "@layouts/BookDetails.astro";
-import getSortedBooks from "@utils/getSortedBooks";
+import getSortedContent from "@utils/getSortedContent";
 import getPageNumbers from "@utils/getPageNumbers";
 import getPagination from "@utils/getPagination";
-import getBooksWithRT from "@utils/getBooksWithRT";
+import getContentWithRT from "@utils/getContentWithRT";
 
 export interface Props {
-  book: CollectionEntry<"books">;
+  book: CollectionEntry<"book">;
 }
 
 export async function getStaticPaths() {
   const books = await getCollection("book", ({ data }) => !data.draft);
-  const booksWithRT = await getBooksWithRT(books);
+  const booksWithRT = await getContentWithRT("book", books);
 
   const bookResult = booksWithRT.map((book: any) => ({
     params: { slug: book.slug },
@@ -30,14 +30,64 @@ export async function getStaticPaths() {
 const { slug } = Astro.params;
 const { book } = Astro.props;
 
-const books = await getCollection("book");
+interface BookData {
+  author: string;
+  pubDatetime: Date;
+  title: string;
+  tags: string[];
+  description: string;
+  modDatetime?: Date | null;
+  featured?: boolean;
+  draft?: boolean;
+  thumbnail?: {
+    url: string;
+    alt: string;
+  };
+  ogImage?: string;
+  canonicalURL?: string;
+  readingTime?: number;
+  addedDatetime?: Date; // Added this line
+}
 
-const sortedBooks = getSortedBooks(books);
+const books = await getCollection("book", {
+  filter: ({ data }: { data: BookData }) => !data.draft,
+});
+
+const sortedBooks = getSortedContent(books);
 
 const pagination = getPagination({
-  posts: sortedBooks,
+  posts: sortedBooks.map(book => ({
+    id: book.id,
+    slug: book.slug,
+    body: book.body,
+    collection: book.collection,
+    data: {
+      author: book.data.author,
+      pubDatetime: book.data.pubDatetime,
+      title: book.data.title,
+      tags: book.data.tags,
+      description: book.data.description,
+      modDatetime: book.data.modDatetime,
+      featured: book.data.featured,
+      draft: book.data.draft,
+      thumbnail: book.data.thumbnail,
+      ogImage: book.data.ogImage,
+      canonicalURL: book.data.canonicalURL,
+      readingTime: book.data.readingTime,
+    },
+  })),
   page: slug,
 });
 ---
 
-{book ? <BookDetails book={book} /> : <BookPosts {...pagination} />}
+{
+  book ? (
+    <BookDetails book={book} />
+  ) : (
+    <BookPosts
+      totalPages={pagination.totalPages}
+      currentPage={pagination.currentPage}
+      paginatedItems={pagination.paginatedPosts as any[]}
+    />
+  )
+}
