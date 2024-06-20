@@ -20,7 +20,10 @@ console.log(paginatedItems);
 
 <Layout title={`Books | ${SITE.title}`}>
   <!-- <Header activeNav="books" /> -->
-  <Main pageTitle="Books" pageDesc="All the books I've added.">
+  <Main
+    pageTitle="Books"
+    pageDesc="Some of the books I've read - pulled from Goodreads :)"
+  >
     <ul>
       {
         paginatedItems.map(({ data, slug }) => (
