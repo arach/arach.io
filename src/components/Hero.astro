@@ -25,12 +25,14 @@ const { imageUrl, onHoverImageUrl, height, width } = Astro.props;
   const image = document.querySelectorAll("[data-src-image]");
   image.forEach(img => {
     img.addEventListener("mouseover", () => {
+      console.log("mouseover", img);
       const hoverImage = img.getAttribute("data-hover-image");
       if (hoverImage) {
         img.setAttribute("src", hoverImage);
       }
     });
     img.addEventListener("mouseout", () => {
+      console.log("mouseout", img);
       const srcImage = img.getAttribute("data-src-image");
       if (srcImage) {
         img.setAttribute("src", srcImage);
