@@ -16,7 +16,7 @@ module.exports = {
     // if one breakpoint is not enough for you
     extend: {
       fontFamily: {
-        sans: ["Inter var", "system-ui", "sans-serif"],
+        sans: ["Cinetype", "Inter", "system-ui", "sans-serif"],
         serif: ["Merriweather", "Georgia", "serif"],
         mono: ["Menlo", "Monaco", "ui-monospace"],
         body: ["Berkeley", "ui-monospace"],
@@ -65,7 +65,7 @@ module.exports = {
         transparent: "transparent",
       },
       fontFamily: {
-        mono: ["IBM Plex Mono", "monospace"],
+        mono: ["Cinetype", "Sans-serif"],
       },
 
       typography: {
