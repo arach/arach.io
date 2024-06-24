@@ -12,15 +12,15 @@ const { activeNav } = Astro.props;
 
 <header>
   <a id="skip-to-content" href="#main-content">Skip to content</a>
-  <div class="nav-container h-12 sm:h-24">
-    <div class="top-nav-wrap md:shrink-0 my-0 py-0">
+  <div class="nav-container h-12 sm:h-20">
+    <div class="top-nav-wrap my-0 py-0 md:shrink-0">
       <a href="/" class="logo whitespace-nowrap">
         {
           LOGO_IMAGE.enable ? (
             <img
-              src={`/assets/${LOGO_IMAGE.svg ? "logo.svg" : "logo.png"}`}
+              src={`/assets/${LOGO_IMAGE.svg ? "logo.svg" : "arach.io-logo-photo.png"}`}
               alt={SITE.title}
-              class="w-24 px-4 sm:h-auto sm:w-48"
+              class="w-24 px-4 sm:h-auto sm:w-32"
             />
           ) : (
             SITE.title
@@ -130,7 +130,7 @@ const { activeNav } = Astro.props;
     @apply absolute -top-full left-16 z-50 bg-skin-accent px-3 py-2 text-skin-inverted transition-all focus:top-4;
   }
   .nav-container {
-    @apply mx-auto flex max-w-3xl flex-col items-center justify-between sm:flex-row;
+    @apply max-w-3xl mx-auto flex flex-col items-center justify-between sm:flex-row;
   }
   .top-nav-wrap {
     @apply relative flex w-full items-start justify-between sm:items-center sm:py-0;
