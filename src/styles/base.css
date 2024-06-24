@@ -29,13 +29,13 @@
     font-display: swap;
   } */
 
-  /* @font-face {
+  @font-face {
     font-family: 'Berkeley';
-    font-weight: normal;
+    font-weight: lighter;
     font-style: normal;
     font-display: swap;
     src: url('/fonts/BerkeleyMono/BerkeleyMonoTrial-Regular.ttf') format('TrueType');
-  } */
+  }
 
   /* @font-face {
     font-family: 'Space Mono';
@@ -115,10 +115,10 @@
     @apply flex min-h-[100svh] flex-col bg-skin-fill font-mono text-skin-base selection:bg-skin-accent selection:bg-opacity-70 selection:text-skin-inverted text-xs;
     /* font-family: 'Fira Mono', 'Berkeley', 'Geist Mono', 'monospace'; */
     font-family: 'Cinetype', sans-serif;
-    font-weight: 200;
+    font-weight: 300;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    line-height: 1.25rem;
+    line-height: 1.1rem;
   }
 
   section,

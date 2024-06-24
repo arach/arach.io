@@ -2,11 +2,28 @@
 export interface Props {
   noPadding?: boolean;
   ariaHidden?: boolean;
+  noMargin?: boolean;
+  lightBorder?: boolean;
 }
 
-const { noPadding = false, ariaHidden = true } = Astro.props;
+const {
+  noPadding = false,
+  ariaHidden = true,
+  noMargin = false,
+  lightBorder = false,
+} = Astro.props;
 ---
 
-<div class={`max-w-3xl mx-auto ${noPadding ? "px-0" : "px-4"} mt-4`}>
+<div
+  class={`max-w-3xl mx-auto ${noPadding ? "px-0" : "px-4"} ${noMargin ? "mt-0" : "mt-4"} ${lightBorder ? "light-border" : ""}`}
+>
   <hr class="border-skin-line" aria-hidden={ariaHidden} />
 </div>
+
+<style>
+  .light-border {
+    hr {
+      --tw-border-opacity: 0.15;
+    }
+  }
+</style>

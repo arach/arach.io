@@ -25,7 +25,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
   <Header />
   <main id="main-content">
     <section id="hero">
-      <div class="mb-6 mt-6 flex flex-col gap-4 sm:flex-row">
+      <div class="mb-4 mt-4 flex flex-col gap-4 sm:flex-row">
         <div class="flex-1">
           <p>
             Hi 👋🏻, welcome to my personal website! I’m Arach, a software
@@ -67,7 +67,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
         </div>
       </div>
 
-      <Hr noPadding={true} />
+      <Hr noPadding={true} noMargin={true} lightBorder={true} />
 
       {
         featuredPosts.length > 0 && (
@@ -127,10 +127,10 @@ const socialCount = SOCIALS.filter(social => social.active).length;
   <style>
     /* ===== Hero Section ===== */
     #hero {
-      @apply pb-6 pt-8;
+      @apply pb-4 pt-4;
     }
     #hero h1 {
-      @apply my-4 inline-block text-3xl font-bold sm:my-8 sm:text-5xl;
+      @apply my-4 inline-block text-3xl font-bold sm:my-4 sm:text-5xl;
     }
     #hero .rss-link {
       @apply mb-6;
@@ -142,7 +142,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
       @apply my-2;
     }
     .social-wrapper {
-      @apply mt-4 flex flex-col sm:flex-row sm:items-center;
+      @apply mt-2 flex flex-col sm:flex-row sm:items-center;
     }
     .social-links {
       @apply mb-1 mr-2 whitespace-nowrap sm:mb-0;
@@ -151,7 +151,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     /* ===== Featured & Recent Posts Sections ===== */
     #featured,
     #recent-posts {
-      @apply pb-6 pt-12;
+      @apply pb-4 pt-4;
     }
     #featured h2,
     #recent-posts h2 {
