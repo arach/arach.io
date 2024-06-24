@@ -20,11 +20,17 @@ const { frontmatter } = Astro.props;
   <Header activeNav="resume" />
   <Breadcrumbs />
   <main id="main-content">
-    <section id="resume" class="mb-28 max-w-3xl prose-img:border-0">
+    <section id="resume" class="max-w-3xl mb-28 prose-img:border-0">
       <h1 class="mb-4 text-2xl tracking-wider sm:text-3xl">
         {frontmatter.title}
       </h1>
-
+      <div class="pdf-container" style="height: 67vh;">
+        <iframe
+          src={frontmatter.pdf}
+          width="100%"
+          height="100%"
+          style="border:none;"></iframe>
+      </div>
       <div class="pdf-container" style="height: 67vh;">
         <embed
           style={{ width: "100%", height: "100%" }}
