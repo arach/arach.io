@@ -11,4 +11,4 @@ featured: false
 draft: false
 ---
 
-this book by Alexandre Dumas 
+i read the book by Alexandre Dumas in French as part of my 8th grade French class taught by the extraordinary Miss Iammonico. One of my all time favorite books 
