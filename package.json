@@ -35,6 +35,7 @@
     "mdast-util-to-string": "^4.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-rating": "^2.0.5",
     "reading-time": "^1.5.0",
     "remark-collapse": "^0.1.2",
     "remark-toc": "^9.0.0",

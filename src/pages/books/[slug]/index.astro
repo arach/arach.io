@@ -30,28 +30,12 @@ export async function getStaticPaths() {
 const { slug } = Astro.params;
 const { book } = Astro.props;
 
-interface BookData {
-  author: string;
-  pubDatetime: Date;
-  title: string;
-  tags: string[];
-  description: string;
-  modDatetime?: Date | null;
-  featured?: boolean;
-  draft?: boolean;
-  thumbnail?: {
-    url: string;
-    alt: string;
-  };
-  ogImage?: string;
-  canonicalURL?: string;
-  readingTime?: number;
-  addedDatetime?: Date; // Added this line
-}
-
-const books = await getCollection("book", {
-  filter: ({ data }: { data: BookData }) => !data.draft,
-});
+const books = await getCollection(
+  "book",
+  (entry: CollectionEntry<"book">): boolean => {
+    return !entry.data.draft;
+  }
+);
 
 const sortedBooks = getSortedContent(books);
 
@@ -62,18 +46,7 @@ const pagination = getPagination({
     body: book.body,
     collection: book.collection,
     data: {
-      author: book.data.author,
-      pubDatetime: book.data.pubDatetime,
-      title: book.data.title,
-      tags: book.data.tags,
-      description: book.data.description,
-      modDatetime: book.data.modDatetime,
-      featured: book.data.featured,
-      draft: book.data.draft,
-      thumbnail: book.data.thumbnail,
-      ogImage: book.data.ogImage,
-      canonicalURL: book.data.canonicalURL,
-      readingTime: book.data.readingTime,
+      ...book.data,
     },
   })),
   page: slug,

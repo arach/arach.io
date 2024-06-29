@@ -7,10 +7,12 @@ import getContentPagination from "@utils/getContentPagination";
 const books = await getCollection("book");
 
 const sortedBooks = getSortedContent(books);
+const url = new URL(import.meta.url);
+const currentPage = parseInt(url.searchParams.get("page") || "1", 10);
 
 const pagination = getContentPagination({
   items: sortedBooks,
-  currentPage: 1,
+  currentPage,
   isIndex: true,
 });
 ---

@@ -5,37 +5,43 @@ import Main from "@layouts/Main.astro";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import Pagination from "@components/Pagination.astro";
-import Card from "@components/Card";
+import BookCard from "@components/BookCard";
 import { SITE } from "@config";
+import type { BookData } from "../interfaces";
 
 export interface Props {
   currentPage: number;
   totalPages: number;
-  paginatedItems: CollectionEntry<"book">[];
+  paginatedItems: Array<{
+    id: string;
+    slug: string;
+    body: string;
+    collection: string;
+    data: BookData;
+  }>;
 }
 
 const { currentPage, totalPages, paginatedItems } = Astro.props;
-console.log(paginatedItems);
 ---
 
 <Layout title={`Books | ${SITE.title}`}>
   <Header activeNav="books" />
   <Main
     pageTitle="Books"
-    pageDesc="Some of the books I've read - pulled from Goodreads :)"
+    pageDesc="Some of the books I've read - pulled from Goodreads and memory :)"
   >
     <ul>
       {
         paginatedItems.map(({ data, slug }) => (
-          <Card href={`/books/${slug}/`} frontmatter={data} />
+          <BookCard href={`/books/${slug}/`} frontmatter={data} />
         ))
       }
     </ul>
   </Main>
 
   <Pagination
-    {currentPage}
-    {totalPages}
+    currentPage={currentPage}
+    totalPages={totalPages}
     prevUrl={`/books${currentPage - 1 !== 1 ? "/" + (currentPage - 1) : ""}/`}
     nextUrl={`/books/${currentPage + 1}/`}
   />
