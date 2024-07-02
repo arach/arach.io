@@ -29,21 +29,21 @@
     font-display: swap;
   } */
 
-  /* @font-face {
+  @font-face {
     font-family: 'Berkeley';
     font-weight: lighter;
     font-style: normal;
     font-display: swap;
     src: url('/fonts/BerkeleyMono/BerkeleyMonoTrial-Regular.ttf') format('TrueType');
-  } */
+  }
 
-  /* @font-face {
+  @font-face {
     font-family: 'Space Mono';
     src: url('/fonts/Space_Mono/SpaceMono-Regular.ttf') format('TrueType');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
-  } */
+  }
 
   @font-face {
     font-family: 'Cinetype';
@@ -112,9 +112,9 @@
   }
 
   body {
-    @apply flex min-h-[100svh] flex-col bg-skin-fill font-mono text-skin-base selection:bg-skin-accent selection:bg-opacity-70 selection:text-skin-inverted text-sm;
+    @apply flex min-h-[100svh] flex-col bg-skin-fill font-mono text-skin-base selection:bg-skin-accent selection:bg-opacity-70 selection:text-skin-inverted text-xs;
     /* font-family: 'Fira Mono', 'Berkeley', 'Geist Mono', 'monospace'; */
-    font-family: 'Cinetype', sans-serif;
+    font-family: 'Space Mono', 'Berkeley', 'Cinetype', sans-serif;
     font-weight: 300;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -227,8 +227,8 @@ h4,
 h5,
 h6 {
   /* font-family: 'Fira Mono', 'Berkeley', 'Geist Mono', 'monospace'; */
-  font-family: 'PP Formula', sans-serif;
-  font-weight: 200;
+  font-family: 'Cinetype', 'Space Mono', 'Berkeley', sans-serif;
+  font-weight: 900;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

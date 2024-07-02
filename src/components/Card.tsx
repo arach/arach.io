@@ -13,7 +13,7 @@ export default function Card({ href, frontmatter, secHeading = true }: Props) {
 
   const headerProps = {
     style: { viewTransitionName: slugifyStr(title) },
-    className: "text-lg font-medium decoration-dashed hover:underline",
+    className: "text-lg font-bold decoration-dashed hover:underline",
   };
 
   return (
@@ -21,7 +21,7 @@ export default function Card({ href, frontmatter, secHeading = true }: Props) {
       <div className="flex-1">
         <a
           href={href}
-          className="inline-block text-lg font-medium text-skin-accent decoration-dashed underline-offset-4 focus-visible:no-underline focus-visible:underline-offset-0"
+          className="inline-block text-lg font-bold text-skin-accent decoration-dashed underline-offset-4 focus-visible:no-underline focus-visible:underline-offset-0"
         >
           {secHeading ? (
             <h2 {...headerProps}>{title}</h2>
