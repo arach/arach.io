@@ -7,8 +7,9 @@ description: "Malcolm Gladwell delves into the science of snap judgments and the
 tags: ["Business", "Nonfiction", "Leadership", "Management", "Entrepreneurship", "Self Help"]
 thumbnail: "assets/images/books/9780316010665-L.jpg"
 isbn: "9780316010665"
+rating: 4
 featured: false
-draft: true
+draft: false 
 ---
 
 ### Key Points:
