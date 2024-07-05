@@ -25,4 +25,7 @@ In this comprehensive guide, Will Larson draws from his extensive experience at 
 
 Larson provides practical advice on managing technical debt, designing effective teams, and fostering a positive organizational culture. He also highlights the importance of building strong relationships with team members and understanding their individual goals and challenges. With real-life examples and actionable insights, this book serves as a valuable resource for engineering managers at all levels.
 
-"An Elegant Puzzle" is highly regarded for its practical approach and insightful commentary on the intricacies of engineering management. It is recommended for anyone looking to enhance their leadership skills and create more effective and rewarding environments for engineers to thrive [oai_citation:1,Stripe Press — An Elegant Puzzle](https://press.stripe.com/an-elegant-puzzle) [oai_citation:2,An Elegant Puzzle - Systems of Engineering Management (Will Larson) | Josh Hornby](https://joshhornby.com/books/an-elegant-puzzle).
+"An Elegant Puzzle" is highly regarded for its practical approach and insightful commentary on the intricacies of engineering management. It is recommended for anyone looking to enhance their leadership skills and create more effective and rewarding environments for engineers to thrive
+
+* [Stripe Press — An Elegant Puzzle](https://press.stripe.com/an-elegant-puzzle)
+* [An Elegant Puzzle - Systems of Engineering Management (Will Larson) | Josh Hornby](https://joshhornby.com/books/an-elegant-puzzle).
