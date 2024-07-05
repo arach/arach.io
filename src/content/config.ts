@@ -49,6 +49,8 @@ const book = defineCollection({
       rating: z.number().optional(),
       readingTime: z.string().optional(),
       thumbnail: image().optional(),
+      goodreads: z.string().optional(),
+      amazon: z.string().optional(),
     }),
 });
 

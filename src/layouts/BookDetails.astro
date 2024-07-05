@@ -73,6 +73,16 @@ const layoutProps = {
     <article id="article" role="article" class="prose mx-auto mt-8 max-w-3xl">
       <Content />
     </article>
+<div class="flex gap-4">
+  <a href={book.data.goodreads} class="btn flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50">
+    <img src="/assets/logos/goodreads-logo.png" alt="GoodReads" class="w-6 h-6" />
+    <span>GoodReads</span>
+  </a>
+  <a href={book.data.amazon} class="btn flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50">
+    <img src="/assets/logos/amazon-logo.png" alt="Amazon" class="w-6 h-6" />
+    <span>Amazon</span>
+  </a>
+</div>
     <ul class="my-8">
       {tags.map(tag => <Tag tag={slugifyStr(tag)} />)}
     </ul>
