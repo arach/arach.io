@@ -9,6 +9,9 @@ thumbnail: "assets/images/books/9781594488849-L.jpg"
 isbn: "9781594488849"
 featured: false
 draft: false
+rating: 4
+goodreads: "https://www.goodreads.com/book/show/6452796-drive"
+amazon: "https://www.amazon.com/Drive-Surprising-Truth-About-Motivates/dp/1594488843/"
 ---
 
 this book by Daniel H. Pink argues that true motivation comes from intrinsic factors and outlines three key elements that drive people:
@@ -20,6 +23,6 @@ this book by Daniel H. Pink argues that true motivation comes from intrinsic fac
 Key Points from the Book
 
  * Intrinsic vs. Extrinsic Motivation: Pink highlights the difference between intrinsic motivation (doing something because it is inherently interesting or enjoyable) and extrinsic motivation (doing something because it leads to a separable outcome). He argues that intrinsic motivation is more sustainable and effective for complex tasks.
- * The “Carrot and Stick” Approach: Traditional management practices often rely on rewards and punishments to motivate employees. Pink presents evidence that this approach can actually diminish performance and creativity, especially for tasks that require cognitive skill.
- * Examples and Case Studies: Pink provides various examples and case studies from companies and organizations that have successfully implemented strategies to boost autonomy, mastery, and purpose. These include Google’s “20% time” policy, where employees can spend 20% of their time on projects they are passionate about, and Atlassian’s “FedEx Days,” where engineers work on any problem they choose and deliver results within 24 hours.
+ * The "Carrot and Stick" Approach: Traditional management practices often rely on rewards and punishments to motivate employees. Pink presents evidence that this approach can actually diminish performance and creativity, especially for tasks that require cognitive skill.
+ * Examples and Case Studies: Pink provides various examples and case studies from companies and organizations that have successfully implemented strategies to boost autonomy, mastery, and purpose. These include Google's "20% time" policy, where employees can spend 20% of their time on projects they are passionate about, and Atlassian's "FedEx Days," where engineers work on any problem they choose and deliver results within 24 hours.
  * Practical Applications: The book also offers practical advice for individuals and organizations on how to create environments that foster intrinsic motivation. This includes techniques for setting goals, providing feedback, and designing tasks that are meaningful and engaging. 

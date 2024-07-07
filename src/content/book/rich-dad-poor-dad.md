@@ -10,6 +10,8 @@ isbn: "9780751532715"
 rating: 2.5
 featured: false
 draft: false
+goodreads: "https://www.goodreads.com/book/show/69571.Rich_Dad_Poor_Dad"
+amazon: "https://www.amazon.com/dp/0751532711"
 ---
 
 ### Key Points:

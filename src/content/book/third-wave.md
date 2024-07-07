@@ -10,6 +10,8 @@ isbn: "9780688035976"
 featured: false
 draft: false
 rating: 5
+goodreads: "https://www.goodreads.com/book/show/41658.Third_Wave"
+amazon: "https://www.amazon.com/Third-Wave-Alvin-Toffler/dp/0553271631"
 ---
 
 ### Key Points:

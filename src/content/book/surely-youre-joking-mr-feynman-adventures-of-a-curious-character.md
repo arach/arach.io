@@ -10,6 +10,9 @@ isbn: "9780393316049"
 rating: 5
 featured: false
 draft: false
+goodreads: "https://www.goodreads.com/book/show/5544.Surely_You_re_Joking_Mr_Feynman"
+amazon: "https://www.amazon.com/Surely-Youre-Joking-Mr-Feynman/dp/0393316041"
+
 ---
 
 ### Key Points:

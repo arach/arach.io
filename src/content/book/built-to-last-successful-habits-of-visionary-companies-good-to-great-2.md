@@ -9,6 +9,9 @@ thumbnail: "assets/images/books/9780060566104-L.jpg"
 isbn: "9780060566104"
 featured: false
 draft: false
+goodreads: "https://www.goodreads.com/book/show/4853.Built_to_Last"
+amazon: "https://www.amazon.com/Built-Last-Successful-Visionary-Companies-ebook/dp/B000FC12C8/"
+rating: 4
 ---
 
 ### Key Points:

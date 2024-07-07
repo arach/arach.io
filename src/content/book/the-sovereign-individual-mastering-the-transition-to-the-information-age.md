@@ -2,13 +2,15 @@
 title: "The Sovereign Individual: Mastering the Transition to the Information Age"
 addedDatetime: 2024-06-20T04:15:32.369Z
 pubDatetime: 2024-06-20T04:15:32.369Z
-authors: ["James Dale Davidson"]
-description: "A forward-thinking analysis of the economic and political shifts brought about by the transition to the Information Age."
-tags: ["Business", "Nonfiction", "Leadership", "Management", "Entrepreneurship", "Self Help"]
+authors: ["James Dale Davidson", "William Rees-Mogg"]
+description: "A visionary analysis of the future of individual sovereignty in the Information Age."
+tags: ["Nonfiction", "Economics", "Politics", "Technology"]
 thumbnail: "assets/images/books/9780684832722-L.jpg"
 isbn: "9780684832722"
 featured: false
-draft: false 
+draft: false
+goodreads: "https://www.goodreads.com/book/show/101687.The_Sovereign_Individual"
+amazon: "https://www.amazon.com/Sovereign-Individual-Mastering-Transition-Information/dp/0684832720"
 rating: 4
 ---
 

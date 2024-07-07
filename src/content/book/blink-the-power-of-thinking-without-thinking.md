@@ -10,6 +10,8 @@ isbn: "9780316010665"
 rating: 4
 featured: false
 draft: false 
+goodreads: "https://www.goodreads.com/book/show/40102.Blink_The_Power_of_Thinking_Without_Thinking"
+amazon: "https://www.amazon.com/Blink-Power-Thinking-Without/dp/0316010669"
 ---
 
 ### Key Points:
@@ -21,7 +23,7 @@ draft: false
 
 ### Summary:
 
-“Blink: The Power of Thinking Without Thinking” by Malcolm Gladwell explores the fascinating science behind snap judgments and quick decision-making. Gladwell introduces the concept of "thin-slicing," which is the ability to make rapid decisions with minimal information. He provides compelling case studies, such as art experts who can instantly recognize a forgery and firefighters who sense danger without knowing exactly why.
+"Blink: The Power of Thinking Without Thinking" by Malcolm Gladwell explores the fascinating science behind snap judgments and quick decision-making. Gladwell introduces the concept of "thin-slicing," which is the ability to make rapid decisions with minimal information. He provides compelling case studies, such as art experts who can instantly recognize a forgery and firefighters who sense danger without knowing exactly why.
 
 One of the key insights of the book is that our unconscious mind can often make better decisions than our conscious mind, especially in high-pressure situations. However, Gladwell also warns about the potential dangers of relying too much on snap judgments, particularly when they are influenced by biases and stereotypes.
 

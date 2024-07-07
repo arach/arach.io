@@ -9,6 +9,8 @@ thumbnail: "assets/images/books/9781953953339-L.jpg"
 isbn: "9781953953339"
 featured: false
 draft: false 
+goodreads: "https://www.goodreads.com/book/show/43561856-an-elegant-puzzle"
+amazon: "https://www.amazon.com/Elegant-Puzzle-Systems-Engineering-Management/dp/1953953333"
 ---
 
 ### Key Points:

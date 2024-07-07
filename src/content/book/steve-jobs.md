@@ -10,6 +10,9 @@ isbn: "9781451648539"
 rating: 4.5
 featured: false
 draft: false 
+goodreads: "https://www.goodreads.com/book/show/11084145-steve-jobs"
+amazon: "https://www.amazon.com/Steve-Jobs-Walter-Isaacson/dp/1451648537/"
+
 ---
 
 ### Key Points:

@@ -10,6 +10,8 @@ isbn: "9780316769174"
 rating: 3.5
 featured: false
 draft: false
+goodreads: "https://www.goodreads.com/book/show/5107.The_Catcher_in_the_Rye"
+amazon: "https://www.amazon.com/Catcher-Rye-J-D-Salinger/dp/0316769487"
 ---
 
 ### Key Points:

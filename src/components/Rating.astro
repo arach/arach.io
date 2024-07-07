@@ -1,0 +1,18 @@
+---
+const { rating } = Astro.props;
+---
+
+<div class="flex items-center gap-1">
+  {
+    Array.from({ length: 5 }, (_, index) => (
+      <span
+        class:list={[
+          "cursor-pointer text-base",
+          index < rating ? "text-yellow-400" : "text-gray-300",
+        ]}
+      >
+        {index < rating ? "★" : "☆"}
+      </span>
+    ))
+  }
+</div>

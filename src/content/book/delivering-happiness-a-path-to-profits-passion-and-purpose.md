@@ -10,6 +10,8 @@ isbn: "9780446563048"
 featured: false
 rating: 4
 draft: false 
+goodreads: "https://www.goodreads.com/book/show/9805525-delivering-happiness"
+amazon: "https://www.amazon.com/Delivering-Happiness-Profits-Passion-Purpose/dp/0446563048"
 ---
 
 ### Key Points:

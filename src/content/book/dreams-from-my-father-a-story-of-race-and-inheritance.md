@@ -7,16 +7,18 @@ description: "Barack Obama’s memoir about his journey to understand his comple
 tags: ["Business","Nonfiction","Leadership","Management","Entrepreneurship","Self Help"]
 thumbnail: "assets/images/books/9781921351433-L.jpg"
 isbn: "9781921351433"
-rating: 5
 featured: false
 draft: false
+rating: 5
+goodreads: https://www.goodreads.com/book/show/88061.Dreams_from_My_Father
+amazon: https://www.amazon.com/Dreams-Father-Story-Race-Inheritance/dp/1400082773/
 ---
 
 Key Points:
 
-	•	Identity Exploration: The book focuses on Obama’s journey to understand his biracial identity and its implications in American society.
-	•	Family and Heritage: It provides an intimate look at his family history, highlighting his Kenyan father’s legacy and the influence of his maternal grandparents.
-	•	Personal Growth: The memoir covers Obama’s experiences from childhood in Hawaii and Indonesia to his years as a community organizer in Chicago, showcasing his personal and political development.
+1. Identity Exploration: The book focuses on Obama’s journey to understand his biracial identity and its implications in American society.
+1. Family and Heritage: It provides an intimate look at his family history, highlighting his Kenyan father’s legacy and the influence of his maternal grandparents.
+1. Personal Growth: The memoir covers Obama’s experiences from childhood in Hawaii and Indonesia to his years as a community organizer in Chicago, showcasing his personal and political development.
 
 Summary:
 
