@@ -26,7 +26,7 @@
     "@fontsource/inconsolata": "^5.0.18",
     "@fontsource/share-tech-mono": "^5.0.12",
     "@resvg/resvg-js": "^2.6.2",
-    "@tailwindcss/typography": "github:tailwindcss/typography",
+    "@tailwindcss/typography": "^0.5.13",
     "astro": "^4.8.4",
     "astrojs": "^0.1.3",
     "fuse.js": "^7.0.0",
