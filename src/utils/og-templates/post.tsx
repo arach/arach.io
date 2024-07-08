@@ -1,5 +1,4 @@
 import { SITE } from "@config";
-import Image from "next/image";
 import type { CollectionEntry } from "astro:content";
 
 export default (post: CollectionEntry<"blog">) => {
