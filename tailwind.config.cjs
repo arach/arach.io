@@ -12,8 +12,23 @@ module.exports = {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   darkMode: "class",
   theme: {
-    // Remove the following screen breakpoint or add other breakpoints
-    // if one breakpoint is not enough for you
+    screens: {
+      sm: "640px",
+      md: "768px",
+      lg: "1024px",
+      xl: "1280px",
+      '2xl': "1536px",
+    },
+    container: {
+      center: true,
+      padding: {
+        DEFAULT: '1rem',
+        sm: '2rem',
+        lg: '4rem',
+        xl: '5rem',
+        '2xl': '6rem',
+      },
+    },
     extend: {
       fontFamily: {
         sans: ["Cinetype", "Inter", "system-ui", "sans-serif"],
@@ -22,12 +37,6 @@ module.exports = {
         body: ["Berkeley", "ui-monospace"],
       }
     },
-    screens: {
-      sm: "640px",
-      md: "768px",
-      lg: "1024px",
-    },
-
     extend: {
       textColor: {
         skin: {
@@ -80,7 +89,30 @@ module.exports = {
           },
         },
       },
+      maxWidth: {
+        'container-lg': '1024px',
+        'container-xl': '1280px',
+        'container-2xl': '1536px',
+      },
     },
   },
-  plugins: [require("@tailwindcss/typography")],
+  plugins: [
+    require("@tailwindcss/typography"),
+    function ({ addComponents, theme }) {
+      addComponents({
+        '.container': {
+          maxWidth: '100%',
+          '@screen lg': {
+            maxWidth: theme('maxWidth.container-lg'),
+          },
+          '@screen xl': {
+            maxWidth: theme('maxWidth.container-xl'),
+          },
+          '@screen 2xl': {
+            maxWidth: theme('maxWidth.container-2xl'),
+          },
+        }
+      })
+    }
+  ],
 };

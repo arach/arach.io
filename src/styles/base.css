@@ -112,9 +112,10 @@
   }
 
   body {
-    @apply flex min-h-[100svh] flex-col bg-skin-fill font-mono text-skin-base selection:bg-skin-accent selection:bg-opacity-70 selection:text-skin-inverted text-xs;
+    @apply flex min-h-[100svh] flex-col bg-skin-fill font-mono text-skin-base selection:bg-skin-accent selection:bg-opacity-70 selection:text-skin-inverted text-sm;
     /* font-family: 'Fira Mono', 'Berkeley', 'Geist Mono', 'monospace'; */
     font-family: 'Space Mono', 'Berkeley', 'Cinetype', sans-serif;
+
     font-weight: 300;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -123,7 +124,7 @@
 
   section,
   footer {
-    @apply mx-auto max-w-3xl px-4;
+    @apply mx-auto max-w-4xl px-4;
   }
 
   a {
@@ -175,6 +176,10 @@
   section#featured {
     padding-left: 0;
 
+  }
+
+  pre {
+    font-family: 'Berkeley', 'IBM Plex Mono', monospace;
   }
 }
 

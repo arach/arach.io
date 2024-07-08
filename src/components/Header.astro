@@ -11,11 +11,10 @@ const { activeNav } = Astro.props;
 
 const navItems = [
   { href: "/posts/", label: "Posts" },
-  { href: "/tags/", label: "Tags" },
+  { href: "/memos/", label: "Memos" },
   { href: "/books/", label: "Books" },
   { href: "/about/", label: "About" },
   { href: "/resume/", label: "Resume" },
-  { href: "/memos/", label: "Memos" },
 ];
 ---
 
@@ -127,7 +126,7 @@ const navItems = [
     @apply absolute -top-full left-16 z-50 bg-skin-accent px-3 py-2 text-skin-inverted transition-all focus:top-4;
   }
   .nav-container {
-    @apply mx-auto flex max-w-3xl flex-col items-center justify-between sm:flex-row;
+    @apply mx-auto flex max-w-4xl flex-col items-center justify-between sm:flex-row;
   }
   .top-nav-wrap {
     @apply relative flex w-full items-start justify-between sm:items-center sm:py-0;
