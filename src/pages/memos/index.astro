@@ -1,0 +1,20 @@
+---
+import { getCollection } from "astro:content";
+import Memos from "@layouts/Memos.astro";
+import getSortedContent from "@utils/getSortedContent";
+import getContentPagination from "@utils/getContentPagination";
+
+const memos = await getCollection("memo");
+
+const sortedBooks = getSortedContent(memos);
+const url = new URL(import.meta.url);
+const currentPage = parseInt(url.searchParams.get("page") || "1", 10);
+
+const pagination = getContentPagination({
+  items: sortedBooks,
+  currentPage,
+  isIndex: true,
+});
+---
+
+<Memos {...pagination} />

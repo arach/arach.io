@@ -18,3 +18,11 @@ export interface BookData {
     featured?: boolean;
     draft?: boolean;
 }
+
+export interface MemoData {
+    title: string;
+    pubDatetime: Date;
+    modDatetime?: Date | null;
+    description?: string;
+    tags?: string[];
+}

@@ -54,7 +54,22 @@ const book = defineCollection({
     }),
 });
 
+const memo = defineCollection({
+  type: "content",
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      authors: z.array(z.string()),
+      pubDatetime: z.date(),
+      addedDatetime: z.date(),
+      featured: z.boolean().optional(),
+      draft: z.boolean().optional(),
+    }),
+});
+
 export const collections = {
   'blog': blog,
-  'book': book
+  'book': book,
+  'memo': memo
 };

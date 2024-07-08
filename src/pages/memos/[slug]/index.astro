@@ -1,0 +1,66 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import MemoPosts from "@layouts/Memos.astro";
+import MemoDetails from "@layouts/MemoDetails.astro";
+import getSortedContent from "@utils/getSortedContent";
+import getPageNumbers from "@utils/getPageNumbers";
+import getPagination from "@utils/getPagination";
+import getContentWithRT from "@utils/getContentWithRT";
+
+export interface Props {
+  memo: CollectionEntry<"memo">;
+}
+
+export async function getStaticPaths() {
+  const memos = await getCollection("memo");
+  const memosWithRT = await getContentWithRT("memo", memos);
+
+  const memoResult = memosWithRT.map((memo: any) => ({
+    params: { slug: memo.slug },
+    props: { memo },
+  }));
+
+  const pagePaths = getPageNumbers(memos.length).map(pageNum => ({
+    params: { slug: String(pageNum) },
+  }));
+
+  return [...memoResult, ...pagePaths];
+}
+
+const { slug } = Astro.params;
+const { memo } = Astro.props;
+
+const memos = (await getCollection(
+  "memo",
+  (entry: CollectionEntry<"memo">): boolean => {
+    return !entry.data.draft;
+  }
+)) as CollectionEntry<"memo">[];
+
+const sortedMemos = getSortedContent(memos);
+
+const pagination = getPagination({
+  posts: sortedMemos.map((memo: CollectionEntry<"memo">) => ({
+    id: memo.id,
+    slug: memo.slug,
+    body: memo.body,
+    collection: memo.collection,
+    data: {
+      ...memo.data,
+    },
+  })),
+  page: slug,
+});
+---
+
+{
+  memo ? (
+    <MemoDetails memo={memo} />
+  ) : (
+    <MemoPosts
+      totalPages={pagination.totalPages}
+      currentPage={pagination.currentPage}
+      paginatedItems={pagination.paginatedPosts as any[]}
+    />
+  )
+}

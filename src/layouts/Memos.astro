@@ -1,0 +1,47 @@
+---
+import type { CollectionEntry } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import Main from "@layouts/Main.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import Pagination from "@components/Pagination.astro";
+import MemoCard from "@components/MemoCard";
+import { SITE } from "@config";
+import type { MemoData } from "../interfaces";
+
+export interface Props {
+  currentPage: number;
+  totalPages: number;
+  paginatedItems: Array<{
+    id: string;
+    slug: string;
+    body: string;
+    collection: string;
+    data: MemoData;
+  }>;
+}
+
+const { currentPage, totalPages, paginatedItems } = Astro.props;
+---
+
+<Layout title={`Memos | ${SITE.title}`}>
+  <Header activeNav="memos" />
+  <Main pageTitle="Memos" pageDesc="Short notes and thoughts on various topics">
+    <ul>
+      {
+        paginatedItems.map(({ data, slug }) => (
+          <MemoCard href={`/memos/${slug}/`} frontmatter={data} />
+        ))
+      }
+    </ul>
+  </Main>
+
+  <Pagination
+    currentPage={currentPage}
+    totalPages={totalPages}
+    prevUrl={`/memos${currentPage - 1 !== 1 ? "/" + (currentPage - 1) : ""}/`}
+    nextUrl={`/memos/${currentPage + 1}/`}
+  />
+
+  <Footer noMarginTop={totalPages > 1} />
+</Layout>
