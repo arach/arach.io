@@ -14,7 +14,6 @@ export const getReadingTime = async (contentType: ContentType) => {
 
     const mapFrontmatter = new Map();
     Object.values(globContent).forEach(content => {
-        console.log(content.frontmatter.title);
         mapFrontmatter.set(
             slugifyStr(content.frontmatter.title),
             content.frontmatter.readingTime
