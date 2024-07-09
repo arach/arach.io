@@ -125,6 +125,18 @@ const socialImageURL = new URL(
     <ViewTransitions />
 
     <script is:inline src="/toggle-theme.js"></script>
+    <script is:inline>
+      document.addEventListener("DOMContentLoaded", () => {
+        document
+          .querySelector("#back-to-top")
+          ?.addEventListener("click", () => {
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth",
+            });
+          });
+      });
+    </script>
   </head>
   <body>
     <div class="container">
