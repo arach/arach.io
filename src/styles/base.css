@@ -144,6 +144,11 @@
     overflow-y: scroll;
   }
 
+
+  a.active {
+    @apply border border-black;
+  }
+
   /* width */
   ::-webkit-scrollbar {
     @apply w-3;
