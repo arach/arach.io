@@ -242,3 +242,8 @@ h6 {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+#featured {
+  font-family: 'Cinetype', 'PP Formula', 'SF Pro Text', 'SF Pro Icons', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+
+}
