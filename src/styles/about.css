@@ -1,0 +1,22 @@
+.profileContainer {
+    perspective: 1000px;
+}
+
+.profileImage {
+    transition: transform 0.5s;
+    transform-style: preserve-3d;
+}
+
+.profileContainer:hover .profileImage {
+    animation: spinHorizontal 0.5s linear;
+}
+
+@keyframes spinHorizontal {
+    0% {
+        transform: rotateY(0deg);
+    }
+
+    100% {
+        transform: rotateY(720deg);
+    }
+}

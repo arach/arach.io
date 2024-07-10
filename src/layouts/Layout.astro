@@ -39,12 +39,13 @@ const socialImageURL = new URL(
 
 <!doctype html>
 <html
-  lang=`${LOCALE.lang ?? "en"}`
-  class={`${scrollSmooth && "scroll-smooth"}`}
+  lang={`${LOCALE.lang ?? "en"}`}
+  class={`${scrollSmooth ? "scroll-smooth min-w-screen" : "min-w-screen"}`}
 >
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonicalURL} />
     <meta name="generator" content={Astro.generator} />
@@ -138,9 +139,7 @@ const socialImageURL = new URL(
       });
     </script>
   </head>
-  <body>
-    <div class="container">
-      <slot />
-    </div>
+  <body class="flex min-h-screen flex-col">
+    <slot />
   </body>
 </html>

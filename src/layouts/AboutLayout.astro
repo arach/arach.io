@@ -4,11 +4,13 @@ import Breadcrumbs from "@components/Breadcrumbs.astro";
 import Footer from "@components/Footer.astro";
 import Header from "@components/Header.astro";
 import Layout from "./Layout.astro";
+import "../styles/about.css";
 
 export interface Props {
   frontmatter: {
     title: string;
     description?: string;
+    profile?: string;
   };
 }
 
@@ -17,14 +19,21 @@ const { frontmatter } = Astro.props;
 
 <Layout title={`${frontmatter.title} | ${SITE.title}`}>
   <Header activeNav="about" />
-  <Breadcrumbs />
   <main id="main-content">
+    <div class="mt-4"></div>
     <section id="about" class="mb-28 max-w-4xl prose-img:border-0">
       <h1 class="mb-4 text-2xl tracking-wider sm:text-3xl">
         {frontmatter.title}
       </h1>
-
       <slot />
+      <div class="profileContainer pt-10">
+        <img
+          id="profile"
+          src={frontmatter.profile}
+          alt="profile"
+          class="profileImage w-24 rounded-full"
+        />
+      </div>
     </section>
   </main>
   <Footer />

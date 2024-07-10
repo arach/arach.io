@@ -15,7 +15,7 @@ draft: false
 
 Imagine a world where AI agents navigate web applications as seamlessly as humans, using familiar tools instead of opaque, hidden systems. Despite advancements in web frameworks and browsers, current tools for programmatic access and web automation remain fragmented and inefficient. This article introduces a revolutionary architecture designed to bridge this gap, enabling AI to handle web interactions smoothly and intelligently. Join me as we explore the challenges, potentials, and innovative solutions that can transform web automation and unlock AI’s full potential.
 
-<iframe src="https://giphy.com/embed/CmFMWpEa4IFtS" width="480" height="299" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/korea-north-automation-CmFMWpEa4IFtS">via GIPHY</a></p>
+<iframe src="https://giphy.com/embed/CmFMWpEa4IFtS"  frameBorder="0" class="giphy-embed w-[350px] h-[300px] md:w-[100%]" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/korea-north-automation-CmFMWpEa4IFtS">via GIPHY</a></p>
 
 ### AI and the Web: A Broken Paradigm
 
@@ -138,4 +138,4 @@ The proposed architecture for AI-driven web automation marks a significant leap 
 
 If you’re building in this space or have ideas to share, I’d love to hear from you. 
 
-<iframe src="https://giphy.com/embed/jsI8nBXJl6s7r7iuJ5" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/siliconvalleyhbo-jsI8nBXJl6s7r7iuJ5">via GIPHY</a></p>
+<iframe src="https://giphy.com/embed/jsI8nBXJl6s7r7iuJ5" height="375px" frameBorder="0" class="giphy-embed w-[100%]" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/siliconvalleyhbo-jsI8nBXJl6s7r7iuJ5">via GIPHY</a></p>
