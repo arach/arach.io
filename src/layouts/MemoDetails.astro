@@ -50,8 +50,7 @@ const layoutProps = {
     </button>
   </div>
   <main id="main-content">
-    <h1 class="memo-title">{title}</h1>
-    <Datetime
+    <h1 class="memo-title">{title}</h1><Datetime
       pubDatetime={pubDatetime}
       modDatetime={modDatetime}
       size="lg"
@@ -90,6 +89,6 @@ const layoutProps = {
     @apply mx-auto w-full max-w-4xl px-4 pb-12;
   }
   .memo-title {
-    @apply text-2xl font-semibold text-skin-accent;
+    @apply text-lg font-semibold text-skin-accent;
   }
 </style>

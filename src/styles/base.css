@@ -115,7 +115,6 @@
     @apply flex min-h-[100svh] flex-col bg-skin-fill font-mono text-skin-base selection:bg-skin-accent selection:bg-opacity-70 selection:text-skin-inverted text-sm;
     /* font-family: 'Fira Mono', 'Berkeley', 'Geist Mono', 'monospace'; */
     font-family: 'Space Mono', 'Berkeley', 'Cinetype', sans-serif;
-
     font-weight: 300;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -228,6 +227,16 @@ html {
       width: 80px;
     }
   }
+
+  #featured {
+    font-family: 'Cinetype', 'PP Formula', 'SF Pro Text', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+
+    .description {
+      font-family: 'Space Mono', 'Berkeley', 'Cinetype', sans-serif;
+      font-weight: 300;
+      font-size: 0.85rem;
+    }
+  }
 }
 
 h1,
@@ -239,16 +248,37 @@ h6 {
   /* font-family: 'Fira Mono', 'Berkeley', 'Geist Mono', 'monospace'; */
   font-family: 'Cinetype', 'Space Mono', 'Berkeley', sans-serif;
   font-weight: 900;
+  text-transform: uppercase;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
 }
 
-#featured {
-  font-family: 'Cinetype', 'PP Formula', 'SF Pro Text', 'SF Pro Icons', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+article {
+  font-family: 'Space Mono', 'Berkeley', 'Cinetype', sans-serif;
 
-  .description {
-    font-family: 'Space Mono', 'Berkeley', 'Cinetype', sans-serif;
-    font-weight: 300;
-    font-size: 0.85rem;
+  &.prose {
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-weight: 900;
+      line-height: 1.45rem;
+    }
+
+    h1 {
+      font-size: 1.25rem;
+    }
+
+
+    h2 {
+      font-size: 1.15rem;
+
+
+    }
   }
+
 }

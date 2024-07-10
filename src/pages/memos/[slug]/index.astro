@@ -30,33 +30,29 @@ export async function getStaticPaths() {
 const { slug } = Astro.params;
 const { memo } = Astro.props;
 
-const memos = (await getCollection(
+const memos = await getCollection(
   "memo",
   (entry: CollectionEntry<"memo">): boolean => {
     return !entry.data.draft;
   }
-)) as CollectionEntry<"memo">[];
+);
 
 const sortedMemos = getSortedContent(memos);
+
 const pagination = getPagination({
-  posts: sortedMemos.map(
-    memo =>
-      ({
-        id: memo.id,
-        slug: memo.slug,
-        body: memo.body,
-        collection: memo.collection,
-        data: {
-          pubDatetime: new Date(memo.data.pubDatetime),
-          title: memo.data.title,
-          description: memo.data.description,
-          featured: memo.data.featured,
-          draft: memo.data.draft,
-        },
-      }) as CollectionEntry<"memo">
-  ),
+  posts: sortedMemos.map((memo: CollectionEntry<"memo">) => ({
+    id: memo.id,
+    slug: memo.slug,
+    body: memo.body,
+    collection: memo.collection,
+    data: {
+      ...memo.data,
+    },
+  })),
   page: slug,
 });
+---
+
 {
   memo ? (
     <MemoDetails memo={memo} />
@@ -66,6 +62,5 @@ const pagination = getPagination({
       currentPage={pagination.currentPage}
       paginatedItems={pagination.paginatedPosts as any[]}
     />
-  );
+  )
 }
----
