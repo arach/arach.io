@@ -41,7 +41,7 @@ export default function Card({ href, frontmatter, secHeading = true }: Props) {
         </div>
         <div >
 
-          <div className="flex-1">
+          <div className="flex-1 description">
             <p>{description}</p>
           </div>
 
