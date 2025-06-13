@@ -350,6 +350,11 @@ const socialCount = SOCIALS.filter(social => social.active).length;
       background: rgb(var(--color-card-muted) / 0.3);
     }
     
+    /* Dark mode: lighter background for better logo visibility */
+    html[data-theme="dark"] .companies-section {
+      background: rgb(38, 38, 38);
+    }
+    
     /* ===== Animations ===== */
     @keyframes slideRight {
       0%, 100% {
