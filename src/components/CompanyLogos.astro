@@ -70,7 +70,7 @@ const regularCompanies = companies.filter(c => !c.isLarge);
 
 <style>
   .companies-container {
-    @apply text-center py-4;
+    @apply text-center pb-4 pt-2;
   }
   
   .companies-title {
@@ -107,28 +107,28 @@ const regularCompanies = companies.filter(c => !c.isLarge);
   
   /* All logos in single row */
   .company-item img {
-    height: 48px;
+    height: 50px;
     width: auto;
-    max-width: 182px;
+    max-width: 185px;
   }
   
   /* Meta logo adjustment */
   .meta-logo {
-    height: 42px;
-    max-width: 145px;
+    height: 44px;
+    max-width: 152px;
   }
   
   /* Starbucks logo is taller, needs adjustment */
   .company-item[data-company="Starbucks"] img {
-    height: 34px;
+    height: 28px;
     width: auto;
     max-width: 120px;
   }
   
   /* Primary logo (text-based, needs to be larger) */
   .primary-logo {
-    height: 55px;
-    max-width: 194px;
+    height: 54px;
+    max-width: 190px;
   }
   
   /* Tooltip styles */
@@ -179,17 +179,17 @@ const regularCompanies = companies.filter(c => !c.isLarge);
     }
     
     .company-item img {
-      height: 36px;
-      max-width: 121px;
+      height: 38px;
+      max-width: 125px;
     }
     
     .meta-logo {
-      height: 31px;
-      max-width: 97px;
+      height: 33px;
+      max-width: 105px;
     }
     
     .company-item[data-company="Starbucks"] img {
-      height: 26px;
+      height: 22px;
       width: auto;
       max-width: 95px;
     }
