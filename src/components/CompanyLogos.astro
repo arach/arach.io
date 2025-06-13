@@ -77,6 +77,12 @@ const regularCompanies = companies.filter(c => !c.isLarge);
     @apply text-base font-medium text-skin-base opacity-60 mb-6 uppercase tracking-wider;
   }
   
+  /* Dark mode adjustments for white background */
+  html[data-theme="dark"] .companies-title {
+    color: rgb(0, 0, 0);
+    opacity: 0.6;
+  }
+  
   .companies-row {
     @apply grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8 items-center justify-items-center max-w-5xl mx-auto pb-4;
   }
@@ -132,6 +138,12 @@ const regularCompanies = companies.filter(c => !c.isLarge);
     transform: translateX(-50%) translateY(10px);
     transition: all 0.3s ease;
     white-space: nowrap;
+  }
+  
+  /* Dark mode tooltip adjustments */
+  html[data-theme="dark"] .companies-section .company-tooltip {
+    @apply bg-gray-800 text-gray-100;
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
   
   .company-item:hover .company-tooltip {
