@@ -4,7 +4,6 @@ This is the repository for the website [Arach.io](https://arach.io).
 
 ![Arach.io Screenshot](src/assets/images/arach-io-screenshot.png)
 
-
 ## Installation
 
 To install the project, follow these steps:
@@ -18,4 +17,5 @@ To install the project, follow these steps:
 This project is hosted on [Vercel](https://vercel.com/).
 
 ## Credit
+
 This project uses [Astro.js](https://astro.build/) and was inspired by the [astro-paper](https://github.com/snowpackjs/astro/tree/main/packages/astro-paper) theme.

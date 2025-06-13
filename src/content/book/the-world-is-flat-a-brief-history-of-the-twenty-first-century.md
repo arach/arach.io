@@ -4,7 +4,15 @@ addedDatetime: 2024-06-20T04:15:38.806Z
 pubDatetime: 2024-06-20T04:15:38.806Z
 authors: ["Thomas L. Friedman"]
 description: "An exploration of globalization and its profound impact on the world economy and society."
-tags: ["Business", "Nonfiction", "Leadership", "Management", "Entrepreneurship", "Self Help"]
+tags:
+  [
+    "Business",
+    "Nonfiction",
+    "Leadership",
+    "Management",
+    "Entrepreneurship",
+    "Self Help",
+  ]
 thumbnail: "assets/images/books/9780374292799-L.jpg"
 isbn: "9780374292799"
 featured: false
@@ -12,7 +20,6 @@ draft: true
 rating: 4
 goodreads: "https://www.goodreads.com/book/show/30063.The_World_Is_Flat"
 amazon: "https://www.amazon.com/World-Flat-Brief-History-Twenty-first/dp/0374292795/"
-
 ---
 
 ### Key Points:

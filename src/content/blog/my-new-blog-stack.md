@@ -1,5 +1,5 @@
 ---
-title: My New Blog, Powered by Astro 🚀 
+title: My New Blog, Powered by Astro 🚀
 pubDatetime: 2024-01-31T15:14:00.000Z
 description: An overview of the new stack behind my blog.
 slug: my-new-blog-stack

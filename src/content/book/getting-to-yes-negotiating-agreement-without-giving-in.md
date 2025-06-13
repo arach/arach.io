@@ -4,7 +4,15 @@ addedDatetime: 2024-06-20T04:15:34.816Z
 pubDatetime: 2024-06-20T04:15:34.816Z
 authors: ["Roger Fisher", "William L. Ury", "Bruce Patton"]
 description: "A seminal guide on principled negotiation that offers practical strategies for reaching mutually beneficial agreements."
-tags: ["Business", "Nonfiction", "Leadership", "Management", "Entrepreneurship", "Self Help"]
+tags:
+  [
+    "Business",
+    "Nonfiction",
+    "Leadership",
+    "Management",
+    "Entrepreneurship",
+    "Self Help",
+  ]
 thumbnail: "assets/images/books/9780140157352-L.jpg"
 isbn: "9780140157352"
 featured: false
@@ -12,7 +20,6 @@ draft: false
 rating: 3.5
 goodreads: "https://www.goodreads.com/book/show/313622.Getting_to_Yes"
 amazon: "https://www.amazon.com/Getting-Yes-Negotiating-Agreement-Without/dp/0140157352"
-
 ---
 
 ### Key Points:

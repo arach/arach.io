@@ -7,7 +7,7 @@ tags: []
 excerpt: ""
 thumbnail: "assets/images/plaid-innovation.webp"
 categories: []
-featured: true 
+featured: true
 draft: false
 ---
 

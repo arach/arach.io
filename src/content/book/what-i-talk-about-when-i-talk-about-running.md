@@ -4,12 +4,20 @@ addedDatetime: 2024-06-20T04:15:32.626Z
 pubDatetime: 2024-06-20T04:15:32.626Z
 authors: ["Haruki Murakami"]
 description: "An intimate memoir that explores the intersections between running, writing, and life."
-tags: ["Business", "Nonfiction", "Leadership", "Management", "Entrepreneurship", "Self Help"]
+tags:
+  [
+    "Business",
+    "Nonfiction",
+    "Leadership",
+    "Management",
+    "Entrepreneurship",
+    "Self Help",
+  ]
 thumbnail: "assets/images/books/9780307269195-L.jpg"
 isbn: "9780307269195"
 featured: false
 draft: false
-rating: 5 
+rating: 5
 goodreads: "https://www.goodreads.com/book/show/9715.What_I_Talk_About_When_I_Talk_About_Running"
 amazon: "https://www.amazon.com/What-About-Running-Vintage-International/dp/0307389839"
 ---

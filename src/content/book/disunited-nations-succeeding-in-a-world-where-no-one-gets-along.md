@@ -4,7 +4,15 @@ addedDatetime: 2024-06-20T04:15:31.596Z
 pubDatetime: 2024-06-20T04:15:31.596Z
 authors: ["Peter Zeihan"]
 description: "An analysis of the geopolitical landscape, exploring how the breakdown of international cooperation will shape the future."
-tags: ["Business", "Nonfiction", "Leadership", "Management", "Entrepreneurship", "Self Help"]
+tags:
+  [
+    "Business",
+    "Nonfiction",
+    "Leadership",
+    "Management",
+    "Entrepreneurship",
+    "Self Help",
+  ]
 thumbnail: "assets/images/books/9780062913692-L.jpg"
 isbn: "9780062913692"
 featured: false

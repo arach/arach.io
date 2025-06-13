@@ -69,7 +69,7 @@ const memo = defineCollection({
 });
 
 export const collections = {
-  'blog': blog,
-  'book': book,
-  'memo': memo
+  blog: blog,
+  book: book,
+  memo: memo,
 };

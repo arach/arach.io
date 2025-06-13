@@ -6,8 +6,10 @@ import Footer from "@components/Footer.astro";
 import LinkButton from "@components/LinkButton.astro";
 import Hr from "@components/Hr.astro";
 import Card from "@components/Card";
+import PostCard from "@components/PostCard";
 import Hero from "@components/Hero.astro";
 import Socials from "@components/Socials.astro";
+import CompanyLogos from "@components/CompanyLogos.astro";
 import getSortedPosts from "@utils/getSortedPosts";
 import { SOCIALS } from "@config";
 import socialIcons from "@assets/socialIcons";
@@ -24,141 +26,353 @@ const socialCount = SOCIALS.filter(social => social.active).length;
 <Layout>
   <Header />
   <main id="main-content">
-    <section id="hero">
-      <div class="mb-4 mt-4 flex flex-col gap-4 sm:flex-row">
-        <div class="flex-1">
-          <p>
-            Hi 👋🏻, welcome to my personal website! I’m Arach, a software
-            engineer (4x startup CTO, 2x founder) currently hanging out in SF.
-            When I’m not coding 👨🏻‍💻, you can find me 📚reading, 🏃🏻 running, 🏊🏻
-            swimming, or hooping 🏀.
+    <section id="hero" class="hero-section">
+      <div class="hero-container">
+        <div class="hero-content">
+          <h1 class="hero-title animate-in">
+            Startup Founder, Engineering Leader,<br /> and AI Enthusiast
+          </h1>
+
+          <p class="hero-description animate-in-slow">
+            Hi, I'm <strong>Arach</strong>. I'm a software engineer who loves
+            turning ideas into reality. From Startups to Meta, I've learned how 
+            to bridge the gap between technical execution and business vision.
           </p>
 
-          <p>
-            Most recently, I worked at Facebook's NY HQ, leading engineering
-            teams on exciting creator initiatives like Bulletin, a platform for
-            independent long-form writers, and FB Creators Support, Education,
-            and Production Infrastructure. Before that, I spent over a decade
-            building startups from the ground up. One career highlight was
-            co-founding Breathe Life, an InsurTech startup that developed a
-            leading hybrid distribution model for life insurance carriers and
-            agencies. We grew from inception to a mid-8-figure exit in just 4
-            years!
-          </p>
+          <div class="achievement-badges animate-in">
+            <span class="badge">Engineering Leadership</span>
+            <span class="badge">Startup Founder</span>
+            <span class="badge">AI Development</span>
+            <span class="badge">InsurTech</span>
+            <span class="badge">Product Strategy</span>
+          </div>
 
-          <p>
-            I've spent the last few months coding and it's been a blast to
-            really accelerate with AI. If you're not building with AI yet, you
-            should - so much fun! If you’re working on something cool or
-            investing in innovative projects, I’d love to connect and
-            collaborate 🚀.
-          </p>
-          <div class="flex flex-row">
-            {
-              // only display if at least one social link is enabled
-              socialCount > 0 && (
-                <div class="social-wrapper flex-1">
-                  <div class="social-links">Social Links:</div>
-                  <Socials />
-                </div>
-              )
-            }
+          <div class="cta-buttons animate-in">
+            <LinkButton href="/posts/" className="cta-primary">
+              Explore My Work
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="ml-2 h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+              </svg>
+            </LinkButton>
+            <LinkButton
+              href="mailto:arach@tchoupani.com"
+              className="cta-secondary"
+            >
+              Connect With Me
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="ml-2 h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M7 17L17 7M17 7H7M17 7V17"
+                ></path>
+              </svg>
+            </LinkButton>
+          </div>
+        </div>
+
+        <div class="hero-image-wrapper animate-in">
+          <div class="hero-image-container">
+            <div class="hero-image-gradient"></div>
+            <img
+              src="/assets/arach-circle.png"
+              alt="Arach Tchoupani"
+              class="hero-image"
+            />
           </div>
         </div>
       </div>
+    </section>
+    
+    <section id="companies" class="companies-section">
+      <CompanyLogos />
+    </section>
 
-      <Hr noPadding={true} noMargin={true} lightBorder={true} />
+    {
+      featuredPosts.length > 0 && (
+        <>
+          <section id="featured" class="content-section">
+            <h2 class="section-title animate-in">Featured Posts</h2>
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 stagger-children">
+              {featuredPosts.map(({ data, slug }) => (
+                <PostCard
+                  href={`/posts/${slug}/`}
+                  frontmatter={data}
+                  secHeading={false}
+                />
+              ))}
+            </div>
+          </section>
+          {recentPosts.length > 0 && <Hr noPadding={false} />}
+        </>
+      )
+    }
 
-      {
-        featuredPosts.length > 0 && (
-          <>
-            <section id="featured">
-              <h2>Featured Posts</h2>
-              <ul>
-                {featuredPosts.map(({ data, slug }) => (
-                  <Card
+    {
+      recentPosts.length > 0 && (
+        <section id="recent-posts" class="content-section">
+          <h2 class="section-title animate-in">Recent Posts</h2>
+          <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 stagger-children">
+            {recentPosts.map(
+              ({ data, slug }, index) =>
+                index < 6 && (
+                  <PostCard
                     href={`/posts/${slug}/`}
                     frontmatter={data}
                     secHeading={false}
                   />
-                ))}
-              </ul>
-            </section>
-            {recentPosts.length > 0 && <Hr />}
-          </>
-        )
-      }
+                )
+            )}
+          </div>
+        </section>
+      )
+    }
 
-      {
-        recentPosts.length > 0 && (
-          <section id="recent-posts">
-            <h2>Recent Posts</h2>
-            <ul>
-              {recentPosts.map(
-                ({ data, slug }, index) =>
-                  index < 4 && (
-                    <Card
-                      href={`/posts/${slug}/`}
-                      frontmatter={data}
-                      secHeading={false}
-                    />
-                  )
-              )}
-            </ul>
-          </section>
-        )
-      }
-
-      <div class="all-posts-btn-wrapper">
-        <LinkButton href="/posts/">
-          All Posts
-          <svg xmlns="http://www.w3.org/2000/svg"
-            ><path
-              d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"
-            ></path>
-          </svg>
-        </LinkButton>
-      </div>
-    </section>
+    <div class="all-posts-btn-wrapper">
+      <LinkButton
+        href="/posts/"
+        className="inline-flex items-center px-6 py-3 text-base font-medium rounded-lg"
+      >
+        View All Posts
+        <svg xmlns="http://www.w3.org/2000/svg" className="ml-2 h-5 w-5"
+          ><path
+            d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"
+          ></path>
+        </svg>
+      </LinkButton>
+    </div>
 
     <Footer />
   </main>
 
   <style>
     /* ===== Hero Section ===== */
-    #hero {
-      @apply pb-4 pt-4;
+    .hero-section {
+      @apply pb-8 pt-8;
     }
-    #hero h1 {
-      @apply my-4 inline-block text-3xl font-bold sm:my-4 sm:text-5xl;
+
+    .hero-container {
+      @apply flex flex-col gap-6 lg:flex-row lg:items-center lg:gap-12;
     }
-    #hero .rss-link {
-      @apply mb-6;
+
+    .hero-content {
+      @apply flex-1;
     }
-    #hero .rss-icon {
-      @apply mb-2 h-6 w-6 scale-110 fill-skin-accent sm:mb-3 sm:scale-125;
+
+    .hero-title {
+      @apply text-4xl font-black tracking-tighter leading-tight md:text-5xl;
     }
-    #hero p {
-      @apply my-2;
+
+    .hero-subtitle {
+      @apply mt-3 text-xl text-skin-base opacity-80 sm:text-2xl;
     }
-    .social-wrapper {
-      @apply mt-2 flex flex-col sm:flex-row sm:items-center;
+
+    .hero-description {
+      @apply mt-4 max-w-prose font-normal;
+      font-size: 1.25rem;
+      line-height: 1.75;
+      color: rgb(var(--color-text-base) / 0.9);
     }
-    .social-links {
-      @apply mb-1 mr-2 whitespace-nowrap sm:mb-0;
+    
+    @media (min-width: 768px) {
+      .hero-description {
+        font-size: 1.375rem;
+        line-height: 1.8;
+      }
+    }
+    
+    .hero-description strong {
+      @apply font-black;
+    }
+
+    .achievement-badges {
+      @apply mt-5 flex flex-wrap gap-2;
+    }
+
+    .badge {
+      @apply rounded-full px-3.5 py-1.5 text-xs font-semibold transition-all;
+      background: rgb(var(--color-card-muted));
+      border: 1px solid rgb(var(--color-border) / 0.5);
+    }
+    
+    .badge:hover {
+      border-color: rgb(var(--color-border));
+      background: rgb(var(--color-card));
+      transform: translateY(-1px);
+    }
+
+    .cta-buttons {
+      @apply mt-6 flex flex-wrap gap-3;
+    }
+
+    .cta-primary {
+      @apply inline-flex items-center rounded-lg bg-skin-accent px-5 py-2.5 text-sm font-medium text-skin-inverted transition-all;
+    }
+    
+    .cta-primary:hover {
+      @apply bg-skin-accent;
+      opacity: 0.9;
+    }
+    
+    .cta-primary:hover svg {
+      animation: slideRight 0.3s ease-out;
+    }
+
+    .cta-secondary {
+      @apply inline-flex items-center rounded-lg bg-skin-card border border-skin-line px-5 py-2.5 text-sm font-medium transition-all;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+    
+    .cta-secondary:hover {
+      @apply bg-skin-card-muted border-skin-accent;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .cta-secondary:hover svg {
+      animation: bounceUp 0.4s ease-out;
+    }
+    
+    html[data-theme="dark"] .cta-secondary {
+      box-shadow: 0 1px 3px rgba(255, 255, 255, 0.08);
+    }
+    
+    html[data-theme="dark"] .cta-secondary:hover {
+      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
+    }
+
+    .hero-image-wrapper {
+      @apply flex-shrink-0;
+    }
+    
+    .hero-image-container {
+      @apply relative;
+    }
+    
+    .hero-image-gradient {
+      @apply absolute -inset-4 rounded-full blur-3xl opacity-70;
+      background: radial-gradient(circle at center, rgb(var(--color-accent) / 0.25), rgb(var(--color-accent) / 0.05));
+    }
+
+    .hero-image {
+      @apply rounded-full object-cover shadow-2xl relative;
+      width: 15.4rem;
+      height: 15.4rem;
+      transition: transform 0.3s ease;
+      border: 5px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .hero-image:hover {
+      transform: scale(1.05) rotate(-5deg);
+    }
+
+    /* ===== Section Styles ===== */
+    .section-title {
+      @apply mb-6 text-3xl font-black tracking-tight;
+    }
+
+    .journey-content p,
+    .current-content p {
+      @apply mb-4 text-base leading-6;
+    }
+
+    .journey-content p:last-child,
+    .current-content p:last-child {
+      @apply mb-0;
+    }
+    
+    .social-links-row {
+      @apply flex flex-col items-center sm:flex-row sm:items-center sm:gap-4;
+    }
+    
+    .social-links-row p {
+      @apply sm:mb-0;
     }
 
     /* ===== Featured & Recent Posts Sections ===== */
-    #featured,
-    #recent-posts {
-      @apply pb-4 pt-4;
+    .content-section {
+      @apply pb-6 pt-0;
     }
+    
     #featured h2,
     #recent-posts h2 {
-      @apply text-2xl font-semibold tracking-wide;
+      @apply text-3xl font-bold tracking-tight ml-0;
     }
     .all-posts-btn-wrapper {
-      @apply my-8 text-center;
+      @apply mt-12 mb-16 text-center;
+    }
+
+    /* Stagger children animations */
+    .stagger-children > * {
+      opacity: 0;
+      animation: fadeIn 0.6s ease-out forwards;
+    }
+
+    .stagger-children > *:nth-child(1) {
+      animation-delay: 0.1s;
+    }
+    .stagger-children > *:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+    .stagger-children > *:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+    .stagger-children > *:nth-child(4) {
+      animation-delay: 0.4s;
+    }
+    .stagger-children > *:nth-child(5) {
+      animation-delay: 0.5s;
+    }
+    .stagger-children > *:nth-child(6) {
+      animation-delay: 0.6s;
+    }
+
+    
+    /* ===== Companies Section ===== */
+    .companies-section {
+      @apply py-6 -mt-5;
+      background: rgb(var(--color-card-muted) / 0.3);
+    }
+    
+    /* ===== Animations ===== */
+    @keyframes slideRight {
+      0%, 100% {
+        transform: translateX(0);
+      }
+      50% {
+        transform: translateX(3px);
+      }
+    }
+    
+    @keyframes bounceUp {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg);
+      }
+      25% {
+        transform: translateY(-2px) rotate(-5deg);
+      }
+      50% {
+        transform: translateY(-3px) rotate(5deg);
+      }
+      75% {
+        transform: translateY(-1px) rotate(-2deg);
+      }
     }
   </style>
 </Layout>

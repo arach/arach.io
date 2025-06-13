@@ -49,9 +49,7 @@ export default () => {
             >
               {SITE.author}
             </p>
-            <p>
-              Entrepreneur, software engineer
-            </p>
+            <p>Entrepreneur, software engineer</p>
           </div>
         </div>
       </div>
@@ -76,6 +74,6 @@ export default () => {
           }}
         />
       </div>
-    </div >
+    </div>
   );
 };

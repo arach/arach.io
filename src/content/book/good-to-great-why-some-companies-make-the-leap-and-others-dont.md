@@ -4,7 +4,15 @@ addedDatetime: 2024-06-20T04:15:39.823Z
 pubDatetime: 2024-06-20T04:15:39.823Z
 authors: ["James C. Collins"]
 description: "An exploration of how good companies can transform into great ones, based on extensive research and analysis."
-tags: ["Business", "Nonfiction", "Leadership", "Management", "Entrepreneurship", "Self Help"]
+tags:
+  [
+    "Business",
+    "Nonfiction",
+    "Leadership",
+    "Management",
+    "Entrepreneurship",
+    "Self Help",
+  ]
 thumbnail: "assets/images/books/9780066620992-L.jpg"
 isbn: "9780066620992"
 featured: false
@@ -12,7 +20,6 @@ draft: false
 rating: 4
 goodreads: "https://www.goodreads.com/book/show/76865.Good_to_Great"
 amazon: "https://www.amazon.com/Good-Great-Some-Companies-Others/dp/0066620996"
-
 ---
 
 ### Key Points:

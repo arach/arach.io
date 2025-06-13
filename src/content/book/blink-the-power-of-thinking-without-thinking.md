@@ -4,12 +4,20 @@ addedDatetime: 2024-06-20T04:15:39.121Z
 pubDatetime: 2024-06-20T04:15:39.121Z
 authors: ["Malcolm Gladwell"]
 description: "Malcolm Gladwell delves into the science of snap judgments and the power of thinking without thinking, exploring how we make decisions in the blink of an eye."
-tags: ["Business", "Nonfiction", "Leadership", "Management", "Entrepreneurship", "Self Help"]
+tags:
+  [
+    "Business",
+    "Nonfiction",
+    "Leadership",
+    "Management",
+    "Entrepreneurship",
+    "Self Help",
+  ]
 thumbnail: "assets/images/books/9780316010665-L.jpg"
 isbn: "9780316010665"
 rating: 4
 featured: false
-draft: false 
+draft: false
 goodreads: "https://www.goodreads.com/book/show/40102.Blink_The_Power_of_Thinking_Without_Thinking"
 amazon: "https://www.amazon.com/Blink-Power-Thinking-Without/dp/0316010669"
 ---

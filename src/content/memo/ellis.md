@@ -5,7 +5,7 @@ authors: ["Arach Tchoupani"]
 isbn: "9781781256176"
 pubDatetime: 2024-02-10T9:28:16.130Z
 addedDatetime: 2024-01-25T9:28:16.130Z
-slug: 'Ellis'
+slug: "Ellis"
 featured: true
 draft: false
 ---
@@ -16,7 +16,7 @@ draft: false
 
 **Company Name**: Ellis  
 **Location**: San Francisco Bay Area  
-**Stage**: Idea stage  
+**Stage**: Idea stage
 
 **Problem**: Enterprise software implementation projects are a bottleneck for innovation. They are expensive, risky, and outdated.
 

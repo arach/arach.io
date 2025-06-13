@@ -1,7 +1,9 @@
 import { SITE } from "@config";
 import type { CollectionEntry, ContentEntryMap } from "astro:content";
 
-const contentFilter = <T extends keyof ContentEntryMap>({ data }: CollectionEntry<T>) => {
+const contentFilter = <T extends keyof ContentEntryMap>({
+  data,
+}: CollectionEntry<T>) => {
   const isPublishTimePassed =
     Date.now() >
     new Date(data.pubDatetime).getTime() - SITE.scheduledPostMargin;

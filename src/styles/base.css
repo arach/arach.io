@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
   /* @font-face {
     font-family: 'Geist';
@@ -30,40 +29,44 @@
   } */
 
   @font-face {
-    font-family: 'Berkeley';
+    font-family: "Berkeley";
     font-weight: lighter;
     font-style: normal;
     font-display: swap;
-    src: url('/fonts/BerkeleyMono/BerkeleyMonoTrial-Regular.ttf') format('TrueType');
+    src: url("/fonts/BerkeleyMono/BerkeleyMonoTrial-Regular.ttf")
+      format("TrueType");
   }
 
   @font-face {
-    font-family: 'Space Mono';
-    src: url('/fonts/Space_Mono/SpaceMono-Regular.ttf') format('TrueType');
+    font-family: "Space Mono";
+    src: url("/fonts/Space_Mono/SpaceMono-Regular.ttf") format("TrueType");
     font-weight: normal;
     font-style: normal;
     font-display: swap;
   }
 
   @font-face {
-    font-family: 'Cinetype';
-    src: url('/fonts/GT-Cinetype-Light-b647778f486e587d812d63089ebc8059.woff2') format('woff');
+    font-family: "Cinetype";
+    src: url("/fonts/GT-Cinetype-Light-b647778f486e587d812d63089ebc8059.woff2")
+      format("woff");
     font-weight: normal;
     font-style: normal;
     font-display: swap;
   }
 
   @font-face {
-    font-family: 'Cinetype Regular';
-    src: url('/fonts/GT-Cinetype-Regular-36e5d057ff86825187f74ee48e5c36e4.woff2') format('woff');
+    font-family: "Cinetype Regular";
+    src: url("/fonts/GT-Cinetype-Regular-36e5d057ff86825187f74ee48e5c36e4.woff2")
+      format("woff");
     font-weight: normal;
     font-style: normal;
     font-display: swap;
   }
 
   @font-face {
-    font-family: 'PP Formula';
-    src: url('/fonts/PP-Formula-ExtraBold-9e2c25df948f215447fdcf685540fcc7.woff2') format('woff');
+    font-family: "PP Formula";
+    src: url("/fonts/PP-Formula-ExtraBold-9e2c25df948f215447fdcf685540fcc7.woff2")
+      format("woff");
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -72,33 +75,21 @@
   :root,
   html[data-theme="light"] {
     --color-fill: 255, 255, 255;
-    /* Soft White */
-    --color-text-base: 12, 12, 12;
-    /* Charcoal */
-    --color-accent: 52, 152, 219;
-    /* Azure Blue */
-    --color-card: 236, 240, 241;
-    /* Light Grey */
-    --color-card-muted: 189, 195, 199;
-    /* Muted Grey */
-    --color-border: 44, 62, 80;
-    /* Dark Slate */
+    --color-text-base: 0, 0, 0;
+    --color-accent: 0, 0, 0;
+    --color-card: 255, 255, 255;
+    --color-card-muted: 250, 250, 250;
+    --color-border: 229, 229, 229;
   }
 
   :root,
   html[data-theme="dark"] {
-    --color-fill: 18, 18, 18;
-    /* Almost Black */
-    --color-text-base: 230, 230, 230;
-    /* Light Grey */
-    --color-accent: 41, 128, 185;
-    /* Deep Azure Blue */
-    --color-card: 34, 34, 34;
-    /* Dark Grey */
-    --color-card-muted: 44, 62, 80;
-    /* Muted Dark Slate */
-    --color-border: 75, 75, 75;
-    /* Mid Grey */
+    --color-fill: 0, 0, 0;
+    --color-text-base: 255, 255, 255;
+    --color-accent: 255, 255, 255;
+    --color-card: 17, 17, 17;
+    --color-card-muted: 38, 38, 38;
+    --color-border: 38, 38, 38;
   }
 
   #sun-svg,
@@ -112,22 +103,47 @@
   }
 
   body {
-    @apply flex min-h-[100svh] flex-col bg-skin-fill font-mono text-skin-base selection:bg-skin-accent selection:bg-opacity-70 selection:text-skin-inverted text-sm;
-    /* font-family: 'Fira Mono', 'Berkeley', 'Geist Mono', 'monospace'; */
-    font-family: 'Space Mono', 'Berkeley', 'Cinetype', sans-serif;
-    font-weight: 300;
+    @apply flex min-h-[100svh] flex-col bg-skin-fill text-skin-base selection:bg-skin-accent selection:bg-opacity-70 selection:text-skin-inverted;
+    font-family:
+      -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", "Roboto", "Oxygen",
+      "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+      sans-serif;
+    font-size: 16px;
+    font-weight: 400;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    line-height: 1.2rem;
+    text-rendering: optimizeLegibility;
+    line-height: 1.6;
   }
 
   section,
   footer {
-    @apply mx-auto max-w-4xl px-4;
+    @apply mx-auto px-6;
+    max-width: 1200px;
+  }
+
+  @media (max-width: 1024px) {
+    section,
+    footer {
+      max-width: 768px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    section,
+    footer {
+      @apply px-4;
+      max-width: 100%;
+    }
   }
 
   a {
     @apply outline-2 outline-offset-1 outline-skin-fill focus-visible:no-underline focus-visible:outline-dashed;
+    transition: opacity 0.15s ease;
+  }
+
+  a:hover {
+    opacity: 0.8;
   }
 
   svg {
@@ -143,51 +159,86 @@
     overflow-y: scroll;
   }
 
-
   @keyframes drawBorder {
     0% {
-      background-size: 0 1px, 1px 0, 0 1px, 1px 0;
-      background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+      background-size:
+        0 1px,
+        1px 0,
+        0 1px,
+        1px 0;
+      background-position:
+        0 0,
+        100% 0,
+        100% 100%,
+        0 100%;
     }
 
     25% {
-      background-size: 100% 1px, 1px 100%, 0 1px, 1px 0;
-      background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+      background-size:
+        100% 1px,
+        1px 100%,
+        0 1px,
+        1px 0;
+      background-position:
+        0 0,
+        100% 0,
+        100% 100%,
+        0 100%;
     }
 
     50% {
-      background-size: 100% 1px, 1px 100%, 100% 1px, 1px 0;
-      background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+      background-size:
+        100% 1px,
+        1px 100%,
+        100% 1px,
+        1px 0;
+      background-position:
+        0 0,
+        100% 0,
+        100% 100%,
+        0 100%;
     }
 
     75% {
-      background-size: 100% 0px, 1px 100%, 100% 1px, 1px 75%;
-      background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+      background-size:
+        100% 0px,
+        1px 100%,
+        100% 1px,
+        1px 75%;
+      background-position:
+        0 0,
+        100% 0,
+        100% 100%,
+        0 100%;
     }
 
     100% {
-      background-size: 100% 1px, 1px 35%, 100% 1px, 1px 35%;
-      background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+      background-size:
+        100% 1px,
+        1px 35%,
+        100% 1px,
+        1px 35%;
+      background-position:
+        0 0,
+        100% 0,
+        100% 100%,
+        0 100%;
     }
   }
 
   a.active {
     @apply relative overflow-hidden;
     background-image:
-      linear-gradient(90deg, #000, #000),
-      linear-gradient(0deg, #000, #000),
-      linear-gradient(0deg, #000, #000),
-      linear-gradient(0deg, #000, #000);
+      linear-gradient(90deg, #000, #000), linear-gradient(0deg, #000, #000),
+      linear-gradient(0deg, #000, #000), linear-gradient(0deg, #000, #000);
     background-repeat: no-repeat;
     animation: drawBorder 0.4s ease-in-out forwards;
   }
 
   html[data-theme="dark"] a.active {
     background-image:
-      linear-gradient(90deg, #fff, #fff),
-      linear-gradient(0deg, #fff, #fff),
-      linear-gradient(0deg, #fff, #fff),
-      linear-gradient(0deg, #fff, #fff);
+      linear-gradient(90deg, #fff, #fff), linear-gradient(0deg, #fff, #fff),
+      linear-gradient(0deg, #fff, #fff), linear-gradient(0deg, #fff, #fff);
   }
 
   /* width */
@@ -215,17 +266,76 @@
     word-wrap: break-word;
   }
 
-  pre>code {
+  pre > code {
     white-space: pre;
   }
 
-  section#featured {
-    padding-left: 0;
-
-  }
 
   pre {
-    font-family: 'Berkeley', 'IBM Plex Mono', monospace;
+    font-family:
+      "Fira Code", "Fira Mono", Consolas, Monaco, "Andale Mono", "Ubuntu Mono",
+      monospace;
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  code {
+    font-family:
+      "Fira Code", "Fira Mono", Consolas, Monaco, "Andale Mono", "Ubuntu Mono",
+      monospace;
+    font-size: 0.875em;
+  }
+}
+
+/* Subtle animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gentlePulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes gradientShift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
   }
 }
 
@@ -238,30 +348,73 @@
     @apply outline-2 outline-offset-1 outline-skin-fill focus-visible:no-underline focus-visible:outline-dashed;
   }
 
+  /* Smooth transitions */
+  * {
+    transition:
+      color 0.15s ease,
+      background-color 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  /* Entrance animations */
+  .animate-in {
+    animation: fadeIn 0.6s ease-out;
+  }
+
+  .animate-in-slow {
+    animation: fadeIn 1s ease-out;
+  }
+
+  .animate-slide-down {
+    animation: slideDown 0.5s ease-out;
+  }
+
+  .animate-shimmer {
+    animation: shimmer 3s ease-in-out infinite;
+  }
+
+  .animate-gradient-shift {
+    animation: gradientShift 8s ease infinite;
+  }
 }
 
-html[data-theme='dark'] {
+html[data-theme="dark"] {
   .prose {
     --tw-prose-headings: #f9f9f9;
     --tw-prose-body: rgb(225, 225, 225);
     --tw-prose-link: #ff862f;
     --tw-prose-bold: #f9f9f9;
-    --tw-prose-counters: var(--tw-prose-body)
+    --tw-prose-counters: var(--tw-prose-body);
   }
 }
 
 html {
   .prose {
-    font-size: 0.85rem;
+    font-size: 1rem;
+    line-height: 1.75;
+
+    p {
+      margin-bottom: 1.25rem;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
   }
 }
 
 html {
   section#hero {
-    @apply pt-1
+    @apply pt-1;
   }
 
-  img[data-card-thumbnail='true'] {
+  img[data-card-thumbnail="true"] {
     width: 100px;
     border: 1px solid black;
 
@@ -271,12 +424,14 @@ html {
   }
 
   #featured {
-    font-family: 'Cinetype', 'PP Formula', 'SF Pro Text', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    font-family:
+      -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+      "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+      sans-serif;
 
     .description {
-      font-family: 'Space Mono', 'Berkeley', 'Cinetype', sans-serif;
-      font-weight: 300;
-      font-size: 0.85rem;
+      font-size: 0.875rem;
+      line-height: 1.5;
     }
   }
 }
@@ -287,49 +442,60 @@ h3,
 h4,
 h5,
 h6 {
-  /* font-family: 'Fira Mono', 'Berkeley', 'Geist Mono', 'monospace'; */
-  font-family: 'Cinetype', 'Space Mono', 'Berkeley', sans-serif;
-  font-weight: 900;
-  text-transform: uppercase;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
+  text-rendering: optimizeLegibility;
 }
 
 article {
-  font-family: 'Space Mono', 'Berkeley', 'Cinetype', sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 
   &.prose {
-
     h1,
     h2,
     h3,
     h4,
     h5,
     h6 {
-      font-weight: 900;
-      line-height: 1.45rem;
+      font-weight: 800;
+      line-height: 1.3;
     }
 
     h1 {
+      font-size: 2rem;
+      margin-top: 0;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+    }
+
+    h3 {
       font-size: 1.25rem;
     }
 
-
-    h2 {
-      font-size: 1.15rem;
-
-
+    h4 {
+      font-size: 1.125rem;
     }
   }
 }
 
-.logo {
-  transition: transform 0.2s ease, opacity 0.2s ease;
+.logo-wrapper {
+  @apply inline-block p-6 rounded-xl transition-transform duration-300;
+  background-color: #ffffff; /* solid white background */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); /* subtle shadow */
 }
 
-.logo:hover {
-  transform: scale(2.5) rotate(-5deg);
-  opacity: 0.95;
 
+.company-logo-large:hover img {
+  filter: grayscale(0%) contrast(1);
+  opacity: 1;
 }

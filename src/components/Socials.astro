@@ -5,17 +5,18 @@ import socialIcons from "@assets/socialIcons";
 
 export interface Props {
   centered?: boolean;
+  inline?: boolean;
 }
 
-const { centered = false } = Astro.props;
+const { centered = false, inline = false } = Astro.props;
 ---
 
-<div class={`social-icons ${centered ? "flex" : ""}`}>
+<div class={`social-icons ${centered ? "flex" : ""} ${inline ? "inline-flex" : ""}`}>
   {
     SOCIALS.filter(social => social.active).map(social => (
       <LinkButton
         href={social.href}
-        className="link-button"
+        className="link-button social-link transition-transform hover:scale-110"
         title={social.linkTitle}
       >
         <Fragment set:html={socialIcons[social.name]} />
@@ -31,7 +32,16 @@ const { centered = false } = Astro.props;
 
 <style>
   .social-icons {
-    @apply flex-wrap justify-center gap-1;
+    @apply flex flex-wrap justify-center gap-1;
+  }
+  .social-icons.inline-flex {
+    display: inline-flex;
+    gap: 0;
+    vertical-align: middle;
+    margin-left: 0.25rem;
+  }
+  .social-icons.inline-flex .link-button {
+    @apply p-1;
   }
   .link-button {
     @apply p-2 hover:rotate-6 sm:p-1;

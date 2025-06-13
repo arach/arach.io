@@ -10,7 +10,9 @@ import path from "path";
 // const fontRegularPath = path.resolve("public/fonts/FiraSans/FiraSans-Black.ttf");
 // const fontBoldPath = path.resolve("public/fonts/FiraSans/FiraSans-Bold.ttf");
 
-const fontRegularPath = path.resolve("public/fonts/Fira_Mono/FiraMono-Regular.ttf");
+const fontRegularPath = path.resolve(
+  "public/fonts/Fira_Mono/FiraMono-Regular.ttf"
+);
 const fontBoldPath = path.resolve("public/fonts/Fira_Mono/FiraMono-Bold.ttf");
 
 const fontRegular = await readFile(fontRegularPath);
@@ -24,7 +26,7 @@ const options: SatoriOptions = {
       name: "Inter",
       weight: 400,
       data: fontRegular,
-      style: "normal"
+      style: "normal",
     },
     {
       name: "Inter",

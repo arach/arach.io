@@ -3,7 +3,8 @@ title: "AI-Driven Web Automation: Building the Action Layer"
 pubDatetime: 2024-06-11T19:46:26.130Z
 author: "Arach Tchoupani"
 description: "AI currently lacks an effective action layer, limiting its potential in web automation. This article introduces an architecture to address this gap, offering innovative solutions to enhance AI-driven workflows and interactions with web applications. "
-tags: ["AI", "AI Agents", "Browser Automation", "Web Automation", "Web Development"]
+tags:
+  ["AI", "AI Agents", "Browser Automation", "Web Automation", "Web Development"]
 excerpt: ""
 thumbnail: "assets/images/automation-thumbnail.png"
 categories: []
@@ -34,13 +35,15 @@ There are two main strategies for enabling 🤖 accessibility: retrofitting webs
 Imagine deploying AI to index all app actions and expose them as a web API. This scalable mapping of software interfaces would expose information and actions for 🤖 to access.
 
 **Architecture**:
+
 - **Multimodal Models**: Use models like GPT-4o and GPT-4v to understand the context and structure of web pages using visual understanding.
 - **Extraction Markup**: Use LLMs to extract context from HTML sections and build a detailed RAG context graph.
 - **Code Generation**: Use LLMs' ability to generate code and apply it to frameworks like Playwright. Each page and each form is a separate deterministic program.
 
 **Example Implementation**:
+
 ```typescript
-import { Browser, Page } from 'playwright';
+import { Browser, Page } from "playwright";
 
 export class HubSpotAutomationHandler {
   private browser: Browser;
@@ -53,17 +56,19 @@ export class HubSpotAutomationHandler {
 
   async getNavigations(url: string): Promise<void> {
     await this.page.goto(url);
-    const buttons = await this.page.$$('#hs-vertical-nav button');
+    const buttons = await this.page.$$("#hs-vertical-nav button");
     const navigations: Record<string, any> = {};
 
     for (const button of buttons) {
       await button.click();
-      const secondary_menu = await this.page.$$("div[data-menu-item-level='secondary']");
+      const secondary_menu = await this.page.$$(
+        "div[data-menu-item-level='secondary']"
+      );
       const nav_key = await this.page.innerText(button);
       navigations[nav_key] = {
         nav_key,
         text: nav_key,
-        sub_navs: []
+        sub_navs: [],
       };
 
       for (const sub_nav of secondary_menu) {
@@ -71,8 +76,8 @@ export class HubSpotAutomationHandler {
         if (subnav_key) {
           navigations[nav_key].sub_navs.push({
             nav_key: subnav_key,
-            url: await this.page.getAttribute(sub_nav, 'href'),
-            text: subnav_key
+            url: await this.page.getAttribute(sub_nav, "href"),
+            text: subnav_key,
           });
         }
       }
@@ -84,13 +89,14 @@ export class HubSpotAutomationHandler {
 
 ### New 🤖-a11y Frameworks
 
-Apple’s latest event showcased a sophisticated approach to declarative automation for the agent layer with the [AppIntents API](https://developer.apple.com/documentation/appintents). This framework offers app developers a declarative way to define *intents* that will be exposed to Siri and therefore Apple Intelligence. Instead of building tooling to reverse engineer the intents from app API or the code itself, giving app developers the ability to declare *precisely* what they want to expose to Siri creates a super clean and powerful developer experience. It's also much less headaches for Apple. 
+Apple’s latest event showcased a sophisticated approach to declarative automation for the agent layer with the [AppIntents API](https://developer.apple.com/documentation/appintents). This framework offers app developers a declarative way to define _intents_ that will be exposed to Siri and therefore Apple Intelligence. Instead of building tooling to reverse engineer the intents from app API or the code itself, giving app developers the ability to declare _precisely_ what they want to expose to Siri creates a super clean and powerful developer experience. It's also much less headaches for Apple.
 
 ### What does that look like for the Web?
 
 Imagine if you could declare app intents in a framework like NextJS, Laravel, Rails, Django and/or anything that uses React? This would allow developers to expose web application logic and data to programs without having to build separate APIs for every single thing they build. They could seamlessly use the same code to drive their web applications and their AI-powered agents and be in control of exactly what they expose to which audience and how!
 
 **Architecture**:
+
 1. **Decorators and Action Handlers**: The Action decorator adds metadata to methods in the IntentHandlers class. The getActions function retrieves these actions.
 2. **Context for Actions**: The ActionProvider context makes the actions and handlers available throughout the app.
 3. **React Components**: The ActionExecutor component uses the context to display and execute available actions.
@@ -99,30 +105,34 @@ Imagine if you could declare app intents in a framework like NextJS, Laravel, Ra
 #### Implementation in TypeScript:
 
 ```typescript
-import { Action, getActions } from '../utils/decorators';
+import { Action, getActions } from "../utils/decorators";
 
 class IntentHandlers {
-  @Action('Create Project')
+  @Action("Create Project")
   async createProject(name: string, description: string): Promise<string> {
     return `Project "${name}" created successfully.`;
   }
 
-  @Action('Assign Task')
-  async assignTask(projectId: string, taskId: string, userId: string): Promise<string> {
+  @Action("Assign Task")
+  async assignTask(
+    projectId: string,
+    taskId: string,
+    userId: string
+  ): Promise<string> {
     return `Task "${taskId}" assigned to user "${userId}" in project "${projectId}".`;
   }
 
-  @Action('Complete Task')
+  @Action("Complete Task")
   async completeTask(taskId: string): Promise<string> {
     return `Task "${taskId}" marked as complete.`;
   }
 
-  @Action('Get Project Details')
+  @Action("Get Project Details")
   async getProjectDetails(projectId: string): Promise<string> {
     return `Details for project "${projectId}".`;
   }
 
-  @Action('Delete Project')
+  @Action("Delete Project")
   async deleteProject(projectId: string): Promise<string> {
     return `Project "${projectId}" deleted successfully.`;
   }
@@ -136,6 +146,6 @@ export const availableActions = getActions(IntentHandlers);
 
 The proposed architecture for AI-driven web automation marks a significant leap forward, enhancing efficiency and flexibility in web interactions. When developers, workflow automation platforms, and AI 🤖 have access to the same information and workflows as human users, we will be able to truly unlock the full potential of AI. Imagine AI agents seamlessly handling customer service, automating data analysis, and optimizing workflows in real-time and in collaboration with human users. By adopting this hybrid human + AI, businesses and developers can drive unprecedented innovation and productivity.
 
-If you’re building in this space or have ideas to share, I’d love to hear from you. 
+If you’re building in this space or have ideas to share, I’d love to hear from you.
 
 <iframe src="https://giphy.com/embed/jsI8nBXJl6s7r7iuJ5" height="375px" frameBorder="0" class="giphy-embed w-[100%]" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/siliconvalleyhbo-jsI8nBXJl6s7r7iuJ5">via GIPHY</a></p>

@@ -20,8 +20,9 @@ export default function Datetime({
     <span className={`flex items-center space-x-1 opacity-80 ${className}`}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className={`${size === "sm" ? "scale-85" : "scale-90"
-          } inline-block h-4 w-4 min-w-[1rem] fill-skin-base`}
+        className={`${
+          size === "sm" ? "scale-85" : "scale-90"
+        } inline-block h-4 w-4 min-w-[1rem] fill-skin-base`}
         aria-hidden="true"
         viewBox="0 0 24 24"
         fill="none"
@@ -70,4 +71,3 @@ const FormattedDatetime = ({ pubDatetime, modDatetime }: DatetimesProps) => {
     </>
   );
 };
-

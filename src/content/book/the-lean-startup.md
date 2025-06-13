@@ -4,7 +4,15 @@ addedDatetime: 2024-06-20T04:15:48.572Z
 pubDatetime: 2024-06-20T04:15:48.572Z
 authors: ["Eric Ries"]
 description: "Eric Ries presents a new approach to business that's being adopted across the globe, changing the way companies are built and new products are launched."
-tags: ["Business", "Nonfiction", "Leadership", "Management", "Entrepreneurship", "Self Help"]
+tags:
+  [
+    "Business",
+    "Nonfiction",
+    "Leadership",
+    "Management",
+    "Entrepreneurship",
+    "Self Help",
+  ]
 thumbnail: "assets/images/books/9780307887894-L.jpg"
 isbn: "9780307887894"
 featured: false
@@ -30,4 +38,4 @@ Ries also discusses the importance of making critical decisions on whether to pi
 
 The book is filled with practical advice and real-world examples, making it a valuable guide for entrepreneurs and managers. "The Lean Startup" is praised for its actionable insights and has become essential reading for anyone involved in the startup ecosystem [The Lean Startup by Eric Ries - Five Books Expert Reviews](https://fivebooks.com/book/lean-startup-eric-ries/) [Book Review: The Lean Startup by Eric Ries - Bizness Professionals](https://biznessprofessionals.com/the-lean-startup-book-review/) [The Lean Startup](https://www.penguin.co.uk/books/185058/the-lean-startup-by-ries-eric/9780670921607).
 
-It's kind of funny that Eric Ries hasn't shipped all that much since he wrote about this. His work on Long Term Stock Exchange was diametrically opposed to these notions. 
+It's kind of funny that Eric Ries hasn't shipped all that much since he wrote about this. His work on Long Term Stock Exchange was diametrically opposed to these notions.

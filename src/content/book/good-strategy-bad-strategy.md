@@ -5,7 +5,16 @@ authors: ["Richard Rumelt"]
 isbn: "9781781256176"
 pubDatetime: 2024-06-18T9:28:16.130Z
 addedDatetime: 2024-06-19T9:28:16.130Z
-tags: ["Business", "Nonfiction", "Leadership", "Management", "Entrepreneurship", "Business", "Self Help"]
+tags:
+  [
+    "Business",
+    "Nonfiction",
+    "Leadership",
+    "Management",
+    "Entrepreneurship",
+    "Business",
+    "Self Help",
+  ]
 thumbnail: "assets/images/books/good-bad-strategy.jpeg"
 categories: []
 featured: true

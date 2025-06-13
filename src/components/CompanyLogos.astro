@@ -1,0 +1,207 @@
+---
+export interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+
+const companies = [
+  {
+    name: "Meta",
+    logo: "/assets/logos/meta-logo-rgb-medium.png",
+    role: "Engineering Leadership, FB Creators",
+    period: "2022-2023",
+    isLarge: true,
+  },
+  {
+    name: "Breathe Life",
+    logo: "/assets/logos/breathe-logo.png",
+    role: "Co-Founder & CTO",
+    period: "2018-2021",
+  },
+  {
+    name: "Starbucks",
+    logo: "/assets/logos/starbucks-logo-transparent.png",
+    role: "Senior Consultant & Architect, Global E-Commerce",
+    period: "2019-2020",
+    isLarge: true,
+  },
+  {
+    name: "PhotoShelter",
+    logo: "/assets/logos/photoshelter-logo.png",
+    role: "VP of Engineering",
+    period: "2016-2017",
+  },
+  {
+    name: "Primary",
+    logo: "/assets/logos/primary-logo.png",
+    role: "Founding CTO",
+    period: "2014-2016",
+  },
+];
+
+const largeCompanies = companies.filter(c => c.isLarge);
+const regularCompanies = companies.filter(c => !c.isLarge);
+---
+
+<div class={`companies-container ${className || ''}`}>
+  <h3 class="companies-title">Companies I've Worked With</h3>
+  
+  <!-- All companies in one row -->
+  <div class="companies-row">
+    {companies.map((company, index) => (
+      <div class="company-item" data-company={company.name} style={`animation-delay: ${index * 0.1}s`}>
+        <img 
+          src={company.logo} 
+          alt={company.name}
+          class={
+            company.name === 'Meta' ? 'meta-logo' : 
+            company.name === 'Primary' ? 'primary-logo' : ''
+          }
+        />
+        <div class="company-tooltip">
+          <p class="role">{company.role}</p>
+          <p class="period">{company.period}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .companies-container {
+    @apply text-center py-4;
+  }
+  
+  .companies-title {
+    @apply text-base font-medium text-skin-base opacity-60 mb-6 uppercase tracking-wider;
+  }
+  
+  .companies-row {
+    @apply grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8 items-center justify-items-center max-w-5xl mx-auto pb-4;
+  }
+  
+  .company-item {
+    @apply relative;
+    opacity: 0;
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+  
+  .company-item img {
+    @apply transition-all duration-300;
+    /* Show logos in full color */
+    opacity: 0.9;
+  }
+  
+  .company-item:hover img {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+  
+  /* All logos in single row */
+  .company-item img {
+    height: 48px;
+    width: auto;
+    max-width: 182px;
+  }
+  
+  /* Meta logo adjustment */
+  .meta-logo {
+    height: 42px;
+    max-width: 145px;
+  }
+  
+  /* Starbucks logo is taller, needs adjustment */
+  .company-item[data-company="Starbucks"] img {
+    height: 34px;
+    width: auto;
+    max-width: 120px;
+  }
+  
+  /* Primary logo (text-based, needs to be larger) */
+  .primary-logo {
+    height: 55px;
+    max-width: 194px;
+  }
+  
+  /* Tooltip styles */
+  .company-tooltip {
+    @apply absolute left-1/2 -translate-x-1/2 bg-white dark:bg-gray-800 rounded-md shadow-lg px-3 py-1.5 text-xs pointer-events-none z-10;
+    bottom: -40px;
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+  
+  .company-item:hover .company-tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  
+  .company-tooltip .role {
+    @apply font-semibold text-gray-900 dark:text-gray-100;
+  }
+  
+  .company-tooltip .period {
+    @apply text-gray-600 dark:text-gray-400 text-xs;
+  }
+  
+  /* Animations */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Mobile adjustments */
+  @media (max-width: 768px) {
+    .companies-row {
+      @apply gap-4;
+    }
+    
+    .company-item img {
+      height: 36px;
+      max-width: 121px;
+    }
+    
+    .meta-logo {
+      height: 31px;
+      max-width: 97px;
+    }
+    
+    .company-item[data-company="Starbucks"] img {
+      height: 26px;
+      width: auto;
+      max-width: 95px;
+    }
+    
+    .primary-logo {
+      height: 42px;
+      max-width: 145px;
+    }
+    
+    .company-tooltip {
+      bottom: -35px;
+      @apply text-xs px-2 py-1;
+    }
+  }
+</style>
+
+<script>
+  // Add hover interactions
+  document.querySelectorAll('.company-item').forEach(item => {
+    item.addEventListener('mouseenter', function() {
+      this.classList.add('hovered');
+    });
+    
+    item.addEventListener('mouseleave', function() {
+      this.classList.remove('hovered');
+    });
+  });
+</script>

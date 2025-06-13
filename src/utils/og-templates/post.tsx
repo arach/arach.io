@@ -105,6 +105,6 @@ export default (post: CollectionEntry<"blog">) => {
           }}
         />
       </div>
-    </div >
+    </div>
   );
 };

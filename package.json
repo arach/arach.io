@@ -24,6 +24,7 @@
     "@divriots/jampack": "0.23.4",
     "@fontsource-variable/dosis": "^5.0.20",
     "@fontsource/inconsolata": "^5.0.18",
+    "@fontsource/inter": "^5.2.6",
     "@fontsource/share-tech-mono": "^5.0.12",
     "@resvg/resvg-js": "^2.6.2",
     "@tailwindcss/typography": "^0.5.13",
@@ -52,9 +53,9 @@
     "@astrojs/react": "^3.3.4",
     "@astrojs/sitemap": "^3.1.4",
     "@astrojs/tailwind": "^5.1.0",
-    "@typescript-eslint/parser": "^6.21.0",
     "@types/github-slugger": "^1.3.0",
     "@types/react": "^18.3.2",
+    "@typescript-eslint/parser": "^6.21.0",
     "astro-eslint-parser": "^0.16.3",
     "commitizen": "^4.3.0",
     "cz-conventional-changelog": "^3.3.0",
@@ -62,10 +63,10 @@
     "eslint-plugin-astro": "^0.31.4",
     "husky": "^8.0.3",
     "lint-staged": "^15.2.2",
+    "node-gyp": "^9.1.0",
     "prettier": "^3.2.5",
     "prettier-plugin-astro": "^0.13.0",
-    "prettier-plugin-tailwindcss": "^0.5.14",
-    "node-gyp": "^9.1.0"
+    "prettier-plugin-tailwindcss": "^0.5.14"
   },
   "config": {
     "commitizen": {

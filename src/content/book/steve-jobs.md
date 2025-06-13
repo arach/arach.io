@@ -4,15 +4,22 @@ addedDatetime: 2024-06-20T04:15:50.085Z
 pubDatetime: 2024-06-20T04:15:50.085Z
 authors: ["Walter Isaacson"]
 description: "A comprehensive biography of Steve Jobs, exploring his life, career, and the innovations he brought to the tech industry."
-tags: ["Business", "Nonfiction", "Leadership", "Management", "Entrepreneurship", "Self Help"]
+tags:
+  [
+    "Business",
+    "Nonfiction",
+    "Leadership",
+    "Management",
+    "Entrepreneurship",
+    "Self Help",
+  ]
 thumbnail: "assets/images/books/9781451648539-L.jpg"
 isbn: "9781451648539"
 rating: 4.5
 featured: false
-draft: false 
+draft: false
 goodreads: "https://www.goodreads.com/book/show/11084145-steve-jobs"
 amazon: "https://www.amazon.com/Steve-Jobs-Walter-Isaacson/dp/1451648537/"
-
 ---
 
 ### Key Points:

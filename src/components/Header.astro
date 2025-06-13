@@ -18,7 +18,8 @@ const navItems = [
 ];
 ---
 
-<header>
+<header class="sticky-header">
+  <div class="top-border"></div>
   <a id="skip-to-content" href="#main-content">Skip to content</a>
   <div class="nav-container h-16 sm:h-16">
     <div class="top-nav-wrap my-0 py-0 md:shrink-0">
@@ -28,7 +29,7 @@ const navItems = [
             <img
               src={`/assets/${LOGO_IMAGE.svg ? "logo.svg" : "arach.io-logo-photo.png"}`}
               alt={SITE.title}
-              class="w-20 px-4 sm:w-24"
+              class="w-20 px-4 sm:w-24 header-logo"
             />
           ) : (
             SITE.title
@@ -68,7 +69,7 @@ const navItems = [
                 <a
                   href={href}
                   class={activeNav === label.toLowerCase() ? "active" : ""}
-                  style={{ textTransform: "uppercase" }}
+                  style={{ textTransform: "none" }}
                 >
                   {label}
                 </a>
@@ -102,7 +103,7 @@ const navItems = [
                   title="Toggles light & dark"
                   aria-label="auto"
                   aria-live="polite"
-                  style={{ textTransform: "uppercase" }}
+                  style={{ textTransform: "none" }}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" id="moon-svg">
                     <path d="M20.742 13.045a8.088 8.088 0 0 1-2.077.271c-2.135 0-4.14-.83-5.646-2.336a8.025 8.025 0 0 1-2.064-7.723A1 1 0 0 0 9.73 2.034a10.014 10.014 0 0 0-4.489 2.582c-3.898 3.898-3.898 10.243 0 14.143a9.937 9.937 0 0 0 7.072 2.93 9.93 9.93 0 0 0 7.07-2.929 10.007 10.007 0 0 0 2.583-4.491 1.001 1.001 0 0 0-1.224-1.224zm-2.772 4.301a7.947 7.947 0 0 1-5.656 2.343 7.953 7.953 0 0 1-5.658-2.344c-3.118-3.119-3.118-8.195 0-11.314a7.923 7.923 0 0 1 2.06-1.483 10.027 10.027 0 0 0 2.89 7.848 9.972 9.972 0 0 0 7.848 2.891 8.036 8.036 0 0 1-1.484 2.059z" />
@@ -118,21 +119,53 @@ const navItems = [
       </nav>
     </div>
   </div>
-  <Hr noPadding={true} noMargin={true} lightBorder={true} />
+  <div class="header-border"></div>
 </header>
 
 <style>
+  .sticky-header {
+    @apply sticky top-0 z-40 w-full;
+    background: rgba(var(--color-fill), 0.8);
+    backdrop-filter: saturate(180%) blur(10px);
+    -webkit-backdrop-filter: saturate(180%) blur(10px);
+    animation: slideDown 0.5s ease-out;
+  }
+  
+  .top-border {
+    @apply absolute top-0 left-0 right-0 h-px;
+    background: rgb(var(--color-border) / 0.15);
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+  }
+  
+  .header-border {
+    @apply h-px w-full;
+    background: rgb(var(--color-border) / 0.25);
+  }
   #skip-to-content {
     @apply absolute -top-full left-16 z-50 bg-skin-accent px-3 py-2 text-skin-inverted transition-all focus:top-4;
   }
   .nav-container {
-    @apply mx-auto flex max-w-4xl flex-col items-center justify-between sm:flex-row;
+    @apply mx-auto flex flex-col items-center justify-between sm:flex-row px-6;
+    max-width: 1200px;
+
+    @media (max-width: 1024px) {
+      max-width: 768px;
+    }
   }
   .top-nav-wrap {
     @apply relative flex w-full items-start justify-between sm:items-center sm:py-0;
   }
   .logo {
     @apply absolute z-20 py-1 text-xl font-semibold sm:static sm:text-2xl;
+  }
+
+  .header-logo {
+    transition: transform 0.3s ease;
+  }
+
+  .header-logo:hover {
+    transform: scale(1.1) rotate(5deg);
   }
   .hamburger-menu {
     @apply self-end p-2 sm:hidden;
@@ -152,7 +185,13 @@ const navItems = [
     @apply col-span-2 flex items-center justify-center;
   }
   nav ul li a {
-    @apply w-full px-4 py-3 text-center font-medium hover:text-skin-accent sm:my-0 sm:px-2 sm:py-1;
+    @apply w-full px-4 py-3 text-center text-sm font-medium sm:my-0 sm:px-2 sm:py-1;
+    color: rgb(var(--color-text-base) / 0.7);
+    transition: color 0.15s ease;
+  }
+
+  nav ul li a:hover {
+    color: rgb(var(--color-text-base));
   }
   nav ul li:nth-last-child(2) a {
     @apply w-auto;

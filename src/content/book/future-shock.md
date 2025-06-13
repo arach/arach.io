@@ -4,7 +4,15 @@ addedDatetime: 2024-06-20T04:15:36.686Z
 pubDatetime: 2024-06-20T04:15:36.686Z
 authors: ["Alvin Toffler"]
 description: "A visionary analysis of the accelerated rate of change in society and its impact on individuals and cultures."
-tags: ["Business", "Nonfiction", "Leadership", "Management", "Entrepreneurship", "Self Help"]
+tags:
+  [
+    "Business",
+    "Nonfiction",
+    "Leadership",
+    "Management",
+    "Entrepreneurship",
+    "Self Help",
+  ]
 thumbnail: "assets/images/books/9780553101508-L.jpg"
 isbn: "9780553101508"
 featured: false
@@ -12,7 +20,6 @@ draft: false
 rating: 5
 goodreads: "https://www.goodreads.com/book/show/466537.Future_Shock"
 amazon: "https://www.amazon.com/Future-Shock-Alvin-Toffler/dp/0553277375"
-
 ---
 
 ### Key Points:
@@ -30,6 +37,5 @@ The book vividly describes the emerging global civilization and predicts how new
 
 "Future Shock" has been praised for its foresight and continues to be relevant as we navigate the complexities of the Information Age. It is a must-read for anyone interested in understanding the impact of rapid change on our world and how to adapt to it.
 
- * [Future Shock - Book Review](https://sudalo.medium.com/tofflers-future-shock-a-prophetic-vision-of-the-future-ee366d88aca)
- * [Future Shock - 40 years later](https://www.npr.org/2016/06/30/484215904/encore-future-shock-40-years-later)
-
+- [Future Shock - Book Review](https://sudalo.medium.com/tofflers-future-shock-a-prophetic-vision-of-the-future-ee366d88aca)
+- [Future Shock - 40 years later](https://www.npr.org/2016/06/30/484215904/encore-future-shock-40-years-later)

@@ -4,11 +4,19 @@ addedDatetime: 2024-06-20T04:15:33.986Z
 pubDatetime: 2024-06-20T04:15:33.986Z
 authors: ["Will Larson"]
 description: "Will Larson provides a comprehensive guide to the complexities of engineering management, blending structured principles with human-centric thinking."
-tags: ["Business", "Nonfiction", "Leadership", "Management", "Entrepreneurship", "Self Help"]
+tags:
+  [
+    "Business",
+    "Nonfiction",
+    "Leadership",
+    "Management",
+    "Entrepreneurship",
+    "Self Help",
+  ]
 thumbnail: "assets/images/books/9781953953339-L.jpg"
 isbn: "9781953953339"
 featured: false
-draft: false 
+draft: false
 goodreads: "https://www.goodreads.com/book/show/43561856-an-elegant-puzzle"
 amazon: "https://www.amazon.com/Elegant-Puzzle-Systems-Engineering-Management/dp/1953953333"
 ---
@@ -29,5 +37,5 @@ Larson provides practical advice on managing technical debt, designing effective
 
 "An Elegant Puzzle" is highly regarded for its practical approach and insightful commentary on the intricacies of engineering management. It is recommended for anyone looking to enhance their leadership skills and create more effective and rewarding environments for engineers to thrive
 
-* [Stripe Press — An Elegant Puzzle](https://press.stripe.com/an-elegant-puzzle)
-* [An Elegant Puzzle - Systems of Engineering Management (Will Larson) | Josh Hornby](https://joshhornby.com/books/an-elegant-puzzle).
+- [Stripe Press — An Elegant Puzzle](https://press.stripe.com/an-elegant-puzzle)
+- [An Elegant Puzzle - Systems of Engineering Management (Will Larson) | Josh Hornby](https://joshhornby.com/books/an-elegant-puzzle).
