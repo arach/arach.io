@@ -52,7 +52,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
               Explore My Work
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="ml-2 h-4 w-4"
+                className="ml-2.5 h-4 w-4"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -71,7 +71,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
               Connect With Me
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="ml-2 h-4 w-4"
+                className="ml-2.5 h-4 w-4"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -222,11 +222,11 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     }
 
     .cta-primary {
-      @apply inline-flex items-center rounded-lg bg-skin-accent px-5 py-2.5 text-sm font-medium text-skin-inverted transition-all;
+      @apply inline-flex items-center rounded-lg bg-skin-accent px-5 py-2.5 text-sm font-medium text-skin-inverted transition-opacity;
     }
     
     .cta-primary:hover {
-      @apply bg-skin-accent;
+      @apply bg-skin-accent text-skin-inverted;
       opacity: 0.9;
     }
     

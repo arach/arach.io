@@ -119,7 +119,6 @@ const navItems = [
       </nav>
     </div>
   </div>
-  <div class="header-border"></div>
 </header>
 
 <style>
@@ -129,6 +128,7 @@ const navItems = [
     backdrop-filter: saturate(180%) blur(10px);
     -webkit-backdrop-filter: saturate(180%) blur(10px);
     animation: slideDown 0.5s ease-out;
+    border-bottom: 1px solid rgb(var(--color-border) / 0.4);
   }
   
   .top-border {
@@ -136,11 +136,6 @@ const navItems = [
     background: rgb(var(--color-border) / 0.15);
     width: 100vw;
     margin-left: calc(-50vw + 50%);
-  }
-  
-  .header-border {
-    @apply h-px w-full;
-    background: rgb(var(--color-border) / 0.25);
   }
   #skip-to-content {
     @apply absolute -top-full left-16 z-50 bg-skin-accent px-3 py-2 text-skin-inverted transition-all focus:top-4;
