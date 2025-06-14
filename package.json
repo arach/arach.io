@@ -13,9 +13,9 @@
     "format:check": "prettier --check . --plugin=prettier-plugin-astro",
     "format": "prettier --write . --plugin=prettier-plugin-astro",
     "cz": "cz",
-    "prepare": "husky install",
+    "prepare": "bun x husky install",
     "lint": "eslint",
-    "postinstall": "node scripts/install-sharp.js"
+    "postinstall": "bun scripts/install-sharp.js"
   },
   "dependencies": {
     "@astrojs/check": "^0.4.1",
