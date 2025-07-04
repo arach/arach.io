@@ -25,6 +25,9 @@ pnpm-debug.log*
 # ignore Jampack cache files
 .jampack/
 
+# Claude settings (local configuration)
+.claude/
+
 # yarn
 .yarn/*
 !.yarn/patches
