@@ -10,6 +10,7 @@ import PostCard from "@components/PostCard";
 import Hero from "@components/Hero.astro";
 import Socials from "@components/Socials.astro";
 import CompanyLogos from "@components/CompanyLogos.astro";
+import CalBooking from "@components/CalBooking";
 import getSortedPosts from "@utils/getSortedPosts";
 import { SOCIALS } from "@config";
 import socialIcons from "@assets/socialIcons";
@@ -25,7 +26,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
 
 <Layout>
   <Header />
-  <main id="main-content">
+  <main id="main-content" class="index-main">
     <section id="hero" class="hero-section">
       <div class="hero-container">
         <div class="hero-content">
@@ -64,26 +65,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
                   d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
               </svg>
             </LinkButton>
-            <LinkButton
-              href="mailto:arach@tchoupani.com"
-              className="cta-secondary"
-            >
-              Connect With Me
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="ml-2.5 h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M7 17L17 7M17 7H7M17 7V17"
-                ></path>
-              </svg>
-            </LinkButton>
+            <CalBooking client:load />
           </div>
         </div>
 
@@ -162,13 +144,26 @@ const socialCount = SOCIALS.filter(social => social.active).length;
   </main>
 
   <style>
+    /* ===== Main Content ===== */
+    .index-main {
+      @apply w-full;
+      margin-top: 3rem;
+      padding-top: 0;
+    }
+    
+    @media (min-width: 768px) {
+      .index-main {
+        margin-top: 5rem;
+      }
+    }
+
     /* ===== Hero Section ===== */
     .hero-section {
-      @apply pb-10 pt-8;
+      @apply pb-12 pt-16 md:pt-20;
     }
 
     .hero-container {
-      @apply flex flex-col gap-6 lg:flex-row lg:items-center lg:gap-12;
+      @apply flex flex-col gap-8 lg:flex-row lg:items-center lg:gap-16;
     }
 
     .hero-content {
@@ -184,7 +179,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     }
 
     .hero-description {
-      @apply mt-4 max-w-prose font-normal;
+      @apply mt-6 max-w-prose font-normal;
       font-size: 1.25rem;
       line-height: 1.75;
       color: rgb(var(--color-text-base) / 0.9);
@@ -202,7 +197,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     }
 
     .achievement-badges {
-      @apply mt-5 flex flex-wrap gap-2;
+      @apply mt-6 flex flex-wrap gap-3;
     }
 
     .badge {
@@ -218,7 +213,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     }
 
     .cta-buttons {
-      @apply mt-6 flex flex-wrap gap-3;
+      @apply mt-8 flex flex-wrap gap-4;
     }
 
     .cta-primary {
@@ -235,12 +230,14 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     }
 
     .cta-secondary {
-      @apply inline-flex items-center rounded-lg bg-skin-card border border-skin-line px-5 py-2.5 text-sm font-medium transition-all;
+      @apply inline-flex items-center rounded-lg bg-skin-card px-5 py-2.5 text-sm font-medium transition-all;
+      border: 1px solid rgb(var(--color-border));
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
     }
     
     .cta-secondary:hover {
-      @apply bg-skin-card-muted border-skin-accent;
+      @apply bg-skin-card-muted;
+      border-color: rgb(var(--color-accent));
       transform: translateY(-1px);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
@@ -307,7 +304,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
 
     /* ===== Featured & Recent Posts Sections ===== */
     .content-section {
-      @apply pb-6 pt-4;
+      @apply pb-6 pt-6;
     }
     
     #featured h2,
@@ -346,7 +343,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     
     /* ===== Companies Section ===== */
     .companies-section {
-      @apply py-4 -mt-5;
+      @apply py-6 mt-6;
       background: rgb(var(--color-card-muted) / 0.3);
     }
     
