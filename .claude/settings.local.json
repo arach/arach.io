@@ -12,7 +12,8 @@
       "Bash(sips:*)",
       "Bash(grep:*)",
       "Bash(npm install:*)",
-      "Bash(npm run typecheck:*)"
+      "Bash(npm run typecheck:*)",
+      "Bash(bun install:*)"
     ],
     "deny": []
   }

@@ -24,8 +24,14 @@ bun preview
 # Format code
 bun format
 
+# Check formatting without fixing
+bun format:check
+
 # Run linting
 bun lint
+
+# Commit with conventional commits (uses Commitizen)
+bun cz
 ```
 
 ## Architecture
@@ -92,3 +98,48 @@ When modifying components:
 - `src/config.ts` - Site metadata and constants
 - `tailwind.config.cjs` - Custom theme extensions and typography settings
 - `tsconfig.json` - TypeScript paths and compiler options
+
+## Key Routes and Pages
+
+- `/` - Homepage with recent posts and featured content
+- `/blog` - Blog post listing
+- `/book` - Book reviews listing
+- `/memo` - Memos listing (short-form content)
+- `/[collection]/[slug]` - Individual content pages (dynamic routing)
+- `/search` - Search page with fuzzy search across all content
+- `/about` - About page
+- `/privacy` - Privacy policy
+- `/rss.xml` - RSS feed (auto-generated)
+
+## Content Frontmatter Requirements
+
+### Blog Posts (`src/content/blog/`)
+```yaml
+title: string (required)
+description: string (required)
+date: ISO date string (required)
+tags: string[] (optional)
+featured: boolean (optional)
+thumbnail: string (optional - path relative to src/assets/)
+```
+
+### Book Reviews (`src/content/book/`)
+```yaml
+title: string (required)
+author: string (required)
+description: string (required)
+date: ISO date string (required)
+isbn: string (required)
+rating: number 1-5 (required)
+goodreads: URL (optional)
+amazon: URL (optional)
+thumbnail: string (optional)
+```
+
+### Memos (`src/content/memo/`)
+```yaml
+title: string (required)
+description: string (required)
+date: ISO date string (required)
+authors: string[] (optional)
+```

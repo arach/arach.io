@@ -10,6 +10,7 @@ excerpt: ""
 categories: []
 featured: true
 draft: false
+thumbnail: "assets/images/ai-dev-tools.jpg"
 ---
 
 # The Initial Learning Curve
