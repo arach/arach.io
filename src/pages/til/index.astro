@@ -1,0 +1,35 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import Main from "@layouts/Main.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import Card from "@components/Card";
+import getSortedPosts from "@utils/getSortedPosts";
+import { SITE } from "@config";
+
+const tilEntries = await getCollection("til");
+const sortedTILs = getSortedPosts(tilEntries);
+
+const socialImageURL = new URL(
+  "/og.png",
+  Astro.url.origin
+).href;
+---
+
+<Layout title={`TIL | ${SITE.title}`} socialImageURL={socialImageURL}>
+  <Header activeNav="til" />
+  <Main pageTitle="Today I Learned" pageDesc="Small things I've learned along the way">
+    <ul>
+      {
+        sortedTILs.map(
+          ({ data, slug }, index) =>
+            data.draft !== true && (
+              <Card href={`/til/${slug}/`} frontmatter={data} />
+            )
+        )
+      }
+    </ul>
+  </Main>
+  <Footer />
+</Layout>

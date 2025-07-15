@@ -1,0 +1,30 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import TILDetails from "@layouts/TILDetails.astro";
+import getSortedPosts from "@utils/getSortedPosts";
+
+export interface Props {
+  entry: CollectionEntry<"til">;
+}
+
+export async function getStaticPaths() {
+  const entries = await getCollection("til", ({ data }) => !data.draft);
+
+  const entryResult = entries.map(entry => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+
+  return entryResult;
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+const allTILs = await getCollection("til");
+const sortedTILs = getSortedPosts(allTILs);
+---
+
+<TILDetails entry={entry} tils={sortedTILs}>
+  <Content />
+</TILDetails>

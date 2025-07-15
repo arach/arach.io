@@ -60,6 +60,7 @@
     "@types/react": "^18.3.2",
     "@typescript-eslint/parser": "^6.21.0",
     "astro-eslint-parser": "^0.16.3",
+    "caniuse-lite": "^1.0.30001727",
     "commitizen": "^4.3.0",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.57.0",
