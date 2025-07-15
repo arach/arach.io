@@ -1,6 +1,6 @@
 ---
 author: Arach Tchoupani
-pubDatetime: 2025-01-15T10:00:00Z
+pubDatetime: 2025-07-15T10:00:00Z
 title: What is TIL (Today I Learned)?
 tags:
   - meta

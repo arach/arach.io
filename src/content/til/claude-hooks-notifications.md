@@ -1,6 +1,6 @@
 ---
 author: Arach Tchoupani
-pubDatetime: 2025-01-15T16:00:00Z
+pubDatetime: 2025-07-15T16:00:00Z
 title: Claude hooks with voice notifications using Speakeasy
 tags:
   - claude
