@@ -61,7 +61,7 @@ if (pathMatch) {
 ```
 
 ### 3. Natural Speech with Speakeasy
-Instead of robotic notifications, it creates contextual messages:
+Instead of robotic notifications, it creates contextual messages using [Speakeasy](https://github.com/arach/speakeasy):
 ```typescript
 // Examples:
 "In blink, Claude is waiting for you"
