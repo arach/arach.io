@@ -40,6 +40,22 @@ Claude hooks can be configured in `~/.claude/settings.json` to run custom script
 }
 ```
 
+## Simple Import, Powerful Results
+
+The beauty of Speakeasy is its simplicity. In notification.ts, it's just:
+
+```typescript
+import { speak } from 'speakeasy';
+
+// Later in the code...
+await speak(message, { 
+  priority: 'high',
+  provider: 'elevenlabs'  // or 'groq', 'openai', etc.
+});
+```
+
+That's it! Speakeasy handles all the complexity of TTS providers, voice selection, and audio playback.
+
 ## The Magic: notification.ts
 
 The TypeScript hook does three clever things:
@@ -70,7 +86,7 @@ Instead of robotic notifications, it creates contextual messages using [Speakeas
 
 await speak(message, { 
   priority: 'high',
-  provider: 'groq' 
+  provider: 'elevenlabs' 
 });
 ```
 
