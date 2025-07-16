@@ -44,10 +44,11 @@ bun cz
 - **Bun** - Primary package manager
 
 ### Content Architecture
-The site uses Astro's Content Collections for managing three types of content:
+The site uses Astro's Content Collections for managing four types of content:
 - **Blog posts** (`src/content/blog/`) - Technical articles and thoughts
 - **Book reviews** (`src/content/book/`) - Book notes and reviews
 - **Memos** (`src/content/memo/`) - Short-form content
+- **TILs** (`src/content/til/`) - Today I Learned entries (not yet in menu)
 
 Each content type has:
 - Markdown files with frontmatter metadata
@@ -142,4 +143,13 @@ title: string (required)
 description: string (required)
 date: ISO date string (required)
 authors: string[] (optional)
+```
+
+### TILs (`src/content/til/`)
+```yaml
+title: string (required)
+author: string (required)
+pubDatetime: ISO date string (required)
+description: string (required)
+tags: string[] (optional)
 ```
