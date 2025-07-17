@@ -7,6 +7,7 @@ import sitemap from "@astrojs/sitemap";
 import { SITE } from "./src/config";
 import { remarkReadingTime } from "./src/utils/remark-reading-time.mjs";
 import partytown from "@astrojs/partytown";
+import icon from "astro-icon";
 
 // https://astro.build/config
 export default defineConfig({
@@ -18,6 +19,7 @@ export default defineConfig({
     react(),
     sitemap(),
     partytown(),
+    icon(),
   ],
   image: {
     // Example: Enable the Sharp-based image service with a custom config

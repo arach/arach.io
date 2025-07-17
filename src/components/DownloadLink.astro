@@ -1,4 +1,6 @@
 ---
+import { Icon } from 'astro-icon/components';
+
 export interface Props {
   collection: 'blog' | 'til' | 'book' | 'memo';
   slug: string;
@@ -14,50 +16,21 @@ const markdownUrl = `${baseUrl}/${slug}.md`;
   <button
     id={`copy-${slug}`}
     data-url={markdownUrl}
-    class="inline-flex items-center gap-2 rounded-lg bg-skin-card px-4 py-2 text-sm font-medium text-skin-base hover:bg-skin-card-muted focus:outline-none focus:ring-2 focus:ring-skin-accent focus:ring-offset-2 focus:ring-offset-skin-fill transition-colors"
+    class="inline-flex items-center gap-1.5 rounded-lg bg-skin-card px-3 py-1.5 text-sm font-medium text-skin-base hover:bg-skin-card-muted focus:outline-none focus:ring-2 focus:ring-skin-accent focus:ring-offset-2 focus:ring-offset-skin-fill transition-colors"
     title="Copy Markdown to clipboard"
   >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      class="opacity-70"
-    >
-      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-    </svg>
-    <span>Copy</span>
+    <Icon name="lucide:copy" class="w-3.5 h-3.5 opacity-60" />
+    <span class="text-xs">Copy</span>
   </button>
   
   <a
     href={markdownUrl}
     download={`${slug}.md`}
-    class="inline-flex items-center gap-2 rounded-lg bg-skin-card px-4 py-2 text-sm font-medium text-skin-base hover:bg-skin-card-muted focus:outline-none focus:ring-2 focus:ring-skin-accent focus:ring-offset-2 focus:ring-offset-skin-fill transition-colors"
+    class="inline-flex items-center gap-1.5 rounded-lg bg-skin-card px-3 py-1.5 text-sm font-medium text-skin-base hover:bg-skin-card-muted focus:outline-none focus:ring-2 focus:ring-skin-accent focus:ring-offset-2 focus:ring-offset-skin-fill transition-colors"
     title="Download as Markdown"
   >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      class="opacity-70"
-    >
-      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-      <polyline points="7 10 12 15 17 10"></polyline>
-      <line x1="12" y1="15" x2="12" y2="3"></line>
-    </svg>
-    Download
+    <Icon name="lucide:download" class="w-3.5 h-3.5 opacity-60" />
+    <span class="text-xs">Download</span>
   </a>
 </div>
 
