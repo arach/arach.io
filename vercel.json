@@ -1,0 +1,10 @@
+{
+  "functions": {
+    "api/**/*.ts": {
+      "runtime": "nodejs22.x"
+    }
+  },
+  "buildCommand": "bun run build",
+  "installCommand": "bun install",
+  "framework": null
+}

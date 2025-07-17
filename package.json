@@ -3,6 +3,9 @@
   "name": "arach-io",
   "version": "4.2.0",
   "private": false,
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "dev": "astro dev --experimental-https",
     "start": "astro dev",
