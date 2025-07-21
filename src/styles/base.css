@@ -382,9 +382,17 @@ html[data-theme="dark"] {
   .prose {
     --tw-prose-headings: #f9f9f9;
     --tw-prose-body: rgb(225, 225, 225);
-    --tw-prose-link: #ff862f;
+    --tw-prose-links: #ff862f;
     --tw-prose-bold: #f9f9f9;
     --tw-prose-counters: var(--tw-prose-body);
+  }
+  
+  .prose a {
+    color: #ff862f !important;
+  }
+  
+  .prose a:hover {
+    color: #ff9f5f !important;
   }
 }
 

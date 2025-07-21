@@ -35,9 +35,7 @@ module.exports = {
         serif: ["Merriweather", "Georgia", "serif"],
         mono: ["Menlo", "Monaco", "ui-monospace"],
         body: ["Berkeley", "ui-monospace"],
-      }
-    },
-    extend: {
+      },
       textColor: {
         skin: {
           base: withOpacity("--color-text-base"),
@@ -73,10 +71,6 @@ module.exports = {
         },
         transparent: "transparent",
       },
-      fontFamily: {
-        mono: ["Cinetype", "Sans-serif"],
-      },
-
       typography: {
         DEFAULT: {
           css: {

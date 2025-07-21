@@ -44,14 +44,7 @@ function reflectPreference() {
       .querySelector("meta[name='theme-color']")
       ?.setAttribute("content", bgColor);
   }
-  document
-    .querySelector(".logo > img")
-    ?.setAttribute(
-      "src",
-      themeValue === "dark"
-        ? "/assets/arach.io-logo-photo-white.png"
-        : "/assets/arach.io-logo-photo.png"
-    );
+  // Logo switching is now handled by CSS classes
 }
 
 // set early so no page flashes / CSS is made aware
