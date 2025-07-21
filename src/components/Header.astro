@@ -319,9 +319,16 @@ const navItems = [
     
     // Debug: log which logo should be visible
     const currentTheme = htmlElement.getAttribute("data-theme");
-    console.log("Current theme:", currentTheme);
-    console.log("Logo light display:", window.getComputedStyle(document.querySelector('.logo-light')).display);
-    console.log("Logo dark display:", window.getComputedStyle(document.querySelector('.logo-dark')).display);
+    const logoLight = document.querySelector('.logo-light');
+    const logoDark = document.querySelector('.logo-dark');
+    
+    if (logoLight && logoDark) {
+      console.log("Current theme:", currentTheme);
+      console.log("Logo light display:", window.getComputedStyle(logoLight).display);
+      console.log("Logo dark display:", window.getComputedStyle(logoDark).display);
+      console.log("Logo light src:", logoLight.src);
+      console.log("Logo dark src:", logoDark.src);
+    }
   }
 
   setupNav();
