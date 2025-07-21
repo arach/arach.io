@@ -6,6 +6,7 @@ slug: ladderless-path
 description: "When corporations delete entry-level jobs in favor of AI, they're not just saving money—they're destroying their own future. The kids they're locking out? They're building the companies that will eat them alive."
 tags: ["AI", "Future of Work", "Corporate Strategy", "Career Development"]
 featured: true
+thumbnail: "pulling-up-ladder-thumbnail.png"
 draft: false
 ---
 
