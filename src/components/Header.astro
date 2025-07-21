@@ -158,11 +158,11 @@ const navItems = [
   }
   
   /* Dark mode: hide regular logo, show white logo */
-  [data-theme="dark"] .logo-light {
+  :global([data-theme="dark"]) .logo-light {
     display: none;
   }
   
-  [data-theme="dark"] .logo-dark {
+  :global([data-theme="dark"]) .logo-dark {
     display: block;
   }
   
