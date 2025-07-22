@@ -1,13 +1,16 @@
 ---
 title: "Pulling Up the Ladder: How AI Could Kill the Corporate Status Game"
 author: Arach Tchoupani
-pubDatetime: 2025-07-21T12:00:00Z
+pubDatetime: 2025-07-18T12:00:00Z
 slug: ladderless-path
 description: "When corporations delete entry-level jobs in favor of AI, they're not just saving money—they're destroying their own future. The kids they're locking out? They're building the companies that will eat them alive."
 tags: ["AI", "Future of Work", "Corporate Strategy", "Career Development"]
 featured: true
 thumbnail: "assets/images/pulling-up-the-ladder.png"
 draft: false
+series:
+  name: "AI's Impact on Corporate Strategy"
+  order: 1
 ---
 
 Last month, JPMorgan's consumer banking CEO told investors she'd "take the over" on cutting 10% of operations staff through AI. The stock jumped. The irony? She just bet against her own future talent pipeline.

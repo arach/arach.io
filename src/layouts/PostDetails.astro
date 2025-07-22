@@ -8,6 +8,7 @@ import type { CollectionEntry } from "astro:content";
 import { slugifyStr } from "@utils/slugify";
 import ShareLinks from "@components/ShareLinks.astro";
 import DownloadLink from "@components/DownloadLink.astro";
+import SeriesNavigation from "@components/SeriesNavigation.astro";
 import { SITE } from "@config";
 
 export interface Props {
@@ -55,35 +56,52 @@ const layoutProps = {
     <div class="progress-bar h-1 w-0 bg-skin-accent" id="myBar"></div>
   </div> -->
 
-  <div class="mx-auto flex w-full max-w-4xl justify-start px-2">
-    <button
-      class="focus-outline mb-2 mt-8 flex hover:opacity-75"
-      onclick="(() => (history.length === 1) ? window.location = '/' : history.back())()"
-    >
-      <svg xmlns="http://www.w3.org/2000/svg"
-        ><path
-          d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"
-        ></path>
-      </svg><span>Go back</span>
-    </button>
-  </div>
   <main id="main-content">
-    <div class="flex items-start justify-between gap-4">
+    <!-- Series tag at top level -->
+    {post.data.series && (
+      <div class="series-floating-tag">
+        Special series on AI
+      </div>
+    )}
+    
+    <!-- Title with Go back on same line -->
+    <div class="mb-3 flex items-start justify-between">
       <div class="flex-1">
+        <button
+          class="go-back-btn-inline"
+          onclick="(() => (history.length === 1) ? window.location = '/' : history.back())()"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+            ><path
+              d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"
+            ></path>
+          </svg><span>Go back</span>
+        </button>
         <h1 transition:name={slugifyStr(title)} class="post-title">{title}</h1>
+      </div>
+    </div>
+    
+    <!-- Date/Reading time + Actions row -->
+    <div class="flex items-center justify-between gap-4 mb-4">
+      <div class="flex items-center gap-4">
         <Datetime
           pubDatetime={pubDatetime}
           modDatetime={modDatetime}
-          size="lg"
-          className="my-2"
+          size="sm"
+          className=""
         />
-        <span>Estimated Reading Time: ({readingTime})</span>
+        <span class="reading-time">
+          Estimated Reading Time: {readingTime}
+        </span>
       </div>
-      <div class="flex-shrink-0 pt-2">
+      <div class="flex items-center gap-3">
         <DownloadLink collection="blog" slug={post.slug} />
       </div>
     </div>
-    <article id="article" role="article" class="prose mx-auto mt-8 max-w-4xl">
+    
+    <SeriesNavigation currentPost={post} />
+    
+    <article id="article" role="article" class="prose prose-lg mx-auto mt-8 w-full">
       <Content />
     </article>
 
@@ -118,10 +136,161 @@ const layoutProps = {
 
 <style>
   main {
-    @apply mx-auto w-full max-w-4xl px-4 pb-12;
+    @apply mx-auto w-full pb-12;
+    max-width: 1200px; /* Match header nav width */
+    padding-left: 2rem; /* 32px instead of 16px */
+    padding-right: 2rem;
   }
+  .go-back-btn-inline {
+    @apply flex items-center gap-1 text-xs text-skin-base opacity-60 hover:opacity-80 transition-opacity mb-2;
+    font-weight: 400;
+  }
+  
+  .go-back-btn-inline svg {
+    @apply w-3 h-3;
+  }
+  
   .post-title {
-    @apply text-2xl font-semibold text-skin-accent;
+    @apply text-3xl font-bold text-skin-accent;
+  }
+  
+  .series-floating-tag {
+    @apply float-right text-xs font-medium text-skin-accent bg-skin-card border border-skin-accent px-3 py-1 rounded-full mb-2;
+    opacity: 0.9;
+    margin-top: -2rem;
+  }
+  
+  .reading-time {
+    @apply text-xs font-medium text-skin-base bg-skin-card-muted px-3 py-1 rounded-full border border-skin-line;
+    opacity: 0.8;
+  }
+
+  /* Flexible content layout system */
+  .prose {
+    max-width: none;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 1.1875rem;
+    line-height: 1.7;
+    font-weight: 400;
+    color: rgb(var(--color-text-base));
+  }
+
+  /* Default body text - optimal reading width */
+  .prose p,
+  .prose li {
+    max-width: 75ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Full-width elements that use more space */
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose blockquote,
+  .prose figure,
+  .prose img {
+    max-width: 100%; /* Use full article width */
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Special full-width sections */
+  .prose .full-width {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Two-column text for variety */
+  .prose .two-column {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    max-width: 100%;
+    margin: 2rem auto;
+  }
+
+  @media (max-width: 768px) {
+    .prose .two-column {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+  }
+
+  .prose p {
+    margin-bottom: 1.75em; /* 1.75em based on line-height for rhythm */
+    text-align: left;
+  }
+
+  .prose h1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: rgb(var(--color-text-base));
+  }
+
+  .prose h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-top: 2.5em;
+    margin-bottom: 1em;
+    color: rgb(var(--color-text-base));
+  }
+
+  .prose h3 {
+    font-size: 1.375rem;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-top: 2em;
+    margin-bottom: 0.75em;
+    color: rgb(var(--color-text-base));
+  }
+
+  .prose blockquote {
+    @apply border-l-4 border-skin-accent bg-skin-card-muted px-6 py-4 my-8 rounded-r-lg;
+    font-style: italic;
+    font-size: 1.125rem;
+  }
+
+  .prose code {
+    @apply bg-skin-card-muted px-2 py-1 rounded;
+    font-size: 0.9em;
+    font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  }
+
+  .prose strong, .prose b {
+    font-weight: 600;
+    color: rgb(var(--color-text-base));
+  }
+
+  .prose em, .prose i {
+    font-style: italic;
+  }
+
+  /* Lists */
+  .prose ul, .prose ol {
+    margin-bottom: 1.75em;
+    padding-left: 1.5em;
+  }
+
+  .prose li {
+    margin-bottom: 0.5em;
+  }
+
+  /* Links */
+  .prose a {
+    color: rgb(var(--color-accent));
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
+
+  .prose a:hover {
+    text-decoration-thickness: 2px;
   }
 </style>
 
