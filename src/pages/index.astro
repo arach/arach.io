@@ -50,7 +50,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
 
           <div class="cta-buttons animate-in">
             <LinkButton href="https://arach.dev" className="cta-primary">
-              Recent Explorations
+              Explorations
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="ml-3.5 h-4 w-4"
@@ -90,7 +90,10 @@ const socialCount = SOCIALS.filter(social => social.active).length;
       featuredPosts.length > 0 && (
         <>
           <section id="featured" class="content-section">
-            <h2 class="section-title animate-in">Featured Posts</h2>
+            <h2 class="section-title animate-in">
+              <span class="featured-full">Featured Posts</span>
+              <span class="featured-short">Featured</span>
+            </h2>
             <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 stagger-children">
               {featuredPosts.map(({ data, slug }) => (
                 <PostCard
@@ -151,6 +154,13 @@ const socialCount = SOCIALS.filter(social => social.active).length;
       padding-top: 0;
     }
     
+    /* iPhone: move main content up by reducing top margin */
+    @media (max-width: 767px) {
+      .index-main {
+        margin-top: 1.5rem;
+      }
+    }
+    
     @media (min-width: 768px) {
       .index-main {
         margin-top: 5rem;
@@ -161,6 +171,13 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     .hero-section {
       @apply pb-12 pt-16 md:pt-20;
     }
+    
+    /* iPhone: move content up and minimal bottom spacing */
+    @media (max-width: 767px) {
+      .hero-section {
+        @apply pt-10 pb-1;
+      }
+    }
 
     .hero-container {
       @apply flex flex-col gap-8 lg:flex-row lg:items-center lg:gap-16;
@@ -168,6 +185,13 @@ const socialCount = SOCIALS.filter(social => social.active).length;
 
     .hero-content {
       @apply flex-1 pt-2;
+    }
+    
+    /* iPhone: center all hero content */
+    @media (max-width: 767px) {
+      .hero-content {
+        @apply text-center;
+      }
     }
 
     .hero-title {
@@ -179,7 +203,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     }
 
     .hero-description {
-      @apply mt-6 max-w-prose font-normal;
+      @apply mt-6 max-w-prose font-light;
       font-size: 1.25rem;
       line-height: 1.75;
       color: rgb(var(--color-text-base) / 0.9);
@@ -199,6 +223,13 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     .achievement-badges {
       @apply mt-6 flex flex-wrap gap-3;
     }
+    
+    /* iPhone: hide achievement badges to save space */
+    @media (max-width: 767px) {
+      .achievement-badges {
+        @apply hidden;
+      }
+    }
 
     .badge {
       @apply rounded-full px-3.5 py-1.5 text-xs font-semibold transition-all;
@@ -213,11 +244,25 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     }
 
     .cta-buttons {
-      @apply mt-8 flex flex-wrap gap-4;
+      @apply mt-8 flex gap-3;
+    }
+    
+    /* iPhone: force side by side layout */
+    @media (max-width: 767px) {
+      .cta-buttons {
+        @apply gap-2;
+      }
     }
 
     .cta-primary {
-      @apply inline-flex items-center rounded-lg bg-skin-accent px-5 py-2.5 text-sm font-medium text-skin-inverted transition-opacity;
+      @apply inline-flex items-center rounded-lg bg-skin-accent px-5 py-2.5 text-sm font-medium text-skin-inverted transition-opacity flex-1 justify-center;
+    }
+    
+    /* iPhone: more compact buttons */
+    @media (max-width: 767px) {
+      .cta-primary {
+        @apply px-3 py-2 text-xs;
+      }
     }
     
     .cta-primary:hover {
@@ -230,9 +275,16 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     }
 
     .cta-secondary {
-      @apply inline-flex items-center rounded-lg bg-skin-card px-5 py-2.5 text-sm font-medium transition-all;
+      @apply inline-flex items-center rounded-lg bg-skin-card px-5 py-2.5 text-sm font-medium transition-all flex-1 justify-center;
       border: 1px solid rgb(var(--color-border));
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+    
+    /* iPhone: more compact secondary button */
+    @media (max-width: 767px) {
+      .cta-secondary {
+        @apply px-3 py-2 text-xs;
+      }
     }
     
     .cta-secondary:hover {
@@ -256,6 +308,13 @@ const socialCount = SOCIALS.filter(social => social.active).length;
 
     .hero-image-wrapper {
       @apply flex-shrink-0;
+    }
+    
+    /* iPhone: hide face photo to save space */
+    @media (max-width: 767px) {
+      .hero-image-wrapper {
+        @apply hidden;
+      }
     }
     
     .hero-image-container {
@@ -282,6 +341,30 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     /* ===== Section Styles ===== */
     .section-title {
       @apply mb-6 text-3xl font-black tracking-tight;
+    }
+    
+    /* Featured text responsive display */
+    .featured-full {
+      @apply inline;
+    }
+    
+    .featured-short {
+      @apply hidden;
+    }
+    
+    /* iPhone: center section titles, reduce spacing, and show short text */
+    @media (max-width: 767px) {
+      .section-title {
+        @apply text-center mb-4 mt-2;
+      }
+      
+      .featured-full {
+        @apply hidden;
+      }
+      
+      .featured-short {
+        @apply inline;
+      }
     }
 
     .journey-content p,

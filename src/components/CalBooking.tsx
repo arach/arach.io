@@ -24,7 +24,7 @@ export default function CalBooking() {
         boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)'
       }}
     >
-      Connect With Me
+      Connect
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className="ml-2.5 h-4 w-4 transition-transform hover:animate-bounce"

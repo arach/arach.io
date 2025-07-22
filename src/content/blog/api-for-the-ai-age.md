@@ -6,7 +6,7 @@ slug: api-for-the-ai-age
 featured: true
 draft: false
 description: We need to reassess the gap between UIs and APIs in the age of AI
-thumbnail: "assets/images/api-ai-integration.jpg"
+thumbnail: "/src/assets/images/api-ai-integration.jpg"
 ---
 
 # **Memo: Enhancing Automation and Integration in the AI-driven Era**

@@ -13,7 +13,7 @@ tags:
   - team structure
   - generative AI
   - technical leadership
-thumbnail: "assets/images/cto-ai-meeting-productivity.png"
+thumbnail: "../../assets/images/cto-ai-meeting-productivity.png"
 series:
   name: "AI's Impact on Corporate Strategy"
   order: 2

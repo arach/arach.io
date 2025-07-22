@@ -12,7 +12,7 @@ tags:
   - development tools
   - productivity
   - workflow
-thumbnail: "../../assets/images/voice-coding-workflow.jpg"
+thumbnail: "/src/assets/images/voice-coding-workflow.jpg"
 ---
 
 ## Introduction

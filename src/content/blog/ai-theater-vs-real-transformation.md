@@ -6,7 +6,7 @@ slug: ai-theater-vs-real-transformation
 description: "While Salesforce brags about AgentForce helping companies 'do the same things with fewer people,' real AI transformation expands capabilities, not just efficiency. Here's how to tell who's building the future versus who's just optimizing the past."
 tags: ["AI", "Business Strategy", "Digital Transformation", "Innovation", "Future of Work"]
 featured: true
-thumbnail: "assets/images/ai-theater-robot-replacing-workers.png"
+thumbnail: "../../assets/images/ai-theater-robot-replacing-workers.png"
 draft: false
 series:
   name: "AI's Impact on Corporate Strategy"
@@ -75,11 +75,8 @@ Real manufacturing transformation might look like: fully distributed production 
 
 But most "smart manufacturing" AI is applied to making existing factories run better, not questioning whether factories are the right model for future production.
 
-![Woman working efficiently at laptop representing optimization mindset](https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80)
 
-*The efficiency trap: AI making existing processes faster without questioning whether they're the right processes.*
-
-![Robot with everyday items illustrating AI's unexpected applications](https://unsplash.com/photos/gray-and-orange-plastic-robot-toy-LEPhZkQbUrk)
+![Robot with everyday items illustrating AI's unexpected applications](../../assets/images/robot.jpg)
 
 *AI transformation requires questioning fundamental assumptions—not just applying robots to existing processes.*
 

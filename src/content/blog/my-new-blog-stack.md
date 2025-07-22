@@ -9,7 +9,7 @@ tags:
   - libraries
   - Blog
 featured: true
-thumbnail: "assets/images/astro-blog-stack.jpg"
+thumbnail: "/src/assets/images/astro-blog-stack.jpg"
 ---
 
 # Describing My Blog Stack

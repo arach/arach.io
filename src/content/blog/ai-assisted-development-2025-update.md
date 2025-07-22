@@ -7,7 +7,7 @@ author: Arach Tchoupani
 tags: ["AI", "Development", "Productivity", "Tools"]
 featured: true
 draft: false
-thumbnail: "assets/images/ai-assist.jpg"
+thumbnail: "/src/assets/images/ai-assist.jpg"
 ---
 
 # One Year of AI-Assisted Development

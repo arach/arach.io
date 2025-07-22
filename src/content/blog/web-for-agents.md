@@ -6,7 +6,7 @@ description: "AI currently lacks an effective action layer, limiting its potenti
 tags:
   ["AI", "AI Agents", "Browser Automation", "Web Automation", "Web Development"]
 excerpt: ""
-thumbnail: "assets/images/automation-thumbnail.png"
+thumbnail: "/src/assets/images/automation-thumbnail.png"
 categories: []
 featured: true
 draft: false
