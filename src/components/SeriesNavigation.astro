@@ -26,7 +26,23 @@ const showSeriesNav = currentPost.data.series && seriesPosts.length > 1;
 ---
 
 {showSeriesNav && (
-<nav class="series-navigation" aria-label={`${currentPost.data.series.name} series navigation`}>
+<>
+
+
+  <!-- Series navigation sidebar -->
+  <nav 
+    id="series-navigation" 
+    class="series-navigation" 
+    aria-label={`${currentPost.data.series.name} series navigation`}
+    aria-hidden="false"
+  >
+    <button 
+      id="series-close" 
+      class="series-close" 
+      aria-label="Close series navigation"
+    >
+      ×
+    </button>
   <div class="series-header">
     <p class="series-label">Special Series</p>
     <h3 class="series-title">
@@ -76,26 +92,105 @@ const showSeriesNav = currentPost.data.series && seriesPosts.length > 1;
       </a>
     )}
   </div>
-</nav>
+  </nav>
+
+  <!-- Backdrop for tablet view -->
+  <div id="series-backdrop" class="series-backdrop" aria-hidden="true"></div>
+</>
 )}
 
 <style>
+
+  .series-close {
+    @apply absolute top-3 right-3 w-8 h-8 
+           bg-skin-card-muted hover:bg-skin-card
+           rounded-full flex items-center justify-center
+           text-xl font-light text-skin-base hover:text-skin-accent
+           transition-colors;
+    border: none;
+    cursor: pointer;
+  }
+
+  .series-backdrop {
+    @apply fixed inset-0 bg-black bg-opacity-50 z-20 hidden;
+    transition: opacity 0.3s ease;
+  }
+
   .series-navigation {
-    @apply bg-skin-card border border-skin-line rounded-lg p-5;
+    @apply bg-skin-card border border-skin-line rounded-lg p-5 relative;
     /* Reset prose styles since this sits inside the article */
     color: rgb(var(--color-text-base));
     font-family: inherit;
+    transition: transform 0.3s ease;
   }
 
-  /* Mobile: inline navigation */
-  @media (max-width: 1023px) {
+  /* When collapsed on mobile, minimize spacing */
+  @media (max-width: 768px) {
+    .series-navigation:not(.mobile-open) {
+      margin-bottom: 0 !important;
+    }
+  }
+
+  /* iPhone: completely hidden by default, slide-down when open */
+  @media (max-width: 767px) {
+    
+    
+    .series-close {
+      @apply hidden;
+    }
+    
+    .series-backdrop {
+      @apply hidden !important;
+    }
+    
     .series-navigation {
-      @apply mb-8;
+      @apply hidden w-full relative overflow-hidden;
+      transform: none !important;
+      transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+    }
+
+    .series-navigation.mobile-open {
+      @apply block mb-1;
+      max-height: 800px; /* Large enough for content */
+      opacity: 1;
+    }
+  }
+
+  /* iPad/Tablet: full-width panel sliding from below header row */
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .series-navigation {
+      @apply w-full bg-skin-card border border-skin-line rounded-lg overflow-hidden;
+      max-height: 0;
+      opacity: 0;
+      transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    }
+
+    .series-navigation.open {
+      max-height: 600px; /* Large enough for content */
+      opacity: 1;
+    }
+
+    .series-backdrop {
+      @apply hidden !important;
+    }
+
+    .series-close {
+      @apply hidden;
     }
   }
 
   /* Desktop: floating sidebar */
-  @media (min-width: 1024px) {
+  @media (min-width: 1025px) {
+    
+    .series-close {
+      @apply hidden;
+    }
+    
+    .series-backdrop {
+      @apply hidden !important;
+    }
+    
     .series-navigation {
       @apply fixed top-1/2 transform -translate-y-1/2 z-30 text-left;
       right: 2rem;
@@ -131,6 +226,33 @@ const showSeriesNav = currentPost.data.series && seriesPosts.length > 1;
 
   .series-progress {
     @apply text-sm text-skin-base opacity-70;
+  }
+
+  /* Mobile font size improvements */
+  @media (max-width: 767px) {
+    .series-label {
+      @apply text-sm font-medium text-skin-accent opacity-80 mb-2 uppercase tracking-wider;
+    }
+
+    .series-title {
+      @apply flex items-center gap-2 text-xl font-semibold text-skin-accent mb-1;
+    }
+
+    .series-progress {
+      @apply text-base text-skin-base opacity-70;
+    }
+
+    .series-link {
+      @apply text-skin-base hover:text-skin-accent transition-colors text-lg line-clamp-2;
+    }
+
+    .series-current-title {
+      @apply text-skin-accent font-medium text-lg line-clamp-2;
+    }
+
+    .nav-title {
+      @apply block text-sm text-skin-base line-clamp-2;
+    }
   }
 
   .series-list {
@@ -214,3 +336,112 @@ const showSeriesNav = currentPost.data.series && seriesPosts.length > 1;
     }
   }
 </style>
+
+<script>
+  function isIPhone() {
+    return window.innerWidth <= 767;
+  }
+
+  function isTablet() {
+    return window.innerWidth >= 768 && window.innerWidth <= 1024;
+  }
+
+  function initIPhoneToggle() {
+    if (!isIPhone()) return;
+
+    // Use the floating tag from PostDetails instead
+    const floatingTag = document.getElementById('series-floating-tag');
+    const nav = document.getElementById('series-navigation');
+
+    if (!floatingTag || !nav) return;
+
+    function toggleMobilePanel() {
+      const isOpen = nav.classList.contains('mobile-open');
+      
+      if (isOpen) {
+        nav.classList.remove('mobile-open');
+      } else {
+        nav.classList.add('mobile-open');
+      }
+    }
+
+    floatingTag.addEventListener('click', toggleMobilePanel);
+  }
+
+  function initTabletToggle() {
+    if (!isTablet()) return;
+
+    // Use the inline tag from PostDetails for tablet expansion
+    const inlineTag = document.getElementById('series-floating-tag-inline');
+    const nav = document.getElementById('series-navigation');
+
+    if (!inlineTag || !nav) return;
+
+    function toggleExpansion() {
+      const isOpen = nav.classList.contains('open');
+      
+      if (isOpen) {
+        nav.classList.remove('open');
+        nav.setAttribute('aria-hidden', 'true');
+      } else {
+        nav.classList.add('open');
+        nav.setAttribute('aria-hidden', 'false');
+      }
+    }
+
+    // Event listeners
+    inlineTag.addEventListener('click', toggleExpansion);
+
+    // ESC key to close
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && nav.classList.contains('open')) {
+        nav.classList.remove('open');
+        nav.setAttribute('aria-hidden', 'true');
+      }
+    });
+
+    // Close on outside click
+    document.addEventListener('click', (e) => {
+      if (nav.classList.contains('open') && 
+          !nav.contains(e.target) && 
+          !inlineTag.contains(e.target)) {
+        nav.classList.remove('open');
+        nav.setAttribute('aria-hidden', 'true');
+      }
+    });
+  }
+
+  // Initialize when DOM is ready
+  function initAllToggles() {
+    initIPhoneToggle();
+    initTabletToggle();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAllToggles);
+  } else {
+    initAllToggles();
+  }
+
+  // Re-initialize on window resize
+  let resizeTimeout;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      const nav = document.getElementById('series-navigation');
+      const backdrop = document.getElementById('series-backdrop');
+      
+      // Clean up iPhone state if no longer iPhone
+      if (!isIPhone() && nav) {
+        nav.classList.remove('mobile-open');
+      }
+      
+      // Clean up tablet state if no longer tablet
+      if (!isTablet() && nav && backdrop) {
+        nav.classList.remove('open');
+        backdrop.classList.remove('show');
+        document.body.style.overflow = '';
+      }
+    }, 150);
+  });
+</script>

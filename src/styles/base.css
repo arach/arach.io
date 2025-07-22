@@ -89,7 +89,7 @@
     --color-accent: 255, 255, 255;
     --color-card: 17, 17, 17;
     --color-card-muted: 38, 38, 38;
-    --color-border: 38, 38, 38;
+    --color-border: 160, 160, 160;
   }
 
   #sun-svg,
@@ -413,6 +413,27 @@ html {
     h6 {
       margin-top: 2rem;
       margin-bottom: 1rem;
+    }
+
+    /* iPhone: Override heading margins for tighter layout */
+    @media (max-width: 767px) {
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        margin-top: 0.5rem !important;
+        margin-bottom: 0.75rem !important;
+      }
+
+      h3,
+      h4,
+      h5,
+      h6 {
+        margin-top: 0.5rem !important;
+        margin-bottom: 0.5rem !important;
+      }
     }
   }
 }

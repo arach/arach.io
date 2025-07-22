@@ -9,6 +9,7 @@ import { slugifyStr } from "@utils/slugify";
 import ShareLinks from "@components/ShareLinks.astro";
 import DownloadLink from "@components/DownloadLink.astro";
 import SeriesNavigation from "@components/SeriesNavigation.astro";
+import { Icon } from 'astro-icon/components';
 import { SITE } from "@config";
 
 export interface Props {
@@ -59,30 +60,46 @@ const layoutProps = {
   <main id="main-content">
     <!-- Series tag at top level -->
     {post.data.series && (
-      <div class="series-floating-tag">
-        Special series on AI
+      <div class="series-floating-tag" id="series-floating-tag">
+        <span class="series-name-full">Special Series: {post.data.series.name}</span>
+        <span class="series-name-short">AI Series</span>
       </div>
     )}
     
-    <!-- Title with Go back on same line -->
-    <div class="mb-3 flex items-start justify-between">
+    <!-- Title with Go back and Series tag on same line for iPad -->
+    <div class="mb-2 flex items-start justify-between">
       <div class="flex-1">
-        <button
-          class="go-back-btn-inline"
-          onclick="(() => (history.length === 1) ? window.location = '/' : history.back())()"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
-            ><path
-              d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"
-            ></path>
-          </svg><span>Go back</span>
-        </button>
+        <div class="header-row">
+          <button
+            class="go-back-btn-inline"
+            onclick="(() => (history.length === 1) ? window.location = '/' : history.back())()"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+              ><path
+                d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"
+              ></path>
+            </svg><span class="go-back-full">Go back</span><span class="go-back-short">Back</span>
+          </button>
+          {post.data.series && (
+            <div class="series-tag-container">
+              <div class="series-tag-inline" id="series-floating-tag-inline">
+                <span>Special Series: {post.data.series.name}</span>
+              </div>
+            </div>
+          )}
+        </div>
+        
         <h1 transition:name={slugifyStr(title)} class="post-title">{title}</h1>
       </div>
     </div>
     
+    <!-- Series navigation overlay -->
+    <div class="series-navigation-wrapper">
+      <SeriesNavigation currentPost={post} />
+    </div>
+    
     <!-- Date/Reading time + Actions row -->
-    <div class="flex items-center justify-between gap-4 mb-4">
+    <div class="flex items-center justify-between gap-4 date-time-row">
       <div class="flex items-center gap-4">
         <Datetime
           pubDatetime={pubDatetime}
@@ -91,7 +108,9 @@ const layoutProps = {
           className=""
         />
         <span class="reading-time">
-          Estimated Reading Time: {readingTime}
+          <Icon name="lucide:clock" class="reading-time-icon" />
+          <span class="reading-time-full">Estimated Reading Time: {readingTime}</span>
+          <span class="reading-time-short">{readingTime}</span>
         </span>
       </div>
       <div class="flex items-center gap-3">
@@ -99,9 +118,7 @@ const layoutProps = {
       </div>
     </div>
     
-    <SeriesNavigation currentPost={post} />
-    
-    <article id="article" role="article" class="prose prose-lg mx-auto mt-8 w-full">
+    <article id="article" role="article" class="prose prose-lg mx-auto w-full">
       <Content />
     </article>
 
@@ -141,13 +158,82 @@ const layoutProps = {
     padding-left: 2rem; /* 32px instead of 16px */
     padding-right: 2rem;
   }
+
+  /* Mobile: use full width with proper padding */
+  @media (max-width: 767px) {
+    main {
+      max-width: 100%;
+      padding-left: 1rem; /* 16px on mobile */
+      padding-right: 1rem;
+    }
+  }
+  .header-row {
+    @apply flex items-center justify-between mb-2 relative z-30;
+  }
+
+  /* iPhone: Ensure header row is clickable and fix series nav wrapper */
+  @media (max-width: 767px) {
+    .header-row {
+      @apply relative z-40;
+    }
+
+    /* Position series navigation wrapper properly on iPhone */
+    .series-navigation-wrapper {
+      @apply relative mt-1;
+    }
+  }
+
   .go-back-btn-inline {
-    @apply flex items-center gap-1 text-xs text-skin-base opacity-60 hover:opacity-80 transition-opacity mb-2;
+    @apply flex items-center gap-1 text-xs text-skin-base opacity-60 hover:opacity-80 transition-opacity;
     font-weight: 400;
+  }
+
+  /* Default: show full "Go back" text, hide short "Back" text */
+  .go-back-btn-inline .go-back-full {
+    @apply inline;
+  }
+
+  .go-back-btn-inline .go-back-short {
+    @apply hidden;
   }
   
   .go-back-btn-inline svg {
     @apply w-3 h-3;
+  }
+
+  .series-tag-container {
+    @apply relative;
+  }
+
+  /* iPad: Ensure proper positioning context for rollout */
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .series-tag-container {
+      @apply relative;
+    }
+  }
+
+  .series-tag-inline {
+    @apply text-xs font-normal text-skin-base bg-skin-fill px-2.5 py-1 rounded-full cursor-pointer transition-all duration-200 hidden;
+    opacity: 0.7;
+    border: 1px solid rgb(var(--color-border) / 0.2);
+  }
+
+  .series-tag-inline:hover {
+    @apply opacity-90;
+    border-color: rgb(var(--color-border) / 0.4);
+  }
+
+  .series-navigation-wrapper {
+    @apply relative;
+  }
+
+  /* iPad: Position navigation wrapper as overlay below header row */
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .series-navigation-wrapper {
+      @apply absolute left-0 right-0 z-10 pl-8;
+      /* Overlay that covers content below without displacing it */
+      top: 110px; /* Position below the header row to keep go-back and series tag fully visible */
+    }
   }
   
   .post-title {
@@ -155,14 +241,150 @@ const layoutProps = {
   }
   
   .series-floating-tag {
-    @apply float-right text-xs font-medium text-skin-accent bg-skin-card border border-skin-accent px-3 py-1 rounded-full mb-4;
-    opacity: 0.9;
+    @apply float-right text-xs font-normal text-skin-base bg-skin-fill px-2.5 py-1 rounded-md mb-4 cursor-pointer transition-all duration-200;
+    opacity: 0.7;
     clear: both;
+    border: 1px solid rgb(var(--color-border) / 0.3);
+  }
+
+  /* Default: show full name, hide short name */
+  .series-floating-tag .series-name-full {
+    @apply inline;
+  }
+
+  .series-floating-tag .series-name-short {
+    @apply hidden;
+  }
+
+  /* Desktop: Keep as floating tag */
+  @media (min-width: 1025px) {
+    .series-floating-tag {
+      @apply float-right text-xs font-normal text-skin-base bg-skin-fill px-2.5 py-1 rounded-md mb-4 cursor-pointer transition-all duration-200;
+      opacity: 0.7;
+      clear: both;
+      border: 1px solid rgb(var(--color-border) / 0.3);
+    }
+  }
+
+  .series-floating-tag:hover {
+    @apply opacity-90;
+  }
+
+  /* iPhone: Make floating tag tappable with shorter text */
+  @media (max-width: 767px) {
+    .series-floating-tag {
+      @apply block float-none mb-3 inline-block text-xs px-3 py-1.5;
+    }
+    
+    /* Hide full series name on iPhone, show only short version */
+    .series-floating-tag .series-name-full {
+      @apply hidden;
+    }
+    
+    .series-floating-tag .series-name-short {
+      @apply inline;
+    }
+
+    /* Hide full "Go back" text on iPhone, show only short "Back" text */
+    .go-back-btn-inline .go-back-full {
+      @apply hidden;
+    }
+    
+    .go-back-btn-inline .go-back-short {
+      @apply inline;
+    }
+    
+    .series-tag-inline {
+      @apply hidden;
+    }
+  }
+
+  /* iPad: Hide original floating tag, show inline version */
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .series-floating-tag {
+      @apply hidden;
+    }
+
+    .series-tag-inline {
+      @apply inline-flex;
+    }
   }
   
   .reading-time {
-    @apply text-xs font-medium text-skin-base bg-skin-card-muted px-3 py-1 rounded-full border border-skin-line;
-    opacity: 0.8;
+    @apply flex items-center gap-1.5 text-xs text-skin-base;
+    opacity: 0.6;
+    white-space: nowrap;
+  }
+
+  .reading-time-icon {
+    @apply w-3 h-3 flex-shrink-0;
+  }
+
+  .reading-time-full {
+    @apply block;
+  }
+
+  .reading-time-short {
+    @apply hidden;
+  }
+
+  /* iPhone optimizations */
+  @media (max-width: 767px) {
+    .post-title {
+      @apply text-xl font-bold text-skin-accent mb-1; /* Reduced spacing */
+    }
+
+    .reading-time-full {
+      @apply hidden;
+    }
+
+    .reading-time-short {
+      @apply block;
+    }
+
+    /* Hide download button in header on iPhone */
+    .flex.items-center.gap-3 {
+      @apply hidden;
+    }
+
+    /* Tighter spacing between title and date/time */
+    .header-row {
+      @apply mb-0;
+    }
+
+    /* Minimal gap between date/time and first paragraph */
+    .date-time-row {
+      @apply mb-1;
+    }
+
+    /* Nuclear option - override ALL heading margins on iPhone */
+    .prose h1,
+    .prose h2 {
+      margin-top: 1.25rem !important;
+      margin-bottom: 0.75rem !important;
+    }
+
+    /* Slightly more spacing for h3+ */
+    html body main article .prose h3,
+    html body main article .prose h4,
+    html body main article .prose h5,
+    html body main article .prose h6,
+    html body main article h3,
+    html body main article h4,
+    html body main article h5,
+    html body main article h6 {
+      margin-top: 0.5rem !important;
+      margin-bottom: 0.5rem !important;
+    }
+
+    html .prose p {
+      margin-bottom: 1.25rem !important;
+    }
+
+    /* First paragraph after title should have minimal top margin */
+    html .prose > p:first-child {
+      margin-top: 0 !important;
+    }
   }
 
   /* Flexible content layout system */
@@ -190,14 +412,30 @@ const layoutProps = {
     margin-right: auto !important;
   }
 
+  /* Mobile: use full width */
+  @media (max-width: 767px) {
+    .prose p,
+    .prose li,
+    .prose h1,
+    .prose h2, 
+    .prose h3,
+    .prose blockquote,
+    .prose figure,
+    .prose img {
+      max-width: 100% !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+  }
+
   /* Content area with elegant boundary lines */
   .prose {
     position: relative;
     min-height: 200px; /* Ensure lines have height */
-    padding: 2rem 0;
+    padding: 0 0 2rem 0;
   }
 
-  /* Visible boundary lines that define content area */
+  /* Outer structural boundaries like Vercel - frame the content */
   .prose::before,
   .prose::after {
     content: '';
@@ -205,16 +443,25 @@ const layoutProps = {
     top: 0;
     bottom: 0;
     width: 1px;
-    background: rgba(var(--color-border), 0.3); /* More visible lines */
+    background: rgb(var(--color-border)); /* Works in both light and dark mode */
+    opacity: 0.05;
     z-index: 1;
   }
 
   .prose::before {
-    left: calc(50% - 32ch); /* Left boundary - adjusted for 55ch width */
+    left: calc(50% - 38ch); /* Outer left boundary - wider than content for structure */
   }
 
   .prose::after {
-    right: calc(50% - 32ch); /* Right boundary - adjusted for 55ch width */
+    right: calc(50% - 38ch); /* Outer right boundary - creates container feel */
+  }
+
+  /* Mobile: hide structural boundaries */
+  @media (max-width: 767px) {
+    .prose::before,
+    .prose::after {
+      display: none;
+    }
   }
 
   /* Special full-width sections */
@@ -233,7 +480,7 @@ const layoutProps = {
     margin: 2rem auto;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     .prose .two-column {
       grid-template-columns: 1fr;
       gap: 1rem;
