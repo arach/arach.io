@@ -349,45 +349,105 @@ const showSeriesNav = currentPost.data.series && seriesPosts.length > 1;
   function initIPhoneToggle() {
     if (!isIPhone()) return;
 
-    // Use the floating tag from PostDetails instead
-    const floatingTag = document.getElementById('series-floating-tag');
+    const inlineTag = document.getElementById('series-floating-tag-inline');
     const nav = document.getElementById('series-navigation');
+    const chevron = document.querySelector('.series-chevron');
 
-    if (!floatingTag || !nav) return;
+    if (!inlineTag || !nav) {
+      console.warn('SeriesNav: iPhone - Missing elements', { inlineTag: !!inlineTag, nav: !!nav });
+      return;
+    }
 
-    function toggleMobilePanel() {
-      const isOpen = nav.classList.contains('mobile-open');
+    function toggleMobilePanel(event) {
+      event?.preventDefault();
+      event?.stopPropagation();
       
-      if (isOpen) {
-        nav.classList.remove('mobile-open');
-      } else {
+      console.log('🔥 SERIES NAV TAP - iPhone', {
+        timestamp: new Date().toLocaleTimeString(),
+        windowWidth: window.innerWidth,
+        currentClasses: nav.className,
+        chevronTransform: chevron?.style.transform || 'none'
+      });
+      
+      const wasOpen = nav.classList.contains('mobile-open');
+      
+      // NUCLEAR RESET - clear everything
+      nav.classList.remove('mobile-open', 'open');
+      nav.setAttribute('aria-hidden', 'true');
+      if (chevron) chevron.style.transform = 'rotate(0deg)';
+      
+      // Force reflow
+      nav.offsetHeight;
+      
+      if (!wasOpen) {
         nav.classList.add('mobile-open');
+        nav.setAttribute('aria-hidden', 'false');
+        if (chevron) chevron.style.transform = 'rotate(180deg)';
+        console.log('✅ iPhone navigation OPENED');
+      } else {
+        console.log('❌ iPhone navigation CLOSED');
       }
     }
 
-    floatingTag.addEventListener('click', toggleMobilePanel);
+    // Clean up any existing listeners
+    if (inlineTag._seriesToggle) {
+      inlineTag.removeEventListener('click', inlineTag._seriesToggle);
+    }
+    
+    inlineTag._seriesToggle = toggleMobilePanel;
+    inlineTag.addEventListener('click', toggleMobilePanel);
+    console.log('📱 iPhone toggle initialized');
   }
 
   function initTabletToggle() {
     if (!isTablet()) return;
 
-    // Use the inline tag from PostDetails for tablet expansion
     const inlineTag = document.getElementById('series-floating-tag-inline');
     const nav = document.getElementById('series-navigation');
+    const chevron = document.querySelector('.series-chevron');
 
-    if (!inlineTag || !nav) return;
+    if (!inlineTag || !nav) {
+      console.warn('SeriesNav: iPad - Missing elements', { inlineTag: !!inlineTag, nav: !!nav });
+      return;
+    }
 
-    function toggleExpansion() {
-      const isOpen = nav.classList.contains('open');
+    function toggleExpansion(event) {
+      event?.preventDefault();
+      event?.stopPropagation();
       
-      if (isOpen) {
-        nav.classList.remove('open');
-        nav.setAttribute('aria-hidden', 'true');
-      } else {
+      console.log('🔥 SERIES NAV TAP - iPad', {
+        timestamp: new Date().toLocaleTimeString(),
+        windowWidth: window.innerWidth,
+        currentClasses: nav.className,
+        chevronTransform: chevron?.style.transform || 'none'
+      });
+      
+      const wasOpen = nav.classList.contains('open');
+      
+      // NUCLEAR RESET - clear everything
+      nav.classList.remove('open', 'mobile-open');
+      nav.setAttribute('aria-hidden', 'true');
+      if (chevron) chevron.style.transform = 'rotate(0deg)';
+      
+      // Force reflow
+      nav.offsetHeight;
+      
+      if (!wasOpen) {
         nav.classList.add('open');
         nav.setAttribute('aria-hidden', 'false');
+        if (chevron) chevron.style.transform = 'rotate(180deg)';
+        console.log('✅ iPad navigation OPENED');
+      } else {
+        console.log('❌ iPad navigation CLOSED');
       }
     }
+
+    // Clean up any existing listeners
+    if (inlineTag._seriesToggle) {
+      inlineTag.removeEventListener('click', inlineTag._seriesToggle);
+    }
+    
+    inlineTag._seriesToggle = toggleExpansion;
 
     // Event listeners
     inlineTag.addEventListener('click', toggleExpansion);
@@ -423,25 +483,83 @@ const showSeriesNav = currentPost.data.series && seriesPosts.length > 1;
     initAllToggles();
   }
 
-  // Re-initialize on window resize
+  // NUCLEAR RESET on window resize - fixes stuck states
   let resizeTimeout;
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
+      const currentWidth = window.innerWidth;
+      console.log('🔄 WINDOW RESIZE - Resetting series nav state', { 
+        newWidth: currentWidth,
+        timestamp: new Date().toLocaleTimeString()
+      });
+      
       const nav = document.getElementById('series-navigation');
       const backdrop = document.getElementById('series-backdrop');
+      const chevron = document.querySelector('.series-chevron');
+      const inlineTag = document.getElementById('series-floating-tag-inline');
       
-      // Clean up iPhone state if no longer iPhone
-      if (!isIPhone() && nav) {
-        nav.classList.remove('mobile-open');
-      }
+      if (!nav) return;
       
-      // Clean up tablet state if no longer tablet
-      if (!isTablet() && nav && backdrop) {
-        nav.classList.remove('open');
+      // NUCLEAR RESET - clear everything
+      nav.classList.remove('mobile-open', 'open');
+      nav.setAttribute('aria-hidden', 'false');
+      nav.style.transform = '';
+      nav.style.opacity = '';
+      nav.style.maxHeight = '';
+      
+      if (backdrop) {
         backdrop.classList.remove('show');
         document.body.style.overflow = '';
       }
-    }, 150);
+      if (chevron) {
+        chevron.style.transform = 'rotate(0deg)';
+      }
+      
+      // Clean up event listeners completely
+      if (inlineTag && inlineTag._seriesToggle) {
+        inlineTag.removeEventListener('click', inlineTag._seriesToggle);
+        delete inlineTag._seriesToggle;
+      }
+      
+      // Force reflow
+      nav.offsetHeight;
+      
+      console.log('🧹 State reset complete - reinitializing for current breakpoint');
+      
+      // Re-initialize for current breakpoint
+      setTimeout(() => {
+        initAllToggles();
+      }, 100);
+    }, 300);
   });
+
+  // THEME CHANGE HANDLER - fixes broken listeners after theme switch
+  function observeThemeChanges() {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
+          console.log('🎨 THEME CHANGED - Reinitializing series navigation');
+          
+          // Short delay to let theme change settle
+          setTimeout(() => {
+            const inlineTag = document.getElementById('series-floating-tag-inline');
+            if (inlineTag && inlineTag._seriesToggle) {
+              console.log('🔧 Cleaning up old listeners after theme change');
+              inlineTag.removeEventListener('click', inlineTag._seriesToggle);
+              delete inlineTag._seriesToggle;
+            }
+            
+            initAllToggles();
+            console.log('✨ Series navigation reinitialized after theme change');
+          }, 200);
+        }
+      });
+    });
+    
+    observer.observe(document.documentElement, { attributes: true });
+  }
+
+  // Start observing theme changes
+  observeThemeChanges();
 </script>

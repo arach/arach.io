@@ -83,7 +83,11 @@ const layoutProps = {
           {post.data.series && (
             <div class="series-tag-container">
               <div class="series-tag-inline" id="series-floating-tag-inline">
-                <span>Special Series: {post.data.series.name}</span>
+                <span class="series-name-full">Special Series: {post.data.series.name}</span>
+                <span class="series-name-short">Series on AI</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" class="series-chevron">
+                  <path d="m7 10 5 5 5-5z" fill="currentColor"></path>
+                </svg>
               </div>
             </div>
           )}
@@ -213,14 +217,30 @@ const layoutProps = {
   }
 
   .series-tag-inline {
-    @apply text-xs font-normal text-skin-base bg-skin-fill px-2.5 py-1 rounded-full cursor-pointer transition-all duration-200 hidden;
-    opacity: 0.7;
-    border: 1px solid rgb(var(--color-border) / 0.2);
+    @apply text-xs font-normal text-skin-base bg-skin-card px-2.5 py-1 rounded cursor-pointer transition-all duration-200 hidden items-center gap-1;
+    opacity: 0.8;
+    border: 1px solid rgb(var(--color-border) / 0.3);
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
   }
 
   .series-tag-inline:hover {
-    @apply opacity-90;
-    border-color: rgb(var(--color-border) / 0.4);
+    @apply opacity-100 transform scale-105 bg-skin-card-muted;
+    border-color: rgb(var(--color-border) / 0.5);
+    box-shadow: 0 2px 4px rgb(0 0 0 / 0.1);
+  }
+
+  .series-chevron {
+    @apply w-3 h-3 opacity-70 transition-transform duration-200;
+    fill: currentColor;
+  }
+
+  /* Default: show full name, hide short name */
+  .series-tag-inline .series-name-full {
+    @apply inline;
+  }
+
+  .series-tag-inline .series-name-short {
+    @apply hidden;
   }
 
   .series-navigation-wrapper {
@@ -270,18 +290,27 @@ const layoutProps = {
     @apply opacity-90;
   }
 
-  /* iPhone: Make floating tag tappable with shorter text */
+  /* iPhone: Put series tag inline with Back button */
   @media (max-width: 767px) {
     .series-floating-tag {
-      @apply block float-none mb-3 inline-block text-xs px-3 py-1.5;
+      @apply hidden; /* Hide the floating version on iPhone */
     }
     
-    /* Hide full series name on iPhone, show only short version */
-    .series-floating-tag .series-name-full {
+    .series-tag-inline {
+      @apply inline-flex text-xs px-2.5 py-1 bg-skin-fill rounded-full cursor-pointer opacity-70;
+      border: 1px solid rgb(var(--color-border) / 0.2);
+    }
+
+    .series-tag-inline:hover {
+      @apply opacity-90;
+    }
+
+    /* Show short series name on iPhone, hide full name */
+    .series-tag-inline .series-name-full {
       @apply hidden;
     }
     
-    .series-floating-tag .series-name-short {
+    .series-tag-inline .series-name-short {
       @apply inline;
     }
 
@@ -292,10 +321,6 @@ const layoutProps = {
     
     .go-back-btn-inline .go-back-short {
       @apply inline;
-    }
-    
-    .series-tag-inline {
-      @apply hidden;
     }
   }
 
