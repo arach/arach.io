@@ -155,9 +155,9 @@ const layoutProps = {
   }
   
   .series-floating-tag {
-    @apply float-right text-xs font-medium text-skin-accent bg-skin-card border border-skin-accent px-3 py-1 rounded-full mb-2;
+    @apply float-right text-xs font-medium text-skin-accent bg-skin-card border border-skin-accent px-3 py-1 rounded-full mb-4;
     opacity: 0.9;
-    margin-top: -2rem;
+    clear: both;
   }
   
   .reading-time {
@@ -170,29 +170,51 @@ const layoutProps = {
     max-width: none;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     font-size: 1.1875rem;
-    line-height: 1.7;
-    font-weight: 400;
+    line-height: 1.5; /* Tight like premium sites - efficient but comfortable */
+    font-weight: 275; /* Ultra-light like Vercel/Linear - ethereal feel */
+    letter-spacing: 0.005em; /* Subtle breathing room */
     color: rgb(var(--color-text-base));
   }
 
-  /* Default body text - optimal reading width */
+  /* Much tighter reading width for focused content */
   .prose p,
-  .prose li {
-    max-width: 75ch;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  /* Full-width elements that use more space */
+  .prose li,
   .prose h1,
-  .prose h2,
+  .prose h2, 
   .prose h3,
   .prose blockquote,
   .prose figure,
   .prose img {
-    max-width: 100%; /* Use full article width */
-    margin-left: auto;
-    margin-right: auto;
+    max-width: 55ch !important; /* Much narrower, premium reading width */
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* Content area with elegant boundary lines */
+  .prose {
+    position: relative;
+    min-height: 200px; /* Ensure lines have height */
+    padding: 2rem 0;
+  }
+
+  /* Visible boundary lines that define content area */
+  .prose::before,
+  .prose::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: rgba(var(--color-border), 0.3); /* More visible lines */
+    z-index: 1;
+  }
+
+  .prose::before {
+    left: calc(50% - 32ch); /* Left boundary - adjusted for 55ch width */
+  }
+
+  .prose::after {
+    right: calc(50% - 32ch); /* Right boundary - adjusted for 55ch width */
   }
 
   /* Special full-width sections */
