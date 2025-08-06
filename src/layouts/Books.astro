@@ -22,9 +22,14 @@ export interface Props {
 }
 
 const { currentPage, totalPages, paginatedItems } = Astro.props;
+
+// Set canonical URL - page 1 should always point to the base books URL
+const canonicalURL = currentPage === 1 
+  ? new URL(`/books/`, Astro.site).href
+  : new URL(`/books/${currentPage}/`, Astro.site).href;
 ---
 
-<Layout title={`Books | ${SITE.title}`}>
+<Layout title={`Books | ${SITE.title}`} canonicalURL={canonicalURL}>
   <Header activeNav="books" />
   <Main
     pageTitle="Books"

@@ -17,9 +17,14 @@ export interface Props {
 }
 
 const { currentPage, totalPages, paginatedPosts, tag, tagName } = Astro.props;
+
+// Set canonical URL - page 1 should always point to the base tag URL
+const canonicalURL = currentPage === 1 
+  ? new URL(`/tags/${tag}/`, Astro.site).href
+  : new URL(`/tags/${tag}/${currentPage}/`, Astro.site).href;
 ---
 
-<Layout title={`Tag: ${tagName} | ${SITE.title}`}>
+<Layout title={`Tag: ${tagName} | ${SITE.title}`} canonicalURL={canonicalURL}>
   <Header activeNav="tags" />
   <Main
     pageTitle={[`Tag:`, `${tagName}`]}

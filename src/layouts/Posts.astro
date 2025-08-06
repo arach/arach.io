@@ -15,9 +15,14 @@ export interface Props {
 }
 
 const { currentPage, totalPages, paginatedPosts } = Astro.props;
+
+// Set canonical URL - page 1 should always point to the base posts URL
+const canonicalURL = currentPage === 1 
+  ? new URL(`/posts/`, Astro.site).href
+  : new URL(`/posts/${currentPage}/`, Astro.site).href;
 ---
 
-<Layout title={`Posts | ${SITE.title}`}>
+<Layout title={`Posts | ${SITE.title}`} canonicalURL={canonicalURL}>
   <Header activeNav="posts" />
   <Main pageTitle="Posts" pageDesc="All the articles I've posted.">
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
