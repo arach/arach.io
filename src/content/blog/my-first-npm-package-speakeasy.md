@@ -11,6 +11,7 @@ tags:
   - libraries
   - side projects
 featured: true
+thumbnail: "/src/assets/images/speakeasy-cli-welcome.png"
 ---
 
 # From Idea to NPM: Building SpeakEasy
