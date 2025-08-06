@@ -59,12 +59,13 @@ That's it. No complex setup, no provider-specific configurations to remember.
 ## Building It
 
 ### Architecture Decisions
-I spent considerable time thinking about the architecture. The key insight was treating TTS providers as interchangeable plugins with a common interface. This meant:
+The key insight was treating TTS providers as interchangeable plugins with a common interface. I also wanted both an SDK for programmatic use and a CLI for quick testing and scripts. And I wanted it to be open source and easy to install. This meant:
 
 1. **Provider abstraction** - Each provider implements the same interface
-2. **Caching layer** - Sits between the user and providers
-3. **Configuration management** - Unified settings across all providers
-4. **Error handling** - Consistent error responses regardless of provider
+2. **Dual interface** - SDK for code integration, CLI for quick tasks
+3. **Caching layer** - Sits between the user and providers
+4. **Configuration management** - Unified settings across all providers
+5. **Error handling** - Consistent error responses regardless of provider
 
 ### TypeScript
 I used TypeScript for type safety and better developer experience with autocomplete and inline documentation.
@@ -82,7 +83,7 @@ Publishing to npm for the first time taught me a few things:
 
 ### Package Preparation
 - **Semantic versioning** - Starting at 1.0.0 felt significant
-- **Documentation** - Created comprehensive docs at [speakeasy.arach.dev](https://speakeasy.arach.dev/)
+- **Documentation** - Created comprehensive [docs](https://speakeasy.arach.dev/docs/overview/) at speakeasy.arach.dev
 - **Examples** - Added practical usage examples
 - **Bundle optimization** - Ensured the package was lightweight
 
@@ -118,7 +119,7 @@ If you're building something that needs text-to-speech capabilities, I'd love fo
 npm install @arach/speakeasy
 ```
 
-Check out the [documentation](https://speakeasy.arach.dev/) for comprehensive examples and API reference.
+Check out the [documentation](https://speakeasy.arach.dev/docs/overview/) for comprehensive examples and API reference.
 
 ## Wrapping Up
 
