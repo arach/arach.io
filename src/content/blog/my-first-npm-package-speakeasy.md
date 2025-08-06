@@ -1,5 +1,5 @@
 ---
-title: Shipping My First NPM Package - SpeakEasy TTS 🎤
+title: Shipped my first NPM package - meet SpeakEasy 🎤
 pubDatetime: 2025-08-06T08:00:00Z
 description: The journey of creating and publishing SpeakEasy, a unified text-to-speech library with smart caching and multiple provider support.
 slug: my-first-npm-package-speakeasy
@@ -14,8 +14,6 @@ featured: true
 thumbnail: "/src/assets/images/speakeasy-cli-welcome.png"
 ---
 
-# From Idea to NPM: Building SpeakEasy
-
 After years of using npm packages, I finally published my first one. Meet [SpeakEasy](https://speakeasy.arach.dev/), a unified text-to-speech library that makes adding voice capabilities to applications simple.
 
 ## The Problem That Started It All
@@ -27,11 +25,11 @@ Working on various projects, I found myself repeatedly implementing text-to-spee
 - Implement caching to avoid expensive repeated API calls
 - Deal with volume control and audio management
 
-The fragmentation was annoying. I wanted a single interface that could handle multiple providers with smart caching built-in.
+The fragmentation was annoying. I wanted a single interface that could handle multiple providers with smart caching built-in. I was also seeing my credits get eaten up by repetitive generation, and there was this little nudge of latency I could do away with. Hence the cache implementation.
 
 ## What SpeakEasy Does
 
-SpeakEasy is a unified TTS library that abstracts away the complexity of working with different speech synthesis providers. Here's what makes it special:
+SpeakEasy is a unified TTS library that abstracts away the complexity of working with different speech synthesis providers. For me, it also removes the need to configure every project with all my keys - I can have one thing that has all my text-to-speech keys, and every project can use it. Here's what makes it useful:
 
 ### Multiple Provider Support
 - **OpenAI TTS** - High-quality AI voices
@@ -124,10 +122,10 @@ Check out the [documentation](https://speakeasy.arach.dev/) for comprehensive ex
 
 ## Wrapping Up
 
-Publishing my first npm package was a good experience. It's nice to contribute something back to the ecosystem.
+Publishing my first npm package was a good experience and honestly pretty easy. It's nice to contribute something back to the ecosystem.
 
-If you've got repeated patterns in your code, consider packaging them up. The JavaScript community benefits from this kind of sharing.
+In retrospect, I should have shipped a few more by now. If you've got repeated patterns in your code, consider packaging them up. The JavaScript community benefits from this kind of sharing.
 
 ---
 
-*Have you built something with SpeakEasy? I'd love to hear about it! Reach out on [Twitter](https://twitter.com/arach) or [GitHub](https://github.com/arach).*
+*Have you built something with SpeakEasy? I'd love to hear about it! Reach out on [X](https://x.com/arach) or [GitHub](https://github.com/arach).*
