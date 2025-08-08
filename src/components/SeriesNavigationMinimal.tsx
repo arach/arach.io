@@ -28,7 +28,8 @@ const SeriesNavigationMinimal: React.FC<SeriesNavigationMinimalProps> = ({
   const shortTitles: Record<string, string> = {
     'ladderless-path': 'pulling up the ladder',
     'ai-restored-cto-personal-leverage': 'ai as leverage',
-    'ai-theater-vs-real-transformation': 'theater vs transformation'
+    'ai-theater-vs-real-transformation': 'theater vs transformation',
+    'infinite-bespoke-magic-paste-machine': 'infinite magic paste'
   };
 
   useEffect(() => {
