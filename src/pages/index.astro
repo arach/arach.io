@@ -232,15 +232,35 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     }
 
     .badge {
-      @apply rounded-full px-3.5 py-1.5 text-xs font-semibold transition-all;
+      @apply rounded-full px-3.5 py-1.5 text-xs font-semibold;
       background: rgb(var(--color-card-muted));
-      border: 1px solid rgb(var(--color-border) / 0.5);
+      border: 1px solid rgb(var(--color-border) / 0.3);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .badge::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, 
+        transparent,
+        rgb(var(--color-accent) / 0.1),
+        transparent
+      );
+      transform: translateX(-100%);
+      transition: transform 0.5s ease;
+    }
+    
+    .badge:hover::before {
+      transform: translateX(100%);
     }
     
     .badge:hover {
-      border-color: rgb(var(--color-border));
+      border-color: rgb(var(--color-accent) / 0.3);
       background: rgb(var(--color-card));
-      transform: translateY(-1px);
+      color: rgb(var(--color-accent));
     }
 
     .cta-buttons {

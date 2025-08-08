@@ -146,13 +146,13 @@ const SeriesNavigationMinimal: React.FC<SeriesNavigationMinimalProps> = ({
               borderRadius: '10px',
               backdropFilter: 'blur(14px)',
               boxShadow: '0 10px 40px rgba(0, 0, 0, 0.15)',
-              padding: '12px',
+              padding: '10px',
               zIndex: 1000,
             }}
           >
 
             {/* Series Items - Minimal Terminal Style */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
               {seriesPosts.map((post, index) => {
                 const isCurrent = post.slug === currentPost.slug;
                 const postNumber = post.data.series?.order ?? index + 1;
@@ -173,7 +173,7 @@ const SeriesNavigationMinimal: React.FC<SeriesNavigationMinimalProps> = ({
                         display: 'flex',
                         alignItems: 'center',
                         gap: '8px',
-                        padding: '8px 10px',
+                        padding: '0 10px',
                         background: 'rgb(var(--color-accent) / 0.08)',
                         borderRadius: '4px',
                         border: '1px solid rgb(var(--color-accent) / 0.15)',
@@ -216,7 +216,7 @@ const SeriesNavigationMinimal: React.FC<SeriesNavigationMinimalProps> = ({
                           display: 'flex',
                           alignItems: 'center',
                           gap: '8px',
-                          padding: '8px 10px',
+                          padding: '0 10px',
                           textDecoration: 'none',
                           borderRadius: '4px',
                           transition: 'all 0.15s ease',
