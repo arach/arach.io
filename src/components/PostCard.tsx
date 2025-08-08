@@ -25,10 +25,18 @@ export default function PostCard({
   const thumbnailSrc = thumbnail?.src || null;
 
   return (
-    <article className="group relative flex flex-col overflow-hidden rounded-2xl border border-skin-line bg-skin-card transition-all duration-300 hover:border-skin-accent/30 hover:shadow-lg hover:-translate-y-1">
-      <a href={href} className="absolute inset-0 z-10" aria-label={title}>
-        <span className="sr-only">{title}</span>
-      </a>
+    <article className="group relative flex flex-col overflow-hidden rounded-2xl bg-skin-card">
+      {/* Gradient border effect */}
+      <div className="absolute inset-0 rounded-2xl p-[1px] opacity-60 transition-opacity duration-300 group-hover:opacity-100">
+        <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-skin-accent/20 via-skin-accent/40 to-skin-accent/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100 blur-sm"></div>
+        <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-skin-accent/30 to-transparent"></div>
+      </div>
+      
+      {/* Inner content with background */}
+      <div className="relative flex flex-col overflow-hidden rounded-2xl border border-skin-line bg-skin-card transition-all duration-300 group-hover:border-skin-accent/20">
+        <a href={href} className="absolute inset-0 z-10" aria-label={title}>
+          <span className="sr-only">{title}</span>
+        </a>
 
       {/* Thumbnail */}
       <div className="aspect-[16/9] w-full overflow-hidden bg-skin-card-muted">
@@ -36,7 +44,7 @@ export default function PostCard({
           <img
             src={thumbnailSrc}
             alt={title}
-            className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-105"
+            className="h-full w-full object-contain transition-all duration-500 group-hover:scale-[1.02]"
             loading="lazy"
           />
         ) : (
@@ -86,10 +94,11 @@ export default function PostCard({
 
         {/* Read more */}
         <div className="mt-4 flex items-center text-sm font-medium">
-          <span className="text-skin-base/60 group-hover:text-skin-base transition-colors">
+          <span className="text-skin-base/60 group-hover:text-skin-accent transition-colors duration-300">
             Read article →
           </span>
         </div>
+      </div>
       </div>
     </article>
   );

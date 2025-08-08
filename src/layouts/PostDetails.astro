@@ -176,19 +176,8 @@ const layoutProps = {
 <style>
   /* Series navigation CSS removed - handled by minimal component */
   main {
-    @apply mx-auto w-full pb-12;
-    max-width: 1200px; /* Match header nav width */
-    padding-left: 2rem; /* 32px instead of 16px */
-    padding-right: 2rem;
-  }
-
-  /* Mobile: use full width with proper padding */
-  @media (max-width: 767px) {
-    main {
-      max-width: 100%;
-      padding-left: 1rem; /* 16px on mobile */
-      padding-right: 1rem;
-    }
+    @apply mx-auto w-full pb-12 px-4 sm:px-6 lg:px-8;
+    max-width: 1200px; /* Match header width exactly */
   }
   .header-row {
     @apply flex items-center justify-between mb-2 relative z-30;
@@ -332,7 +321,7 @@ const layoutProps = {
     color: rgb(var(--color-text-base));
   }
 
-  /* Much tighter reading width for focused content */
+  /* Use full available width within the container */
   .prose p,
   .prose li,
   .prose h1,
@@ -341,25 +330,9 @@ const layoutProps = {
   .prose blockquote,
   .prose figure,
   .prose img {
-    max-width: 55ch !important; /* Much narrower, premium reading width */
-    margin-left: auto !important;
-    margin-right: auto !important;
-  }
-
-  /* Mobile: use full width */
-  @media (max-width: 767px) {
-    .prose p,
-    .prose li,
-    .prose h1,
-    .prose h2, 
-    .prose h3,
-    .prose blockquote,
-    .prose figure,
-    .prose img {
-      max-width: 100% !important;
-      margin-left: 0 !important;
-      margin-right: 0 !important;
-    }
+    max-width: 100% !important; /* Use full container width */
+    margin-left: 0 !important;
+    margin-right: 0 !important;
   }
 
   /* Content area with elegant boundary lines */

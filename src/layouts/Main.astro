@@ -40,7 +40,8 @@ const { props } = Astro;
 
 <style>
   #main-content {
-    @apply mx-auto w-full max-w-2xl px-4 pb-4 sm:max-w-4xl;
+    @apply mx-auto w-full px-4 pb-4 sm:px-6 lg:px-8;
+    max-width: 1200px; /* Match header width for consistency */
   }
   #main-content h1 {
     @apply text-2xl font-semibold sm:text-3xl;
