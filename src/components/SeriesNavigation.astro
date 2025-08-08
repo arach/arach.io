@@ -33,7 +33,7 @@ const showSeriesNav = currentPost.data.series && seriesPosts.length > 1;
   <nav 
     id="series-navigation" 
     class="series-navigation" 
-    aria-label={`${currentPost.data.series.name} series navigation`}
+    aria-label={`${currentPost.data.series?.name ?? 'Series'} series navigation`}
     aria-hidden="false"
   >
     <button 
@@ -46,11 +46,11 @@ const showSeriesNav = currentPost.data.series && seriesPosts.length > 1;
   <div class="series-header">
     <p class="series-label">Special Series</p>
     <h3 class="series-title">
-      <span class="series-icon">📚</span>
-      {currentPost.data.series.name}
+      <span class="series-title-full">{currentPost.data.series?.name ?? ''}</span>
+      <span class="series-title-short">SPECIAL SERIES ON AI</span>
     </h3>
     <p class="series-progress">
-      Part {currentPost.data.series.order} of {seriesPosts.length}
+      Part {currentPost.data.series?.order ?? 0} of {seriesPosts.length}
     </p>
   </div>
 
@@ -59,18 +59,36 @@ const showSeriesNav = currentPost.data.series && seriesPosts.length > 1;
       const isCurrent = post.slug === currentPost.slug;
       const isCompleted = index < currentIndex;
       
+      // Create short titles for minimized view
+      const shortTitles = {
+        'ladderless-path': 'pulling up the ladder',
+        'ai-restored-cto-personal-leverage': 'ai as leverage', 
+        'ai-theater-vs-real-transformation': 'theater vs transformation'
+      };
+      
+      const shortTitle = shortTitles[post.slug] || post.data.title.toLowerCase().slice(0, 20);
+      
       return (
         <div class={`series-item ${isCurrent ? 'current' : ''} ${isCompleted ? 'completed' : ''}`}>
           <div class="series-number">
-            {isCompleted ? '✓' : post.data.series?.order}
+            <span class="series-number-full">{isCompleted ? '✓' : post.data.series?.order}</span>
+            <span class="series-number-short">{post.data.series?.order}</span>
           </div>
           <div class="series-content">
             {isCurrent ? (
-              <span class="series-current-title">{post.data.title}</span>
+              <>
+                <span class="series-current-title series-full-title">{post.data.title}</span>
+                <span class="series-current-title series-short-title">{shortTitle}</span>
+              </>
             ) : (
-              <a href={`/posts/${post.slug}/`} class="series-link">
-                {post.data.title}
-              </a>
+              <>
+                <a href={`/posts/${post.slug}/`} class="series-link series-full-title">
+                  {post.data.title}
+                </a>
+                <a href={`/posts/${post.slug}/`} class="series-link series-short-title">
+                  {shortTitle}
+                </a>
+              </>
             )}
           </div>
         </div>
@@ -180,7 +198,7 @@ const showSeriesNav = currentPost.data.series && seriesPosts.length > 1;
     }
   }
 
-  /* Desktop: floating sidebar */
+  /* Desktop: sticky sidebar on the left */
   @media (min-width: 1025px) {
     
     .series-close {
@@ -193,17 +211,56 @@ const showSeriesNav = currentPost.data.series && seriesPosts.length > 1;
     
     .series-navigation {
       @apply fixed top-1/2 transform -translate-y-1/2 z-30 text-left;
-      right: 2rem;
-      width: 320px;
+      left: 2rem; /* Fixed on the left side */
+      width: 280px;
       max-height: 80vh;
       overflow-y: auto;
-      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1);
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+                  opacity 0.3s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    /* Position next to the content area (matches header: 1200px) */
-    @media (min-width: 1300px) {
+    /* Expanded state (no change needed for left positioning) */
+    .series-navigation.desktop-expanded {
+      /* Keep same left position */
+    }
+
+    /* Visual indicator on the right edge */
+    .series-navigation::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(180deg, 
+        transparent 0%,
+        rgb(var(--color-accent) / 0.4) 20%,
+        rgb(var(--color-accent) / 0.6) 50%,
+        rgb(var(--color-accent) / 0.4) 80%,
+        transparent 100%);
+      pointer-events: none;
+      opacity: 1;
+      transition: opacity 0.3s ease;
+    }
+
+    /* Keep the indicator visible when expanded */
+    .series-navigation.desktop-expanded::after {
+      opacity: 1;
+    }
+
+    /* For wider screens, keep on the left edge */
+    @media (min-width: 1400px) {
       .series-navigation {
-        right: calc((100vw - 1200px) / 2 - 340px);
+        left: 2rem;
+      }
+    }
+    
+    /* On very wide screens, position relative to content */
+    @media (min-width: 1800px) {
+      .series-navigation {
+        left: calc((100vw - 1200px) / 2 - 320px);
+        left: max(2rem, calc((100vw - 1200px) / 2 - 320px));
       }
     }
   }
@@ -217,11 +274,10 @@ const showSeriesNav = currentPost.data.series && seriesPosts.length > 1;
   }
 
   .series-title {
-    @apply flex items-center gap-2 text-lg font-semibold text-skin-accent mb-1;
-  }
-
-  .series-icon {
-    @apply text-base;
+    @apply text-lg font-semibold text-skin-accent mb-1;
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
   }
 
   .series-progress {
@@ -235,7 +291,10 @@ const showSeriesNav = currentPost.data.series && seriesPosts.length > 1;
     }
 
     .series-title {
-      @apply flex items-center gap-2 text-xl font-semibold text-skin-accent mb-1;
+      @apply text-xl font-semibold text-skin-accent mb-1;
+      font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
     }
 
     .series-progress {
@@ -257,6 +316,114 @@ const showSeriesNav = currentPost.data.series && seriesPosts.length > 1;
 
   .series-list {
     @apply space-y-2 mb-4;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  /* Default: show full titles and numbers */
+  .series-title-short,
+  .series-short-title,
+  .series-number-short {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .series-title-full,
+  .series-full-title,
+  .series-number-full {
+    opacity: 1;
+  }
+
+  /* Desktop collapsed vs expanded behavior */
+  @media (min-width: 1025px) {
+    /* Collapsed: show short titles and compact UI */
+    .series-navigation.desktop-collapsed {
+      width: 240px;
+      padding-top: 0.75rem;
+      padding-bottom: 0.75rem;
+    }
+
+    .series-navigation.desktop-collapsed .series-label,
+    .series-navigation.desktop-collapsed .series-progress,
+    .series-navigation.desktop-collapsed .series-navigation-buttons {
+      opacity: 0;
+      height: 0;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .series-navigation.desktop-collapsed .series-title-full,
+    .series-navigation.desktop-collapsed .series-full-title,
+    .series-navigation.desktop-collapsed .series-number-full {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .series-navigation.desktop-collapsed .series-title-short,
+    .series-navigation.desktop-collapsed .series-short-title,
+    .series-navigation.desktop-collapsed .series-number-short {
+      position: static;
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Expanded: show full titles; hide short versions */
+    .series-navigation.desktop-expanded .series-title-full,
+    .series-navigation.desktop-expanded .series-full-title,
+    .series-navigation.desktop-expanded .series-number-full,
+    .series-navigation.desktop-expanded .series-label,
+    .series-navigation.desktop-expanded .series-progress,
+    .series-navigation.desktop-expanded .series-navigation-buttons {
+      opacity: 1;
+      height: auto;
+      pointer-events: auto;
+    }
+
+    .series-navigation.desktop-expanded .series-title-short,
+    .series-navigation.desktop-expanded .series-short-title,
+    .series-navigation.desktop-expanded .series-number-short {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+  
+  /* Content transitions happen after container expansion (with delay) */
+  .series-label,
+  .series-progress,
+  .series-navigation-buttons,
+  .series-title span,
+  .series-link,
+  .series-current-title {
+    transition: opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.3s, /* Delayed by 0.3s */
+                height 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.3s,
+                margin 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.3s,
+                padding 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.3s;
+  }
+  
+  /* Numbers fade quickly */
+  .series-number {
+    transition: opacity 0.3s ease;
+  }
+
+  /* Desktop styles - always expanded */
+  @media (min-width: 1025px) {
+    /* Always show full content on desktop */
+    .series-navigation .series-label,
+    .series-navigation .series-progress {
+      opacity: 1;
+      height: auto;
+      pointer-events: auto;
+    }
+    
+    .series-navigation .series-navigation-buttons {
+      opacity: 1;
+      height: auto;
+      pointer-events: auto;
+    }
   }
 
   .series-item {
@@ -349,16 +516,17 @@ const showSeriesNav = currentPost.data.series && seriesPosts.length > 1;
   function initIPhoneToggle() {
     if (!isIPhone()) return;
 
-    const inlineTag = document.getElementById('series-floating-tag-inline');
-    const nav = document.getElementById('series-navigation');
-    const chevron = document.querySelector('.series-chevron');
+    const inlineTag = document.getElementById('series-floating-tag-inline') as (HTMLElement & { _seriesToggle?: (e: MouseEvent) => void }) | null;
+    const nav = document.getElementById('series-navigation') as HTMLElement | null;
+    const chevron = document.querySelector('.series-chevron') as HTMLElement | null;
 
     if (!inlineTag || !nav) {
       console.warn('SeriesNav: iPhone - Missing elements', { inlineTag: !!inlineTag, nav: !!nav });
       return;
     }
 
-    function toggleMobilePanel(event) {
+    function toggleMobilePanel(event: MouseEvent) {
+      if (!nav) return;
       event?.preventDefault();
       event?.stopPropagation();
       
@@ -390,28 +558,31 @@ const showSeriesNav = currentPost.data.series && seriesPosts.length > 1;
     }
 
     // Clean up any existing listeners
-    if (inlineTag._seriesToggle) {
+    if (inlineTag && inlineTag._seriesToggle) {
       inlineTag.removeEventListener('click', inlineTag._seriesToggle);
     }
     
-    inlineTag._seriesToggle = toggleMobilePanel;
-    inlineTag.addEventListener('click', toggleMobilePanel);
+    if (inlineTag) {
+      inlineTag._seriesToggle = toggleMobilePanel;
+      inlineTag.addEventListener('click', toggleMobilePanel);
+    }
     console.log('📱 iPhone toggle initialized');
   }
 
   function initTabletToggle() {
     if (!isTablet()) return;
 
-    const inlineTag = document.getElementById('series-floating-tag-inline');
-    const nav = document.getElementById('series-navigation');
-    const chevron = document.querySelector('.series-chevron');
+    const inlineTag = document.getElementById('series-floating-tag-inline') as (HTMLElement & { _seriesToggle?: (e: MouseEvent) => void }) | null;
+    const nav = document.getElementById('series-navigation') as HTMLElement | null;
+    const chevron = document.querySelector('.series-chevron') as HTMLElement | null;
 
     if (!inlineTag || !nav) {
       console.warn('SeriesNav: iPad - Missing elements', { inlineTag: !!inlineTag, nav: !!nav });
       return;
     }
 
-    function toggleExpansion(event) {
+    function toggleExpansion(event: MouseEvent) {
+      if (!nav) return;
       event?.preventDefault();
       event?.stopPropagation();
       
@@ -443,17 +614,17 @@ const showSeriesNav = currentPost.data.series && seriesPosts.length > 1;
     }
 
     // Clean up any existing listeners
-    if (inlineTag._seriesToggle) {
+    if (inlineTag && inlineTag._seriesToggle) {
       inlineTag.removeEventListener('click', inlineTag._seriesToggle);
     }
     
-    inlineTag._seriesToggle = toggleExpansion;
+    if (inlineTag) inlineTag._seriesToggle = toggleExpansion;
 
     // Event listeners
     inlineTag.addEventListener('click', toggleExpansion);
 
     // ESC key to close
-    document.addEventListener('keydown', (e) => {
+    document.addEventListener('keydown', (e: KeyboardEvent) => {
       if (e.key === 'Escape' && nav.classList.contains('open')) {
         nav.classList.remove('open');
         nav.setAttribute('aria-hidden', 'true');
@@ -461,12 +632,49 @@ const showSeriesNav = currentPost.data.series && seriesPosts.length > 1;
     });
 
     // Close on outside click
-    document.addEventListener('click', (e) => {
+    document.addEventListener('click', (e: MouseEvent) => {
+      const target = e.target as Node | null;
       if (nav.classList.contains('open') && 
-          !nav.contains(e.target) && 
-          !inlineTag.contains(e.target)) {
+          !(nav as Node).contains(target) && 
+          inlineTag && !(inlineTag as Node).contains(target)) {
         nav.classList.remove('open');
         nav.setAttribute('aria-hidden', 'true');
+      }
+    });
+  }
+
+  // Desktop - always visible on left
+  function initDesktopInteraction() {
+    if (window.innerWidth < 1025) return;
+
+    const nav = document.getElementById('series-navigation') as HTMLElement | null;
+    if (!nav) return;
+
+    // Default to collapsed with short titles
+    nav.classList.add('desktop-collapsed');
+    nav.classList.remove('desktop-expanded');
+
+    // Expand on hover/focus
+    function expand() {
+      if (!nav) return;
+      nav.classList.add('desktop-expanded');
+      nav.classList.remove('desktop-collapsed');
+    }
+
+    function collapse() {
+      if (!nav) return;
+      nav.classList.add('desktop-collapsed');
+      nav.classList.remove('desktop-expanded');
+    }
+
+    nav.addEventListener('mouseenter', expand);
+    nav.addEventListener('focusin', expand);
+    nav.addEventListener('mouseleave', collapse);
+    nav.addEventListener('focusout', (e: FocusEvent) => {
+      // Collapse if focus moves outside the nav
+      const related = e.relatedTarget as Node | null;
+      if (!related || !nav.contains(related)) {
+        collapse();
       }
     });
   }
@@ -475,6 +683,7 @@ const showSeriesNav = currentPost.data.series && seriesPosts.length > 1;
   function initAllToggles() {
     initIPhoneToggle();
     initTabletToggle();
+    initDesktopInteraction();
   }
 
   if (document.readyState === 'loading') {
@@ -484,25 +693,25 @@ const showSeriesNav = currentPost.data.series && seriesPosts.length > 1;
   }
 
   // NUCLEAR RESET on window resize - fixes stuck states
-  let resizeTimeout;
+  let resizeTimeout: number | undefined;
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
+    resizeTimeout = window.setTimeout(() => {
       const currentWidth = window.innerWidth;
       console.log('🔄 WINDOW RESIZE - Resetting series nav state', { 
         newWidth: currentWidth,
         timestamp: new Date().toLocaleTimeString()
       });
       
-      const nav = document.getElementById('series-navigation');
-      const backdrop = document.getElementById('series-backdrop');
-      const chevron = document.querySelector('.series-chevron');
-      const inlineTag = document.getElementById('series-floating-tag-inline');
+      const nav = document.getElementById('series-navigation') as HTMLElement | null;
+      const backdrop = document.getElementById('series-backdrop') as HTMLElement | null;
+      const chevron = document.querySelector('.series-chevron') as HTMLElement | null;
+      const inlineTag = document.getElementById('series-floating-tag-inline') as (HTMLElement & { _seriesToggle?: (e: MouseEvent) => void }) | null;
       
       if (!nav) return;
       
       // NUCLEAR RESET - clear everything
-      nav.classList.remove('mobile-open', 'open');
+      nav.classList.remove('mobile-open', 'open', 'desktop-collapsed', 'desktop-expanded');
       nav.setAttribute('aria-hidden', 'false');
       nav.style.transform = '';
       nav.style.opacity = '';
@@ -543,7 +752,7 @@ const showSeriesNav = currentPost.data.series && seriesPosts.length > 1;
           
           // Short delay to let theme change settle
           setTimeout(() => {
-            const inlineTag = document.getElementById('series-floating-tag-inline');
+            const inlineTag = document.getElementById('series-floating-tag-inline') as (HTMLElement & { _seriesToggle?: (e: MouseEvent) => void }) | null;
             if (inlineTag && inlineTag._seriesToggle) {
               console.log('🔧 Cleaning up old listeners after theme change');
               inlineTag.removeEventListener('click', inlineTag._seriesToggle);

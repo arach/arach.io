@@ -8,15 +8,32 @@ import type { CollectionEntry } from "astro:content";
 import { slugifyStr } from "@utils/slugify";
 import ShareLinks from "@components/ShareLinks.astro";
 import DownloadLink from "@components/DownloadLink.astro";
-import SeriesNavigation from "@components/SeriesNavigation.astro";
+import SeriesNavigationReact from "@components/SeriesNavigationReact";
 import { Icon } from 'astro-icon/components';
 import { SITE } from "@config";
+import { getCollection } from "astro:content";
 
 export interface Props {
   post: CollectionEntry<"blog">;
 }
 
 const { post } = Astro.props;
+
+// Get series data if post is part of a series
+const allPosts = await getCollection("blog");
+const seriesPosts = post.data.series ? allPosts
+  .filter(p => 
+    p.data.series?.name === post.data.series?.name && 
+    !p.data.draft
+  )
+  .sort((a, b) => (a.data.series?.order || 0) - (b.data.series?.order || 0)) : [];
+
+const currentIndex = seriesPosts.findIndex(p => p.slug === post.slug);
+const previousPost = currentIndex > 0 ? seriesPosts[currentIndex - 1] : null;
+const nextPost = currentIndex < seriesPosts.length - 1 ? seriesPosts[currentIndex + 1] : null;
+
+// Only show series navigation if the current post is part of a series and series has more than one post
+const showSeriesNav = post.data.series && seriesPosts.length > 1;
 
 const {
   title,
@@ -57,7 +74,18 @@ const layoutProps = {
     <div class="progress-bar h-1 w-0 bg-skin-accent" id="myBar"></div>
   </div> -->
 
-  <main id="main-content">
+  {showSeriesNav && (
+    <SeriesNavigationReact 
+      currentPost={post} 
+      seriesPosts={seriesPosts}
+      currentIndex={currentIndex}
+      previousPost={previousPost}
+      nextPost={nextPost}
+      client:load
+    />
+  )}
+
+  <main id="main-content" class="relative z-10 bg-skin-fill" style="backdrop-filter: blur(20px); background: rgb(var(--color-fill));">
     <!-- Series tag at top level -->
     {post.data.series && (
       <div class="series-floating-tag" id="series-floating-tag">
@@ -97,10 +125,7 @@ const layoutProps = {
       </div>
     </div>
     
-    <!-- Series navigation overlay -->
-    <div class="series-navigation-wrapper">
-      <SeriesNavigation currentPost={post} />
-    </div>
+    
     
     <!-- Date/Reading time + Actions row -->
     <div class="flex items-center justify-between gap-4 date-time-row">
