@@ -1,0 +1,18 @@
+---
+import MidjourneyPrompt from './MidjourneyPrompt';
+
+export interface Props {
+  prompt: string;
+  imageUrl: string;
+  midjourneyUrl?: string;
+}
+
+const { prompt, imageUrl, midjourneyUrl } = Astro.props;
+---
+
+<MidjourneyPrompt 
+  client:load
+  prompt={prompt}
+  imageUrl={imageUrl}
+  midjourneyUrl={midjourneyUrl}
+/>

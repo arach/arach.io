@@ -8,6 +8,7 @@ import { SITE } from "./src/config";
 import { remarkReadingTime } from "./src/utils/remark-reading-time.mjs";
 import partytown from "@astrojs/partytown";
 import icon from "astro-icon";
+import mdx from "@astrojs/mdx";
 
 // https://astro.build/config
 export default defineConfig({
@@ -17,6 +18,7 @@ export default defineConfig({
       applyBaseStyles: false,
     }),
     react(),
+    mdx(),
     sitemap(),
     partytown(),
     icon(),
