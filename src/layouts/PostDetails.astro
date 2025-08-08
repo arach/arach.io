@@ -8,7 +8,7 @@ import type { CollectionEntry } from "astro:content";
 import { slugifyStr } from "@utils/slugify";
 import ShareLinks from "@components/ShareLinks.astro";
 import DownloadLink from "@components/DownloadLink.astro";
-import SeriesNavigationReact from "@components/SeriesNavigationReact";
+import SeriesNavigationMinimal from "@components/SeriesNavigationMinimal";
 import { Icon } from 'astro-icon/components';
 import { SITE } from "@config";
 import { getCollection } from "astro:content";
@@ -74,25 +74,10 @@ const layoutProps = {
     <div class="progress-bar h-1 w-0 bg-skin-accent" id="myBar"></div>
   </div> -->
 
-  {showSeriesNav && (
-    <SeriesNavigationReact 
-      currentPost={post} 
-      seriesPosts={seriesPosts}
-      currentIndex={currentIndex}
-      previousPost={previousPost}
-      nextPost={nextPost}
-      client:load
-    />
-  )}
+  <!-- Series navigation moved to title area -->
 
-  <main id="main-content" class="relative z-10 bg-skin-fill" style="backdrop-filter: blur(20px); background: rgb(var(--color-fill));">
-    <!-- Series tag at top level -->
-    {post.data.series && (
-      <div class="series-floating-tag" id="series-floating-tag">
-        <span class="series-name-full">Special Series: {post.data.series.name}</span>
-        <span class="series-name-short">AI Series</span>
-      </div>
-    )}
+  <main id="main-content" class="relative z-0 bg-skin-fill" style="background: rgb(var(--color-fill));">
+    <!-- Series tag removed - now handled by minimal navigation -->
     
     <!-- Title with Go back and Series tag on same line for iPad -->
     <div class="mb-2 flex items-start justify-between">
@@ -108,22 +93,28 @@ const layoutProps = {
               ></path>
             </svg><span class="go-back-full">Go back</span><span class="go-back-short">Back</span>
           </button>
-          {post.data.series && (
-            <div class="series-tag-container">
-              <div class="series-tag-inline" id="series-floating-tag-inline">
-                <span class="series-name-full">Special Series: {post.data.series.name}</span>
-                <span class="series-name-short">Series on AI</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" class="series-chevron">
-                  <path d="m7 10 5 5 5-5z" fill="currentColor"></path>
-                </svg>
-              </div>
-            </div>
-          )}
+          <!-- Series tag removed - now handled by minimal navigation -->
         </div>
         
+        <div class="title-with-series">
         <h1 transition:name={slugifyStr(title)} class="post-title">{title}</h1>
+        {showSeriesNav && (
+          <SeriesNavigationMinimal 
+            currentPost={post} 
+            seriesPosts={seriesPosts}
+            currentIndex={currentIndex}
+            previousPost={previousPost}
+            nextPost={nextPost}
+            client:load
+          />
+        )}
+      </div>
       </div>
     </div>
+
+    <!-- Series navigation now handled by minimal component in top-right -->
+
+    <!-- Series navigation slot removed - now handled by minimal component -->
     
     
     
@@ -147,9 +138,11 @@ const layoutProps = {
       </div>
     </div>
     
-    <article id="article" role="article" class="prose prose-lg mx-auto w-full">
-      <Content />
-    </article>
+    <div class="article-shell relative z-50">
+      <article id="article" role="article" class="prose prose-lg mx-auto w-full article-surface relative z-60">
+        <Content />
+      </article>
+    </div>
 
     <ul class="my-8">
       {tags.map(tag => <Tag tag={slugifyStr(tag)} />)}
@@ -181,6 +174,7 @@ const layoutProps = {
 </Layout>
 
 <style>
+  /* Series navigation CSS removed - handled by minimal component */
   main {
     @apply mx-auto w-full pb-12;
     max-width: 1200px; /* Match header nav width */
@@ -230,135 +224,25 @@ const layoutProps = {
     @apply w-3 h-3;
   }
 
-  .series-tag-container {
-    @apply relative;
-  }
-
-  /* iPad: Ensure proper positioning context for rollout */
-  @media (min-width: 768px) and (max-width: 1024px) {
-    .series-tag-container {
-      @apply relative;
-    }
-  }
-
-  .series-tag-inline {
-    @apply text-xs font-normal text-skin-base bg-skin-card px-2.5 py-1 rounded cursor-pointer transition-all duration-200 hidden items-center gap-1;
-    opacity: 0.8;
-    border: 1px solid rgb(var(--color-border) / 0.3);
-    box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
-  }
-
-  .series-tag-inline:hover {
-    @apply opacity-100 transform scale-105 bg-skin-card-muted;
-    border-color: rgb(var(--color-border) / 0.5);
-    box-shadow: 0 2px 4px rgb(0 0 0 / 0.1);
-  }
-
-  .series-chevron {
-    @apply w-3 h-3 opacity-70 transition-transform duration-200;
-    fill: currentColor;
-  }
-
-  /* Default: show full name, hide short name */
-  .series-tag-inline .series-name-full {
-    @apply inline;
-  }
-
-  .series-tag-inline .series-name-short {
-    @apply hidden;
-  }
-
-  .series-navigation-wrapper {
-    @apply relative;
-  }
-
-  /* iPad: Position navigation wrapper as overlay below header row */
-  @media (min-width: 768px) and (max-width: 1024px) {
-    .series-navigation-wrapper {
-      @apply absolute left-0 right-0 z-10 pl-8;
-      /* Overlay that covers content below without displacing it */
-      top: 110px; /* Position below the header row to keep go-back and series tag fully visible */
-    }
-  }
+  /* Series tag CSS removed - handled by minimal component */
   
+  .title-with-series {
+    @apply flex items-start gap-3;
+    justify-content: space-between;
+  }
+
   .post-title {
     @apply text-3xl font-bold text-skin-accent;
-  }
-  
-  .series-floating-tag {
-    @apply float-right text-xs font-normal text-skin-base bg-skin-fill px-2.5 py-1 rounded-md mb-4 cursor-pointer transition-all duration-200;
-    opacity: 0.7;
-    clear: both;
-    border: 1px solid rgb(var(--color-border) / 0.3);
+    flex: 1;
   }
 
-  /* Default: show full name, hide short name */
-  .series-floating-tag .series-name-full {
-    @apply inline;
-  }
-
-  .series-floating-tag .series-name-short {
-    @apply hidden;
-  }
-
-  /* Desktop: Keep as floating tag */
-  @media (min-width: 1025px) {
-    .series-floating-tag {
-      @apply float-right text-xs font-normal text-skin-base bg-skin-fill px-2.5 py-1 rounded-md mb-4 cursor-pointer transition-all duration-200;
-      opacity: 0.7;
-      clear: both;
-      border: 1px solid rgb(var(--color-border) / 0.3);
-    }
-  }
-
-  .series-floating-tag:hover {
-    @apply opacity-90;
-  }
-
-  /* iPhone: Put series tag inline with Back button */
+  /* Mobile: Stack vertically */
   @media (max-width: 767px) {
-    .series-floating-tag {
-      @apply hidden; /* Hide the floating version on iPhone */
-    }
-    
-    .series-tag-inline {
-      @apply inline-flex text-xs px-2.5 py-1 bg-skin-fill rounded-full cursor-pointer opacity-70;
-      border: 1px solid rgb(var(--color-border) / 0.2);
-    }
-
-    .series-tag-inline:hover {
-      @apply opacity-90;
-    }
-
-    /* Show short series name on iPhone, hide full name */
-    .series-tag-inline .series-name-full {
-      @apply hidden;
-    }
-    
-    .series-tag-inline .series-name-short {
-      @apply inline;
-    }
-
-    /* Hide full "Go back" text on iPhone, show only short "Back" text */
-    .go-back-btn-inline .go-back-full {
-      @apply hidden;
-    }
-    
-    .go-back-btn-inline .go-back-short {
-      @apply inline;
+    .title-with-series {
+      @apply flex-col;
     }
   }
-
-  /* iPad: Hide original floating tag, show inline version */
-  @media (min-width: 768px) and (max-width: 1024px) {
-    .series-floating-tag {
-      @apply hidden;
-    }
-
-    .series-tag-inline {
-      @apply inline-flex;
-    }
-  }
+  /* Series floating tag CSS removed - handled by minimal component */
   
   .reading-time {
     @apply flex items-center gap-1.5 text-xs text-skin-base;
@@ -485,25 +369,26 @@ const layoutProps = {
     padding: 0 0 2rem 0;
   }
 
-  /* Outer structural boundaries like Vercel - frame the content */
+  /* Remove vertical boundary lines for a cleaner, less decorative look */
   .prose::before,
   .prose::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 1px;
-    background: rgb(var(--color-border)); /* Works in both light and dark mode */
-    opacity: 0.05;
-    z-index: 1;
+    display: none;
   }
 
-  .prose::before {
-    left: calc(50% - 38ch); /* Outer left boundary - wider than content for structure */
+  /* Article surface styling: opaque text area only */
+  .article-shell {
+    @apply mx-auto w-full;
   }
 
-  .prose::after {
-    right: calc(50% - 38ch); /* Outer right boundary - creates container feel */
+  .article-surface {
+    background: rgb(var(--color-fill)); /* fully opaque for crisp text */
+  }
+
+  /* Reduce chrome on mobile */
+  @media (max-width: 767px) {
+    .article-surface {
+      background: rgb(var(--color-fill));
+    }
   }
 
   /* Mobile: hide structural boundaries */
