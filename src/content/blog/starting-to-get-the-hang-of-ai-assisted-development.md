@@ -1,7 +1,7 @@
 ---
 title: "Starting to get the hang of AI assisted development"
 
-slug: "get-the-hang-of-AI-assisted-development"
+slug: "get-the-hang-of-ai-assisted-development"
 pubDatetime: 2024-05-13T23:11:41.419Z
 author: "Arach Tchoupani"
 description: "cursor + copilot + GPT4 = 🚀 -> Notes on AI amplified development"
@@ -13,17 +13,15 @@ draft: false
 thumbnail: "/src/assets/images/ai-dev-tools.jpg"
 ---
 
-# The Initial Learning Curve
+## The Initial Learning Curve
 
 Adopting AI tools like Cursor, Copilot, and GPT-4 was pretty easy since I was already used to VSCode and GitHub Copilot. Moving to the new stack flipped a switch in my mind, prompting me to find more ways to leverage AI. It took me about two months to truly grasp how to extract the full potential of these tools.
-
-## The Turning Point: Feeling Like Flying
 
 After roughly a month of writing code with these AI tools, a noticeable shift occurred. I started investing more time in explaining my intentions to the AI. Instead of quickly jumping to snippet shortcuts like `tsrafc`, advanced vim commands or just typing furiousl, I got in the habit of stepping back and assessing how well the AI would accomplish the same idea. I learned to invest the time to explain my thoughts, and frankly how to do it effectively. The more I practiced this, the better I understood the AI's strengths and where I was better just doing the work.
 
 Recently, I've been able to ship complete feature ideas in just a few hours, with a level of joy and quality I never expected. This is so much fun!
 
-![IDE Shortcuts](/src/assets/images/ide-shortcuts.png)
+<img src="/src/assets/images/ide-shortcuts.png" alt="IDE Shortcuts" />
 
 ## Enhanced Code Quality
 
