@@ -1,0 +1,185 @@
+---
+export interface Props {
+  prompt: string;
+  imageUrl: string;
+  midjourneyUrl?: string;
+}
+
+const { prompt, imageUrl, midjourneyUrl } = Astro.props;
+
+// Convert relative paths to work with Astro's image handling
+const imagePath = imageUrl.startsWith('../../') 
+  ? imageUrl.replace('../../', '/src/')
+  : imageUrl;
+---
+
+<div class="midjourney-container my-12">
+  <div class="relative inline-block max-w-[750px]">
+    <div class="relative overflow-hidden rounded-sm border border-gray-300 dark:border-gray-700">
+      <!-- Top Bevel -->
+      <div class="absolute top-0 left-0 right-0 px-2 py-1 bg-gray-50 dark:bg-gray-800/50 border-b border-gray-300 dark:border-gray-700 z-10">
+        <div class="flex items-center justify-between text-[9px] font-mono text-gray-500 dark:text-gray-500">
+          <span class="font-bold uppercase tracking-wider">Midjourney</span>
+          <span class="text-[8px]">AI-GENERATED</span>
+        </div>
+      </div>
+      
+      <!-- Image -->
+      <img
+        src={imagePath}
+        alt={prompt.substring(0, 100) + '...'}
+        class="w-full h-auto block"
+        loading="lazy"
+        decoding="async"
+      />
+      
+      <!-- Bottom Bevel with URL Info -->
+      <div class="absolute bottom-0 left-0 right-0 px-2 py-1 bg-gray-50 dark:bg-gray-800/50 border-t border-gray-300 dark:border-gray-700">
+        <div class="flex items-center justify-between text-[9px] font-mono text-gray-500 dark:text-gray-500">
+          <div class="flex items-center gap-1 truncate mr-2">
+            <span class="font-bold">ref:</span>
+            <span class="truncate">url('{midjourneyUrl || imageUrl}')</span>
+          </div>
+          
+          <div class="flex-shrink-0">
+            '{midjourneyUrl?.split('/').pop() || 'local'}'
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Hover Info Card -->
+    <div class="midjourney-info-card">
+      <div class="bg-white dark:bg-gray-900 border border-gray-400 dark:border-gray-600 shadow-xl">
+        <!-- Header -->
+        <div class="px-4 py-2 border-b border-gray-400 dark:border-gray-600 bg-gray-50 dark:bg-gray-800/30">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-bold tracking-wider text-gray-600 dark:text-gray-400">
+              MIDJOURNEY SPEC
+            </span>
+            <span class="text-[10px] text-gray-500 dark:text-gray-500">
+              ID: {midjourneyUrl?.split('/').pop()?.slice(0, 8) || 'N/A'}
+            </span>
+          </div>
+        </div>
+
+        <!-- Prompt Section -->
+        <div class="px-4 py-3 border-b border-gray-300 dark:border-gray-700">
+          <div class="text-[9px] font-bold text-gray-500 dark:text-gray-500 mb-1 tracking-wider">
+            PROMPT_MAIN
+          </div>
+          <div class="text-[11px] text-gray-700 dark:text-gray-300 leading-relaxed">
+            {prompt.split('--')[0].trim()}
+          </div>
+        </div>
+
+        <!-- Parameters -->
+        <div class="px-4 py-3 border-b border-gray-300 dark:border-gray-700">
+          <div class="text-[9px] font-bold text-gray-500 dark:text-gray-500 mb-2 tracking-wider">
+            PARAMETERS
+          </div>
+          <div class="grid grid-cols-2 gap-x-4 gap-y-1">
+            {prompt.match(/--(\w+)\s+([^\s-]+)/g)?.map(param => {
+              const [key, value] = param.replace('--', '').split(' ');
+              return (
+                <div class="flex justify-between">
+                  <span class="text-[10px] text-gray-500 dark:text-gray-500 uppercase">
+                    {key}:
+                  </span>
+                  <span class="text-[10px] text-gray-700 dark:text-gray-300 font-medium">
+                    {value}
+                  </span>
+                </div>
+              );
+            }) || (
+              <span class="text-[10px] text-gray-400 dark:text-gray-600 col-span-2">
+                DEFAULT_CONFIG
+              </span>
+            )}
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="px-4 py-2 bg-gray-50 dark:bg-gray-800/50">
+          <div class="flex items-center justify-between">
+            <button
+              class="copy-prompt text-[9px] font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors duration-200 uppercase tracking-wider cursor-pointer"
+              data-prompt={prompt}
+            >
+              [COPY_PROMPT]
+            </button>
+            
+            {midjourneyUrl && (
+              <a
+                href={midjourneyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-[9px] font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors duration-200 uppercase tracking-wider"
+              >
+                [VIEW_SOURCE]
+              </a>
+            )}
+          </div>
+        </div>
+
+        <!-- Corner notches -->
+        <div class="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-gray-600 dark:border-gray-400"></div>
+        <div class="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-gray-600 dark:border-gray-400"></div>
+        <div class="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2 border-gray-600 dark:border-gray-400"></div>
+        <div class="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-gray-600 dark:border-gray-400"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .midjourney-container {
+    position: relative;
+  }
+  
+  .midjourney-info-card {
+    position: absolute;
+    top: 0;
+    left: calc(100% + 1.5rem);
+    z-index: 20;
+    width: 380px;
+    opacity: 0;
+    transform: translateX(-20px) scale(0.95);
+    transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+    pointer-events: none;
+  }
+  
+  .midjourney-container:hover .midjourney-info-card {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    pointer-events: auto;
+  }
+  
+  .midjourney-info-card > div {
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+    background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(250,250,250,0.95) 100%);
+    backdrop-filter: blur(10px);
+  }
+  
+  :global(.dark) .midjourney-info-card > div {
+    background: linear-gradient(135deg, rgba(17,24,39,0.95) 0%, rgba(31,41,55,0.95) 100%);
+  }
+</style>
+
+<script>
+  // Copy prompt functionality
+  document.querySelectorAll('.copy-prompt').forEach(button => {
+    button.addEventListener('click', () => {
+      const prompt = button.getAttribute('data-prompt');
+      if (prompt) {
+        navigator.clipboard.writeText(prompt);
+        // Visual feedback
+        const originalText = button.textContent;
+        button.textContent = '[COPIED!]';
+        setTimeout(() => {
+          button.textContent = originalText;
+        }, 1000);
+      }
+    });
+  });
+</script>
