@@ -40,14 +40,6 @@ const socialCount = SOCIALS.filter(social => social.active).length;
             to bridge the gap between technical execution and business vision.
           </p>
 
-          <div class="achievement-badges animate-in">
-            <span class="badge">Engineering Leadership</span>
-            <span class="badge">Startup Founder</span>
-            <span class="badge">AI Development</span>
-            <span class="badge">InsurTech</span>
-            <span class="badge">Product Strategy</span>
-          </div>
-
           <div class="cta-buttons animate-in">
             <LinkButton href="https://arach.dev" className="cta-primary">
               Explorations
@@ -218,49 +210,6 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     
     .hero-description strong {
       @apply font-black;
-    }
-
-    .achievement-badges {
-      @apply mt-6 flex flex-wrap gap-3;
-    }
-    
-    /* iPhone: hide achievement badges to save space */
-    @media (max-width: 767px) {
-      .achievement-badges {
-        @apply hidden;
-      }
-    }
-
-    .badge {
-      @apply rounded-full px-3.5 py-1.5 text-xs font-semibold;
-      background: rgb(var(--color-card-muted));
-      border: 1px solid rgb(var(--color-border) / 0.3);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .badge::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, 
-        transparent,
-        rgb(var(--color-accent) / 0.1),
-        transparent
-      );
-      transform: translateX(-100%);
-      transition: transform 0.5s ease;
-    }
-    
-    .badge:hover::before {
-      transform: translateX(100%);
-    }
-    
-    .badge:hover {
-      border-color: rgb(var(--color-accent) / 0.3);
-      background: rgb(var(--color-card));
-      color: rgb(var(--color-accent));
     }
 
     .cta-buttons {

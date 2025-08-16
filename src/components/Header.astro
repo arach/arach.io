@@ -198,17 +198,42 @@ const navItems = [
 
   /* Nav links */
   .nav-link {
-    @apply relative px-3 py-2 text-sm font-medium transition-colors;
-    color: rgb(var(--color-text-base) / 0.7);
+    @apply relative px-4 py-2 text-[15px] transition-all duration-300;
+    color: rgb(var(--color-text-base) / 0.75);
+    font-weight: 450;
+    letter-spacing: 0.01em;
+    font-family: var(--font-body);
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 1.5px;
+    background-color: rgb(var(--color-accent));
+    transform: translateX(-50%);
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .nav-link:hover {
     color: rgb(var(--color-text-base));
+    transform: translateY(-1px);
+  }
+
+  .nav-link:hover::after {
+    width: 20px;
   }
 
   .nav-link.active {
     color: rgb(var(--color-accent));
     font-weight: 500;
+  }
+
+  .nav-link.active::after {
+    width: 100%;
+    background-color: rgb(var(--color-accent));
   }
 
   /* Separator */
