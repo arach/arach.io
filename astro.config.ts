@@ -18,18 +18,7 @@ export default defineConfig({
       applyBaseStyles: false,
     }),
     react(),
-    mdx({
-      remarkPlugins: [
-        remarkToc,
-        remarkReadingTime,
-        [
-          remarkCollapse,
-          {
-            test: "Table of contents",
-          },
-        ],
-      ],
-    }),
+    mdx(),
     sitemap(),
     partytown(),
     icon(),

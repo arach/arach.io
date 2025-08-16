@@ -153,3 +153,8 @@ pubDatetime: ISO date string (required)
 description: string (required)
 tags: string[] (optional)
 ```
+
+## Project Conventions
+
+- **File Formats**
+  - This side uses .md not .mdx for content
