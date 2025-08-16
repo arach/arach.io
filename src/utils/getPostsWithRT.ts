@@ -2,9 +2,9 @@ import type { CollectionEntry } from "astro:content";
 import { slugifyStr } from "./slugify";
 
 export const getReadingTime = async () => {
-  // Get all posts and memos using separate glob patterns
-  const globBlogPosts = import.meta.glob("../content/blog/*.md");
-  const globMemos = import.meta.glob("../content/memo/*.md");
+  // Get all posts and memos using separate glob patterns (including both .md and .mdx)
+  const globBlogPosts = import.meta.glob("../content/blog/*.{md,mdx}");
+  const globMemos = import.meta.glob("../content/memo/*.{md,mdx}");
 
   // Combine both glob results
   const allGlobs = { ...globBlogPosts, ...globMemos };

@@ -82,11 +82,11 @@ const socialCount = SOCIALS.filter(social => social.active).length;
       featuredPosts.length > 0 && (
         <>
           <section id="featured" class="content-section">
-            <h2 class="section-title animate-in">
+            <h2 class="section-title">
               <span class="featured-full">Featured Posts</span>
               <span class="featured-short">Featured</span>
             </h2>
-            <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 stagger-children">
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
               {featuredPosts.map(({ data, slug }) => (
                 <PostCard
                   href={`/posts/${slug}/`}
@@ -104,8 +104,8 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     {
       recentPosts.length > 0 && (
         <section id="recent-posts" class="content-section">
-          <h2 class="section-title animate-in">Recent Posts</h2>
-          <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 stagger-children">
+          <h2 class="section-title">Recent Posts</h2>
+          <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {recentPosts.map(
               ({ data, slug }, index) =>
                 index < 6 && (
