@@ -1,0 +1,49 @@
+---
+// This component enhances specific blog posts with Midjourney interactive components
+import MidjourneyPromptWrapper from "./MidjourneyPromptWrapper.astro";
+import infinitePasteMachineImg from "../assets/images/infinite-paste-machine-1.png";
+
+export interface Props {
+  slug: string;
+  content: string;
+}
+
+const { slug, content } = Astro.props;
+
+// Configuration for posts that need Midjourney enhancement
+const midjourneyConfigs: Record<string, any> = {
+  "infinite-bespoke-magic-paste-machine": {
+    placeholder: "midjourney-component-placeholder",
+    component: {
+      prompt: "A sophisticated retro-futuristic paste machine, art deco industrial design, chrome and brass mechanisms, vacuum tubes glowing with data, streams of text flowing through transparent pipes, knowledge crystals being processed, technical blueprint aesthetic, cross-section view showing intricate gears and circuits processing information, vintage scientific illustration style --chaos 15 --stylize 750 --ar 16:9",
+      imageUrl: infinitePasteMachineImg.src,
+      midjourneyUrl: "https://cdn.midjourney.com/68db614b-6818-4f5a-856a-7f4d64ef2c91/0_0.png"
+    }
+  }
+};
+
+const config = midjourneyConfigs[slug];
+const shouldEnhance = config && content.includes(`id="${config.placeholder}"`);
+
+// If we should enhance, replace the placeholder div with the component
+let enhancedContent = content;
+if (shouldEnhance) {
+  const placeholderRegex = new RegExp(`<div[^>]*id="${config.placeholder}"[^>]*>.*?</div>`, 'g');
+  enhancedContent = content.replace(placeholderRegex, '<!-- MIDJOURNEY_COMPONENT -->');
+}
+---
+
+{shouldEnhance ? (
+  <Fragment set:html={enhancedContent.split('<!-- MIDJOURNEY_COMPONENT -->')[0]} />
+  <div class="my-12">
+    <MidjourneyPromptWrapper
+      client:load
+      prompt={config.component.prompt}
+      imageUrl={config.component.imageUrl}
+      midjourneyUrl={config.component.midjourneyUrl}
+    />
+  </div>
+  <Fragment set:html={enhancedContent.split('<!-- MIDJOURNEY_COMPONENT -->')[1]} />
+) : (
+  <Fragment set:html={content} />
+)}

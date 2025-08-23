@@ -50,7 +50,15 @@ function reflectPreference() {
 // set early so no page flashes / CSS is made aware
 reflectPreference();
 
+// Add no-transition class initially to prevent flash
+document.documentElement.classList.add("no-transition");
+
 window.onload = () => {
+  // Remove no-transition class after page loads
+  setTimeout(() => {
+    document.documentElement.classList.remove("no-transition");
+  }, 100);
+  
   function setThemeFeature() {
     // set on load so screen readers can get the latest value on the button
     reflectPreference();

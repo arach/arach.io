@@ -1,0 +1,11 @@
+---
+import NewsletterForm from "./NewsletterForm";
+
+export interface Props {
+  className?: string;
+}
+
+const { className = "" } = Astro.props;
+---
+
+<NewsletterForm client:load className={className} />

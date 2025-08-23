@@ -12,6 +12,8 @@ import SeriesNavigationMinimal from "@components/SeriesNavigationMinimal";
 import { Icon } from 'astro-icon/components';
 import { SITE } from "@config";
 import { getCollection } from "astro:content";
+import MidjourneyPromptWrapper from "@components/MidjourneyPromptWrapper.astro";
+import infinitePasteMachineImg from "../assets/images/infinite-paste-machine-1.png";
 
 export interface Props {
   post: CollectionEntry<"blog">;
@@ -578,4 +580,67 @@ const layoutProps = {
     });
   }
   backToTop();
+  
+  /** Insert Midjourney component for specific posts */
+  function insertMidjourneyComponent() {
+    if (!window.location.pathname.includes('infinite-bespoke-magic-paste-machine')) return;
+    
+    // Find the comment marker in the rendered HTML
+    const article = document.getElementById('article');
+    if (!article) return;
+    
+    // Create a div for the component
+    const componentDiv = document.createElement('div');
+    componentDiv.id = 'midjourney-interactive-mount';
+    componentDiv.className = 'my-12';
+    
+    // Find the heading "The New Strategic Framework"
+    const headings = article.querySelectorAll('h2');
+    for (const heading of headings) {
+      if (heading.textContent?.includes('The New Strategic Framework')) {
+        // Insert before this heading
+        heading.parentNode?.insertBefore(componentDiv, heading);
+        break;
+      }
+    }
+  }
+  
+  // Run after DOM is loaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', insertMidjourneyComponent);
+  } else {
+    insertMidjourneyComponent();
+  }
+</script>
+
+{/* Render the Midjourney component that will be portaled to the right location */}
+{post.slug === "infinite-bespoke-magic-paste-machine" && (
+  <div id="midjourney-component-source" style="display: none;">
+    <MidjourneyPromptWrapper
+      client:idle
+      prompt="A sophisticated retro-futuristic paste machine, art deco industrial design, chrome and brass mechanisms, vacuum tubes glowing with data, streams of text flowing through transparent pipes, knowledge crystals being processed, technical blueprint aesthetic, cross-section view showing intricate gears and circuits processing information, vintage scientific illustration style --chaos 15 --stylize 750 --ar 16:9"
+      imageUrl={infinitePasteMachineImg.src}
+      midjourneyUrl="https://cdn.midjourney.com/68db614b-6818-4f5a-856a-7f4d64ef2c91/0_0.png"
+    />
+  </div>
+)}
+
+<script>
+  // Move the component from hidden source to the mount point
+  function moveComponent() {
+    const source = document.getElementById('midjourney-component-source');
+    const mount = document.getElementById('midjourney-interactive-mount');
+    
+    if (source && mount) {
+      // Move all children from source to mount
+      while (source.firstChild) {
+        mount.appendChild(source.firstChild);
+      }
+      // Remove the source container
+      source.remove();
+    }
+  }
+  
+  // Wait a bit for Astro to hydrate the component
+  setTimeout(moveComponent, 100);
 </script>

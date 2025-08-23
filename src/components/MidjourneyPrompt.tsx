@@ -16,6 +16,14 @@ const MidjourneyPrompt: React.FC<MidjourneyPromptProps> = ({
   const [isPinned, setIsPinned] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  
+  // Fallback to remove skeleton after 2 seconds even if onLoad doesn't fire
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setImageLoaded(true);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Parse the prompt for parameters
   const parsePromptParams = (prompt: string) => {
@@ -101,6 +109,7 @@ const MidjourneyPrompt: React.FC<MidjourneyPromptProps> = ({
               className="w-full h-auto"
               style={{ display: 'block', maxWidth: '100%', height: 'auto' }}
               onLoad={() => setImageLoaded(true)}
+              onError={() => setImageLoaded(true)} // Hide skeleton even on error
             />
             
             {/* Bottom Bevel with URL Info */}
