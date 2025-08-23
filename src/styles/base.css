@@ -351,9 +351,16 @@
   /* Smooth transitions */
   * {
     transition:
-      color 0.15s ease,
-      background-color 0.15s ease,
-      border-color 0.15s ease;
+      color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Prevent transition on initial page load */
+  .no-transition * {
+    transition: none !important;
   }
 
   /* Entrance animations */

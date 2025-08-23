@@ -10,7 +10,7 @@ excerpt: ""
 categories: []
 featured: true
 draft: false
-thumbnail: "/src/assets/images/ai-dev-tools.jpg"
+thumbnail: "../../assets/images/ai-dev-tools.jpg"
 ---
 
 ## The Initial Learning Curve
@@ -21,7 +21,7 @@ After roughly a month of writing code with these AI tools, a noticeable shift oc
 
 Recently, I've been able to ship complete feature ideas in just a few hours, with a level of joy and quality I never expected. This is so much fun!
 
-<img src="/src/assets/images/ide-shortcuts.png" alt="IDE Shortcuts" />
+![IDE Shortcuts](../../assets/images/ide-shortcuts.png)
 
 ## Enhanced Code Quality
 

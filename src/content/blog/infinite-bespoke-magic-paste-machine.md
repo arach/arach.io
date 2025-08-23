@@ -7,7 +7,7 @@ author: Arach Tchoupani
 tags: ["AI", "Strategy", "Software", "Innovation", "Technology"]
 featured: true
 draft: false
-thumbnail: "/src/assets/images/infinite-paste-machine.png"
+thumbnail: "../../assets/images/infinite-paste-machine.png"
 series:
   name: "AI's Impact on Corporate Strategy"
   order: 4
@@ -44,7 +44,7 @@ The LLM does something similar with the combination of quickly retrieving soluti
 
 Here's what matters for business: The machine can search any solution humanity has ever found, customize it perfectly for your specific needs, and combine solutions in ways that create new ones. Whether you call it intelligence or sophisticated paste is somewhat irrelevant - it's not perfect and AGI will take some time so you better get to work with what you have.
 
-![The Infinite Bespoke Magic Paste Machine](/src/assets/images/infinite-paste-machine-1.png)
+<!-- MIDJOURNEY_COMPONENT_HERE -->
 
 ## The New Strategic Framework: Paste vs. Intelligence Tasks
 

@@ -11,6 +11,7 @@ import Hero from "@components/Hero.astro";
 import Socials from "@components/Socials.astro";
 import CompanyLogos from "@components/CompanyLogos.astro";
 import CalBooking from "@components/CalBooking";
+import Newsletter from "@components/Newsletter.astro";
 import getSortedPosts from "@utils/getSortedPosts";
 import { SOCIALS } from "@config";
 import socialIcons from "@assets/socialIcons";
@@ -135,6 +136,10 @@ const socialCount = SOCIALS.filter(social => social.active).length;
       </LinkButton>
     </div>
 
+    <section id="newsletter" class="content-section newsletter-section">
+      <Newsletter />
+    </section>
+
     <Footer />
   </main>
 
@@ -144,6 +149,17 @@ const socialCount = SOCIALS.filter(social => social.active).length;
       @apply w-full;
       margin-top: 3rem;
       padding-top: 0;
+    }
+    
+    /* ===== Newsletter Section ===== */
+    .newsletter-section {
+      @apply max-w-2xl mx-auto py-12;
+    }
+    
+    @media (max-width: 767px) {
+      .newsletter-section {
+        @apply py-8;
+      }
     }
     
     /* iPhone: move main content up by reducing top margin */
