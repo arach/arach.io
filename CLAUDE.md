@@ -157,4 +157,4 @@ tags: string[] (optional)
 ## Project Conventions
 
 - **File Formats**
-  - This side uses .md not .mdx for content
+  - This site uses .md not .mdx for content
