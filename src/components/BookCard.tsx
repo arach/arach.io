@@ -1,7 +1,6 @@
 import { slugifyStr } from "@utils/slugify";
 import Datetime from "./Datetime";
 import type { CollectionEntry } from "astro:content";
-import StarRating from "@components/StarRating";
 
 export interface Props {
   href?: string;
@@ -33,7 +32,11 @@ export default function Card({ href, frontmatter, secHeading = true }: Props) {
         </a>
         <div className="flex flex-row items-center space-x-4">
           <Datetime pubDatetime={pubDatetime} modDatetime={modDatetime} />
-          {rating !== undefined && <StarRating rating={rating} />}
+          {rating !== undefined && (
+            <span className="text-sm text-skin-base opacity-80">
+              {"★".repeat(Math.round(rating))}{"☆".repeat(5 - Math.round(rating))}
+            </span>
+          )}
         </div>
         <div>
           <div className="flex-1">
