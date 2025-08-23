@@ -8,7 +8,6 @@ import type { CollectionEntry } from "astro:content";
 import { slugifyStr } from "@utils/slugify";
 import ShareLinks from "@components/ShareLinks.astro";
 import { SITE } from "@config";
-import StarRating from "@components/Rating.astro";
 
 export interface Props {
   book: CollectionEntry<"book">;
@@ -77,7 +76,9 @@ const layoutProps = {
         {
           book.data.rating && (
             <div class="mb-4 flex items-center">
-              <StarRating rating={book.data.rating} />
+              <span class="text-lg">
+                {"★".repeat(Math.round(book.data.rating))}{"☆".repeat(5 - Math.round(book.data.rating))}
+              </span>
               <span class="ml-2 text-gray-600">
                 {book.data.rating.toFixed(1)}
               </span>
