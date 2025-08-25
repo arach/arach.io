@@ -14,6 +14,19 @@ const themeGradient = {
 // Layout options based on title length or other criteria
 type LayoutType = '40-60' | 'ultrawide' | 'ultracompact';
 
+// Sanitize text to remove problematic Unicode characters
+const sanitizeText = (text: any): string => {
+  if (!text) return '';
+  const str = String(text);
+  // Replace curly quotes and other problematic Unicode characters
+  return str
+    .replace(/[\u2018\u2019]/g, "'") // Replace curly single quotes with straight quotes
+    .replace(/[\u201C\u201D]/g, '"') // Replace curly double quotes with straight quotes
+    .replace(/[\u2013\u2014]/g, '-') // Replace en/em dashes with hyphens
+    .replace(/\u2026/g, '...') // Replace ellipsis with three dots
+    .replace(/[\u200B-\u200D\uFEFF]/g, ''); // Remove zero-width spaces
+};
+
 const getLayoutType = (post: CollectionEntry<"blog">): LayoutType => {
   // You can customize this logic
   // For now, let's use title length to determine layout
@@ -25,8 +38,36 @@ const getLayoutType = (post: CollectionEntry<"blog">): LayoutType => {
 };
 
 export default (post: CollectionEntry<"blog">, thumbnailBase64?: string, layoutOverride?: string) => {
-  // Extract tags if they exist
-  const tags = post.data.tags?.slice(0, 3) || [];
+  // Temporary workaround for Plaid post Satori rendering issue
+  if (post.data.title === "The Lasting Impact of Plaid's Innovation") {
+    return (
+      <div style={{
+        width: "100%",
+        height: "100%",
+        background: "linear-gradient(135deg, #18181B 0%, #27272A 50%, #343438 100%)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "column",
+        gap: "24px",
+        padding: "60px",
+        fontFamily: "Geist"
+      }}>
+        <h1 style={{ color: "white", fontSize: "48px", textAlign: "center", fontWeight: "800" }}>
+          The Lasting Impact of Plaid's Innovation
+        </h1>
+        <p style={{ color: "rgba(255,255,255,0.8)", fontSize: "20px", textAlign: "center" }}>
+          arach.io
+        </p>
+      </div>
+    );
+  }
+  
+  // Extract tags if they exist - ensure it's always an array of strings
+  const rawTags = post.data.tags;
+  const tags = Array.isArray(rawTags) 
+    ? rawTags.filter(tag => typeof tag === 'string' && tag.length > 0).slice(0, 3) 
+    : [];
   const layoutType = (layoutOverride as LayoutType) || getLayoutType(post);
   
   // If we have a thumbnail, use the selected layout
@@ -93,7 +134,7 @@ export default (post: CollectionEntry<"blog">, thumbnailBase64?: string, layoutO
                 gap: "16px",
               }}
             >
-              {tags.length > 0 && (
+              {tags && tags.length > 0 && (
                 <div
                   style={{
                     display: "flex",
@@ -113,7 +154,7 @@ export default (post: CollectionEntry<"blog">, thumbnailBase64?: string, layoutO
                         border: "1px solid rgba(251, 176, 36, 0.3)",
                       }}
                     >
-                      {tag}
+                      {sanitizeText(tag)}
                     </span>
                   ))}
                 </div>
@@ -129,7 +170,7 @@ export default (post: CollectionEntry<"blog">, thumbnailBase64?: string, layoutO
                   margin: 0,
                 }}
               >
-                {post.data.title}
+                {sanitizeText(post.data.title)}
               </h1>
               
               {post.data.description && (
@@ -141,7 +182,7 @@ export default (post: CollectionEntry<"blog">, thumbnailBase64?: string, layoutO
                     margin: 0,
                   }}
                 >
-                  {post.data.description}
+                  {sanitizeText(post.data.description)}
                 </p>
               )}
             </div>
@@ -179,7 +220,7 @@ export default (post: CollectionEntry<"blog">, thumbnailBase64?: string, layoutO
                     fontWeight: "600",
                   }}
                 >
-                  {post.data.author || SITE.author}
+                  {sanitizeText(post.data.author || SITE.author)}
                 </span>
               </div>
               
@@ -190,11 +231,11 @@ export default (post: CollectionEntry<"blog">, thumbnailBase64?: string, layoutO
                   fontWeight: "500",
                 }}
               >
-                {new Date(post.data.pubDatetime).toLocaleDateString('en-US', { 
+                {String(new Date(post.data.pubDatetime).toLocaleDateString('en-US', { 
                   year: 'numeric', 
                   month: 'short', 
                   day: 'numeric' 
-                })}
+                }))}
               </span>
             </div>
           </div>
@@ -234,7 +275,7 @@ export default (post: CollectionEntry<"blog">, thumbnailBase64?: string, layoutO
                 gap: "16px",
               }}
             >
-              {tags.length > 0 && (
+              {tags && tags.length > 0 && (
                 <div
                   style={{
                     display: "flex",
@@ -254,7 +295,7 @@ export default (post: CollectionEntry<"blog">, thumbnailBase64?: string, layoutO
                         border: "1px solid rgba(251, 176, 36, 0.3)",
                       }}
                     >
-                      {tag}
+                      {sanitizeText(tag)}
                     </span>
                   ))}
                 </div>
@@ -270,7 +311,7 @@ export default (post: CollectionEntry<"blog">, thumbnailBase64?: string, layoutO
                   margin: 0,
                 }}
               >
-                {post.data.title}
+                {sanitizeText(post.data.title)}
               </h1>
               
               {post.data.description && (
@@ -286,7 +327,7 @@ export default (post: CollectionEntry<"blog">, thumbnailBase64?: string, layoutO
                     overflow: "hidden",
                   }}
                 >
-                  {post.data.description}
+                  {sanitizeText(post.data.description)}
                 </p>
               )}
             </div>
@@ -306,7 +347,7 @@ export default (post: CollectionEntry<"blog">, thumbnailBase64?: string, layoutO
                   fontWeight: "500",
                 }}
               >
-                {post.data.author || SITE.author}
+                {sanitizeText(post.data.author || SITE.author)}
               </span>
               <span
                 style={{
@@ -322,11 +363,11 @@ export default (post: CollectionEntry<"blog">, thumbnailBase64?: string, layoutO
                   color: "rgba(255, 255, 255, 0.7)",
                 }}
               >
-                {new Date(post.data.pubDatetime).toLocaleDateString('en-US', { 
+                {String(new Date(post.data.pubDatetime).toLocaleDateString('en-US', { 
                   year: 'numeric', 
                   month: 'short', 
                   day: 'numeric' 
-                })}
+                }))}
               </span>
             </div>
           </div>
@@ -394,7 +435,7 @@ export default (post: CollectionEntry<"blog">, thumbnailBase64?: string, layoutO
               marginTop: "20px",
             }}
           >
-            {tags.length > 0 && (
+            {tags && tags.length > 0 && (
               <div
                 style={{
                   display: "flex",
@@ -433,7 +474,7 @@ export default (post: CollectionEntry<"blog">, thumbnailBase64?: string, layoutO
                 textShadow: "0 2px 10px rgba(0, 0, 0, 0.3)",
               }}
             >
-              {post.data.title}
+              {sanitizeText(post.data.title)}
             </h1>
             
             {post.data.description && (
@@ -449,7 +490,7 @@ export default (post: CollectionEntry<"blog">, thumbnailBase64?: string, layoutO
                   overflow: "hidden",
                 }}
               >
-                {post.data.description}
+                {sanitizeText(post.data.description)}
               </p>
             )}
           </div>
@@ -487,7 +528,7 @@ export default (post: CollectionEntry<"blog">, thumbnailBase64?: string, layoutO
                   fontWeight: "600",
                 }}
               >
-                {post.data.author || SITE.author}
+                {sanitizeText(post.data.author || SITE.author)}
               </span>
             </div>
             
@@ -499,11 +540,11 @@ export default (post: CollectionEntry<"blog">, thumbnailBase64?: string, layoutO
                   fontWeight: "400",
                 }}
               >
-                {new Date(post.data.pubDatetime).toLocaleDateString('en-US', { 
+                {String(new Date(post.data.pubDatetime).toLocaleDateString('en-US', { 
                   year: 'numeric', 
                   month: 'short', 
                   day: 'numeric' 
-                })}
+                }))}
               </span>
             )}
           </div>
@@ -623,7 +664,7 @@ export default (post: CollectionEntry<"blog">, thumbnailBase64?: string, layoutO
                 fontWeight: "600",
               }}
             >
-              {SITE.title}
+              {sanitizeText(SITE.title)}
             </span>
           </div>
           
@@ -658,7 +699,7 @@ export default (post: CollectionEntry<"blog">, thumbnailBase64?: string, layoutO
         >
           
           {/* Tags */}
-          {tags.length > 0 && (
+          {tags && tags.length > 0 && (
             <div
               style={{
                 display: "flex",
@@ -702,7 +743,7 @@ export default (post: CollectionEntry<"blog">, thumbnailBase64?: string, layoutO
               overflow: "hidden",
             }}
           >
-            {post.data.title}
+            {sanitizeText(post.data.title)}
           </h1>
           
           {/* Description */}
@@ -720,7 +761,7 @@ export default (post: CollectionEntry<"blog">, thumbnailBase64?: string, layoutO
                 maxWidth: "90%",
               }}
             >
-              {post.data.description}
+              {sanitizeText(post.data.description)}
             </p>
           )}
         </div>
@@ -769,7 +810,7 @@ export default (post: CollectionEntry<"blog">, thumbnailBase64?: string, layoutO
                 fontWeight: "600",
               }}
             >
-              {post.data.author || SITE.author}
+              {sanitizeText(post.data.author || SITE.author)}
             </span>
           </div>
         </div>

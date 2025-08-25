@@ -12,7 +12,6 @@ export const GET: APIRoute = async (context) => {
   
   // Get layout from URL param if provided  
   const layoutParam = context.url?.searchParams?.get('layout') || null;
-  console.log('OG Route - Full URL:', context.url?.toString(), 'layout:', layoutParam);
 
   // Get all posts
   const posts = await getCollection("blog");
