@@ -91,7 +91,6 @@ export async function generateOgImageForPost(post: CollectionEntry<"blog">, layo
         const mimeType = ext === '.png' ? 'image/png' : 
                         ext === '.webp' ? 'image/webp' : 'image/jpeg';
         thumbnailBase64 = `data:${mimeType};base64,${imageBuffer.toString('base64')}`;
-        console.log(`Successfully loaded thumbnail for ${post.data.title}`);
       } catch (err) {
         console.warn(`Could not read thumbnail file at ${imagePath}:`, err);
       }

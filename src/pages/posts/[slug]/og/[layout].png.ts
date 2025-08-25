@@ -20,8 +20,6 @@ export const GET: APIRoute = async ({ params }) => {
     return new Response("Not found", { status: 404 });
   }
 
-  console.log('OG Image with layout - slug:', slug, 'layout:', layout);
-
   // Generate and return the OG image with layout override
   const image = await generateOgImageForPost(post, layout || undefined);
   

@@ -29,14 +29,6 @@ export default (post: CollectionEntry<"blog">, thumbnailBase64?: string, layoutO
   const tags = post.data.tags?.slice(0, 3) || [];
   const layoutType = (layoutOverride as LayoutType) || getLayoutType(post);
   
-  console.log('OG Image Generation:', {
-    title: post.data.title,
-    titleLength: post.data.title.length,
-    layoutOverride,
-    layoutType,
-    hasThumbnail: !!thumbnailBase64
-  });
-  
   // If we have a thumbnail, use the selected layout
   if (thumbnailBase64) {
     // ULTRAWIDE LAYOUT - Full width image on top
@@ -391,7 +383,6 @@ export default (post: CollectionEntry<"blog">, thumbnailBase64?: string, layoutO
             width: "40%",
             padding: "44px 36px",
             justifyContent: "space-between",
-            zIndex: "1",
           }}
         >
           {/* Title and description - moved to top */}
@@ -597,7 +588,6 @@ export default (post: CollectionEntry<"blog">, thumbnailBase64?: string, layoutO
           padding: "60px",
           height: "100%",
           position: "relative",
-          zIndex: "1",
         }}
       >
         {/* Top section with logo and date */}
