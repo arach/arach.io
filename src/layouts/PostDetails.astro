@@ -12,7 +12,7 @@ import SeriesNavigationMinimal from "@components/SeriesNavigationMinimal";
 import { Icon } from 'astro-icon/components';
 import { SITE } from "@config";
 import { getCollection } from "astro:content";
-import MidjourneyPromptWrapper from "@components/MidjourneyPromptWrapper.astro";
+import MidjourneyPrompt from "@components/MidjourneyPrompt";
 import infinitePasteMachineImg from "../assets/images/infinite-paste-machine-1.png";
 
 export interface Props {
@@ -42,6 +42,7 @@ const {
   author,
   description,
   ogImage,
+  thumbnail,
   readingTime,
   canonicalURL,
   pubDatetime,
@@ -51,9 +52,17 @@ const {
 
 const { Content } = await post.render();
 
-const ogImageUrl = typeof ogImage === "string" ? ogImage : ogImage?.src;
+// Use thumbnail if available, otherwise use ogImage, fallback to generated OG image
+let ogImageUrl: string | undefined;
+if (thumbnail) {
+  // Thumbnail is an ImageMetadata object from Astro
+  ogImageUrl = thumbnail.src;
+} else if (ogImage) {
+  ogImageUrl = typeof ogImage === "string" ? ogImage : ogImage?.src;
+}
+
 const ogUrl = new URL(
-  ogImageUrl ?? `/posts/${slugifyStr(title)}.png`,
+  ogImageUrl ?? `/posts/${slugifyStr(title)}/og.png`,
   Astro.url.origin
 ).href;
 
@@ -616,7 +625,7 @@ const layoutProps = {
 {/* Render the Midjourney component that will be portaled to the right location */}
 {post.slug === "infinite-bespoke-magic-paste-machine" && (
   <div id="midjourney-component-source" style="display: none;">
-    <MidjourneyPromptWrapper
+    <MidjourneyPrompt
       client:idle
       prompt="A sophisticated retro-futuristic paste machine, art deco industrial design, chrome and brass mechanisms, vacuum tubes glowing with data, streams of text flowing through transparent pipes, knowledge crystals being processed, technical blueprint aesthetic, cross-section view showing intricate gears and circuits processing information, vintage scientific illustration style --chaos 15 --stylize 750 --ar 16:9"
       imageUrl={infinitePasteMachineImg.src}
