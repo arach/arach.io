@@ -3,38 +3,96 @@ import Layout from "@layouts/Layout.astro";
 import { SITE } from "@config";
 ---
 
-<Layout title="OG Image Preview">
+<Layout title="OG Image Preview - Tactical UI">
   <main class="mx-auto flex w-full max-w-6xl justify-center px-4 py-12">
     <div class="w-full">
-      <h1 class="mb-8 text-2xl font-bold">OG Image Preview (HTML Render)</h1>
+      <h1 class="mb-8 text-2xl font-bold">OG Image Preview - Anduril/Palantir Tactical Design</h1>
       
       <!-- OG Image HTML Preview -->
       <div class="og-preview-container shadow-2xl rounded-lg overflow-hidden">
         <div class="og-image-preview">
-          <!-- Glass overlay effect -->
-          <div class="glass-overlay"></div>
+          <!-- Tactical grid overlay -->
+          <div class="tactical-grid"></div>
+          
+          <!-- Scanning line -->
+          <div class="scan-line"></div>
           
           <!-- Main content container -->
           <div class="main-content">
-            <!-- Left side - Text content with glass card -->
-            <div class="glass-card">
-              <!-- Name with Space Mono font - UPPERCASE -->
-              <h1 class="name">{SITE.author}</h1>
+            <!-- Left side - Tactical UI -->
+            <div class="tactical-ui">
+              <!-- Corner brackets -->
+              <div class="corner-bracket top-left"></div>
+              <div class="corner-bracket top-right"></div>
+              <div class="corner-bracket bottom-left"></div>
+              <div class="corner-bracket bottom-right"></div>
               
-              <!-- Title - UPPERCASE -->
-              <p class="title">ENTREPRENEUR & SOFTWARE ENGINEER</p>
-              
-              <!-- Tags - Glass style with UPPERCASE -->
-              <div class="tags">
-                <div class="tag">AI/ML</div>
-                <div class="tag">FULL STACK</div>
-                <div class="tag">PRODUCT</div>
+              <!-- Tactical header -->
+              <div class="tactical-header">
+                <div class="header-row">
+                  <span>[LATTICE OS v2.4.1]</span>
+                  <span>CLEARANCE: LEVEL_5</span>
+                </div>
+                <div class="header-info">
+                  SECTOR: ALPHA-7 | GRID: 37.7749°N, 122.4194°W | AUTH: VERIFIED
+                </div>
               </div>
               
-              <!-- Website URL - Glass badge -->
-              <div class="website-badge">
-                <div class="status-dot"></div>
-                <span class="url">ARACH.IO</span>
+              <!-- Callsign and name -->
+              <div class="identity-block">
+                <div class="callsign">CALLSIGN: FOUNDER-1</div>
+                <h1 class="name">{SITE.author}</h1>
+                <div class="unit-info">
+                  UNIT: ENGINEERING_CORPS | SPECIALIZATION: FULL_STACK_OPS
+                </div>
+              </div>
+              
+              <!-- Mission parameters -->
+              <div class="mission-block">
+                <div class="block-header">◆ MISSION PARAMETERS</div>
+                <div class="mission-params">
+                  <div class="param-row">
+                    <span>OBJECTIVE:</span>
+                    <span class="value-active">BUILD_AND_SCALE</span>
+                  </div>
+                  <div class="param-row">
+                    <span>PRIORITY:</span>
+                    <span class="value-critical">CRITICAL</span>
+                  </div>
+                  <div class="param-row">
+                    <span>STATUS:</span>
+                    <span class="value-active">ACTIVE</span>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- System status -->
+              <div class="systems-block">
+                <div class="block-header">◆ SYSTEMS STATUS</div>
+                <div class="system-row">
+                  <span class="system-name">AI/ML:</span>
+                  <span class="status-bars">▓▓▓▓▓▓▓▓░░</span>
+                  <span class="status-text">RLHF</span>
+                </div>
+                <div class="system-row">
+                  <span class="system-name">STACK:</span>
+                  <span class="status-bars">▓▓▓▓▓▓▓▓▓▓</span>
+                  <span class="status-text">FULL_OPERATIONAL</span>
+                </div>
+                <div class="system-row">
+                  <span class="system-name">PRODUCT:</span>
+                  <span class="status-bars">▓▓▓▓▓▓▓▓▓░</span>
+                  <span class="status-text">SHIPPING</span>
+                </div>
+              </div>
+              
+              <!-- Command interface -->
+              <div class="command-interface">
+                <div class="command-status">
+                  <div class="status-indicator"></div>
+                  <span>[CONNECT]</span>
+                </div>
+                <span class="command-text">► ARACH.IO</span>
               </div>
             </div>
             
@@ -84,29 +142,15 @@ import { SITE } from "@config";
             </div>
           </div>
           
-          <!-- Decorative lines - top right -->
-          <div class="decorative-lines top-right">
-            <div class="line"></div>
-            <div class="line long"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-          </div>
-          
-          <!-- Decorative lines - bottom left -->
-          <div class="decorative-lines bottom-left">
-            <div class="line vertical"></div>
-            <div class="line vertical long"></div>
-            <div class="line vertical"></div>
-            <div class="line vertical"></div>
-            <div class="line vertical"></div>
-          </div>
+          <!-- Targeting reticles -->
+          <div class="targeting-reticle inner"></div>
+          <div class="targeting-reticle outer"></div>
         </div>
       </div>
       
       <div class="mt-8 text-sm text-gray-600 dark:text-gray-400">
         <p>Dimensions: 1200 x 630px (Open Graph standard)</p>
-        <p>This is an HTML render preview of the OG image design.</p>
+        <p>Tactical UI inspired by Anduril Lattice OS & Palantir Gotham</p>
       </div>
     </div>
   </main>
@@ -132,11 +176,31 @@ import { SITE } from "@config";
     overflow: hidden;
   }
   
-  .glass-overlay {
+  /* Tactical grid */
+  .tactical-grid {
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.05) 0%, transparent 50%);
+    background-image: 
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(0,255,209,0.03) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(0,255,209,0.03) 40px);
     pointer-events: none;
+  }
+  
+  /* Scanning line animation */
+  .scan-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, rgba(0,255,209,0.5) 50%, transparent 100%);
+    opacity: 0.8;
+    animation: scan 4s linear infinite;
+  }
+  
+  @keyframes scan {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(630px); }
   }
   
   .main-content {
@@ -144,107 +208,239 @@ import { SITE } from "@config";
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding: 60px 80px;
+    padding: 40px 60px;
     position: relative;
     z-index: 1;
     gap: 60px;
   }
   
-  .glass-card {
+  /* Tactical UI side */
+  .tactical-ui {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    flex: 1;
-    background: rgba(255,255,255,0.03);
-    backdrop-filter: blur(40px);
-    -webkit-backdrop-filter: blur(40px);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 20px;
-    padding: 48px;
-    box-shadow: 0 0 40px rgba(255,255,255,0.02);
+    position: relative;
+    color: #fff;
+    font-family: 'Space Mono', monospace;
+  }
+  
+  /* Corner brackets */
+  .corner-bracket {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-color: rgba(0,255,209,0.6);
+    border-style: solid;
+    border-width: 0;
+  }
+  
+  .corner-bracket.top-left {
+    top: -10px;
+    left: -10px;
+    border-top-width: 2px;
+    border-left-width: 2px;
+  }
+  
+  .corner-bracket.top-right {
+    top: -10px;
+    right: -10px;
+    border-top-width: 2px;
+    border-right-width: 2px;
+  }
+  
+  .corner-bracket.bottom-left {
+    bottom: -10px;
+    left: -10px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+  }
+  
+  .corner-bracket.bottom-right {
+    bottom: -10px;
+    right: -10px;
+    border-bottom-width: 2px;
+    border-right-width: 2px;
+  }
+  
+  /* Tactical header */
+  .tactical-header {
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(0,255,209,0.2);
+  }
+  
+  .header-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: rgba(0,255,209,0.8);
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+  }
+  
+  .header-info {
+    font-size: 9px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.05em;
+  }
+  
+  /* Identity block */
+  .identity-block {
+    margin-bottom: 20px;
+  }
+  
+  .callsign {
+    font-size: 12px;
+    color: rgba(0,255,209,0.7);
+    margin-bottom: 4px;
+    letter-spacing: 0.15em;
   }
   
   .name {
-    font-size: 64px;
-    font-family: 'Space Mono', 'Courier New', monospace;
+    font-size: 48px;
     font-weight: 700;
     margin: 0;
-    margin-bottom: 20px;
     color: #FFFFFF;
     letter-spacing: 0.02em;
     text-transform: uppercase;
   }
   
-  .title {
-    font-size: 14px;
-    font-family: 'Space Mono', monospace;
-    font-weight: 400;
-    color: rgba(255,255,255,0.6);
-    margin: 0;
-    margin-bottom: 36px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-  }
-  
-  .tags {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-  
-  .tag {
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    color: rgba(255,255,255,0.8);
-    padding: 8px 16px;
-    border-radius: 6px;
+  .unit-info {
     font-size: 11px;
-    font-family: 'Space Mono', monospace;
-    font-weight: 500;
-    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.5);
+    margin-top: 4px;
     letter-spacing: 0.1em;
-    text-transform: uppercase;
   }
   
-  .website-badge {
+  /* Mission block */
+  .mission-block {
+    background: rgba(0,255,209,0.05);
+    border: 1px solid rgba(0,255,209,0.2);
+    padding: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .block-header {
+    font-size: 10px;
+    color: rgba(0,255,209,0.8);
+    margin-bottom: 12px;
+    letter-spacing: 0.1em;
+  }
+  
+  .mission-params {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .param-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: rgba(255,255,255,0.7);
+  }
+  
+  .value-active {
+    color: rgba(0,255,209,0.8);
+  }
+  
+  .value-critical {
+    color: rgba(255,184,0,0.8);
+  }
+  
+  /* Systems block */
+  .systems-block {
+    margin-bottom: 24px;
+  }
+  
+  .system-row {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-top: 40px;
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    padding: 12px 20px;
-    border-radius: 100px;
-    border: 1px solid rgba(255,255,255,0.1);
-    align-self: flex-start;
+    gap: 12px;
+    font-size: 10px;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 8px;
   }
   
-  .status-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #FFFFFF;
-    opacity: 0.8;
+  .system-name {
+    width: 60px;
+  }
+  
+  .status-bars {
+    color: rgba(0,255,209,0.6);
+    font-size: 12px;
+  }
+  
+  .status-text {
+    color: rgba(255,255,255,0.5);
+    font-size: 9px;
+  }
+  
+  /* Command interface */
+  .command-interface {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(0,255,209,0.3);
+    border-left: 3px solid rgba(0,255,209,0.8);
+    margin-top: 20px;
+  }
+  
+  .command-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: rgba(0,255,209,0.9);
+    letter-spacing: 0.05em;
+  }
+  
+  .status-indicator {
+    width: 8px;
+    height: 8px;
+    background: rgba(0,255,209,0.8);
+    box-shadow: 0 0 10px rgba(0,255,209,0.6);
     animation: pulse 2s ease-in-out infinite;
   }
   
   @keyframes pulse {
     0%, 100% { opacity: 0.8; }
-    50% { opacity: 0.4; }
+    50% { opacity: 1; }
   }
   
-  .url {
-    font-size: 14px;
-    font-family: 'Space Mono', monospace;
-    font-weight: 400;
+  .command-text {
+    font-size: 12px;
     color: rgba(255,255,255,0.7);
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
+    letter-spacing: 0.1em;
   }
   
+  /* Readiness block */
+  .readiness-block {
+    margin-top: 20px;
+    font-size: 10px;
+    color: rgba(255,255,255,0.5);
+  }
+  
+  .readiness-text {
+    margin-bottom: 4px;
+  }
+  
+  .readiness-bar {
+    width: 200px;
+    height: 4px;
+    background: rgba(255,255,255,0.1);
+    position: relative;
+  }
+  
+  .readiness-fill {
+    width: 85%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(0,255,209,0.8), rgba(0,255,209,0.4));
+  }
+  
+  /* Polaroid styles (unchanged) */
   .photo-container {
     display: flex;
     align-items: center;
@@ -267,28 +463,6 @@ import { SITE } from "@config";
   
   .polaroid:hover {
     transform: scale(1.02);
-  }
-  
-  .polaroid::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: linear-gradient(45deg, 
-      #ff6b6b, #4ecdc4, #45b7d1, #f9ca24, #f0932b, #eb4d4b, #6ab04c, #22a6b3);
-    background-size: 400% 400%;
-    animation: gradient-shift 10s ease infinite;
-    z-index: -1;
-    opacity: 0.7;
-    filter: blur(8px);
-  }
-  
-  @keyframes gradient-shift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
   }
   
   .polaroid-image {
@@ -364,54 +538,33 @@ import { SITE } from "@config";
     text-align: right;
   }
   
-  
-  .decorative-lines {
+  /* Targeting reticles */
+  .targeting-reticle {
     position: absolute;
-    display: flex;
-    opacity: 0.05;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid rgba(0,255,209,0.1);
+    border-radius: 50%;
+    pointer-events: none;
   }
   
-  .decorative-lines.top-right {
-    top: 40px;
-    right: 40px;
-    flex-direction: column;
-    gap: 8px;
-  }
-  
-  .decorative-lines.bottom-left {
-    bottom: 40px;
-    left: 40px;
-    gap: 8px;
-  }
-  
-  .line {
+  .targeting-reticle.inner {
     width: 60px;
-    height: 2px;
-    background: #ffffff;
-  }
-  
-  .line.long {
-    width: 80px;
-  }
-  
-  .line.vertical {
-    width: 2px;
     height: 60px;
   }
   
-  .line.vertical.long {
+  .targeting-reticle.outer {
+    width: 80px;
     height: 80px;
+    border-color: rgba(0,255,209,0.05);
   }
   
   /* Responsive adjustments */
   @media (max-width: 768px) {
     .main-content {
-      padding: 30px;
+      padding: 20px;
       flex-direction: column;
-    }
-    
-    .glass-card {
-      padding: 24px;
     }
     
     .name {
@@ -419,7 +572,7 @@ import { SITE } from "@config";
     }
     
     .polaroid {
-      transform: rotate(-2deg) scale(0.7);
+      transform: scale(0.7);
     }
     
     .polaroid-image {

@@ -9,41 +9,31 @@ import postOgImage from "./og-templates/post";
 import siteOgImage from "./og-templates/site";
 import path from "path";
 
-// Use Geist fonts for a modern look
+// Use Space Mono fonts for tactical look
 const fontRegularPath = path.resolve(
-  "public/fonts/Geist-1.3.0/statics-ttf/Geist-Regular.ttf"
+  "public/fonts/Space_Mono/SpaceMono-Regular.ttf"
 );
 const fontBoldPath = path.resolve(
-  "public/fonts/Geist-1.3.0/statics-ttf/Geist-Bold.ttf"
-);
-const fontBlackPath = path.resolve(
-  "public/fonts/Geist-1.3.0/statics-ttf/Geist-Black.ttf"
+  "public/fonts/Space_Mono/SpaceMono-Bold.ttf"
 );
 
 const fontRegular = await readFile(fontRegularPath);
 const fontBold = await readFile(fontBoldPath);
-const fontBlack = await readFile(fontBlackPath);
 
 const options: SatoriOptions = {
   width: 1200,
   height: 630,
   fonts: [
     {
-      name: "Geist",
+      name: "Space Mono",
       weight: 400,
       data: fontRegular,
       style: "normal",
     },
     {
-      name: "Geist",
+      name: "Space Mono",
       data: fontBold,
-      weight: 600,
-      style: "normal",
-    },
-    {
-      name: "Geist",
-      data: fontBlack,
-      weight: 800,
+      weight: 700,
       style: "normal",
     },
   ],

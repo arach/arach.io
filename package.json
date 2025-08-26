@@ -26,6 +26,7 @@
     "@astrojs/partytown": "2.1.4",
     "@astrojs/prism": "^3.3.0",
     "@astrojs/rss": "4.0.12",
+    "@astrojs/vercel": "^8.2.6",
     "@divriots/jampack": "0.23.4",
     "@fontsource-variable/dosis": "^5.0.20",
     "@fontsource/inconsolata": "^5.0.18",
