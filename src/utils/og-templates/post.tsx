@@ -1,14 +1,25 @@
 import { SITE } from "@config";
 import type { CollectionEntry } from "astro:content";
 
-// Theme-aligned gradients using site colors
-// Dark mode: #18181B (warm charcoal) with #FBB024 (warm amber) accent
-// Light mode: white with black
+// Tactical defense-tech theme colors
+const tacticalTheme = {
+  background: "#000000",
+  cyan: "rgba(0,255,209,1)",
+  cyanMuted: "rgba(0,255,209,0.8)",
+  cyanLight: "rgba(0,255,209,0.05)",
+  cyanBorder: "rgba(0,255,209,0.2)",
+  white: "rgba(255,255,255,1)",
+  whiteMuted: "rgba(255,255,255,0.7)",
+  whiteLight: "rgba(255,255,255,0.5)",
+  borderLight: "rgba(255,255,255,0.15)",
+  orange: "rgba(255,184,0,0.8)",
+};
+
+// Legacy gradient theme for fallback
 const themeGradient = {
-  // Using the dark theme colors for OG images for consistency
-  from: "#18181B", // Warm charcoal
-  via: "#27272A",  // Slightly lighter warm gray (from --color-card)
-  to: "#343438"     // Medium warm gray (from --color-card-muted)
+  from: "#18181B",
+  via: "#27272A", 
+  to: "#343438"
 };
 
 // Layout options based on title length or other criteria
@@ -582,236 +593,263 @@ export default (post: CollectionEntry<"blog">, thumbnailBase64?: string, layoutO
     );
   }
   
-  // Original layout for posts without thumbnails
+  // Tactical defense-tech layout for posts without thumbnails
   return (
     <div
       style={{
         display: "flex",
-        flexDirection: "column",
         width: "100%",
         height: "100%",
-        background: `linear-gradient(135deg, ${themeGradient.from} 0%, ${themeGradient.via} 50%, ${themeGradient.to} 100%)`,
-        fontFamily: "Geist",
         position: "relative",
+        background: tacticalTheme.background,
+        padding: "32px 48px",
+        fontFamily: "'Space Mono', monospace",
       }}
     >
-      {/* Noise texture overlay for depth */}
+      {/* Thin border around entire content */}
       <div
         style={{
           position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E")`,
-          mixBlendMode: "overlay",
+          top: "20px",
+          left: "20px",
+          right: "20px",
+          bottom: "20px",
+          border: `1px solid ${tacticalTheme.borderLight}`,
         }}
       />
       
-      {/* Geometric pattern overlay */}
+      {/* Corner crosses - Top Left */}
+      <div style={{ position: "absolute", top: "20px", left: "20px", width: "30px", height: "2px", background: tacticalTheme.whiteLight }} />
+      <div style={{ position: "absolute", top: "20px", left: "20px", width: "2px", height: "30px", background: tacticalTheme.whiteLight }} />
+      
+      {/* Corner crosses - Top Right */}
+      <div style={{ position: "absolute", top: "20px", right: "20px", width: "30px", height: "2px", background: tacticalTheme.whiteLight }} />
+      <div style={{ position: "absolute", top: "20px", right: "20px", width: "2px", height: "30px", background: tacticalTheme.whiteLight }} />
+      
+      {/* Corner crosses - Bottom Left */}
+      <div style={{ position: "absolute", bottom: "20px", left: "20px", width: "30px", height: "2px", background: tacticalTheme.whiteLight }} />
+      <div style={{ position: "absolute", bottom: "20px", left: "20px", width: "2px", height: "30px", background: tacticalTheme.whiteLight }} />
+      
+      {/* Corner crosses - Bottom Right */}
+      <div style={{ position: "absolute", bottom: "20px", right: "20px", width: "30px", height: "2px", background: tacticalTheme.whiteLight }} />
+      <div style={{ position: "absolute", bottom: "20px", right: "20px", width: "2px", height: "30px", background: tacticalTheme.whiteLight }} />
+      
+      {/* Header bar */}
       <div
         style={{
           position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='grid' width='20' height='20' patternUnits='userSpaceOnUse'%3E%3Ccircle cx='10' cy='10' r='1' fill='%23ffffff' fill-opacity='0.1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23grid)'/%3E%3C/svg%3E")`,
-          opacity: 0.5,
+          top: "32px",
+          left: "48px",
+          right: "48px",
+          display: "flex",
+          justifyContent: "space-between",
+          fontSize: "10px",
+          fontFamily: "'Space Mono', monospace",
+          color: tacticalTheme.whiteLight,
+          fontWeight: 600,
+          letterSpacing: "0.1em",
         }}
-      />
+      >
+        <span>ARTICLE: BRIEFING | TYPE: {tags && tags.length > 0 ? sanitizeText(tags[0]).toUpperCase() : "TECHNICAL"} | STATUS: PUBLISHED</span>
+        <span>ACCESS: PUBLIC</span>
+      </div>
       
-      {/* Main content container */}
+      {/* Main content */}
       <div
         style={{
           display: "flex",
           flexDirection: "column",
-          padding: "60px",
+          width: "100%",
+          marginTop: "60px",
+          justifyContent: "space-between",
           height: "100%",
-          position: "relative",
         }}
       >
-        {/* Top section with logo and date */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: "auto",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "12px",
-            }}
-          >
-            <img
-              src={"https://arach.io/assets/arach.jpg"}
-              alt="Arach Tchoupani"
-              width={44}
-              height={44}
-              style={{
-                borderRadius: "50%",
-                border: "2px solid rgba(251, 176, 36, 0.5)",
-              }}
-            />
-            <span
-              style={{
-                fontSize: "20px",
-                color: "rgba(255, 255, 255, 0.95)",
-                fontWeight: "600",
-              }}
-            >
-              {sanitizeText(SITE.title)}
-            </span>
-          </div>
-          
-          {/* Date if available */}
-          {post.data.pubDatetime && (
-            <span
-              style={{
-                fontSize: "18px",
-                color: "rgba(255, 255, 255, 0.8)",
-                fontWeight: "400",
-              }}
-            >
-              {new Date(post.data.pubDatetime).toLocaleDateString('en-US', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-              })}
-            </span>
-          )}
-        </div>
-
-        {/* Center section with title and description */}
+        {/* Article classification */}
         <div
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: "24px",
-            maxWidth: "100%",
-            marginTop: "auto",
-            marginBottom: "auto",
+            marginBottom: "32px",
           }}
         >
-          
-          {/* Tags */}
-          {tags && tags.length > 0 && (
-            <div
-              style={{
-                display: "flex",
-                gap: "12px",
-                flexWrap: "wrap",
-              }}
-            >
-              {tags.map((tag, i) => (
-                <span
-                  key={i}
-                  style={{
-                    background: "rgba(255, 255, 255, 0.15)",
-                    backdropFilter: "blur(10px)",
-                    color: "rgba(255, 255, 255, 0.95)",
-                    padding: "6px 16px",
-                    borderRadius: "20px",
-                    fontSize: "14px",
-                    fontWeight: "500",
-                    border: "1px solid rgba(255, 255, 255, 0.2)",
-                  }}
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          )}
+          <div
+            style={{
+              fontSize: "12px",
+              fontFamily: "'Space Mono', monospace",
+              color: tacticalTheme.cyanMuted,
+              marginBottom: "8px",
+              letterSpacing: "0.15em",
+            }}
+          >
+            CLASSIFICATION: ARTICLE_{post.data.pubDatetime ? new Date(post.data.pubDatetime).getFullYear() : new Date().getFullYear()}_{Math.floor(Math.random() * 1000).toString().padStart(3, '0')}
+          </div>
           
           {/* Title */}
           <h1
             style={{
-              fontSize: post.data.title.length > 60 ? "48px" : "56px",
-              fontWeight: "800",
-              color: "white",
-              lineHeight: 1.2,
-              letterSpacing: "-1px",
+              fontSize: post.data.title.length > 50 ? "42px" : "48px",
+              fontWeight: "700",
+              color: tacticalTheme.white,
+              lineHeight: 1.1,
+              letterSpacing: "-0.5px",
               margin: 0,
-              textShadow: "0 2px 10px rgba(0, 0, 0, 0.2)",
-              display: "-webkit-box",
-              WebkitLineClamp: 3,
-              WebkitBoxOrient: "vertical",
-              overflow: "hidden",
+              textTransform: "uppercase",
+              fontFamily: "'Space Mono', monospace",
             }}
           >
             {sanitizeText(post.data.title)}
           </h1>
           
-          {/* Description */}
-          {post.data.description && (
-            <p
-              style={{
-                fontSize: "20px",
-                color: "rgba(255, 255, 255, 0.9)",
-                lineHeight: 1.5,
-                margin: 0,
-                display: "-webkit-box",
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: "vertical",
-                overflow: "hidden",
-                maxWidth: "90%",
-              }}
-            >
-              {sanitizeText(post.data.description)}
-            </p>
-          )}
-        </div>
-
-        {/* Bottom section with author */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "16px",
-            marginTop: "auto",
-          }}
-        >
-          <img
-            src={"https://arach.io/assets/arach.jpg"}
-            alt={post.data.author || SITE.author}
-            width={48}
-            height={48}
-            style={{
-              borderRadius: "50%",
-              border: "3px solid rgba(255, 255, 255, 0.3)",
-            }}
-          />
+          {/* Mission brief box */}
           <div
             style={{
               display: "flex",
               flexDirection: "column",
-              gap: "2px",
+              background: tacticalTheme.cyanLight,
+              border: `1px solid ${tacticalTheme.cyanBorder}`,
+              padding: "20px 24px",
+              marginTop: "24px",
+              marginBottom: "32px",
             }}
           >
-            <span
+            <div
               style={{
                 fontSize: "12px",
-                color: "rgba(255, 255, 255, 0.7)",
-                textTransform: "uppercase",
-                letterSpacing: "1px",
-                fontWeight: "500",
+                fontFamily: "'Space Mono', monospace",
+                color: tacticalTheme.cyanMuted,
+                marginBottom: "16px",
+                letterSpacing: "0.1em",
+                fontWeight: 700,
               }}
             >
-              Written by
-            </span>
-            <span
+              ◆ MISSION BRIEF
+            </div>
+            {post.data.description && (
+              <p
+                style={{
+                  fontSize: "14px",
+                  color: tacticalTheme.whiteMuted,
+                  lineHeight: 1.6,
+                  margin: 0,
+                  fontFamily: "'Space Mono', monospace",
+                }}
+              >
+                {sanitizeText(post.data.description)}
+              </p>
+            )}
+          </div>
+          
+          {/* Meta information */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "flex-end",
+              marginTop: "auto",
+            }}
+          >
+            <div
               style={{
-                fontSize: "18px",
-                color: "white",
-                fontWeight: "600",
+                display: "flex",
+                flexDirection: "column",
+                gap: "8px",
               }}
             >
-              {sanitizeText(post.data.author || SITE.author)}
-            </span>
+              {/* Tags */}
+              {tags && tags.length > 0 && (
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "8px",
+                    marginBottom: "8px",
+                  }}
+                >
+                  {tags.map((tag, i) => (
+                    <span
+                      key={i}
+                      style={{
+                        color: tacticalTheme.cyanMuted,
+                        fontSize: "11px",
+                        fontWeight: "600",
+                        fontFamily: "'Space Mono', monospace",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.05em",
+                      }}
+                    >
+                      [{sanitizeText(tag)}]
+                    </span>
+                  ))}
+                </div>
+              )}
+              
+              {/* Author and date */}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "4px",
+                }}
+              >
+                <span
+                  style={{
+                    fontSize: "12px",
+                    color: tacticalTheme.whiteLight,
+                    fontFamily: "'Space Mono', monospace",
+                  }}
+                >
+                  AUTHOR: {sanitizeText(post.data.author || SITE.author).toUpperCase()}
+                </span>
+                {post.data.pubDatetime && (
+                  <span
+                    style={{
+                      fontSize: "12px",
+                      color: tacticalTheme.whiteLight,
+                      fontFamily: "'Space Mono', monospace",
+                    }}
+                  >
+                    DATE: {new Date(post.data.pubDatetime).toLocaleDateString('en-US', { 
+                      year: 'numeric', 
+                      month: 'short', 
+                      day: 'numeric' 
+                    }).toUpperCase()}
+                  </span>
+                )}
+              </div>
+            </div>
+            
+            {/* Command interface */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "12px",
+                padding: "12px 16px",
+                background: "rgba(0,0,0,0.5)",
+                border: `1px solid ${tacticalTheme.cyanBorder}`,
+                borderLeft: `3px solid ${tacticalTheme.cyanMuted}`,
+              }}
+            >
+              <div
+                style={{
+                  width: "8px",
+                  height: "8px",
+                  background: tacticalTheme.cyanMuted,
+                  boxShadow: `0 0 10px ${tacticalTheme.cyanMuted}`,
+                }}
+              />
+              <span
+                style={{
+                  fontSize: "12px",
+                  fontFamily: "'Space Mono', monospace",
+                  color: tacticalTheme.cyanMuted,
+                  fontWeight: 600,
+                  letterSpacing: "0.05em",
+                }}
+              >
+                [READ] ► ARACH.IO
+              </span>
+            </div>
           </div>
         </div>
       </div>

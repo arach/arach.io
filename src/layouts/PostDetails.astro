@@ -41,7 +41,6 @@ const {
   title,
   author,
   description,
-  ogImage,
   thumbnail,
   readingTime,
   canonicalURL,
@@ -52,17 +51,9 @@ const {
 
 const { Content } = await post.render();
 
-// Use thumbnail if available, otherwise use ogImage, fallback to generated OG image
-let ogImageUrl: string | undefined;
-if (thumbnail) {
-  // Thumbnail is an ImageMetadata object from Astro
-  ogImageUrl = thumbnail.src;
-} else if (ogImage) {
-  ogImageUrl = typeof ogImage === "string" ? ogImage : ogImage?.src;
-}
-
+// Always use the generated OG image endpoint which includes the thumbnail if available
 const ogUrl = new URL(
-  ogImageUrl ?? `/posts/${slugifyStr(title)}/og.png`,
+  `/posts/${post.slug}/og.png`,
   Astro.url.origin
 ).href;
 

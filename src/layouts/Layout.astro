@@ -65,10 +65,13 @@ const socialImageURL = new URL(
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content={socialImageURL} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content={SITE.title} />
 
     <!-- Article Published/Modified time -->
     {
