@@ -4,12 +4,13 @@ import { SITE } from "@config";
 ---
 
 <Layout title="OG Image Preview - Tactical UI">
-  <main class="mx-auto flex w-full max-w-6xl justify-center px-4 py-12">
-    <div class="w-full">
-      <h1 class="mb-8 text-2xl font-bold">OG Image Preview - Anduril/Palantir Tactical Design</h1>
+  <main class="mx-auto flex flex-col w-full items-center px-4 py-12" style="max-width: 1280px;">
+    <!-- Site OG Preview -->
+    <div class="w-full mb-16">
+      <h1 class="mb-8 text-3xl font-bold text-center">Site OG Image Preview</h1>
       
       <!-- OG Image HTML Preview -->
-      <div class="og-preview-container shadow-2xl rounded-lg overflow-hidden">
+      <div class="og-preview-container shadow-2xl rounded-lg overflow-hidden" style="width: 1200px; height: 630px; margin: 0 auto;">
         <div class="og-image-preview">
           <!-- Tactical grid overlay -->
           <div class="tactical-grid"></div>
@@ -153,6 +154,87 @@ import { SITE } from "@config";
         <p>Tactical UI inspired by Anduril Lattice OS & Palantir Gotham</p>
       </div>
     </div>
+    
+    <!-- Article OG Preview -->
+    <div class="w-full">
+      <h2 class="text-3xl font-bold mb-8 text-center">Article OG Preview</h2>
+      
+      <div class="og-preview-container border-4 border-gray-700 rounded-lg overflow-hidden shadow-2xl" style="width: 1200px; height: 630px; margin: 0 auto;">
+        <div class="article-preview">
+          <!-- Thin border -->
+          <div class="article-border"></div>
+          
+          <!-- Corner crosses -->
+          <div class="corner-cross top-left">
+            <div class="cross-h"></div>
+            <div class="cross-v"></div>
+          </div>
+          <div class="corner-cross top-right">
+            <div class="cross-h"></div>
+            <div class="cross-v"></div>
+          </div>
+          <div class="corner-cross bottom-left">
+            <div class="cross-h"></div>
+            <div class="cross-v"></div>
+          </div>
+          <div class="corner-cross bottom-right">
+            <div class="cross-h"></div>
+            <div class="cross-v"></div>
+          </div>
+          
+          <!-- Header bar -->
+          <div class="article-header">
+            <span>ARTICLE: BRIEFING | TYPE: TECHNICAL | STATUS: PUBLISHED</span>
+            <span>ACCESS: PUBLIC</span>
+          </div>
+          
+          <!-- Main content -->
+          <div class="article-content">
+            <div class="article-classification">
+              CLASSIFICATION: ARTICLE_2025_042
+            </div>
+            
+            <h1 class="article-title">
+              THE INFINITE BESPOKE MAGIC PASTE MACHINE
+            </h1>
+            
+            <!-- Mission brief box -->
+            <div class="mission-brief">
+              <div class="mission-header">◆ MISSION BRIEF</div>
+              <p class="mission-text">
+                We built the most sophisticated Command-V machine in human history and convinced ourselves it was thinking. Here's why that might be even better than intelligence.
+              </p>
+            </div>
+            
+            <!-- Meta information -->
+            <div class="article-meta">
+              <div class="meta-info">
+                <div class="tags">
+                  <span class="tag">[AI]</span>
+                  <span class="tag">[STRATEGY]</span>
+                  <span class="tag">[SOFTWARE]</span>
+                </div>
+                <div class="author-date">
+                  <span>AUTHOR: ARACH TCHOUPANI</span>
+                  <span>DATE: AUG 8, 2025</span>
+                </div>
+              </div>
+              
+              <!-- Command interface -->
+              <div class="command-interface">
+                <div class="command-indicator"></div>
+                <span class="command-text">[READ] ▶ ARACH.IO</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mt-8 text-sm text-gray-600 dark:text-gray-400">
+        <p>Tactical defense-tech aesthetic for blog articles</p>
+        <p>Features mission briefing format and classification system</p>
+      </div>
+    </div>
   </main>
 </Layout>
 
@@ -160,9 +242,8 @@ import { SITE } from "@config";
   @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
   
   .og-preview-container {
-    width: 100%;
-    max-width: 1200px;
-    aspect-ratio: 1200 / 630;
+    width: 1200px;
+    height: 630px;
     position: relative;
     background: #000;
   }
@@ -578,6 +659,231 @@ import { SITE } from "@config";
     .polaroid-image {
       width: 280px;
       height: 280px;
+    }
+  }
+  
+  /* Article OG Preview Styles */
+  .article-preview {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: #000;
+    padding: 32px 48px;
+    font-family: 'Space Mono', monospace;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .article-border {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+  
+  /* Corner crosses for article */
+  .corner-cross {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+  }
+  
+  .corner-cross .cross-h {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.5);
+  }
+  
+  .corner-cross .cross-v {
+    position: absolute;
+    width: 2px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.5);
+  }
+  
+  .corner-cross.top-left {
+    top: 20px;
+    left: 20px;
+  }
+  
+  .corner-cross.top-right {
+    top: 20px;
+    right: 20px;
+  }
+  
+  .corner-cross.bottom-left {
+    bottom: 20px;
+    left: 20px;
+  }
+  
+  .corner-cross.bottom-right {
+    bottom: 20px;
+    right: 20px;
+  }
+  
+  /* Article header */
+  .article-header {
+    position: absolute;
+    top: 32px;
+    left: 48px;
+    right: 48px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    z-index: 10;
+  }
+  
+  /* Article content */
+  .article-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 60px;
+    flex: 1;
+    z-index: 10;
+  }
+  
+  .article-classification {
+    font-size: 12px;
+    color: rgba(0, 255, 209, 0.8);
+    margin-bottom: 8px;
+    letter-spacing: 0.15em;
+  }
+  
+  .article-title {
+    font-size: 48px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+    margin: 0 0 24px 0;
+    text-transform: uppercase;
+  }
+  
+  /* Mission brief */
+  .mission-brief {
+    display: flex;
+    flex-direction: column;
+    background: rgba(0, 255, 209, 0.05);
+    border: 1px solid rgba(0, 255, 209, 0.2);
+    padding: 20px 24px;
+    margin-bottom: auto;
+  }
+  
+  .mission-header {
+    font-size: 12px;
+    color: rgba(0, 255, 209, 0.8);
+    margin-bottom: 16px;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+  }
+  
+  .mission-text {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+    margin: 0;
+  }
+  
+  /* Meta information */
+  .article-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: auto;
+  }
+  
+  .meta-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .tags {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .tag {
+    color: rgba(0, 255, 209, 0.8);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .author-date {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .author-date span {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+  }
+  
+  /* Command interface */
+  .command-interface {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 255, 209, 0.2);
+    border-left: 3px solid rgba(0, 255, 209, 0.8);
+  }
+  
+  .command-indicator {
+    width: 8px;
+    height: 8px;
+    background: rgba(0, 255, 209, 0.8);
+    box-shadow: 0 0 10px rgba(0, 255, 209, 0.8);
+    animation: pulse 2s infinite;
+  }
+  
+  .command-text {
+    font-size: 12px;
+    color: rgba(0, 255, 209, 0.8);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+  
+  /* Responsive scaling for preview containers */
+  @media (max-width: 1280px) {
+    .og-preview-container {
+      transform: scale(0.9);
+      transform-origin: center;
+    }
+  }
+  
+  @media (max-width: 1100px) {
+    .og-preview-container {
+      transform: scale(0.75);
+    }
+  }
+  
+  @media (max-width: 920px) {
+    .og-preview-container {
+      transform: scale(0.6);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .og-preview-container {
+      transform: scale(0.5);
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .og-preview-container {
+      transform: scale(0.4);
     }
   }
 </style>
