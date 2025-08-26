@@ -1,20 +1,35 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function CalBooking() {
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
+  
   useEffect(() => {
-    // Initialize Cal.com when component mounts
-    if (typeof window !== 'undefined' && (window as any).Cal) {
-      (window as any).Cal("init", {origin:"https://cal.com"});
-      
-      // Pre-load the chat namespace
-      (window as any).Cal.ns.chat("preload", {
-        calLink: "arach/chat"
-      });
+    // Only initialize chat namespace when button is hovered or about to be clicked
+    if (isHovered && typeof window !== 'undefined' && (window as any).Cal) {
+      // Check if Cal has the chat namespace
+      if ((window as any).Cal.ns && (window as any).Cal.ns.chat) {
+        (window as any).Cal.ns.chat("preload", {
+          calLink: "arach/chat"
+        });
+      } else {
+        // If namespace doesn't exist, create it
+        (window as any).Cal("init", "chat", {origin: "https://cal.com"});
+        // Then try preloading after a small delay
+        setTimeout(() => {
+          if ((window as any).Cal.ns && (window as any).Cal.ns.chat) {
+            (window as any).Cal.ns.chat("preload", {
+              calLink: "arach/chat"
+            });
+          }
+        }, 100);
+      }
     }
-  }, []);
+  }, [isHovered]);
 
   return (
     <button
+      ref={buttonRef}
       data-cal-link="arach/chat"
       data-cal-namespace="chat"
       data-cal-config='{"layout":"month_view"}'
@@ -23,6 +38,8 @@ export default function CalBooking() {
         borderColor: 'rgb(var(--color-border))',
         boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)'
       }}
+      onMouseEnter={() => setIsHovered(true)}
+      onFocus={() => setIsHovered(true)}
     >
       Connect
       <svg

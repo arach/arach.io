@@ -1,0 +1,430 @@
+---
+import Layout from "@layouts/Layout.astro";
+import { SITE } from "@config";
+---
+
+<Layout title="OG Image Preview">
+  <main class="mx-auto flex w-full max-w-6xl justify-center px-4 py-12">
+    <div class="w-full">
+      <h1 class="mb-8 text-2xl font-bold">OG Image Preview (HTML Render)</h1>
+      
+      <!-- OG Image HTML Preview -->
+      <div class="og-preview-container shadow-2xl rounded-lg overflow-hidden">
+        <div class="og-image-preview">
+          <!-- Glass overlay effect -->
+          <div class="glass-overlay"></div>
+          
+          <!-- Main content container -->
+          <div class="main-content">
+            <!-- Left side - Text content with glass card -->
+            <div class="glass-card">
+              <!-- Name with Space Mono font - UPPERCASE -->
+              <h1 class="name">{SITE.author}</h1>
+              
+              <!-- Title - UPPERCASE -->
+              <p class="title">ENTREPRENEUR & SOFTWARE ENGINEER</p>
+              
+              <!-- Tags - Glass style with UPPERCASE -->
+              <div class="tags">
+                <div class="tag">AI/ML</div>
+                <div class="tag">FULL STACK</div>
+                <div class="tag">PRODUCT</div>
+              </div>
+              
+              <!-- Website URL - Glass badge -->
+              <div class="website-badge">
+                <div class="status-dot"></div>
+                <span class="url">ARACH.IO</span>
+              </div>
+            </div>
+            
+            <!-- Right side - Polaroid photo -->
+            <div class="photo-container">
+              <div class="polaroid">
+                <img 
+                  src="/assets/arach.jpg" 
+                  alt={SITE.author}
+                  class="polaroid-image"
+                />
+                <div class="polaroid-caption">
+                  <div class="spec-sheet">
+                    <div class="spec-header">
+                      <span class="spec-id">ARACH_TCHOUPANI</span>
+                      <span class="spec-classification">CLASS_MILLENNIAL</span>
+                    </div>
+                    <div class="spec-grid">
+                      <div class="spec-item">
+                        <span class="spec-label">TYPE:</span>
+                        <span class="spec-value">FOUNDER</span>
+                      </div>
+                      <div class="spec-item">
+                        <span class="spec-label">STACK:</span>
+                        <span class="spec-value">FULL</span>
+                      </div>
+                      <div class="spec-item">
+                        <span class="spec-label">AI/ML:</span>
+                        <span class="spec-value">RLHF</span>
+                      </div>
+                      <div class="spec-item">
+                        <span class="spec-label">EST:</span>
+                        <span class="spec-value">2010</span>
+                      </div>
+                      <div class="spec-item">
+                        <span class="spec-label">LOC:</span>
+                        <span class="spec-value">SF_BAY</span>
+                      </div>
+                      <div class="spec-item">
+                        <span class="spec-label">STATUS:</span>
+                        <span class="spec-value">VERY_ONLINE</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Decorative lines - top right -->
+          <div class="decorative-lines top-right">
+            <div class="line"></div>
+            <div class="line long"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+          </div>
+          
+          <!-- Decorative lines - bottom left -->
+          <div class="decorative-lines bottom-left">
+            <div class="line vertical"></div>
+            <div class="line vertical long"></div>
+            <div class="line vertical"></div>
+            <div class="line vertical"></div>
+            <div class="line vertical"></div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mt-8 text-sm text-gray-600 dark:text-gray-400">
+        <p>Dimensions: 1200 x 630px (Open Graph standard)</p>
+        <p>This is an HTML render preview of the OG image design.</p>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+  
+  .og-preview-container {
+    width: 100%;
+    max-width: 1200px;
+    aspect-ratio: 1200 / 630;
+    position: relative;
+    background: #000;
+  }
+  
+  .og-image-preview {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    background: #000000;
+    overflow: hidden;
+  }
+  
+  .glass-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.05) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  
+  .main-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 60px 80px;
+    position: relative;
+    z-index: 1;
+    gap: 60px;
+  }
+  
+  .glass-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    flex: 1;
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 48px;
+    box-shadow: 0 0 40px rgba(255,255,255,0.02);
+  }
+  
+  .name {
+    font-size: 64px;
+    font-family: 'Space Mono', 'Courier New', monospace;
+    font-weight: 700;
+    margin: 0;
+    margin-bottom: 20px;
+    color: #FFFFFF;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  
+  .title {
+    font-size: 14px;
+    font-family: 'Space Mono', monospace;
+    font-weight: 400;
+    color: rgba(255,255,255,0.6);
+    margin: 0;
+    margin-bottom: 36px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  
+  .tags {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  
+  .tag {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: rgba(255,255,255,0.8);
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-family: 'Space Mono', monospace;
+    font-weight: 500;
+    border: 1px solid rgba(255,255,255,0.1);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  
+  .website-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 40px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 12px 20px;
+    border-radius: 100px;
+    border: 1px solid rgba(255,255,255,0.1);
+    align-self: flex-start;
+  }
+  
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    opacity: 0.8;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 0.4; }
+  }
+  
+  .url {
+    font-size: 14px;
+    font-family: 'Space Mono', monospace;
+    font-weight: 400;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  
+  .photo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .polaroid {
+    background: white;
+    padding: 10px 8px 0 8px;
+    padding-bottom: 0;
+    box-shadow: 
+      0 10px 40px rgba(0,0,0,0.4),
+      0 2px 4px rgba(0,0,0,0.2),
+      inset 2px 2px 3px rgba(255,255,255,0.9),
+      inset -2px -2px 3px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    position: relative;
+  }
+  
+  .polaroid:hover {
+    transform: scale(1.02);
+  }
+  
+  .polaroid::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, 
+      #ff6b6b, #4ecdc4, #45b7d1, #f9ca24, #f0932b, #eb4d4b, #6ab04c, #22a6b3);
+    background-size: 400% 400%;
+    animation: gradient-shift 10s ease infinite;
+    z-index: -1;
+    opacity: 0.7;
+    filter: blur(8px);
+  }
+  
+  @keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  .polaroid-image {
+    width: 380px;
+    height: 380px;
+    object-fit: cover;
+    display: block;
+    filter: saturate(1.1) contrast(1.05);
+    border: 1px solid rgba(0,0,0,0.05);
+  }
+  
+  .polaroid-caption {
+    position: relative;
+    height: 160px;
+    color: #333;
+    font-size: 9px;
+    font-family: 'Space Mono', monospace;
+    background: white;
+    padding: 12px 12px 8px 12px;
+    margin: 0 -8px;
+  }
+  
+  .spec-sheet {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .spec-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 6px;
+    margin-bottom: 12px;
+  }
+  
+  .spec-id {
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 0.05em;
+  }
+  
+  .spec-classification {
+    font-size: 8px;
+    color: #666;
+    letter-spacing: 0.1em;
+  }
+  
+  .spec-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 16px;
+    font-size: 9px;
+  }
+  
+  .spec-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 4px;
+  }
+  
+  .spec-label {
+    text-transform: uppercase;
+    color: #888;
+    font-size: 7px;
+    letter-spacing: 0.05em;
+  }
+  
+  .spec-value {
+    font-weight: 600;
+    color: #333;
+    text-align: right;
+  }
+  
+  
+  .decorative-lines {
+    position: absolute;
+    display: flex;
+    opacity: 0.05;
+  }
+  
+  .decorative-lines.top-right {
+    top: 40px;
+    right: 40px;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .decorative-lines.bottom-left {
+    bottom: 40px;
+    left: 40px;
+    gap: 8px;
+  }
+  
+  .line {
+    width: 60px;
+    height: 2px;
+    background: #ffffff;
+  }
+  
+  .line.long {
+    width: 80px;
+  }
+  
+  .line.vertical {
+    width: 2px;
+    height: 60px;
+  }
+  
+  .line.vertical.long {
+    height: 80px;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .main-content {
+      padding: 30px;
+      flex-direction: column;
+    }
+    
+    .glass-card {
+      padding: 24px;
+    }
+    
+    .name {
+      font-size: 32px;
+    }
+    
+    .polaroid {
+      transform: rotate(-2deg) scale(0.7);
+    }
+    
+    .polaroid-image {
+      width: 280px;
+      height: 280px;
+    }
+  }
+</style>
