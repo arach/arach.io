@@ -12,16 +12,49 @@ export default () => {
         padding: "32px 48px",
       }}
     >
-      {/* Corner brackets */}
+      {/* Thin border around entire content */}
+      <div
+        style={{
+          position: "absolute",
+          top: "20px",
+          left: "20px",
+          right: "20px",
+          bottom: "20px",
+          border: "1px solid rgba(255,255,255,0.15)",
+        }}
+      />
+      
+      {/* Corner crosses - Top Left */}
       <div
         style={{
           position: "absolute",
           top: "20px",
           left: "20px",
           width: "40px",
+          height: "2px",
+          background: "rgba(255,255,255,0.5)",
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          top: "20px",
+          left: "20px",
+          width: "2px",
           height: "40px",
-          borderTop: "2px solid rgba(255,255,255,0.4)",
-          borderLeft: "2px solid rgba(255,255,255,0.4)",
+          background: "rgba(255,255,255,0.5)",
+        }}
+      />
+      
+      {/* Corner crosses - Top Right */}
+      <div
+        style={{
+          position: "absolute",
+          top: "20px",
+          right: "20px",
+          width: "40px",
+          height: "2px",
+          background: "rgba(255,255,255,0.5)",
         }}
       />
       <div
@@ -29,10 +62,21 @@ export default () => {
           position: "absolute",
           top: "20px",
           right: "20px",
-          width: "40px",
+          width: "2px",
           height: "40px",
-          borderTop: "2px solid rgba(255,255,255,0.4)",
-          borderRight: "2px solid rgba(255,255,255,0.4)",
+          background: "rgba(255,255,255,0.5)",
+        }}
+      />
+      
+      {/* Corner crosses - Bottom Left */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: "20px",
+          left: "20px",
+          width: "40px",
+          height: "2px",
+          background: "rgba(255,255,255,0.5)",
         }}
       />
       <div
@@ -40,10 +84,21 @@ export default () => {
           position: "absolute",
           bottom: "20px",
           left: "20px",
-          width: "40px",
+          width: "2px",
           height: "40px",
-          borderBottom: "2px solid rgba(255,255,255,0.4)",
-          borderLeft: "2px solid rgba(255,255,255,0.4)",
+          background: "rgba(255,255,255,0.5)",
+        }}
+      />
+      
+      {/* Corner crosses - Bottom Right */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: "20px",
+          right: "20px",
+          width: "40px",
+          height: "2px",
+          background: "rgba(255,255,255,0.5)",
         }}
       />
       <div
@@ -51,10 +106,9 @@ export default () => {
           position: "absolute",
           bottom: "20px",
           right: "20px",
-          width: "40px",
+          width: "2px",
           height: "40px",
-          borderBottom: "2px solid rgba(255,255,255,0.4)",
-          borderRight: "2px solid rgba(255,255,255,0.4)",
+          background: "rgba(255,255,255,0.5)",
         }}
       />
       
@@ -70,6 +124,7 @@ export default () => {
           fontSize: "10px",
           fontFamily: "'Space Mono', monospace",
           color: "rgba(255,255,255,0.5)",
+          fontWeight: 600,
           letterSpacing: "0.1em",
         }}
       >
@@ -130,9 +185,10 @@ export default () => {
             </h1>
             <div
               style={{
-                fontSize: "11px",
+                fontSize: "12px",
                 fontFamily: "'Space Mono', monospace",
                 color: "rgba(255,255,255,0.5)",
+                fontWeight: 600,
                 marginTop: "8px",
                 letterSpacing: "0.1em",
               }}
@@ -146,16 +202,12 @@ export default () => {
             style={{
               display: "flex",
               flexDirection: "column",
-              background: "rgba(0,255,209,0.05)",
-              border: "1px solid rgba(0,255,209,0.2)",
-              padding: "16px 20px",
               marginBottom: "32px",
-              marginLeft: "0",
             }}
           >
             <div
               style={{
-                fontSize: "11px",
+                fontSize: "12px",
                 fontFamily: "'Space Mono', monospace",
                 color: "rgba(0,255,209,0.8)",
                 marginBottom: "12px",
@@ -170,8 +222,12 @@ export default () => {
                 display: "flex",
                 flexDirection: "column",
                 gap: "8px",
+                background: "rgba(0,255,209,0.05)",
+                border: "1px solid rgba(0,255,209,0.2)",
+                padding: "16px 20px",
                 fontSize: "12px",
                 fontFamily: "'Space Mono', monospace",
+                fontWeight: 600,
                 color: "rgba(255,255,255,0.7)",
               }}
             >
@@ -200,7 +256,7 @@ export default () => {
           >
             <div
               style={{
-                fontSize: "11px",
+                fontSize: "12px",
                 fontFamily: "'Space Mono', monospace",
                 color: "rgba(0,255,209,0.8)",
                 marginBottom: "12px",
@@ -210,28 +266,42 @@ export default () => {
             >
               ◆ SYSTEMS STATUS
             </div>
+            <div style={{
+              display: "flex",
+              flexDirection: "column",
+              background: "rgba(0,255,209,0.05)",
+              border: "1px solid rgba(0,255,209,0.2)",
+              paddingTop: "16px",
+              paddingBottom: "16px",
+              }}>
+
             {[
-              ["AI/ML:", "RLHF", "▓▓▓▓▓▓▓▓░░"],
-              ["STACK:", "FULL_OPERATIONAL", "▓▓▓▓▓▓▓▓▓▓"],
-              ["PRODUCT:", "SHIPPING", "▓▓▓▓▓▓▓▓▓░"],
+              ["AI/ML:", "RLHF", "[========--]"],
+              ["STACK:", "FULL_OPERATIONAL", "[==========]"],
+              ["PRODUCT:", "SHIPPING", "[=========-]"],
             ].map(([system, status, bars]) => (
               <div
                 key={system}
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  gap: "12px",
-                  fontSize: "11px",
+                  justifyContent: "space-between",
+                  fontSize: "12px",
                   fontFamily: "'Space Mono', monospace",
                   color: "rgba(255,255,255,0.7)",
+                  paddingLeft: "20px",
+                  paddingRight: "20px",
                   marginBottom: "6px",
                 }}
               >
-                <span style={{ width: "60px", fontSize: "11px", fontWeight: 600 }}>{system}</span>
-                <span style={{ color: "rgba(0,255,209,0.7)", fontSize: "13px", letterSpacing: "-0.05em" }}>{bars}</span>
-                <span style={{ color: "rgba(255,255,255,0.6)", fontSize: "10px", fontWeight: 500 }}>{status}</span>
+                <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                  <span style={{ width: "70px", fontSize: "12px", fontWeight: 600 }}>{system}</span>
+                  <span style={{ color: "rgba(0,255,209,1)", fontSize: "13px", fontFamily: "monospace", letterSpacing: "-1px" }}>{bars}</span>
+                </div>
+                <span style={{ color: "rgba(0,255,209,0.8)", fontSize: "12px", fontWeight: 600 }}>{status}</span>
               </div>
             ))}
+            </div>
           </div>
           
           {/* Command interface */}
@@ -276,7 +346,8 @@ export default () => {
               style={{
                 fontSize: "12px",
                 fontFamily: "'Space Mono', monospace",
-                color: "rgba(255,255,255,0.7)",
+                color: "rgba(255,255,255,0.9)",
+                fontWeight: 600,
                 letterSpacing: "0.05em",
               }}
             >
@@ -322,7 +393,7 @@ export default () => {
               style={{
                 width: "360px",
                 height: "140px",
-                padding: "14px 14px 10px 14px",
+                padding: "14px 0px 10px 2px",
                 background: "white",
                 display: "flex",
                 flexDirection: "column",
@@ -355,9 +426,9 @@ export default () => {
                 style={{
                   display: "flex",
                   flexWrap: "wrap",
-                  gap: "8px 0",
                   fontSize: "10px",
                   width: "100%",
+                  fontWeight: 600,
                 }}
               >
                 {[
@@ -374,14 +445,14 @@ export default () => {
                       display: "flex",
                       justifyContent: "space-between",
                       flex: index % 2 === 0 ? "0 0 48%" : "0 0 52%",
-                      paddingRight: index % 2 === 0 ? "8px" : "0",
+                      paddingRight: index % 2 === 0 ? "14px" : "0",
                     }}
                   >
                     <span style={{ 
                       color: "#999", 
                       textTransform: "uppercase", 
                       letterSpacing: "0.05em", 
-                      fontSize: "9px",
+                      fontSize: "10px",
                       textAlign: "left",
                     }}>
                       {label}
