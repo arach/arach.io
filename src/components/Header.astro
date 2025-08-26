@@ -338,8 +338,15 @@ const navItems = [
     themeBtn?.addEventListener("click", () => {
       const currentTheme = htmlElement.getAttribute("data-theme");
       const newTheme = currentTheme === "light" ? "dark" : "light";
+      const isDark = newTheme === "dark";
+      
       htmlElement.setAttribute("data-theme", newTheme);
       localStorage.setItem("theme", newTheme);
+      
+      // Dispatch custom event for ThemePickerCool to sync
+      window.dispatchEvent(new CustomEvent('theme-change', { 
+        detail: { isDark: isDark } 
+      }));
     });
     
     // Debug: log which logo should be visible

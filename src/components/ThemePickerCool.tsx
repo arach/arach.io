@@ -144,10 +144,11 @@ const ThemePickerCool: React.FC = () => {
     setIsDark(savedMode);
     applyTheme(theme, savedMode);
 
-    // Listen for theme changes from header toggle
+    // Listen for theme changes from header toggle or system changes
     const handleThemeChange = (e: CustomEvent) => {
-      setIsDark(e.detail.isDark);
-      applyTheme(currentTheme, e.detail.isDark);
+      const newIsDark = e.detail.isDark;
+      setIsDark(newIsDark);
+      applyTheme(theme, newIsDark);  // Use the current theme state
     };
 
     window.addEventListener('theme-change' as any, handleThemeChange);

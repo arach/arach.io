@@ -62,12 +62,7 @@ window.onload = () => {
   function setThemeFeature() {
     // set on load so screen readers can get the latest value on the button
     reflectPreference();
-
-    // now this script can find and listen for clicks on the control
-    document.querySelector("#theme-btn")?.addEventListener("click", () => {
-      themeValue = themeValue === "light" ? "dark" : "light";
-      setPreference();
-    });
+    // Theme button click is now handled in Header.astro to dispatch custom events
   }
 
   setThemeFeature();
@@ -82,4 +77,9 @@ window
   .addEventListener("change", ({ matches: isDark }) => {
     themeValue = isDark ? "dark" : "light";
     setPreference();
+    
+    // Dispatch custom event for ThemePickerCool to sync
+    window.dispatchEvent(new CustomEvent('theme-change', { 
+      detail: { isDark: isDark } 
+    }));
   });
