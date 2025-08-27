@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Krub:wght@400;600&display=swap');
 
 /* Page Theme Variables */
 /* Define component-scoped variables that work within the tactical container */
@@ -398,8 +398,59 @@
   }
 }
 
+/* Fix for screens 769px to 860px - proper responsive sizing */
+@media (min-width: 769px) and (max-width: 860px) {
+  .polaroid-container {
+    flex: 0 0 280px !important;
+    max-width: 280px !important;
+  }
+  
+  .polaroid {
+    width: 280px !important;
+    max-width: 280px !important;
+    padding: 8px 8px 0 8px !important;
+  }
+  
+  .polaroid-image {
+    width: 264px !important;
+    height: 264px !important;
+  }
+  
+  .polaroid-caption {
+    width: 264px !important;
+    min-height: 75px !important;
+    padding: 5px 0 4px 2px !important;
+  }
+  
+  .spec-sheet {
+    padding: 0 6px !important;
+  }
+  
+  .spec-header {
+    padding-bottom: 3px !important;
+    margin-bottom: 5px !important;
+  }
+  
+  .spec-id {
+    font-size: 8px !important;
+  }
+  
+  .spec-classification {
+    font-size: 6px !important;
+  }
+  
+  .spec-item {
+    font-size: 7px !important;
+    margin-bottom: 1px !important;
+  }
+  
+  .name {
+    font-size: 32px !important;
+  }
+}
+
 /* Specific optimization for ~850px viewports */
-@media (min-width: 800px) and (max-width: 900px) {
+@media (min-width: 861px) and (max-width: 900px) {
   .tactical-about-container {
     max-width: 820px;
     aspect-ratio: 2.3 / 1;
@@ -433,14 +484,6 @@
   .unit {
     font-size: 9px;
     margin-top: 3px;
-  }
-  
-  .polaroid {
-    max-width: 220px;
-  }
-  
-  .polaroid-container {
-    max-width: 30%;
   }
   
   .polaroid-image {
@@ -1228,10 +1271,53 @@
   font-size: 10px;
 }
 
+/* Stat cards - for Bio section */
+.tactical-stat-card {
+  background: rgba(0, 255, 209, 0.05);
+  border: 1px solid rgba(0, 255, 209, 0.2);
+  padding: 20px;
+  text-align: center;
+  font-family: 'Space Mono', monospace;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: rgba(0, 255, 209, 0.8);
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+
+.stat-value {
+  font-size: 32px;
+  color: #00FFD1;
+  font-weight: 700;
+}
+
 /* Light theme overrides */
 [data-theme="light"] .tactical-about-container {
   background: #f5f5f5;
   border: 1px solid #e0e0e0;
+}
+
+[data-theme="light"] .tactical-stat-card {
+  background: rgba(0, 136, 204, 0.05);
+  border: 1px solid rgba(0, 136, 204, 0.2);
+}
+
+[data-theme="light"] .stat-label {
+  color: #0088cc;
+}
+
+[data-theme="light"] .stat-value {
+  color: #0088cc;
+}
+
+[data-theme="light"] .status-bars {
+  color: #0088cc;
+}
+
+[data-theme="light"] .status-text {
+  color: #0088cc;
 }
 
 [data-theme="light"] .tactical-about {
@@ -1248,51 +1334,83 @@
 }
 
 [data-theme="light"] .tactical-header {
-  color: rgba(0, 0, 0, 0.6);
+  color: rgba(0, 0, 0, 0.6) !important;
 }
 
 [data-theme="light"] .name {
-  color: #000;
+  color: #000 !important;
 }
 
 [data-theme="light"] .unit {
-  color: rgba(0, 0, 0, 0.6);
+  color: rgba(0, 0, 0, 0.6) !important;
 }
 
 [data-theme="light"] .callsign,
 [data-theme="light"] .section-header {
-  color: rgb(var(--color-accent));
+  color: #0088cc !important;
 }
 
 [data-theme="light"] .mission-parameters {
-  background: rgb(var(--color-accent) / 0.05);
-  border: 1px solid rgb(var(--color-accent) / 0.2);
+  background: rgba(0, 136, 204, 0.05) !important;
+  border: 1px solid rgba(0, 136, 204, 0.2) !important;
 }
 
 [data-theme="light"] .parameters-grid {
-  color: rgba(0, 0, 0, 0.7);
+  color: rgba(0, 0, 0, 0.7) !important;
+}
+
+[data-theme="light"] .parameters-grid span {
+  color: rgba(0, 0, 0, 0.7) !important;
 }
 
 [data-theme="light"] .status-grid {
-  background: rgb(var(--color-accent) / 0.05);
-  border: 1px solid rgb(var(--color-accent) / 0.2);
+  background: rgba(0, 136, 204, 0.05) !important;
+  border: 1px solid rgba(0, 136, 204, 0.2) !important;
 }
 
 [data-theme="light"] .status-row {
-  color: rgba(0, 0, 0, 0.7);
+  color: rgba(0, 0, 0, 0.7) !important;
+}
+
+[data-theme="light"] .status-label {
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+
+[data-theme="light"] .status-text {
+  color: #0088cc !important;
+}
+
+[data-theme="light"] .status-bar {
+  background: rgba(0, 136, 204, 0.15) !important;
+  border: 1px solid rgba(0, 136, 204, 0.3) !important;
+}
+
+[data-theme="light"] .status-fill {
+  background: linear-gradient(90deg, 
+    rgba(0, 136, 204, 0.8), 
+    rgba(0, 136, 204, 1)) !important;
+  box-shadow: 0 0 10px rgba(0, 136, 204, 0.5) !important;
 }
 
 [data-theme="light"] .command-interface {
-  background: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgb(var(--color-accent) / 0.3);
-  border-left: 3px solid rgb(var(--color-accent));
+  background: rgba(255, 255, 255, 0.8) !important;
+  border: 1px solid rgba(0, 136, 204, 0.3) !important;
+  border-left: 3px solid #0088cc !important;
 }
 
 [data-theme="light"] .command-indicator {
-  background: rgb(var(--color-accent));
-  box-shadow: 0 0 10px rgb(var(--color-accent) / 0.6);
+  background: #0088cc !important;
+  box-shadow: 0 0 10px rgba(0, 136, 204, 0.6) !important;
 }
 
 [data-theme="light"] .command-text {
-  color: rgb(var(--color-accent));
+  color: #0088cc !important;
+}
+
+[data-theme="light"] .param-value {
+  color: #0088cc !important;
+}
+
+[data-theme="light"] .param-value.priority {
+  color: #ff6b6b !important;
 }

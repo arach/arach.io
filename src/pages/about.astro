@@ -14,7 +14,7 @@ const layoutProps = {
   <Header activeNav="about" />
   <main id="main-content" class="mx-auto flex flex-col w-full items-center px-4 py-12 pb-20" style="max-width: 1600px;">
     <!-- Full-size tactical about section -->
-    <div class="tactical-about-container shadow-2xl rounded-lg overflow-hidden">
+    <div class="tactical-about-container rounded-lg overflow-hidden">
         <div class="tactical-about">
           <!-- Thin border -->
           <div class="tactical-border"></div>
@@ -51,7 +51,7 @@ const layoutProps = {
               <div class="identity-section">
                 <div class="callsign">CALLSIGN: PERSIAN_EAGLE</div>
                 <h1 class="name">ARACH_TCHOUPANI</h1>
-                <div class="unit">UNIT: ENGINEERING_CORPS | SPECIALIZATION: FULL_STACK_SPEC_OPS</div>
+                <div class="unit">UNIT: ENGINEERING_CORPS <span class="unit-specialization">| SPECIALIZATION: FULL_STACK_SPEC_OPS</span></div>
               </div>
               
               <!-- Mission parameters -->
@@ -180,44 +180,49 @@ const layoutProps = {
 </Layout>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Krub:wght@400;600&display=swap');
+  /* Page-specific overrides only - main styles are in TacticalAbout.css */
+  @import '../components/TacticalAbout.css';
   
-  /* Page Theme Variables */
-  :root {
-    /* Dark mode colors (default) */
-    --primary: 0, 255, 209;              /* Cyan - main accent */
-    --warning: 255, 184, 0;              /* Orange - priority/warning */
-    --success: 0, 255, 209;              /* Same as primary for consistency */
-    --bg: 0, 0, 0;                       /* Black background */
-    --surface: 255, 255, 255;            /* White for cards (polaroid) */
-    --text: 255, 255, 255;               /* White text */
-    --text-muted: 255, 255, 255;        /* Muted text with opacity */
-    --border: 255, 255, 255;             /* White borders with opacity */
-  }
-  
-  :global([data-theme="light"]) {
-    /* Light mode - use theme accent color */
-    --primary: var(--color-accent);     /* Use site's accent color */
-    --warning: var(--color-accent);     /* Use accent for consistency */
-    --success: var(--color-accent);     /* Use accent for consistency */
-    --bg: 245, 245, 245;                /* Light gray background */
-    --surface: 255, 255, 255;           /* White for cards */
-    --text: 0, 0, 0;                    /* Black text */
-    --text-muted: 0, 0, 0;              /* Muted black text */
-    --border: 0, 0, 0;                  /* Black borders */
-  }
-  
-  /* Dark theme (default) */
+  /* Override container max-width and height for this page */
   .tactical-about-container {
-    background: #000;
-    position: relative;
-    width: 100%;
     max-width: min(calc(100vw - 48px), 900px);
     margin: 0 auto;
+    min-height: 500px;
   }
   
-  /* iPad range (768px to 960px) - even narrower left column */
-  @media (min-width: 769px) and (max-width: 960px) {
+  /* Ensure proper height at large breakpoints */
+  @media (min-width: 1200px) {
+    .tactical-about-container {
+      min-height: 560px;
+    }
+  }
+  
+  @media (min-width: 1400px) {
+    .tactical-about-container {
+      min-height: 580px;
+    }
+  }
+  
+  /* Hide specialization text on smaller screens */
+  @media (max-width: 860px) {
+    .unit-specialization {
+      display: none !important;
+    }
+  }
+  
+  /* Layout adjustments for different screen ranges */
+  @media (min-width: 769px) and (max-width: 860px) {
+    .tactical-ui {
+      flex: 0 0 300px !important;
+      max-width: 300px;
+    }
+    
+    .main-content {
+      gap: 30px !important;
+    }
+  }
+  
+  @media (min-width: 861px) and (max-width: 960px) {
     .tactical-ui {
       flex: 0 0 300px !important;
       max-width: 300px;
@@ -230,12 +235,10 @@ const layoutProps = {
     }
     
     .main-content {
-      justify-content: space-between;
-      gap: 30px !important;  /* Reduced gap for iPad range only */
+      gap: 30px !important;
     }
   }
 
-  /* Desktop optimizations - narrower left column */
   @media (min-width: 961px) {
     .tactical-ui {
       flex: 0 0 360px !important;
@@ -247,589 +250,114 @@ const layoutProps = {
       display: flex;
       justify-content: center;
     }
-    
-    .main-content {
-      justify-content: space-between;
-    }
   }
   
-  .tactical-about {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    background: #000;
-    padding: 32px 48px;
-    font-family: 'Space Mono', monospace;
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
+</style>
+
+<style is:global>
+  /* Global light mode styles to ensure proper cascade */
+  [data-theme="light"] .tactical-about-container {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.03) !important;
   }
   
-  .tactical-border {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    right: 20px;
-    bottom: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
+  [data-theme="light"] .tactical-about {
+    background: #ffffff !important;
   }
   
-  /* Light theme overrides */
-  :global([data-theme="light"]) .tactical-about-container {
-    background: #f5f5f5;
-    border: 1px solid #e0e0e0;
+  /* Dark mode shadow */
+  [data-theme="dark"] .tactical-about-container {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(0, 255, 209, 0.1) !important;
   }
   
-  /* Responsive design for 768px (iPad Portrait) */
-  @media screen and (max-width: 768px) {
-    .tactical-about-container {
-      max-width: calc(100vw - 32px);
-      height: auto;
-    }
-    
-    .tactical-about {
-      padding: 12px !important;
-      font-size: 14px;
-    }
-    
-    /* Ensure spec values don't get cut off */
-    .spec-value {
-      font-size: 7px !important;
-      white-space: nowrap;
-    }
-    
-    .tactical-border {
-      top: 10px;
-      left: 10px;
-      right: 10px;
-      bottom: 10px;
-    }
-    
-    /* Keep smaller gap for mobile to fit content */
-    .main-content {
-      gap: 10px !important;
-    }
-    
-    /* Adjust tactical-ui width - 30px narrower */
-    .tactical-ui {
-      flex: 0 0 350px !important;
-      min-width: 0;
-    }
-    
-    /* Smaller polaroid for 768px */
-    .polaroid-container {
-      flex: 0 0 220px !important;
-    }
-    
-    .polaroid {
-      width: 220px !important;
-      padding: 8px 8px 0 8px !important;
-    }
-    
-    .polaroid-image {
-      width: 204px !important;
-      height: 204px !important;
-    }
+  /* Corner crosses in light mode */
+  [data-theme="light"] .cross-h,
+  [data-theme="light"] .cross-v {
+    background: rgba(0, 0, 0, 0.08) !important;
   }
   
-  :global([data-theme="light"]) .tactical-about {
-    background: #f5f5f5;
+  /* Tactical border in light mode */
+  [data-theme="light"] .tactical-border {
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
   }
   
-  :global([data-theme="light"]) .tactical-border {
-    border: 1px solid rgba(0, 0, 0, 0.15);
+  /* Light mode text colors */
+  [data-theme="light"] .tactical-header {
+    color: rgba(0, 0, 0, 0.6) !important;
   }
   
-  :global([data-theme="light"]) .cross-h,
-  :global([data-theme="light"]) .cross-v {
-    background: rgba(0, 0, 0, 0.5);
+  [data-theme="light"] .callsign {
+    color: #0066cc !important;
   }
   
-  :global([data-theme="light"]) .tactical-header {
-    color: rgba(0, 0, 0, 0.6);
+  [data-theme="light"] .name {
+    color: #000 !important;
   }
   
-  :global([data-theme="light"]) .name {
-    color: #000;
+  [data-theme="light"] .unit {
+    color: rgba(0, 0, 0, 0.6) !important;
   }
   
-  :global([data-theme="light"]) .unit {
-    color: rgba(0, 0, 0, 0.6);
+  [data-theme="light"] .section-header {
+    color: #0066cc !important;
   }
   
-  :global([data-theme="light"]) .callsign,
-  :global([data-theme="light"]) .section-header {
-    color: #0088cc;
+  [data-theme="light"] .mission-parameters {
+    background: rgba(0, 102, 204, 0.03) !important;
+    border: 1px solid rgba(0, 102, 204, 0.12) !important;
   }
   
-  :global([data-theme="light"]) .mission-parameters {
-    background: rgba(0, 136, 204, 0.05);
-    border: 1px solid rgba(0, 136, 204, 0.2);
+  [data-theme="light"] .parameters-grid {
+    color: rgba(0, 0, 0, 0.7) !important;
   }
   
-  :global([data-theme="light"]) .parameters-grid {
-    color: rgba(0, 0, 0, 0.7);
+  [data-theme="light"] .parameters-grid span {
+    color: rgba(0, 0, 0, 0.7) !important;
   }
   
-  /* Param values now use --tactical-primary and --tactical-warning variables */
-  
-  :global([data-theme="light"]) .status-grid {
-    background: rgba(0, 136, 204, 0.05);
-    border: 1px solid rgba(0, 136, 204, 0.2);
-  }
-  
-  :global([data-theme="light"]) .status-row {
-    color: rgba(0, 0, 0, 0.7);
-  }
-  
-  :global([data-theme="light"]) .status-bars {
-    color: #0088cc;
-  }
-  
-  :global([data-theme="light"]) .status-text {
-    color: rgb(var(--color-accent));
-  }
-  
-  :global([data-theme="light"]) .command-interface {
-    background: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(0, 136, 204, 0.3);
-    border-left: 3px solid #0088cc;
-  }
-  
-  :global([data-theme="light"]) .command-indicator {
-    background: #0088cc;
-    box-shadow: 0 0 10px rgba(0, 136, 204, 0.6);
-  }
-  
-  :global([data-theme="light"]) .command-text {
-    color: #0088cc;
-  }
-  
-  /* Status components now use --tactical-primary variable */
-  
-  :global([data-theme="light"]) .tactical-stat-card {
-    background: rgba(0, 136, 204, 0.05);
-    border: 1px solid rgba(0, 136, 204, 0.2);
-  }
-  
-  :global([data-theme="light"]) .stat-label {
-    color: #0088cc;
-  }
-  
-  :global([data-theme="light"]) .stat-value {
-    color: #0088cc;
-  }
-  
-  /* Corner crosses */
-  .corner-cross {
-    position: absolute;
-  }
-  
-  .cross-h {
-    position: absolute;
-    width: 40px;
-    height: 2px;
-    background: rgba(255, 255, 255, 0.5);
-    top: 0;
-  }
-  
-  .cross-v {
-    position: absolute;
-    width: 2px;
-    height: 40px;
-    background: rgba(255, 255, 255, 0.5);
-    left: 0;
-  }
-  
-  .corner-cross.top-left {
-    top: 20px;
-    left: 20px;
-  }
-  
-  .corner-cross.top-right {
-    top: 20px;
-    right: 20px;
-  }
-  
-  .corner-cross.top-right .cross-h {
-    right: 0;
-    left: auto;
-  }
-  
-  .corner-cross.top-right .cross-v {
-    right: 0;
-    left: auto;
-  }
-  
-  .corner-cross.bottom-left {
-    bottom: 20px;
-    left: 20px;
-  }
-  
-  .corner-cross.bottom-left .cross-h {
-    bottom: 0;
-    top: auto;
-  }
-  
-  .corner-cross.bottom-left .cross-v {
-    bottom: 0;
-    top: auto;
-  }
-  
-  .corner-cross.bottom-right {
-    bottom: 20px;
-    right: 20px;
-  }
-  
-  .corner-cross.bottom-right .cross-h {
-    bottom: 0;
-    top: auto;
-    right: 0;
-    left: auto;
-  }
-  
-  .corner-cross.bottom-right .cross-v {
-    bottom: 0;
-    top: auto;
-    right: 0;
-    left: auto;
-  }
-  
-  /* Header */
-  .tactical-header {
-    position: absolute;
-    top: 32px;
-    left: 48px;
-    right: 48px;
-    display: flex;
-    justify-content: space-between;
-    font-size: 10px;
-    color: rgba(255, 255, 255, 0.5);
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    z-index: 10;
-  }
-  
-  /* Main content */
-  .main-content {
-    display: flex;
-    width: 100%;
-    margin-top: 48px;
-    gap: 60px;
-    z-index: 10;
-  }
-  
-  /* Left side - Tactical UI */
-  .tactical-ui {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    justify-content: center;
-  }
-  
-  .identity-section {
-    margin-bottom: 24px;
-  }
-  
-  .callsign {
-    font-size: 12px;
-    color: rgba(0, 255, 209, 0.7);
-    margin-bottom: 6px;
-    letter-spacing: 0.15em;
-  }
-  
-  .name {
-    font-size: 36px;
-    font-weight: 700;
-    color: #fff;
-    margin: 0;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    line-height: 1;
+  [data-theme="light"] .param-value {
+    color: #0066cc !important;
   }
   
-  .unit {
-    font-size: 11px;
-    color: rgba(255, 255, 255, 0.5);
-    font-weight: 600;
-    margin-top: 6px;
-    letter-spacing: 0.1em;
+  [data-theme="light"] .param-value.priority {
+    color: #ff6b6b !important;
   }
   
-  /* Mission parameters */
-  .mission-parameters {
-    background: rgba(0, 255, 209, 0.05);
-    border: 1px solid rgba(0, 255, 209, 0.2);
-    padding: 14px 18px;
-    margin-bottom: 24px;
+  [data-theme="light"] .status-grid {
+    background: rgba(0, 102, 204, 0.03) !important;
+    border: 1px solid rgba(0, 102, 204, 0.12) !important;
+    padding-top: 16px !important;
+    padding-bottom: 16px !important;
   }
   
-  .section-header {
-    font-size: 12px;
-    color: rgba(0, 255, 209, 0.8);
-    margin-bottom: 12px;
-    letter-spacing: 0.1em;
-    font-weight: 700;
+  [data-theme="light"] .status-row {
+    color: rgba(0, 0, 0, 0.7) !important;
   }
   
-  .parameters-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    font-size: 12px;
-    color: rgba(255, 255, 255, 0.7);
-    font-weight: 600;
+  [data-theme="light"] .status-label {
+    color: rgba(0, 0, 0, 0.6) !important;
   }
   
-  .param-row {
-    display: flex;
-    justify-content: space-between;
+  [data-theme="light"] .status-text {
+    color: #0066cc !important;
   }
   
-  .param-value {
-    color: rgb(var(--primary) / 0.8);
+  [data-theme="light"] .command-text {
+    color: #0066cc !important;
   }
   
-  .param-value.priority {
-    color: rgb(var(--warning) / 0.8);
+  /* Polaroid spec sheet in light mode */
+  [data-theme="light"] .spec-id,
+  [data-theme="light"] .spec-classification {
+    color: rgba(0, 0, 0, 0.8) !important;
   }
   
-  /* Systems status */
-  .systems-status {
-    margin-bottom: 32px;
+  [data-theme="light"] .spec-label {
+    color: rgba(0, 0, 0, 0.6) !important;
   }
   
-  .status-grid {
-    background: rgba(0, 255, 209, 0.05);
-    border: 1px solid rgba(0, 255, 209, 0.2);
-    padding-top: 16px;
-    padding-bottom: 16px;
+  [data-theme="light"] .spec-value {
+    color: rgba(0, 0, 0, 0.8) !important;
   }
-  
-  .status-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 0 20px;
-    margin-bottom: 6px;
-    font-size: 12px;
-    color: rgba(255, 255, 255, 0.7);
-  }
-  
-  .status-row:last-child {
-    margin-bottom: 0;
-  }
-  
-  .status-label {
-    width: 80px;
-    font-weight: 600;
-    font-size: 12px;
-    color: rgb(var(--primary) / 0.8);
-  }
-  
-  .status-bar {
-    flex: 0 0 auto;
-    width: 120px;
-    height: 8px;
-    background: rgb(var(--primary) / 0.15);
-    border: 1px solid rgb(var(--primary) / 0.3);
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .status-fill {
-    height: 100%;
-    background: linear-gradient(90deg, 
-      rgb(var(--primary) / 0.8), 
-      rgb(var(--primary) / 1));
-    box-shadow: 0 0 10px rgb(var(--primary) / 0.5);
-    width: 0;
-    animation: fillBar 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    animation-delay: var(--delay, 0s);
-  }
-  
-  @keyframes fillBar {
-    0% {
-      width: 0;
-    }
-    100% {
-      width: var(--fill-width);
-    }
-  }
-  
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-      transform: translateX(-10px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-  
-  .status-text {
-    color: rgb(var(--primary) / 0.8);
-    font-weight: 600;
-    opacity: 0;
-    animation: fadeIn 0.3s ease-out forwards;
-    animation-delay: calc(var(--delay, 0s) + 0.5s);
-    font-size: 12px;
-    margin-left: auto;
-  }
-  
-  /* Command interface */
-  .command-interface {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 18px;
-    background: rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(0, 255, 209, 0.3);
-    border-left: 3px solid rgba(0, 255, 209, 0.8);
-  }
-  
-  .command-indicator {
-    width: 8px;
-    height: 8px;
-    background: rgba(0, 255, 209, 0.8);
-    box-shadow: 0 0 10px rgba(0, 255, 209, 0.6);
-    animation: pulse 2s infinite;
-  }
-  
-  @keyframes pulse {
-    0%, 100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.5;
-    }
-  }
-  
-  .command-text {
-    font-size: 12px;
-    color: rgba(0, 255, 209, 0.9);
-    font-weight: 600;
-    letter-spacing: 0.05em;
-  }
-  
-  /* Right side - Polaroid */
-  .polaroid-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-  
-  .polaroid {
-    background: white;
-    padding: 10px 10px 0 10px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-    width: 380px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
-  }
-  
-  .polaroid:hover {
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-  }
-  
-  .polaroid-image {
-    width: 360px;
-    height: 360px;
-    display: block;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-  }
-  
-  .polaroid-caption {
-    width: 360px;
-    height: 140px;
-    padding: 14px 0 10px 2px;
-    background: white;
-    font-family: 'Space Mono', monospace;
-    font-size: 8px;
-    color: #333;
-  }
-  
-  .spec-sheet {
-    padding: 0 14px;
-  }
-  
-  .spec-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #e0e0e0;
-    padding-bottom: 6px;
-    margin-bottom: 12px;
-  }
-  
-  .spec-id {
-    font-weight: 700;
-    font-size: 11px;
-    letter-spacing: 0.05em;
-  }
-  
-  .spec-classification {
-    font-size: 9px;
-    color: #666;
-    letter-spacing: 0.1em;
-  }
-  
-  .spec-grid {
-    display: flex;
-    flex-wrap: wrap;
-    font-size: 10px;
-    width: 100%;
-  }
-  
-  .spec-item {
-    display: flex;
-    justify-content: space-between;
-    flex: 0 0 46%;
-    padding-right: 10px;
-    margin-bottom: 4px;
-  }
-  
-  .spec-item:nth-child(even) {
-    flex: 0 0 54%;
-    padding-right: 0;
-  }
-  
-  .spec-label {
-    color: #999;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    font-size: 10px;
-  }
-  
-  .spec-value {
-    font-weight: 600;
-    color: #333;
-    font-size: 10px;
-  }
-  
-  /* Stat cards */
-  .tactical-stat-card {
-    background: rgba(0, 255, 209, 0.05);
-    border: 1px solid rgba(0, 255, 209, 0.2);
-    padding: 20px;
-    text-align: center;
-    font-family: 'Space Mono', monospace;
-  }
-  
-  .stat-label {
-    font-size: 11px;
-    color: rgba(0, 255, 209, 0.8);
-    letter-spacing: 0.1em;
-    margin-bottom: 8px;
-  }
-  
-  .stat-value {
-    font-size: 32px;
-    color: #00FFD1;
-    font-weight: 700;
-  }
-  
-  /* Responsive styles are now handled in TacticalAbout.css */
 </style>
