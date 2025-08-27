@@ -225,8 +225,27 @@ const layoutProps = {
     margin: 0 auto;
   }
   
+  /* iPad range (768px to 960px) - even narrower left column */
+  @media (min-width: 769px) and (max-width: 960px) {
+    .tactical-ui {
+      flex: 0 0 300px !important;
+      max-width: 300px;
+    }
+    
+    .polaroid-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+    
+    .main-content {
+      justify-content: space-between;
+      gap: 30px;
+    }
+  }
+
   /* Desktop optimizations - narrower left column */
-  @media (min-width: 900px) {
+  @media (min-width: 961px) {
     .tactical-ui {
       flex: 0 0 360px !important;
       max-width: 360px;
