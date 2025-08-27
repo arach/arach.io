@@ -11,6 +11,7 @@ import Hero from "@components/Hero.astro";
 import Socials from "@components/Socials.astro";
 import CompanyLogos from "@components/CompanyLogos.astro";
 import CalBooking from "@components/CalBooking";
+import TacticalAboutEmbed from "@components/TacticalAboutEmbed";
 import Newsletter from "@components/Newsletter.astro";
 import getSortedPosts from "@utils/getSortedPosts";
 import { SOCIALS } from "@config";
@@ -63,14 +64,18 @@ const socialCount = SOCIALS.filter(social => social.active).length;
         </div>
 
         <div class="hero-image-wrapper animate-in">
-          <div class="hero-image-container">
+          <button 
+            id="hero-image-button"
+            class="hero-image-container cursor-pointer transition-transform hover:scale-105"
+            aria-label="View tactical profile"
+          >
             <div class="hero-image-gradient"></div>
             <img
               src="/assets/arach-circle.png"
               alt="Arach Tchoupani"
               class="hero-image"
             />
-          </div>
+          </button>
         </div>
       </div>
     </section>
@@ -142,6 +147,9 @@ const socialCount = SOCIALS.filter(social => social.active).length;
 
     <Footer />
   </main>
+
+  <!-- Tactical About Overlay -->
+  <TacticalAboutEmbed client:load />
 
   <style>
     /* ===== Main Content ===== */
@@ -445,6 +453,19 @@ const socialCount = SOCIALS.filter(social => social.active).length;
       75% {
         transform: translateY(-1px) rotate(-2deg);
       }
+    }
+    /* Hero Image Button Styles */
+    button.hero-image-container {
+      background: none;
+      border: none;
+      padding: 0;
+      margin: 0;
+      display: block;
+      outline: none;
+    }
+    
+    .hero-image-container:hover .hero-image {
+      transform: scale(1.05) rotate(-5deg);
     }
   </style>
 </Layout>
