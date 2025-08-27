@@ -257,13 +257,13 @@ const layoutProps = {
 <style is:global>
   /* Global light mode styles to ensure proper cascade */
   [data-theme="light"] .tactical-about-container {
-    background: #ffffff !important;
-    border: 1px solid rgba(0, 0, 0, 0.06) !important;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+    background: #f5f5f5 !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03) !important;
   }
   
   [data-theme="light"] .tactical-about {
-    background: #ffffff !important;
+    background: #f5f5f5 !important;
   }
   
   /* Dark mode shadow */
@@ -274,21 +274,21 @@ const layoutProps = {
   /* Corner crosses in light mode */
   [data-theme="light"] .cross-h,
   [data-theme="light"] .cross-v {
-    background: rgba(0, 0, 0, 0.08) !important;
+    background: rgba(0, 0, 0, 0.15) !important;
   }
   
   /* Tactical border in light mode */
   [data-theme="light"] .tactical-border {
-    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
   }
   
-  /* Light mode text colors */
+  /* Light mode text colors - Enhanced contrast */
   [data-theme="light"] .tactical-header {
-    color: rgba(0, 0, 0, 0.6) !important;
+    color: rgba(0, 0, 0, 0.5) !important;
   }
   
   [data-theme="light"] .callsign {
-    color: #0066cc !important;
+    color: rgb(0, 95, 184) !important;
   }
   
   [data-theme="light"] .name {
@@ -300,33 +300,33 @@ const layoutProps = {
   }
   
   [data-theme="light"] .section-header {
-    color: #0066cc !important;
+    color: rgb(0, 95, 184) !important;
   }
   
   [data-theme="light"] .mission-parameters {
-    background: rgba(0, 102, 204, 0.03) !important;
-    border: 1px solid rgba(0, 102, 204, 0.12) !important;
+    background: rgba(0, 95, 184, 0.04) !important;
+    border: 1px solid rgba(0, 95, 184, 0.2) !important;
   }
   
   [data-theme="light"] .parameters-grid {
     color: rgba(0, 0, 0, 0.7) !important;
   }
   
-  [data-theme="light"] .parameters-grid span {
-    color: rgba(0, 0, 0, 0.7) !important;
+  [data-theme="light"] .parameters-grid span:first-child {
+    color: rgba(0, 0, 0, 0.6) !important;
   }
   
   [data-theme="light"] .param-value {
-    color: #0066cc !important;
+    color: rgb(0, 95, 184) !important;
   }
   
   [data-theme="light"] .param-value.priority {
-    color: #ff6b6b !important;
+    color: rgb(230, 126, 34) !important;
   }
   
   [data-theme="light"] .status-grid {
-    background: rgba(0, 102, 204, 0.03) !important;
-    border: 1px solid rgba(0, 102, 204, 0.12) !important;
+    background: rgba(0, 95, 184, 0.04) !important;
+    border: 1px solid rgba(0, 95, 184, 0.2) !important;
     padding-top: 16px !important;
     padding-bottom: 16px !important;
   }
@@ -340,11 +340,31 @@ const layoutProps = {
   }
   
   [data-theme="light"] .status-text {
-    color: #0066cc !important;
+    color: rgb(0, 95, 184) !important;
   }
   
   [data-theme="light"] .command-text {
-    color: #0066cc !important;
+    color: rgb(0, 95, 184) !important;
+  }
+  
+  [data-theme="light"] .command-interface {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border: 1px solid rgba(0, 95, 184, 0.3) !important;
+    border-left: 3px solid rgb(0, 95, 184) !important;
+  }
+  
+  [data-theme="light"] .command-indicator {
+    background: rgb(0, 95, 184) !important;
+    box-shadow: 0 0 10px rgba(0, 95, 184, 0.6) !important;
+  }
+  
+  /* Polaroid in light mode */
+  [data-theme="light"] .polaroid {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+  }
+  
+  [data-theme="light"] .polaroid:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.08) !important;
   }
   
   /* Polaroid spec sheet in light mode */
