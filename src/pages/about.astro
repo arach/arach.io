@@ -1,0 +1,783 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import { SITE } from "@config";
+
+const layoutProps = {
+  title: "About - Arach Tchoupani",
+  description: "Engineer & Entrepreneur with 15+ years in technology leadership",
+};
+---
+
+<Layout {...layoutProps}>
+  <Header activeNav="about" />
+  <main id="main-content" class="mx-auto flex flex-col w-full items-center px-4 py-12 pb-20" style="max-width: 1280px;">
+    <div class="w-full">
+      <!-- Full-size tactical about section -->
+      <div class="tactical-about-container shadow-2xl rounded-lg overflow-hidden" style="width: 100%; max-width: 1200px; height: 630px; margin: 0 auto;">
+        <div class="tactical-about">
+          <!-- Thin border -->
+          <div class="tactical-border"></div>
+          
+          <!-- Corner crosses -->
+          <div class="corner-cross top-left">
+            <div class="cross-h"></div>
+            <div class="cross-v"></div>
+          </div>
+          <div class="corner-cross top-right">
+            <div class="cross-h"></div>
+            <div class="cross-v"></div>
+          </div>
+          <div class="corner-cross bottom-left">
+            <div class="cross-h"></div>
+            <div class="cross-v"></div>
+          </div>
+          <div class="corner-cross bottom-right">
+            <div class="cross-h"></div>
+            <div class="cross-v"></div>
+          </div>
+          
+          <!-- Header bar -->
+          <div class="tactical-header">
+            <span>SECTOR: ALPHA-7 | GRID: 37.7749°N, 122.4194°W | AUTH: VERIFIED</span>
+            <span>CLEARANCE: LEVEL_5</span>
+          </div>
+          
+          <!-- Main content -->
+          <div class="main-content">
+            <!-- Left side - Tactical UI -->
+            <div class="tactical-ui">
+              <!-- Callsign and name -->
+              <div class="identity-section">
+                <div class="callsign">CALLSIGN: PERSIAN_EAGLE</div>
+                <h1 class="name">ARACH_TCHOUPANI</h1>
+                <div class="unit">UNIT: ENGINEERING_CORPS | SPECIALIZATION: FULL_STACK_SPEC_OPS</div>
+              </div>
+              
+              <!-- Mission parameters -->
+              <div class="mission-parameters">
+                <div class="section-header">◆ MISSION PARAMETERS</div>
+                <div class="parameters-grid">
+                  <div class="param-row">
+                    <span>OBJECTIVE:</span>
+                    <span class="param-value">BUILD_AND_SCALE</span>
+                  </div>
+                  <div class="param-row">
+                    <span>PRIORITY:</span>
+                    <span class="param-value priority">CRITICAL</span>
+                  </div>
+                  <div class="param-row">
+                    <span>STATUS:</span>
+                    <span class="param-value">ACTIVE</span>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Systems status -->
+              <div class="systems-status">
+                <div class="section-header">◆ SYSTEMS STATUS</div>
+                <div class="status-grid">
+                  <div class="status-row">
+                    <span class="status-label">AI/ML:</span>
+                    <div class="status-bar">
+                      <div class="status-fill" style="--fill-width: 88%; --delay: 0.1s;"></div>
+                    </div>
+                    <span class="status-text" style="--delay: 0.1s;">RLHF</span>
+                  </div>
+                  <div class="status-row">
+                    <span class="status-label">STACK:</span>
+                    <div class="status-bar">
+                      <div class="status-fill" style="--fill-width: 100%; --delay: 0.3s;"></div>
+                    </div>
+                    <span class="status-text" style="--delay: 0.3s;">FULL_OPERATIONAL</span>
+                  </div>
+                  <div class="status-row">
+                    <span class="status-label">PRODUCT:</span>
+                    <div class="status-bar">
+                      <div class="status-fill" style="--fill-width: 94%; --delay: 0.5s;"></div>
+                    </div>
+                    <span class="status-text" style="--delay: 0.5s;">SHIPPING</span>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Command interface -->
+              <div class="command-interface">
+                <div class="command-indicator"></div>
+                <span class="command-text">[CONNECT] ► ARACH.IO</span>
+              </div>
+            </div>
+            
+            <!-- Right side - Polaroid -->
+            <div class="polaroid-container">
+              <div class="polaroid">
+                <img 
+                  src="/assets/arach.jpg" 
+                  alt={SITE.author}
+                  class="polaroid-image"
+                />
+                <div class="polaroid-caption">
+                  <div class="spec-sheet">
+                    <div class="spec-header">
+                      <span class="spec-id">ARACH_TCHOUPANI</span>
+                      <span class="spec-classification">CLASS_MILLENNIAL</span>
+                    </div>
+                    <div class="spec-grid">
+                      <div class="spec-item">
+                        <span class="spec-label">TYPE:</span>
+                        <span class="spec-value">FOUNDER</span>
+                      </div>
+                      <div class="spec-item">
+                        <span class="spec-label">STACK:</span>
+                        <span class="spec-value">FULL</span>
+                      </div>
+                      <div class="spec-item">
+                        <span class="spec-label">AI/ML:</span>
+                        <span class="spec-value">RLHF</span>
+                      </div>
+                      <div class="spec-item">
+                        <span class="spec-label">EST:</span>
+                        <span class="spec-value">2010</span>
+                      </div>
+                      <div class="spec-item">
+                        <span class="spec-label">LOC:</span>
+                        <span class="spec-value">SF_BAY</span>
+                      </div>
+                      <div class="spec-item">
+                        <span class="spec-label">STATUS:</span>
+                        <span class="spec-value">VERY_ONLINE</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Bio section below -->
+      <div class="mt-12 max-w-4xl mx-auto prose dark:prose-invert">
+        <h2 class="text-2xl font-bold mb-6" style="font-family: 'Krub', sans-serif;">Bio</h2>
+        <p class="text-lg leading-relaxed mb-6" style="font-family: 'Krub', sans-serif;">
+          With a 15-year track record in technology leadership in fast-growing startups, Arach has held various roles from Software Engineer to CTO, leading engineering for 4 venture-backed companies in NY and Montreal.
+        </p>
+        <p class="text-lg leading-relaxed mb-6" style="font-family: 'Krub', sans-serif;">
+          He co-founded Breathe Life in 2018 in Montreal, supported by Diagram Ventures and Real Ventures, and rapidly grew its InsurTech product until its acquisition by Zinnia in 2022. He joined Meta and worked on Creators initiatives on a standalone 0->1 product as well as on the blue app.
+        </p>
+        <p class="text-lg leading-relaxed" style="font-family: 'Krub', sans-serif;">
+          He is currently focused on coding every day and learning new things.
+        </p>
+        
+        <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="tactical-stat-card">
+            <div class="stat-label">YEARS_IN_FIELD</div>
+            <div class="stat-value">15+</div>
+          </div>
+          <div class="tactical-stat-card">
+            <div class="stat-label">VENTURES_LED</div>
+            <div class="stat-value">4</div>
+          </div>
+          <div class="tactical-stat-card">
+            <div class="stat-label">EXIT_STATUS</div>
+            <div class="stat-value">ACQUIRED</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Krub:wght@400;600&display=swap');
+  
+  /* Dark theme (default) */
+  .tactical-about-container {
+    background: #000;
+    position: relative;
+  }
+  
+  .tactical-about {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: #000;
+    padding: 32px 48px;
+    font-family: 'Space Mono', monospace;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .tactical-border {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+  
+  /* Light theme overrides */
+  :global([data-theme="light"]) .tactical-about-container {
+    background: #f5f5f5;
+    border: 1px solid #e0e0e0;
+  }
+  
+  :global([data-theme="light"]) .tactical-about {
+    background: #f5f5f5;
+  }
+  
+  :global([data-theme="light"]) .tactical-border {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+  }
+  
+  :global([data-theme="light"]) .cross-h,
+  :global([data-theme="light"]) .cross-v {
+    background: rgba(0, 0, 0, 0.5);
+  }
+  
+  :global([data-theme="light"]) .tactical-header {
+    color: rgba(0, 0, 0, 0.6);
+  }
+  
+  :global([data-theme="light"]) .name {
+    color: #000;
+  }
+  
+  :global([data-theme="light"]) .unit {
+    color: rgba(0, 0, 0, 0.6);
+  }
+  
+  :global([data-theme="light"]) .callsign,
+  :global([data-theme="light"]) .section-header {
+    color: #0088cc;
+  }
+  
+  :global([data-theme="light"]) .mission-parameters {
+    background: rgba(0, 136, 204, 0.05);
+    border: 1px solid rgba(0, 136, 204, 0.2);
+  }
+  
+  :global([data-theme="light"]) .parameters-grid {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  :global([data-theme="light"]) .param-value {
+    color: #0088cc;
+  }
+  
+  :global([data-theme="light"]) .param-value.priority {
+    color: #ff8800;
+  }
+  
+  :global([data-theme="light"]) .status-grid {
+    background: rgba(0, 136, 204, 0.05);
+    border: 1px solid rgba(0, 136, 204, 0.2);
+  }
+  
+  :global([data-theme="light"]) .status-row {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  :global([data-theme="light"]) .status-bars {
+    color: #0088cc;
+  }
+  
+  :global([data-theme="light"]) .status-text {
+    color: #0088cc;
+  }
+  
+  :global([data-theme="light"]) .command-interface {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 136, 204, 0.3);
+    border-left: 3px solid #0088cc;
+  }
+  
+  :global([data-theme="light"]) .command-indicator {
+    background: #0088cc;
+    box-shadow: 0 0 10px rgba(0, 136, 204, 0.6);
+  }
+  
+  :global([data-theme="light"]) .command-text {
+    color: #0088cc;
+  }
+  
+  :global([data-theme="light"]) .status-label {
+    color: #0088cc;
+  }
+  
+  :global([data-theme="light"]) .status-bar {
+    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+  }
+  
+  :global([data-theme="light"]) .status-fill {
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8));
+    box-shadow: none;
+  }
+  
+  :global([data-theme="light"]) .status-text {
+    color: #0088cc;
+  }
+  
+  :global([data-theme="light"]) .tactical-stat-card {
+    background: rgba(0, 136, 204, 0.05);
+    border: 1px solid rgba(0, 136, 204, 0.2);
+  }
+  
+  :global([data-theme="light"]) .stat-label {
+    color: #0088cc;
+  }
+  
+  :global([data-theme="light"]) .stat-value {
+    color: #0088cc;
+  }
+  
+  /* Corner crosses */
+  .corner-cross {
+    position: absolute;
+  }
+  
+  .cross-h {
+    position: absolute;
+    width: 40px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.5);
+    top: 0;
+  }
+  
+  .cross-v {
+    position: absolute;
+    width: 2px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.5);
+    left: 0;
+  }
+  
+  .corner-cross.top-left {
+    top: 20px;
+    left: 20px;
+  }
+  
+  .corner-cross.top-right {
+    top: 20px;
+    right: 20px;
+  }
+  
+  .corner-cross.top-right .cross-h {
+    right: 0;
+    left: auto;
+  }
+  
+  .corner-cross.top-right .cross-v {
+    right: 0;
+    left: auto;
+  }
+  
+  .corner-cross.bottom-left {
+    bottom: 20px;
+    left: 20px;
+  }
+  
+  .corner-cross.bottom-left .cross-h {
+    bottom: 0;
+    top: auto;
+  }
+  
+  .corner-cross.bottom-left .cross-v {
+    bottom: 0;
+    top: auto;
+  }
+  
+  .corner-cross.bottom-right {
+    bottom: 20px;
+    right: 20px;
+  }
+  
+  .corner-cross.bottom-right .cross-h {
+    bottom: 0;
+    top: auto;
+    right: 0;
+    left: auto;
+  }
+  
+  .corner-cross.bottom-right .cross-v {
+    bottom: 0;
+    top: auto;
+    right: 0;
+    left: auto;
+  }
+  
+  /* Header */
+  .tactical-header {
+    position: absolute;
+    top: 32px;
+    left: 48px;
+    right: 48px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    z-index: 10;
+  }
+  
+  /* Main content */
+  .main-content {
+    display: flex;
+    width: 100%;
+    margin-top: 48px;
+    gap: 60px;
+    z-index: 10;
+  }
+  
+  /* Left side - Tactical UI */
+  .tactical-ui {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: center;
+  }
+  
+  .identity-section {
+    margin-bottom: 24px;
+  }
+  
+  .callsign {
+    font-size: 12px;
+    color: rgba(0, 255, 209, 0.7);
+    margin-bottom: 6px;
+    letter-spacing: 0.15em;
+  }
+  
+  .name {
+    font-size: 44px;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+  
+  .unit {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 600;
+    margin-top: 6px;
+    letter-spacing: 0.1em;
+  }
+  
+  /* Mission parameters */
+  .mission-parameters {
+    background: rgba(0, 255, 209, 0.05);
+    border: 1px solid rgba(0, 255, 209, 0.2);
+    padding: 14px 18px;
+    margin-bottom: 24px;
+  }
+  
+  .section-header {
+    font-size: 12px;
+    color: rgba(0, 255, 209, 0.8);
+    margin-bottom: 12px;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+  }
+  
+  .parameters-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 600;
+  }
+  
+  .param-row {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .param-value {
+    color: rgba(0, 255, 209, 0.8);
+  }
+  
+  .param-value.priority {
+    color: rgba(255, 184, 0, 0.8);
+  }
+  
+  /* Systems status */
+  .systems-status {
+    margin-bottom: 32px;
+  }
+  
+  .status-grid {
+    background: rgba(0, 255, 209, 0.05);
+    border: 1px solid rgba(0, 255, 209, 0.2);
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+  
+  .status-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 20px;
+    margin-bottom: 6px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .status-row:last-child {
+    margin-bottom: 0;
+  }
+  
+  .status-label {
+    width: 80px;
+    font-weight: 600;
+    font-size: 12px;
+    color: rgba(0, 255, 209, 0.8);
+  }
+  
+  .status-bar {
+    flex: 0 0 auto;
+    width: 120px;
+    height: 8px;
+    background: rgba(0, 255, 209, 0.1);
+    border: 1px solid rgba(0, 255, 209, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .status-fill {
+    height: 100%;
+    background: linear-gradient(90deg, rgba(0, 255, 209, 0.8), rgba(0, 255, 209, 1));
+    box-shadow: 0 0 10px rgba(0, 255, 209, 0.5);
+    width: 0;
+    animation: fillBar 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation-delay: var(--delay, 0s);
+  }
+  
+  @keyframes fillBar {
+    0% {
+      width: 0;
+    }
+    100% {
+      width: var(--fill-width);
+    }
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateX(-10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  .status-text {
+    color: rgba(0, 255, 209, 0.8);
+    font-weight: 600;
+    opacity: 0;
+    animation: fadeIn 0.3s ease-out forwards;
+    animation-delay: calc(var(--delay, 0s) + 0.5s);
+    font-size: 12px;
+    margin-left: auto;
+  }
+  
+  /* Command interface */
+  .command-interface {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 255, 209, 0.3);
+    border-left: 3px solid rgba(0, 255, 209, 0.8);
+  }
+  
+  .command-indicator {
+    width: 8px;
+    height: 8px;
+    background: rgba(0, 255, 209, 0.8);
+    box-shadow: 0 0 10px rgba(0, 255, 209, 0.6);
+    animation: pulse 2s infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+  
+  .command-text {
+    font-size: 12px;
+    color: rgba(0, 255, 209, 0.9);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+  
+  /* Right side - Polaroid */
+  .polaroid-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  
+  .polaroid {
+    background: white;
+    padding: 10px 10px 0 10px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    width: 380px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .polaroid:hover {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  }
+  
+  .polaroid-image {
+    width: 360px;
+    height: 360px;
+    display: block;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+  
+  .polaroid-caption {
+    width: 360px;
+    height: 140px;
+    padding: 14px 0 10px 2px;
+    background: white;
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    color: #333;
+  }
+  
+  .spec-sheet {
+    padding: 0 14px;
+  }
+  
+  .spec-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 6px;
+    margin-bottom: 12px;
+  }
+  
+  .spec-id {
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+  }
+  
+  .spec-classification {
+    font-size: 9px;
+    color: #666;
+    letter-spacing: 0.1em;
+  }
+  
+  .spec-grid {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 10px;
+    width: 100%;
+  }
+  
+  .spec-item {
+    display: flex;
+    justify-content: space-between;
+    flex: 0 0 48%;
+    padding-right: 14px;
+    margin-bottom: 4px;
+  }
+  
+  .spec-item:nth-child(even) {
+    flex: 0 0 52%;
+    padding-right: 0;
+  }
+  
+  .spec-label {
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 10px;
+  }
+  
+  .spec-value {
+    font-weight: 600;
+    color: #333;
+    font-size: 10px;
+  }
+  
+  /* Stat cards */
+  .tactical-stat-card {
+    background: rgba(0, 255, 209, 0.05);
+    border: 1px solid rgba(0, 255, 209, 0.2);
+    padding: 20px;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+  }
+  
+  .stat-label {
+    font-size: 11px;
+    color: rgba(0, 255, 209, 0.8);
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+  
+  .stat-value {
+    font-size: 32px;
+    color: #00FFD1;
+    font-weight: 700;
+  }
+  
+  /* Responsive */
+  @media (max-width: 1280px) {
+    .tactical-about-container {
+      transform: scale(0.9);
+      transform-origin: center top;
+    }
+  }
+  
+  @media (max-width: 1100px) {
+    .tactical-about-container {
+      transform: scale(0.75);
+    }
+  }
+  
+  @media (max-width: 920px) {
+    .tactical-about-container {
+      transform: scale(0.6);
+      height: 378px;
+    }
+    
+    .main-content {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .polaroid {
+      transform: scale(0.5);
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .tactical-about-container {
+      transform: scale(0.5);
+      height: 315px;
+    }
+  }
+</style>
