@@ -26,11 +26,61 @@
   --border: 0, 0, 0;                  /* Black borders */
 }
 
+/* Overlay backdrop - hidden by default, shown on smaller screens */
+.tactical-overlay-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(10px);
+  z-index: 48;
+  display: none; /* Hidden on large screens */
+}
+
+/* Show overlay backdrop on screens below 1200px */
+@media (max-width: 1199px) {
+  .tactical-overlay-backdrop {
+    display: block;
+  }
+}
+
 /* Floating container */
 .tactical-floating {
   position: fixed;
   z-index: 50;
   transition: opacity 0.3s ease-out;
+}
+
+/* Center container on smaller screens */
+@media (max-width: 1199px) {
+  .tactical-floating {
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%);
+  }
+  
+  .tactical-floating.dragging {
+    transform: translate(-50%, -50%) !important;
+  }
+  
+  /* Disable dragging on smaller screens */
+  .tactical-floating .tactical-about-container {
+    cursor: default !important;
+  }
+}
+
+/* Connection line */
+.tactical-connection-line {
+  display: block;
+}
+
+/* Hide connection line on smaller screens */
+@media (max-width: 1199px) {
+  .tactical-connection-line {
+    display: none !important;
+  }
 }
 
 /* Connection line animation */
@@ -88,17 +138,664 @@
   }
 }
 
-/* Container */
+/* Container - properly responsive with content scaling */
 .tactical-about-container {
   background: #000;
   position: relative;
   width: 100%;
-  max-width: 1200px;
-  height: 630px;
+  max-width: 896px; /* Match site's max-w-4xl for content consistency */
+  aspect-ratio: 1.9 / 1; /* Maintain proper aspect ratio */
   margin: 0 auto;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(0, 255, 209, 0.1);
   cursor: grab;
   user-select: none;
+  overflow: hidden;
+}
+
+/* Larger screens - slightly wider but still within bounds */
+@media (min-width: 1200px) {
+  .tactical-about-container {
+    max-width: 1024px; /* max-w-5xl - wider but not excessive */
+  }
+}
+
+/* Extra large screens - maintain content alignment */
+@media (min-width: 1600px) {
+  .tactical-about-container {
+    max-width: 1152px; /* max-w-6xl - reasonable for very large screens */
+  }
+}
+
+/* Responsive container sizing - only for mobile */
+@media (max-width: 767px) {
+  .tactical-about-container {
+    width: 100%;
+    max-width: min(calc(100vw - 2rem), 640px); /* Cap at reasonable mobile width */
+    height: auto;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+}
+
+/* Perfect optimization for 768px iPad portrait */
+@media screen and (max-width: 768px) {
+  .tactical-about-container {
+    width: 700px !important; /* Force override Astro styles */
+    max-width: 700px !important;
+    min-width: 700px !important;
+    height: 360px !important;
+    aspect-ratio: unset !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
+  }
+  
+  .tactical-about {
+    padding: 10px !important; /* Override Astro's 32px 48px padding */
+    height: 100% !important;
+    overflow: hidden;
+  }
+  
+  .tactical-header {
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    font-size: 7px;
+    padding: 2px 8px;
+  }
+  
+  .tactical-border {
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+  }
+  
+  .corner-cross {
+    /* Smaller crosses for 768px */
+  }
+  
+  .cross-h {
+    width: 20px;
+  }
+  
+  .cross-v {
+    height: 20px;
+  }
+  
+  .corner-cross.top-left,
+  .corner-cross.top-right {
+    top: 10px;
+  }
+  
+  .corner-cross.bottom-left,
+  .corner-cross.bottom-right {
+    bottom: 10px;
+  }
+  
+  .corner-cross.top-left,
+  .corner-cross.bottom-left {
+    left: 10px;
+  }
+  
+  .corner-cross.top-right,
+  .corner-cross.bottom-right {
+    right: 10px;
+  }
+  
+  .main-content {
+    margin-top: 15px;
+    gap: 10px;
+    height: calc(100% - 35px);
+    padding: 0;
+    justify-content: center;
+  }
+  
+  .tactical-ui {
+    flex: 0 0 400px; /* Narrower to prevent cutoff */
+    min-width: 0;
+    padding: 0 10px 0 15px; /* More left padding to prevent cutoff */
+  }
+  
+  .identity-section {
+    margin-bottom: 8px;
+    padding-left: 0;
+  }
+  
+  .name {
+    font-size: 20px;
+    margin-bottom: 2px;
+    letter-spacing: 0.01em;
+    line-height: 1;
+  }
+  
+  .callsign {
+    font-size: 8px;
+    margin-bottom: 1px;
+  }
+  
+  .unit {
+    font-size: 7px;
+    margin-top: 1px;
+  }
+  
+  .mission-parameters {
+    margin-bottom: 8px;
+    padding: 6px 6px 6px 10px;
+  }
+  
+  .section-header {
+    font-size: 9px;
+    margin-bottom: 5px;
+    padding-left: 2px;
+  }
+  
+  .parameters-grid {
+    font-size: 9px;
+    gap: 3px;
+    padding-left: 2px;
+  }
+  
+  .systems-status {
+    margin-bottom: 8px;
+    padding-left: 5px;
+  }
+  
+  .status-grid {
+    padding: 6px 0;
+  }
+  
+  .status-row {
+    font-size: 8px;
+    padding: 0 8px;
+    margin-bottom: 2px;
+    gap: 6px;
+  }
+  
+  .status-label {
+    width: 45px; /* Narrower labels */
+    font-size: 8px;
+  }
+  
+  .status-bar {
+    width: 70px; /* Shorter bars */
+    height: 5px;
+  }
+  
+  .status-text {
+    font-size: 9px;
+  }
+  
+  .command-interface {
+    padding: 7px 6px;
+  }
+  
+  .command-indicator {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .command-text {
+    font-size: 9px;
+  }
+  
+  .polaroid-container {
+    flex: 0 0 240px; /* Smaller to fit in 700px container */
+  }
+  
+  .polaroid {
+    width: 240px;
+    max-width: 240px;
+    padding: 8px 8px 0 8px;
+  }
+  
+  .polaroid-image {
+    width: 224px;
+    height: 224px;
+  }
+  
+  .polaroid-caption {
+    width: 224px;
+    min-height: 70px;
+    padding: 5px 0 4px 3px;
+  }
+  
+  .spec-sheet {
+    padding: 0 6px;
+  }
+  
+  .spec-header {
+    padding-bottom: 3px;
+    margin-bottom: 4px;
+  }
+  
+  .spec-id {
+    font-size: 8px;
+  }
+  
+  .spec-classification {
+    font-size: 6px;
+  }
+  
+  .spec-item {
+    font-size: 7px;
+    margin-bottom: 1px;
+  }
+  
+  .spec-grid {
+    font-size: 7px;
+  }
+}
+
+/* General iPad and tablets */
+@media (min-width: 769px) and (max-width: 1199px) {
+  .tactical-about-container {
+    width: 100%;
+    max-width: min(95%, 896px);
+  }
+  
+  .polaroid {
+    max-width: 280px;
+  }
+}
+
+/* Specific optimization for ~850px viewports */
+@media (min-width: 800px) and (max-width: 900px) {
+  .tactical-about-container {
+    max-width: 820px;
+    aspect-ratio: 2.3 / 1;
+  }
+  
+  .tactical-about {
+    padding: 20px 25px;
+  }
+  
+  .tactical-header {
+    top: 20px;
+    left: 25px;
+    right: 25px;
+  }
+  
+  .main-content {
+    margin-top: 25px;
+    gap: 25px;
+  }
+  
+  .name {
+    font-size: 30px;
+    margin-bottom: 4px;
+  }
+  
+  .callsign {
+    font-size: 10px;
+    margin-bottom: 2px;
+  }
+  
+  .unit {
+    font-size: 9px;
+    margin-top: 3px;
+  }
+  
+  .polaroid {
+    max-width: 220px;
+  }
+  
+  .polaroid-container {
+    max-width: 30%;
+  }
+  
+  .polaroid-image {
+    aspect-ratio: 1 / 1;
+  }
+  
+  .polaroid-caption {
+    min-height: 80px;
+    padding: 8px 0 6px 2px;
+  }
+  
+  .spec-item {
+    font-size: 8px;
+    margin-bottom: 1px;
+  }
+  
+  .status-bar {
+    width: 85px;
+    height: 6px;
+  }
+  
+  .identity-section {
+    margin-bottom: 14px;
+  }
+  
+  .mission-parameters {
+    margin-bottom: 14px;
+    padding: 8px 12px;
+  }
+  
+  .section-header {
+    font-size: 10px;
+    margin-bottom: 6px;
+  }
+  
+  .parameters-grid {
+    font-size: 10px;
+    gap: 4px;
+  }
+  
+  .systems-status {
+    margin-bottom: 16px;
+  }
+  
+  .status-grid {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  
+  .status-row {
+    font-size: 10px;
+    padding: 0 14px;
+    margin-bottom: 3px;
+    gap: 8px;
+  }
+  
+  .status-text {
+    font-size: 10px;
+  }
+  
+  .command-interface {
+    padding: 8px 12px;
+  }
+  
+  .command-text {
+    font-size: 10px;
+  }
+}
+
+/* Larger tablets can have slightly bigger elements */
+@media (min-width: 1000px) and (max-width: 1199px) {
+  .tactical-about-container {
+    max-width: min(95%, 896px); /* Maintain content alignment */
+  }
+  
+  .polaroid {
+    max-width: 320px;
+  }
+}
+
+/* Tablet-specific adjustments */
+@media (min-width: 768px) and (max-width: 999px) {
+  .spec-sheet {
+    padding: 0 8px;
+  }
+  
+  .spec-header {
+    padding-bottom: 4px;
+    margin-bottom: 6px;
+  }
+  
+  .spec-id {
+    font-size: 9px;
+  }
+  
+  .spec-classification {
+    font-size: 7px;
+  }
+  
+  .spec-item {
+    font-size: 8px;
+    margin-bottom: 2px;
+  }
+  
+  .name {
+    font-size: 30px;
+    margin-bottom: 4px;
+  }
+  
+  .callsign {
+    font-size: 10px;
+    margin-bottom: 4px;
+  }
+  
+  .unit {
+    font-size: 9px;
+    margin-top: 4px;
+  }
+  
+  .identity-section {
+    margin-bottom: 14px;
+  }
+  
+  .mission-parameters,
+  .systems-status {
+    margin-bottom: 14px;
+  }
+  
+  .mission-parameters {
+    padding: 8px 12px;
+  }
+  
+  .section-header {
+    font-size: 10px;
+    margin-bottom: 8px;
+  }
+  
+  .parameters-grid {
+    font-size: 10px;
+    gap: 6px;
+  }
+  
+  .status-grid {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+  
+  .status-row {
+    font-size: 10px;
+    padding: 0 16px;
+    margin-bottom: 4px;
+  }
+  
+  .status-label {
+    width: 65px;
+    font-size: 10px;
+  }
+  
+  .status-bar {
+    width: 90px;
+    height: 6px;
+  }
+  
+  .status-text {
+    font-size: 10px;
+  }
+  
+  .command-interface {
+    padding: 10px 14px;
+  }
+  
+  .command-text {
+    font-size: 10px;
+  }
+  
+  .tactical-header {
+    font-size: 9px;
+  }
+}
+
+/* Larger tablet text remains relatively bigger */
+@media (min-width: 1000px) and (max-width: 1199px) {
+  .spec-sheet {
+    padding: 0 10px;
+  }
+  
+  .spec-id {
+    font-size: 10px;
+  }
+  
+  .spec-classification {
+    font-size: 8px;
+  }
+  
+  .spec-item {
+    font-size: 9px;
+  }
+  
+  .name {
+    font-size: 36px;
+  }
+  
+  .callsign {
+    font-size: 11px;
+  }
+  
+  .unit {
+    font-size: 10px;
+  }
+  
+  .identity-section {
+    margin-bottom: 18px;
+  }
+  
+  .mission-parameters,
+  .systems-status {
+    margin-bottom: 18px;
+  }
+  
+  .mission-parameters {
+    padding: 12px 16px;
+  }
+  
+  .section-header {
+    font-size: 11px;
+  }
+  
+  .parameters-grid {
+    font-size: 11px;
+  }
+  
+  .status-row {
+    font-size: 11px;
+  }
+  
+  .status-label {
+    width: 75px;
+    font-size: 11px;
+  }
+  
+  .status-bar {
+    width: 110px;
+  }
+  
+  .command-text {
+    font-size: 11px;
+  }
+}
+
+/* Mobile - stack vertically */
+@media (max-width: 767px) {
+  .tactical-about {
+    padding: 20px;
+  }
+  
+  .main-content {
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 36px;
+  }
+  
+  /* Hide some elements on mobile to save space */
+  .tactical-header {
+    display: none;
+  }
+  
+  /* Smaller polaroid on mobile */
+  .polaroid {
+    width: 240px;
+    margin: 0 auto;
+  }
+  
+  .polaroid-image {
+    width: 220px;
+    height: 220px;
+  }
+  
+  .polaroid-caption {
+    width: 220px;
+    height: 100px;
+    font-size: 7px;
+  }
+  
+  .spec-header {
+    padding-bottom: 4px;
+    margin-bottom: 6px;
+  }
+  
+  .spec-id {
+    font-size: 9px;
+  }
+  
+  .spec-classification {
+    font-size: 8px;
+  }
+  
+  .spec-item {
+    font-size: 8px;
+    margin-bottom: 2px;
+  }
+  
+  /* Adjust text sizes */
+  .name {
+    font-size: 28px;
+  }
+  
+  .callsign,
+  .unit {
+    font-size: 10px;
+  }
+  
+  .section-header {
+    font-size: 11px;
+  }
+  
+  .parameters-grid,
+  .status-row {
+    font-size: 11px;
+  }
+  
+  /* Smaller corner crosses on mobile */
+  .cross-h {
+    width: 25px;
+  }
+  
+  .cross-v {
+    height: 25px;
+  }
+  
+  .tactical-border {
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+  }
+  
+  .corner-cross.top-left,
+  .corner-cross.top-right {
+    top: 15px;
+  }
+  
+  .corner-cross.bottom-left,
+  .corner-cross.bottom-right {
+    bottom: 15px;
+  }
+  
+  .corner-cross.top-left,
+  .corner-cross.bottom-left {
+    left: 15px;
+  }
+  
+  .corner-cross.top-right,
+  .corner-cross.bottom-right {
+    right: 15px;
+  }
 }
 
 .tactical-floating.dragging .tactical-about-container {
@@ -118,7 +815,7 @@
   height: 100%;
   position: relative;
   background: #000;
-  padding: 32px 48px;
+  padding: 3% 4%;
   font-family: 'Space Mono', monospace;
   display: flex;
   flex-direction: column;
@@ -228,9 +925,12 @@
 .main-content {
   display: flex;
   width: 100%;
-  margin-top: 48px;
-  gap: 60px;
+  margin-top: 4%;
+  gap: 4%;
   z-index: 10;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .tactical-ui {
@@ -245,14 +945,14 @@
 }
 
 .callsign {
-  font-size: 12px;
+  font-size: clamp(10px, 1.2vw, 12px);
   color: rgba(0, 255, 209, 0.7);
-  margin-bottom: 6px;
+  margin-bottom: 0.5%;
   letter-spacing: 0.15em;
 }
 
 .name {
-  font-size: 44px;
+  font-size: clamp(24px, 4vw, 44px);
   font-weight: 700;
   color: #fff;
   margin: 0;
@@ -262,10 +962,10 @@
 }
 
 .unit {
-  font-size: 11px;
+  font-size: clamp(9px, 1.1vw, 11px);
   color: rgba(255, 255, 255, 0.5);
   font-weight: 600;
-  margin-top: 6px;
+  margin-top: 0.5%;
   letter-spacing: 0.1em;
 }
 
@@ -278,9 +978,9 @@
 }
 
 .section-header {
-  font-size: 12px;
+  font-size: clamp(10px, 1.2vw, 12px);
   color: rgba(0, 255, 209, 0.8);
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   letter-spacing: 0.1em;
   font-weight: 700;
 }
@@ -288,8 +988,8 @@
 .parameters-grid {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  font-size: 12px;
+  gap: 6px;
+  font-size: clamp(10px, 1.2vw, 12px);
   color: rgba(255, 255, 255, 0.7);
   font-weight: 600;
 }
@@ -334,15 +1034,18 @@
 }
 
 .status-label {
-  width: 80px;
+  width: 25%;
+  min-width: 60px;
   font-weight: 600;
-  font-size: 12px;
+  font-size: clamp(10px, 1.2vw, 12px);
   color: rgb(var(--primary) / 0.8);
 }
 
 .status-bar {
   flex: 0 0 auto;
-  width: 120px;
+  width: 35%;
+  min-width: 80px;
+  max-width: 120px;
   height: 8px;
   background: rgb(var(--primary) / 0.15);
   border: 1px solid rgb(var(--primary) / 0.3);
@@ -432,13 +1135,16 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  flex: 0 0 auto;
+  max-width: 40%;
 }
 
 .polaroid {
   background: white;
-  padding: 10px 10px 0 10px;
+  padding: 2.5% 2.5% 0 2.5%;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-  width: 380px;
+  width: 100%;
+  max-width: 380px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
 }
@@ -448,19 +1154,19 @@
 }
 
 .polaroid-image {
-  width: 360px;
-  height: 360px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   display: block;
   border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .polaroid-caption {
-  width: 360px;
-  height: 140px;
-  padding: 14px 0 10px 2px;
+  width: 100%;
+  min-height: 100px;
+  padding: 3% 0 2.5% 1%;
   background: white;
   font-family: 'Space Mono', monospace;
-  font-size: 8px;
+  font-size: clamp(7px, 0.8vw, 10px);
   color: #333;
 }
 

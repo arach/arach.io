@@ -12,10 +12,9 @@ const layoutProps = {
 
 <Layout {...layoutProps}>
   <Header activeNav="about" />
-  <main id="main-content" class="mx-auto flex flex-col w-full items-center px-4 py-12 pb-20" style="max-width: 1280px;">
-    <div class="w-full">
-      <!-- Full-size tactical about section -->
-      <div class="tactical-about-container shadow-2xl rounded-lg overflow-hidden" style="width: 100%; max-width: 1200px; height: 630px; margin: 0 auto;">
+  <main id="main-content" class="mx-auto flex flex-col w-full items-center px-4 py-12 pb-20" style="max-width: 1600px;">
+    <!-- Full-size tactical about section -->
+    <div class="tactical-about-container shadow-2xl rounded-lg overflow-hidden">
         <div class="tactical-about">
           <!-- Thin border -->
           <div class="tactical-border"></div>
@@ -158,15 +157,15 @@ const layoutProps = {
       </div>
       
       <!-- Bio section below -->
-      <div class="mt-12 max-w-4xl mx-auto prose dark:prose-invert">
+      <div class="mt-12 max-w-4xl mx-auto px-4 prose dark:prose-invert">
         <h2 class="text-2xl font-bold mb-6" style="font-family: 'Krub', sans-serif;">Bio</h2>
-        <p class="text-lg leading-relaxed mb-6" style="font-family: 'Krub', sans-serif;">
+        <p class="text-base leading-relaxed mb-6" style="font-family: 'Krub', sans-serif;">
           With a 15-year track record in technology leadership in fast-growing startups, Arach has held various roles from Software Engineer to CTO, leading engineering for 4 venture-backed companies in NY and Montreal.
         </p>
-        <p class="text-lg leading-relaxed mb-6" style="font-family: 'Krub', sans-serif;">
+        <p class="text-base leading-relaxed mb-6" style="font-family: 'Krub', sans-serif;">
           He co-founded Breathe Life in 2018 in Montreal, supported by Diagram Ventures and Real Ventures, and rapidly grew its InsurTech product until its acquisition by Zinnia in 2022. He joined Meta and worked on Creators initiatives on a standalone 0->1 product as well as on the blue app.
         </p>
-        <p class="text-lg leading-relaxed" style="font-family: 'Krub', sans-serif;">
+        <p class="text-base leading-relaxed" style="font-family: 'Krub', sans-serif;">
           He is currently focused on coding every day and learning new things.
         </p>
         
@@ -185,7 +184,6 @@ const layoutProps = {
           </div>
         </div>
       </div>
-    </div>
   </main>
   <Footer />
 </Layout>
@@ -193,10 +191,57 @@ const layoutProps = {
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Krub:wght@400;600&display=swap');
   
+  /* Page Theme Variables */
+  :root {
+    /* Dark mode colors (default) */
+    --primary: 0, 255, 209;              /* Cyan - main accent */
+    --warning: 255, 184, 0;              /* Orange - priority/warning */
+    --success: 0, 255, 209;              /* Same as primary for consistency */
+    --bg: 0, 0, 0;                       /* Black background */
+    --surface: 255, 255, 255;            /* White for cards (polaroid) */
+    --text: 255, 255, 255;               /* White text */
+    --text-muted: 255, 255, 255;        /* Muted text with opacity */
+    --border: 255, 255, 255;             /* White borders with opacity */
+  }
+  
+  :global([data-theme="light"]) {
+    /* Light mode - use theme accent color */
+    --primary: var(--color-accent);     /* Use site's accent color */
+    --warning: var(--color-accent);     /* Use accent for consistency */
+    --success: var(--color-accent);     /* Use accent for consistency */
+    --bg: 245, 245, 245;                /* Light gray background */
+    --surface: 255, 255, 255;           /* White for cards */
+    --text: 0, 0, 0;                    /* Black text */
+    --text-muted: 0, 0, 0;              /* Muted black text */
+    --border: 0, 0, 0;                  /* Black borders */
+  }
+  
   /* Dark theme (default) */
   .tactical-about-container {
     background: #000;
     position: relative;
+    width: 100%;
+    max-width: min(calc(100vw - 48px), 900px);
+    margin: 0 auto;
+  }
+  
+  /* Desktop optimizations - narrower left column */
+  @media (min-width: 900px) {
+    .tactical-ui {
+      flex: 0 0 360px !important;
+      max-width: 360px;
+    }
+    
+    .polaroid-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+    
+    .main-content {
+      justify-content: space-between;
+      gap: 30px;
+    }
   }
   
   .tactical-about {
@@ -208,6 +253,7 @@ const layoutProps = {
     font-family: 'Space Mono', monospace;
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
   }
   
   .tactical-border {
@@ -223,6 +269,58 @@ const layoutProps = {
   :global([data-theme="light"]) .tactical-about-container {
     background: #f5f5f5;
     border: 1px solid #e0e0e0;
+  }
+  
+  /* Responsive design for 768px (iPad Portrait) */
+  @media screen and (max-width: 768px) {
+    .tactical-about-container {
+      max-width: calc(100vw - 32px);
+      height: auto;
+    }
+    
+    .tactical-about {
+      padding: 12px !important;
+      font-size: 14px;
+    }
+    
+    /* Ensure spec values don't get cut off */
+    .spec-value {
+      font-size: 7px !important;
+      white-space: nowrap;
+    }
+    
+    .tactical-border {
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
+    }
+    
+    /* Override the main-content flex to fit in narrow viewport */
+    .main-content {
+      gap: 10px !important;
+    }
+    
+    /* Adjust tactical-ui width - 30px narrower */
+    .tactical-ui {
+      flex: 0 0 350px !important;
+      min-width: 0;
+    }
+    
+    /* Smaller polaroid for 768px */
+    .polaroid-container {
+      flex: 0 0 220px !important;
+    }
+    
+    .polaroid {
+      width: 220px !important;
+      padding: 8px 8px 0 8px !important;
+    }
+    
+    .polaroid-image {
+      width: 204px !important;
+      height: 204px !important;
+    }
   }
   
   :global([data-theme="light"]) .tactical-about {
@@ -264,13 +362,7 @@ const layoutProps = {
     color: rgba(0, 0, 0, 0.7);
   }
   
-  :global([data-theme="light"]) .param-value {
-    color: #0088cc;
-  }
-  
-  :global([data-theme="light"]) .param-value.priority {
-    color: #ff8800;
-  }
+  /* Param values now use --tactical-primary and --tactical-warning variables */
   
   :global([data-theme="light"]) .status-grid {
     background: rgba(0, 136, 204, 0.05);
@@ -286,7 +378,7 @@ const layoutProps = {
   }
   
   :global([data-theme="light"]) .status-text {
-    color: #0088cc;
+    color: rgb(var(--color-accent));
   }
   
   :global([data-theme="light"]) .command-interface {
@@ -304,23 +396,7 @@ const layoutProps = {
     color: #0088cc;
   }
   
-  :global([data-theme="light"]) .status-label {
-    color: #0088cc;
-  }
-  
-  :global([data-theme="light"]) .status-bar {
-    background: rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(0, 0, 0, 0.2);
-  }
-  
-  :global([data-theme="light"]) .status-fill {
-    background: linear-gradient(90deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8));
-    box-shadow: none;
-  }
-  
-  :global([data-theme="light"]) .status-text {
-    color: #0088cc;
-  }
+  /* Status components now use --tactical-primary variable */
   
   :global([data-theme="light"]) .tactical-stat-card {
     background: rgba(0, 136, 204, 0.05);
@@ -454,7 +530,7 @@ const layoutProps = {
   }
   
   .name {
-    font-size: 44px;
+    font-size: 36px;
     font-weight: 700;
     color: #fff;
     margin: 0;
@@ -502,11 +578,11 @@ const layoutProps = {
   }
   
   .param-value {
-    color: rgba(0, 255, 209, 0.8);
+    color: rgb(var(--primary) / 0.8);
   }
   
   .param-value.priority {
-    color: rgba(255, 184, 0, 0.8);
+    color: rgb(var(--warning) / 0.8);
   }
   
   /* Systems status */
@@ -539,23 +615,25 @@ const layoutProps = {
     width: 80px;
     font-weight: 600;
     font-size: 12px;
-    color: rgba(0, 255, 209, 0.8);
+    color: rgb(var(--primary) / 0.8);
   }
   
   .status-bar {
     flex: 0 0 auto;
     width: 120px;
     height: 8px;
-    background: rgba(0, 255, 209, 0.1);
-    border: 1px solid rgba(0, 255, 209, 0.3);
+    background: rgb(var(--primary) / 0.15);
+    border: 1px solid rgb(var(--primary) / 0.3);
     position: relative;
     overflow: hidden;
   }
   
   .status-fill {
     height: 100%;
-    background: linear-gradient(90deg, rgba(0, 255, 209, 0.8), rgba(0, 255, 209, 1));
-    box-shadow: 0 0 10px rgba(0, 255, 209, 0.5);
+    background: linear-gradient(90deg, 
+      rgb(var(--primary) / 0.8), 
+      rgb(var(--primary) / 1));
+    box-shadow: 0 0 10px rgb(var(--primary) / 0.5);
     width: 0;
     animation: fillBar 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
     animation-delay: var(--delay, 0s);
@@ -582,7 +660,7 @@ const layoutProps = {
   }
   
   .status-text {
-    color: rgba(0, 255, 209, 0.8);
+    color: rgb(var(--primary) / 0.8);
     font-weight: 600;
     opacity: 0;
     animation: fadeIn 0.3s ease-out forwards;
@@ -699,13 +777,13 @@ const layoutProps = {
   .spec-item {
     display: flex;
     justify-content: space-between;
-    flex: 0 0 48%;
-    padding-right: 14px;
+    flex: 0 0 46%;
+    padding-right: 10px;
     margin-bottom: 4px;
   }
   
   .spec-item:nth-child(even) {
-    flex: 0 0 52%;
+    flex: 0 0 54%;
     padding-right: 0;
   }
   
@@ -744,40 +822,5 @@ const layoutProps = {
     font-weight: 700;
   }
   
-  /* Responsive */
-  @media (max-width: 1280px) {
-    .tactical-about-container {
-      transform: scale(0.9);
-      transform-origin: center top;
-    }
-  }
-  
-  @media (max-width: 1100px) {
-    .tactical-about-container {
-      transform: scale(0.75);
-    }
-  }
-  
-  @media (max-width: 920px) {
-    .tactical-about-container {
-      transform: scale(0.6);
-      height: 378px;
-    }
-    
-    .main-content {
-      flex-direction: column;
-      align-items: center;
-    }
-    
-    .polaroid {
-      transform: scale(0.5);
-    }
-  }
-  
-  @media (max-width: 640px) {
-    .tactical-about-container {
-      transform: scale(0.5);
-      height: 315px;
-    }
-  }
+  /* Responsive styles are now handled in TacticalAbout.css */
 </style>

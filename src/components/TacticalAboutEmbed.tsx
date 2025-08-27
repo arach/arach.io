@@ -72,15 +72,16 @@ export default function TacticalAboutEmbed({
           const viewportHeight = window.innerHeight;
           
           // Only set initial position if not already positioned
-          if (position.x === 0 && position.y === 0) {
-            // Position container - offset from trigger, prefer right side on desktop
+          // CSS handles centering below 1200px
+          if (position.x === 0 && position.y === 0 && viewportWidth >= 1200) {
+            const containerWidth = 1200;
+            const containerHeight = 630;
+            
+            // Position as floating element next to trigger
             let containerX = triggerRect.right + 50;
             let containerY = triggerRect.top - 100;
             
             // Adjust if container would go off screen
-            const containerWidth = 1200; // max-width
-            const containerHeight = 630;
-            
             if (containerX + containerWidth > viewportWidth - 50) {
               containerX = viewportWidth - containerWidth - 50;
             }
@@ -93,27 +94,28 @@ export default function TacticalAboutEmbed({
               containerY = viewportHeight - containerHeight - 50;
             }
             
-            // On mobile, center it
-            if (viewportWidth < 1280) {
-              containerX = (viewportWidth - Math.min(containerWidth, viewportWidth - 40)) / 2;
-              containerY = (viewportHeight - containerHeight) / 2;
-            }
-            
             setPosition({ x: containerX, y: containerY });
           }
           
-          container.style.left = `${position.x}px`;
-          container.style.top = `${position.y}px`;
-          
-          // Draw connection line from trigger center to container edge
-          const triggerCenterX = triggerRect.left + triggerRect.width / 2;
-          const triggerCenterY = triggerRect.top + triggerRect.height / 2;
-          
-          line.setAttribute('x1', String(triggerCenterX));
-          line.setAttribute('y1', String(triggerCenterY));
-          line.setAttribute('x2', String(position.x));
-          line.setAttribute('y2', String(position.y + 315)); // Half of container height
-          line.style.display = 'block';
+          // Only set position on large screens (CSS handles centering below 1200px)
+          if (viewportWidth >= 1200) {
+            container.style.left = `${position.x}px`;
+            container.style.top = `${position.y}px`;
+            
+            // Draw connection line
+            const triggerCenterX = triggerRect.left + triggerRect.width / 2;
+            const triggerCenterY = triggerRect.top + triggerRect.height / 2;
+            
+            line.setAttribute('x1', String(triggerCenterX));
+            line.setAttribute('y1', String(triggerCenterY));
+            line.setAttribute('x2', String(position.x));
+            line.setAttribute('y2', String(position.y + 315)); // Half of container height
+            line.style.display = 'block';
+          } else {
+            // For smaller screens, let CSS handle positioning
+            container.style.left = '';
+            container.style.top = '';
+          }
         }
       }, 10);
       
@@ -179,6 +181,15 @@ export default function TacticalAboutEmbed({
 
   return (
     <>
+      {/* Overlay background - CSS will handle visibility based on screen size */}
+      <div 
+        className="tactical-overlay-backdrop"
+        onClick={() => setIsVisible(false)}
+        style={{
+          display: isVisible ? 'block' : 'none',
+        }}
+      />
+      
       {/* Connection line */}
       <svg 
         className="tactical-connection-line"
@@ -210,7 +221,7 @@ export default function TacticalAboutEmbed({
         }}
       >
         <div 
-          className="tactical-about-container shadow-2xl rounded-lg overflow-hidden"
+          className="tactical-about-container shadow-2xl rounded-lg"
           onMouseDown={handleMouseDown}>
           <div className="tactical-about">
           {/* Close button */}

@@ -196,7 +196,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     }
 
     .hero-container {
-      @apply flex flex-col gap-8 lg:flex-row lg:items-center lg:gap-16;
+      @apply flex flex-col gap-6 md:flex-row md:items-center md:gap-12 lg:gap-16;
     }
 
     .hero-content {
@@ -211,7 +211,14 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     }
 
     .hero-title {
-      @apply text-4xl font-black tracking-tighter leading-tight md:text-5xl;
+      @apply text-4xl font-black tracking-tighter leading-tight md:text-4xl lg:text-5xl;
+    }
+    
+    /* Tablet: slightly smaller title for better fit */
+    @media (min-width: 768px) and (max-width: 1023px) {
+      .hero-title {
+        @apply text-3xl;
+      }
     }
 
     .hero-subtitle {
@@ -220,12 +227,22 @@ const socialCount = SOCIALS.filter(social => social.active).length;
 
     .hero-description {
       @apply mt-6 max-w-prose font-light;
-      font-size: 1.25rem;
+      font-size: 1.125rem;
       line-height: 1.75;
       color: rgb(var(--color-text-base) / 0.9);
     }
     
-    @media (min-width: 768px) {
+    /* Tablet: adjusted description size */
+    @media (min-width: 768px) and (max-width: 1023px) {
+      .hero-description {
+        font-size: 1.125rem;
+        line-height: 1.7;
+        @apply mt-4;
+      }
+    }
+    
+    /* Desktop: larger description */
+    @media (min-width: 1024px) {
       .hero-description {
         font-size: 1.375rem;
         line-height: 1.8;
@@ -240,8 +257,15 @@ const socialCount = SOCIALS.filter(social => social.active).length;
       @apply mt-8 flex gap-3;
     }
     
-    /* iPhone: force side by side layout */
-    @media (max-width: 767px) {
+    /* Tablet: ensure buttons don't stretch too wide */
+    @media (min-width: 768px) and (max-width: 1023px) {
+      .cta-buttons {
+        @apply max-w-sm;
+      }
+    }
+    
+    /* Phone: force side by side layout */
+    @media (max-width: 640px) {
       .cta-buttons {
         @apply gap-2;
       }
@@ -303,8 +327,8 @@ const socialCount = SOCIALS.filter(social => social.active).length;
       @apply flex-shrink-0;
     }
     
-    /* iPhone: hide face photo to save space */
-    @media (max-width: 767px) {
+    /* Phone only: hide face photo to save space */
+    @media (max-width: 640px) {
       .hero-image-wrapper {
         @apply hidden;
       }
@@ -325,6 +349,18 @@ const socialCount = SOCIALS.filter(social => social.active).length;
       height: 15.4rem;
       transition: transform 0.3s ease;
       border: 5px solid rgba(255, 255, 255, 0.15);
+    }
+    
+    /* Tablet: smaller image */
+    @media (min-width: 768px) and (max-width: 1023px) {
+      .hero-image {
+        width: 12rem;
+        height: 12rem;
+      }
+      
+      .hero-image-gradient {
+        @apply -inset-3;
+      }
     }
 
     .hero-image:hover {
