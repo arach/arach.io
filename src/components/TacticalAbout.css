@@ -1,109 +1,103 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Krub:wght@400;600&display=swap');
 
-/* Page Theme Variables */
-/* Define component-scoped variables that work within the tactical container */
+/* ============================================================================
+   CSS CUSTOM PROPERTIES - Theme System
+   ============================================================================ */
+
 .tactical-about-container {
-  /* Dark mode colors (default) */
-  --primary: 0, 255, 209;              /* Cyan - main accent */
-  --warning: 255, 184, 0;              /* Orange - priority/warning */
-  --success: 0, 255, 209;              /* Same as primary for consistency */
-  --bg: 0, 0, 0;                       /* Black background */
-  --surface: 255, 255, 255;            /* White for cards (polaroid) */
-  --text: 255, 255, 255;               /* White text */
-  --text-muted: 255, 255, 255;        /* Muted text with opacity */
-  --border: 255, 255, 255;             /* White borders with opacity */
+  /* Base theme variables - Light mode as default */
+  --primary-rgb: 0, 136, 204;           /* Tactical blue */
+  --warning-rgb: 255, 136, 0;           /* Alert orange */
+  --success-rgb: 34, 197, 94;           /* Status green */
+  --bg-rgb: 245, 245, 245;              /* Background */
+  --surface-rgb: 255, 255, 255;         /* Card surfaces */
+  --text-rgb: 0, 0, 0;                  /* Primary text */
+  --text-muted-rgb: 107, 114, 126;      /* Secondary text */
+  --border-rgb: 0, 0, 0;                /* Border color */
+  
+  /* Computed values for easier usage */
+  --primary: rgb(var(--primary-rgb));
+  --warning: rgb(var(--warning-rgb));
+  --success: rgb(var(--success-rgb));
+  --bg: rgb(var(--bg-rgb));
+  --surface: rgb(var(--surface-rgb));
+  --text: rgb(var(--text-rgb));
+  --text-muted: rgb(var(--text-muted-rgb));
+  --border: rgb(var(--border-rgb));
+  
+  /* Layout constants */
+  --border-offset: 20px;
+  --header-offset: 32px;
+  --content-padding-x: 48px;
+  --content-padding-y: 32px;
+  --main-content-gap: 60px;
+  
+  /* Component dimensions */
+  --container-max-width: 1200px;
+  --container-height: 630px;
+  --status-label-width: 80px;
+  --status-bar-width: 120px;
+  --status-bar-height: 8px;
+  --command-indicator-size: 8px;
+  --cross-h-width: 40px;
+  --cross-h-height: 2px;
+  --cross-v-width: 2px;
+  --cross-v-height: 40px;
+  --polaroid-width: 380px;
+  --polaroid-image-size: 360px;
+  --polaroid-caption-height: 140px;
+  
+  /* Animation timings */
+  --animation-fast: 0.3s;
+  --animation-medium: 0.5s;
+  --animation-slow: 0.6s;
+  
+  /* Typography */
+  --font-mono: 'Space Mono', monospace;
+  --font-secondary: 'Krub', sans-serif;
 }
 
+/* Dark theme overrides */
+[data-theme="dark"] .tactical-about-container {
+  --primary-rgb: 0, 255, 209;            /* Tactical cyan */
+  --warning-rgb: 255, 184, 0;            /* Alert amber */
+  --success-rgb: 0, 255, 209;            /* Status cyan */
+  --bg-rgb: 0, 0, 0;                     /* Black background */
+  --surface-rgb: 255, 255, 255;          /* White surfaces */
+  --text-rgb: 255, 255, 255;             /* White text */
+  --text-muted-rgb: 255, 255, 255;       /* Muted white */
+  --border-rgb: 255, 255, 255;           /* White borders */
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 
+              0 0 0 1px rgba(var(--primary-rgb), 0.1);
+}
+
+/* Light theme explicit declaration (for specificity) */
 [data-theme="light"] .tactical-about-container {
-  /* Light mode - enhanced contrast with deeper colors */
-  --primary: 0, 95, 184;               /* Deeper blue for better contrast */
-  --warning: 230, 126, 34;             /* Burnt orange for visibility */
-  --success: 0, 150, 136;              /* Teal for success states */
-  --bg: 250, 250, 250;                 /* Slightly lighter background */
-  --surface: 255, 255, 255;            /* White for cards */
-  --text: 0, 0, 0;                     /* Black text */
-  --text-muted: 75, 75, 75;            /* Gray text for better contrast */
-  --border: 0, 0, 0;                   /* Black borders */
+  --primary-rgb: 0, 136, 204;
+  --warning-rgb: 255, 136, 0;
+  --success-rgb: 34, 197, 94;
+  --bg-rgb: 245, 245, 245;
+  --surface-rgb: 255, 255, 255;
+  --text-rgb: 0, 0, 0;
+  --text-muted-rgb: 107, 114, 126;
+  --border-rgb: 0, 0, 0;
+  border: 1px solid rgba(var(--border-rgb), 0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05), 
+              0 1px 3px rgba(0, 0, 0, 0.03);
 }
 
-/* Overlay backdrop - hidden by default, shown on smaller screens */
-.tactical-overlay-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(10px);
-  z-index: 48;
-  display: none; /* Hidden on large screens */
-}
+/* ============================================================================
+   KEYFRAME ANIMATIONS
+   ============================================================================ */
 
-/* Show overlay backdrop on screens below 1200px */
-@media (max-width: 1199px) {
-  .tactical-overlay-backdrop {
-    display: block;
-  }
-}
-
-/* Floating container */
-.tactical-floating {
-  position: fixed;
-  z-index: 50;
-  transition: opacity 0.3s ease-out;
-}
-
-/* Center container on smaller screens */
-@media (max-width: 1199px) {
-  .tactical-floating {
-    left: 50% !important;
-    top: 50% !important;
-    transform: translate(-50%, -50%);
-  }
-  
-  .tactical-floating.dragging {
-    transform: translate(-50%, -50%) !important;
-  }
-  
-  /* Disable dragging on smaller screens */
-  .tactical-floating .tactical-about-container {
-    cursor: default !important;
-  }
-}
-
-/* Connection line */
-.tactical-connection-line {
-  display: block;
-}
-
-/* Hide connection line on smaller screens */
-@media (max-width: 1199px) {
-  .tactical-connection-line {
-    display: none !important;
-  }
-}
-
-/* Connection line animation */
-@keyframes drawLine {
-  from {
-    stroke-dashoffset: 100;
-  }
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-.tactical-connection-line line {
-  animation: drawLine 0.5s ease-out;
-}
-
-/* Animations */
 @keyframes fadeIn {
-  from {
+  from { 
     opacity: 0;
+    transform: translateX(-10px);
   }
-  to {
+  to { 
     opacity: 1;
+    transform: translateX(0);
   }
 }
 
@@ -118,15 +112,6 @@
   }
 }
 
-/* Animation classes */
-.tactical-floating.animate-in {
-  animation: fadeIn 0.3s ease-out;
-}
-
-.tactical-floating.animate-in .tactical-about-container {
-  animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
 @keyframes scaleIn {
   from {
     opacity: 0;
@@ -138,937 +123,132 @@
   }
 }
 
-/* Container */
+@keyframes fillBar {
+  from { width: 0; }
+  to { width: var(--fill-width); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes drawLine {
+  from { stroke-dashoffset: 100; }
+  to { stroke-dashoffset: 0; }
+}
+
+/* ============================================================================
+   BASE CONTAINER STRUCTURE
+   ============================================================================ */
+
 .tactical-about-container {
-  background: #000;
   position: relative;
   width: 100%;
-  max-width: 1200px;
-  height: 630px;
+  max-width: var(--container-max-width);
+  height: var(--container-height);
   margin: 0 auto;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(0, 255, 209, 0.1);
+  background: var(--bg);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
   cursor: grab;
   user-select: none;
 }
 
-/* Larger screens - slightly wider but still within bounds */
-@media (min-width: 1200px) {
-  .tactical-about-container {
-    max-width: 1100px;
-    aspect-ratio: 2 / 1;
-  }
-}
-
-/* Extra large screens - maintain content alignment */
-@media (min-width: 1600px) {
-  .tactical-about-container {
-    max-width: 1280px;
-    aspect-ratio: 2.1 / 1;
-  }
-}
-
-/* Responsive container sizing - only for mobile */
-@media (max-width: 767px) {
-  .tactical-about-container {
-    width: 100%;
-    max-width: min(calc(100vw - 2rem), 640px); /* Cap at reasonable mobile width */
-    height: auto;
-    max-height: 90vh;
-    overflow-y: auto;
-  }
-}
-
-/* Perfect optimization for 768px iPad portrait */
-@media screen and (min-width: 768px) and (max-width: 960px) {
-  .tactical-about-container {
-    width: calc(100vw - 48px) !important;
-    max-width: 860px !important;
-    min-width: unset !important;
-    height: auto !important;
-    aspect-ratio: 2.1 / 1 !important;
-    margin: 0 auto !important;
-    box-sizing: border-box !important;
-  }
-  
-  .tactical-about {
-    padding: clamp(16px, 2.5vw, 24px) !important;
-    height: 100% !important;
-    overflow: hidden;
-  }
-  
-  .tactical-header {
-    top: 10px;
-    left: 10px;
-    right: 10px;
-    font-size: 7px;
-    padding: 2px 8px;
-  }
-  
-  .tactical-border {
-    top: 10px;
-    left: 10px;
-    right: 10px;
-    bottom: 10px;
-  }
-  
-  .corner-cross {
-    /* Smaller crosses for 768px */
-  }
-  
-  .cross-h {
-    width: 20px;
-  }
-  
-  .cross-v {
-    height: 20px;
-  }
-  
-  .corner-cross.top-left,
-  .corner-cross.top-right {
-    top: 10px;
-  }
-  
-  .corner-cross.bottom-left,
-  .corner-cross.bottom-right {
-    bottom: 10px;
-  }
-  
-  .corner-cross.top-left,
-  .corner-cross.bottom-left {
-    left: 10px;
-  }
-  
-  .corner-cross.top-right,
-  .corner-cross.bottom-right {
-    right: 10px;
-  }
-  
-  .main-content {
-    margin-top: clamp(20px, 3vw, 30px);
-    gap: clamp(20px, 3vw, 40px);
-    height: calc(100% - 40px);
-    padding: 0;
-    justify-content: center;
-    align-items: stretch;
-  }
-  
-  .tactical-ui {
-    flex: 1 1 55%;
-    min-width: 0;
-    max-width: 420px;
-    padding: 0 clamp(10px, 1.5vw, 20px);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  
-  .identity-section {
-    margin-bottom: 8px;
-    padding-left: 0;
-  }
-  
-  .name {
-    font-size: clamp(24px, 3.5vw, 36px);
-    margin-bottom: clamp(3px, 0.5vw, 6px);
-    letter-spacing: 0.02em;
-    line-height: 1.1;
-  }
-  
-  .callsign {
-    font-size: clamp(9px, 1.2vw, 11px);
-    margin-bottom: clamp(2px, 0.3vw, 4px);
-  }
-  
-  .unit {
-    font-size: clamp(8px, 1.1vw, 10px);
-    margin-top: clamp(2px, 0.3vw, 4px);
-  }
-  
-  .mission-parameters {
-    margin-bottom: 8px;
-    padding: 6px 6px 6px 10px;
-  }
-  
-  .section-header {
-    font-size: clamp(10px, 1.3vw, 12px);
-    margin-bottom: clamp(6px, 0.8vw, 8px);
-    padding-left: 2px;
-  }
-  
-  .parameters-grid {
-    font-size: clamp(10px, 1.3vw, 12px);
-    gap: clamp(4px, 0.5vw, 6px);
-    padding-left: 2px;
-  }
-  
-  .systems-status {
-    margin-bottom: 8px;
-    padding-left: 5px;
-  }
-  
-  .status-grid {
-    padding: 6px 0;
-  }
-  
-  .status-row {
-    font-size: clamp(9px, 1.2vw, 11px);
-    padding: 0 clamp(8px, 1.2vw, 12px);
-    margin-bottom: clamp(3px, 0.4vw, 5px);
-    gap: clamp(6px, 0.8vw, 10px);
-  }
-  
-  .status-label {
-    width: 45px; /* Narrower labels */
-    font-size: 8px;
-  }
-  
-  .status-bar {
-    width: 70px; /* Shorter bars */
-    height: 5px;
-  }
-  
-  .status-text {
-    font-size: 9px;
-  }
-  
-  .command-interface {
-    padding: 7px 6px;
-  }
-  
-  .command-indicator {
-    width: 6px;
-    height: 6px;
-  }
-  
-  .command-text {
-    font-size: clamp(10px, 1.3vw, 12px);
-  }
-  
-  .polaroid-container {
-    flex: 1 1 45%;
-    max-width: 320px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .polaroid {
-    width: 100%;
-    max-width: 280px;
-    padding: clamp(8px, 1.2vw, 10px) clamp(8px, 1.2vw, 10px) 0;
-  }
-  
-  .polaroid-image {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    height: auto;
-  }
-  
-  .polaroid-caption {
-    width: 100%;
-    min-height: clamp(70px, 10vw, 85px);
-    padding: clamp(5px, 0.8vw, 8px) 0 clamp(4px, 0.6vw, 6px) clamp(3px, 0.5vw, 5px);
-  }
-  
-  .spec-sheet {
-    padding: 0 6px;
-  }
-  
-  .spec-header {
-    padding-bottom: 3px;
-    margin-bottom: 4px;
-  }
-  
-  .spec-id {
-    font-size: 8px;
-  }
-  
-  .spec-classification {
-    font-size: 6px;
-  }
-  
-  .spec-item {
-    font-size: 7px;
-    margin-bottom: 1px;
-  }
-  
-  .spec-grid {
-    font-size: 7px;
-  }
-}
-
-/* General iPad and tablets */
-@media (min-width: 769px) and (max-width: 1199px) {
-  .tactical-about-container {
-    width: 100%;
-    max-width: min(95%, 896px);
-  }
-  
-  .polaroid {
-    max-width: 280px;
-  }
-}
-
-/* Fix for screens 769px to 860px - proper responsive sizing */
-@media (min-width: 769px) and (max-width: 860px) {
-  .polaroid-container {
-    flex: 0 0 280px !important;
-    max-width: 280px !important;
-  }
-  
-  .polaroid {
-    width: 280px !important;
-    max-width: 280px !important;
-    padding: 8px 8px 0 8px !important;
-  }
-  
-  .polaroid-image {
-    width: 264px !important;
-    height: 264px !important;
-  }
-  
-  .polaroid-caption {
-    width: 264px !important;
-    min-height: 75px !important;
-    padding: 5px 0 4px 2px !important;
-  }
-  
-  .spec-sheet {
-    padding: 0 6px !important;
-  }
-  
-  .spec-header {
-    padding-bottom: 3px !important;
-    margin-bottom: 5px !important;
-  }
-  
-  .spec-id {
-    font-size: 8px !important;
-  }
-  
-  .spec-classification {
-    font-size: 6px !important;
-  }
-  
-  .spec-item {
-    font-size: 7px !important;
-    margin-bottom: 1px !important;
-  }
-  
-  .name {
-    font-size: 32px !important;
-  }
-}
-
-/* Specific optimization for ~850px viewports */
-@media (min-width: 861px) and (max-width: 900px) {
-  .tactical-about-container {
-    max-width: 820px;
-    aspect-ratio: 2.3 / 1;
-  }
-  
-  .tactical-about {
-    padding: 20px 25px;
-  }
-  
-  .tactical-header {
-    top: 20px;
-    left: 25px;
-    right: 25px;
-  }
-  
-  .main-content {
-    margin-top: 25px;
-    gap: 25px;
-  }
-  
-  .name {
-    font-size: 30px;
-    margin-bottom: 4px;
-  }
-  
-  .callsign {
-    font-size: 10px;
-    margin-bottom: 2px;
-  }
-  
-  .unit {
-    font-size: 9px;
-    margin-top: 3px;
-  }
-  
-  .polaroid-image {
-    aspect-ratio: 1 / 1;
-  }
-  
-  .polaroid-caption {
-    min-height: 80px;
-    padding: 8px 0 6px 2px;
-  }
-  
-  .spec-item {
-    font-size: 8px;
-    margin-bottom: 1px;
-  }
-  
-  .status-bar {
-    width: 85px;
-    height: 6px;
-  }
-  
-  .identity-section {
-    margin-bottom: 14px;
-  }
-  
-  .mission-parameters {
-    margin-bottom: 14px;
-    padding: 8px 12px;
-  }
-  
-  .section-header {
-    font-size: 10px;
-    margin-bottom: 6px;
-  }
-  
-  .parameters-grid {
-    font-size: 10px;
-    gap: 4px;
-  }
-  
-  .systems-status {
-    margin-bottom: 16px;
-  }
-  
-  .status-grid {
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
-  
-  .status-row {
-    font-size: 10px;
-    padding: 0 14px;
-    margin-bottom: 3px;
-    gap: 8px;
-  }
-  
-  .status-text {
-    font-size: 10px;
-  }
-  
-  .command-interface {
-    padding: 8px 12px;
-  }
-  
-  .command-text {
-    font-size: 10px;
-  }
-}
-
-/* Larger tablets can have slightly bigger elements */
-@media (min-width: 1000px) and (max-width: 1199px) {
-  .tactical-about-container {
-    max-width: min(95%, 1024px);
-  }
-  
-  .polaroid {
-    max-width: 320px;
-  }
-}
-
-/* Tablet-specific adjustments */
-@media (min-width: 768px) and (max-width: 999px) {
-  .spec-sheet {
-    padding: 0 8px;
-  }
-  
-  .spec-header {
-    padding-bottom: 4px;
-    margin-bottom: 6px;
-  }
-  
-  .spec-id {
-    font-size: 9px;
-  }
-  
-  .spec-classification {
-    font-size: 7px;
-  }
-  
-  .spec-item {
-    font-size: 8px;
-    margin-bottom: 2px;
-  }
-  
-  .name {
-    font-size: 30px;
-    margin-bottom: 4px;
-  }
-  
-  .callsign {
-    font-size: 10px;
-    margin-bottom: 4px;
-  }
-  
-  .unit {
-    font-size: 9px;
-    margin-top: 4px;
-  }
-  
-  .identity-section {
-    margin-bottom: 14px;
-  }
-  
-  .mission-parameters,
-  .systems-status {
-    margin-bottom: 14px;
-  }
-  
-  .mission-parameters {
-    padding: 8px 12px;
-  }
-  
-  .section-header {
-    font-size: 10px;
-    margin-bottom: 8px;
-  }
-  
-  .parameters-grid {
-    font-size: 10px;
-    gap: 6px;
-  }
-  
-  .status-grid {
-    padding-top: 12px;
-    padding-bottom: 12px;
-  }
-  
-  .status-row {
-    font-size: 10px;
-    padding: 0 16px;
-    margin-bottom: 4px;
-  }
-  
-  .status-label {
-    width: 65px;
-    font-size: 10px;
-  }
-  
-  .status-bar {
-    width: 90px;
-    height: 6px;
-  }
-  
-  .status-text {
-    font-size: 10px;
-  }
-  
-  .command-interface {
-    padding: 10px 14px;
-  }
-  
-  .command-text {
-    font-size: 10px;
-  }
-  
-  .tactical-header {
-    font-size: 9px;
-  }
-}
-
-/* Larger tablet text remains relatively bigger */
-@media (min-width: 1000px) and (max-width: 1199px) {
-  .spec-sheet {
-    padding: 0 10px;
-  }
-  
-  .spec-id {
-    font-size: 10px;
-  }
-  
-  .spec-classification {
-    font-size: 8px;
-  }
-  
-  .spec-item {
-    font-size: 9px;
-  }
-  
-  .name {
-    font-size: 36px;
-  }
-  
-  .callsign {
-    font-size: 11px;
-  }
-  
-  .unit {
-    font-size: 10px;
-  }
-  
-  .identity-section {
-    margin-bottom: 18px;
-  }
-  
-  .mission-parameters,
-  .systems-status {
-    margin-bottom: 18px;
-  }
-  
-  .mission-parameters {
-    padding: 12px 16px;
-  }
-  
-  .section-header {
-    font-size: 11px;
-  }
-  
-  .parameters-grid {
-    font-size: 11px;
-  }
-  
-  .status-row {
-    font-size: 11px;
-  }
-  
-  .status-label {
-    width: 75px;
-    font-size: 11px;
-  }
-  
-  .status-bar {
-    width: 110px;
-  }
-  
-  .command-text {
-    font-size: 11px;
-  }
-}
-
-/* Desktop-specific optimizations for large screens */
-@media (min-width: 1200px) {
-  .tactical-about {
-    padding: 32px 48px;
-  }
-  
-  .main-content {
-    gap: 60px;
-    justify-content: space-between;
-  }
-  
-  .tactical-ui {
-    flex: 0 0 45%;
-    max-width: 500px;
-  }
-  
-  .polaroid-container {
-    flex: 0 0 auto;
-    max-width: none;
-  }
-  
-  .name {
-    font-size: 42px;
-  }
-  
-  .callsign {
-    font-size: 12px;
-  }
-  
-  .unit {
-    font-size: 11px;
-  }
-  
-  .identity-section {
-    margin-bottom: 24px;
-  }
-  
-  .mission-parameters,
-  .systems-status {
-    margin-bottom: 24px;
-  }
-  
-  .mission-parameters {
-    padding: 14px 18px;
-  }
-  
-  .section-header {
-    font-size: 12px;
-  }
-  
-  .parameters-grid {
-    font-size: 12px;
-  }
-  
-  .status-row {
-    font-size: 12px;
-  }
-  
-  .status-label {
-    width: 80px;
-    font-size: 12px;
-  }
-  
-  .status-bar {
-    width: 120px;
-  }
-  
-  .command-text {
-    font-size: 12px;
-  }
-  
-  .polaroid {
-    width: 340px;
-    max-width: 340px;
-  }
-  
-  .polaroid-image {
-    width: 320px;
-    height: 320px;
-  }
-  
-  .polaroid-caption {
-    width: 320px;
-    min-height: 120px;
-  }
-}
-
-@media (min-width: 1400px) {
-  .tactical-about {
-    padding: 36px 56px;
-  }
-  
-  .main-content {
-    gap: 80px;
-  }
-  
-  .name {
-    font-size: 44px;
-  }
-  
-  .polaroid {
-    width: 380px;
-    max-width: 380px;
-  }
-  
-  .polaroid-image {
-    width: 360px;
-    height: 360px;
-  }
-  
-  .polaroid-caption {
-    width: 360px;
-    min-height: 140px;
-  }
-}
-
-/* Mobile - stack vertically */
-@media (max-width: 767px) {
-  .tactical-about {
-    padding: 20px;
-  }
-  
-  .main-content {
-    flex-direction: column;
-    gap: 24px;
-    margin-top: 36px;
-  }
-  
-  /* Hide some elements on mobile to save space */
-  .tactical-header {
-    display: none;
-  }
-  
-  /* Smaller polaroid on mobile */
-  .polaroid {
-    width: 240px;
-    margin: 0 auto;
-  }
-  
-  .polaroid-image {
-    width: 220px;
-    height: 220px;
-  }
-  
-  .polaroid-caption {
-    width: 220px;
-    height: 100px;
-    font-size: 7px;
-  }
-  
-  .spec-header {
-    padding-bottom: 4px;
-    margin-bottom: 6px;
-  }
-  
-  .spec-id {
-    font-size: 9px;
-  }
-  
-  .spec-classification {
-    font-size: 8px;
-  }
-  
-  .spec-item {
-    font-size: 8px;
-    margin-bottom: 2px;
-  }
-  
-  /* Adjust text sizes */
-  .name {
-    font-size: 28px;
-  }
-  
-  .callsign,
-  .unit {
-    font-size: 10px;
-  }
-  
-  .section-header {
-    font-size: 11px;
-  }
-  
-  .parameters-grid,
-  .status-row {
-    font-size: 11px;
-  }
-  
-  /* Smaller corner crosses on mobile */
-  .cross-h {
-    width: 25px;
-  }
-  
-  .cross-v {
-    height: 25px;
-  }
-  
-  .tactical-border {
-    top: 15px;
-    left: 15px;
-    right: 15px;
-    bottom: 15px;
-  }
-  
-  .corner-cross.top-left,
-  .corner-cross.top-right {
-    top: 15px;
-  }
-  
-  .corner-cross.bottom-left,
-  .corner-cross.bottom-right {
-    bottom: 15px;
-  }
-  
-  .corner-cross.top-left,
-  .corner-cross.bottom-left {
-    left: 15px;
-  }
-  
-  .corner-cross.top-right,
-  .corner-cross.bottom-right {
-    right: 15px;
-  }
-}
-
-.tactical-floating.dragging .tactical-about-container {
-  cursor: grabbing;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(0, 255, 209, 0.3);
-}
-
-/* Prevent drag on interactive elements */
-.tactical-about-container button,
-.tactical-about-container a,
-.tactical-about-container img {
-  cursor: pointer;
-}
 
 .tactical-about {
   width: 100%;
   height: 100%;
   position: relative;
-  background: #000;
-  padding: 32px 48px;
-  font-family: 'Space Mono', monospace;
+  background: var(--bg);
+  padding: var(--content-padding-y) var(--content-padding-x);
+  font-family: var(--font-mono);
   display: flex;
   flex-direction: column;
 }
 
+/* ============================================================================
+   DECORATIVE BORDERS & CORNERS
+   ============================================================================ */
+
+
 .tactical-border {
   position: absolute;
-  top: 20px;
-  left: 20px;
-  right: 20px;
-  bottom: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  top: var(--border-offset);
+  left: var(--border-offset);
+  right: var(--border-offset);
+  bottom: var(--border-offset);
+  border: 1px solid rgba(var(--border-rgb), 0.15);
+  pointer-events: none;
 }
 
-/* Corner crosses */
+[data-theme="light"] .tactical-border {
+  border-color: rgba(var(--border-rgb), 0.1);
+}
+
+/* Corner cross marks */
 .corner-cross {
   position: absolute;
+  pointer-events: none;
+}
+
+.cross-h,
+.cross-v {
+  position: absolute;
+  background: rgba(var(--border-rgb), 0.5);
 }
 
 .cross-h {
-  position: absolute;
-  width: 40px;
-  height: 2px;
-  background: rgba(255, 255, 255, 0.5);
+  width: var(--cross-h-width);
+  height: var(--cross-h-height);
   top: 0;
 }
 
 .cross-v {
-  position: absolute;
-  width: 2px;
-  height: 40px;
-  background: rgba(255, 255, 255, 0.5);
+  width: var(--cross-v-width);
+  height: var(--cross-v-height);
   left: 0;
   top: 0;
 }
 
+[data-theme="light"] .cross-h,
+[data-theme="light"] .cross-v {
+  background: rgba(var(--border-rgb), 0.15);
+}
+
+/* Corner positioning */
 .corner-cross.top-left {
-  top: 20px;
-  left: 20px;
+  top: var(--border-offset);
+  left: var(--border-offset);
 }
 
 .corner-cross.top-right {
-  top: 20px;
-  right: 20px;
+  top: var(--border-offset);
+  right: var(--border-offset);
 }
 
-.corner-cross.top-right .cross-h {
-  right: 0;
-  left: auto;
-}
-
+.corner-cross.top-right .cross-h,
 .corner-cross.top-right .cross-v {
   right: 0;
   left: auto;
 }
 
 .corner-cross.bottom-left {
-  bottom: 20px;
-  left: 20px;
+  bottom: var(--border-offset);
+  left: var(--border-offset);
 }
 
-.corner-cross.bottom-left .cross-h {
-  bottom: 0;
-  top: auto;
-}
-
+.corner-cross.bottom-left .cross-h,
 .corner-cross.bottom-left .cross-v {
   bottom: 0;
   top: auto;
 }
 
 .corner-cross.bottom-right {
-  bottom: 20px;
-  right: 20px;
+  bottom: var(--border-offset);
+  right: var(--border-offset);
 }
 
-.corner-cross.bottom-right .cross-h {
-  bottom: 0;
-  top: auto;
-  right: 0;
-  left: auto;
-}
-
+.corner-cross.bottom-right .cross-h,
 .corner-cross.bottom-right .cross-v {
   bottom: 0;
   top: auto;
@@ -1076,27 +256,33 @@
   left: auto;
 }
 
-/* Header */
+/* ============================================================================
+   HEADER SECTION
+   ============================================================================ */
+
 .tactical-header {
   position: absolute;
-  top: 32px;
-  left: 48px;
-  right: 48px;
+  top: var(--header-offset);
+  left: var(--content-padding-x);
+  right: var(--content-padding-x);
   display: flex;
   justify-content: space-between;
   font-size: 10px;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(var(--text-muted-rgb), 0.7);
   font-weight: 600;
   letter-spacing: 0.1em;
   z-index: 10;
 }
 
-/* Main content */
+/* ============================================================================
+   MAIN CONTENT LAYOUT
+   ============================================================================ */
+
 .main-content {
   display: flex;
   width: 100%;
-  margin-top: 48px;
-  gap: 60px;
+  padding-top: 30px;
+  gap: var(--main-content-gap);
   z-index: 10;
 }
 
@@ -1107,21 +293,29 @@
   justify-content: center;
 }
 
+/* ============================================================================
+   IDENTITY SECTION
+   ============================================================================ */
+
 .identity-section {
   margin-bottom: 24px;
 }
 
 .callsign {
   font-size: 12px;
-  color: rgba(0, 255, 209, 0.7);
+  color: rgba(var(--primary-rgb), 0.7);
   margin-bottom: 6px;
   letter-spacing: 0.15em;
+}
+
+[data-theme="light"] .callsign {
+  color: var(--primary);
 }
 
 .name {
   font-size: 44px;
   font-weight: 700;
-  color: #fff;
+  color: var(--text);
   margin: 0;
   letter-spacing: 0.02em;
   text-transform: uppercase;
@@ -1130,34 +324,61 @@
 
 .unit {
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.5);
-  font-weight: 600;
+  color: var(--text-muted-rgb);
+  font-weight: 500;
   margin-top: 6px;
   letter-spacing: 0.1em;
 }
 
-/* Mission parameters */
-.mission-parameters {
-  background: rgba(0, 255, 209, 0.05);
-  border: 1px solid rgba(0, 255, 209, 0.2);
+[data-theme="light"] .unit {
+  color: rgba(var(--text-muted-rgb), 0.8);
+}
+
+/* ============================================================================
+   DATA PANELS (Mission Parameters & System Status)
+   ============================================================================ */
+
+/* Shared panel styles */
+.parameters-grid,
+.status-grid {
+  background: rgba(var(--primary-rgb), 0.05);
+  border: 1px solid rgba(var(--primary-rgb), 0.2);
+}
+
+[data-theme="light"] .parameters-grid,
+[data-theme="light"] .status-grid {
+  background: rgba(var(--primary-rgb), 0.04);
+}
+
+.parameters-grid {
+  padding: 14px 18px;
+  margin-bottom: 24px;
+}
+
+.status-grid {
   padding: 14px 18px;
   margin-bottom: 24px;
 }
 
 .section-header {
   font-size: clamp(10px, 1.2vw, 12px);
-  color: rgba(0, 255, 209, 0.8);
+  color: rgba(var(--primary-rgb), 0.8);
   margin-bottom: 8px;
   letter-spacing: 0.1em;
   font-weight: 700;
 }
 
+[data-theme="light"] .section-header {
+  color: var(--primary);
+}
+
+/* Mission parameters grid */
 .parameters-grid {
   display: flex;
   flex-direction: column;
   gap: 6px;
   font-size: clamp(10px, 1.2vw, 12px);
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(var(--text-rgb), 0.7);
   font-weight: 600;
 }
 
@@ -1167,24 +388,30 @@
 }
 
 .param-value {
-  color: rgb(var(--primary) / 0.8);
+  color: rgba(var(--primary-rgb), 0.8);
 }
 
 .param-value.priority {
-  color: rgb(var(--warning) / 0.8);
+  color: rgba(var(--warning-rgb), 0.8);
 }
 
-/* Systems status */
+[data-theme="light"] .param-value {
+  color: var(--primary);
+}
+
+[data-theme="light"] .param-value.priority {
+  color: var(--warning);
+}
+
+/* ============================================================================
+   SYSTEMS STATUS
+   ============================================================================ */
+
+.mission-parameters,
 .systems-status {
   margin-bottom: 32px;
 }
 
-.status-grid {
-  background: rgba(0, 255, 209, 0.05);
-  border: 1px solid rgba(0, 255, 209, 0.2);
-  padding-top: 16px;
-  padding-bottom: 16px;
-}
 
 .status-row {
   display: flex;
@@ -1193,7 +420,7 @@
   padding: 0 20px;
   margin-bottom: 6px;
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(var(--text-rgb), 0.7);
 }
 
 .status-row:last-child {
@@ -1201,119 +428,107 @@
 }
 
 .status-label {
-  width: 80px;
+  width: var(--status-label-width);
   font-weight: 600;
   font-size: 12px;
-  color: rgba(0, 255, 209, 0.8);
+  color: rgba(var(--primary-rgb), 0.8);
 }
 
+[data-theme="light"] .status-label {
+  color: rgba(var(--text-muted-rgb), 0.9);
+}
+
+/* Status bar visualization */
 .status-bar {
   flex: 0 0 auto;
-  width: 120px;
-  height: 8px;
-  background: rgba(0, 255, 209, 0.1);
-  border: 1px solid rgba(0, 255, 209, 0.3);
+  width: var(--status-bar-width);
+  height: var(--status-bar-height);
+  background: rgba(var(--primary-rgb), 0.1);
+  border: 1px solid rgba(var(--primary-rgb), 0.3);
   position: relative;
   overflow: hidden;
 }
 
+[data-theme="light"] .status-bar {
+  background: rgba(var(--primary-rgb), 0.08);
+}
+
 .status-fill {
   height: 100%;
-  background: linear-gradient(90deg, rgba(0, 255, 209, 0.8), rgba(0, 255, 209, 1));
-  box-shadow: 0 0 10px rgba(0, 255, 209, 0.5);
-  width: 0;
-  animation: fillBar 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  animation-delay: var(--delay, 0s);
-}
-
-.status-fill-old {
-  height: 100%;
   background: linear-gradient(90deg, 
-    rgb(var(--primary) / 0.8), 
-    rgb(var(--primary) / 1));
-  box-shadow: 0 0 10px rgb(var(--primary) / 0.5);
+    rgba(var(--primary-rgb), 0.8), 
+    rgba(var(--primary-rgb), 1));
+  box-shadow: 0 0 10px rgba(var(--primary-rgb), 0.5);
   width: 0;
-  animation: fillBar 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: fillBar var(--animation-slow) cubic-bezier(0.4, 0, 0.2, 1) forwards;
   animation-delay: var(--delay, 0s);
 }
 
-@keyframes fillBar {
-  0% {
-    width: 0;
-  }
-  100% {
-    width: var(--fill-width);
-  }
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateX(-10px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
+[data-theme="light"] .status-fill {
+  box-shadow: 0 0 8px rgba(var(--primary-rgb), 0.5);
 }
 
 .status-text {
-  color: rgba(0, 255, 209, 0.8);
+  color: rgba(var(--primary-rgb), 0.8);
   font-weight: 600;
   opacity: 0;
-  animation: fadeIn 0.3s ease-out forwards;
+  animation: fadeIn var(--animation-fast) ease-out forwards;
   animation-delay: calc(var(--delay, 0s) + 0.5s);
   font-size: 12px;
   margin-left: auto;
 }
 
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateX(-10px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
+[data-theme="light"] .status-text {
+  color: var(--primary);
 }
 
-/* Command interface */
+/* ============================================================================
+   COMMAND INTERFACE
+   ============================================================================ */
+
 .command-interface {
   display: flex;
   align-items: center;
   gap: 12px;
   padding: 14px 18px;
-  background: rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(0, 255, 209, 0.3);
-  border-left: 3px solid rgba(0, 255, 209, 0.8);
+  background: rgba(var(--bg-rgb), 0.8);
+  border: 1px solid rgba(var(--primary-rgb), 0.3);
+  border-left: 3px solid rgba(var(--primary-rgb), 0.8);
+  backdrop-filter: blur(10px);
+}
+
+[data-theme="light"] .command-interface {
+  background: rgba(var(--surface-rgb), 0.95);
+  border-left-color: var(--primary);
 }
 
 .command-indicator {
-  width: 8px;
-  height: 8px;
-  background: rgba(0, 255, 209, 0.8);
-  box-shadow: 0 0 10px rgba(0, 255, 209, 0.6);
+  width: var(--command-indicator-size);
+  height: var(--command-indicator-size);
+  background: rgba(var(--primary-rgb), 0.8);
+  box-shadow: 0 0 10px rgba(var(--primary-rgb), 0.6);
   animation: pulse 2s infinite;
 }
 
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
+[data-theme="light"] .command-indicator {
+  background: var(--primary);
 }
 
 .command-text {
   font-size: 12px;
-  color: rgba(0, 255, 209, 0.9);
+  color: rgba(var(--primary-rgb), 0.9);
   font-weight: 600;
   letter-spacing: 0.05em;
 }
 
-/* Polaroid */
+[data-theme="light"] .command-text {
+  color: var(--primary);
+}
+
+/* ============================================================================
+   POLAROID SECTION
+   ============================================================================ */
+
 .polaroid-container {
   display: flex;
   align-items: center;
@@ -1325,32 +540,44 @@
   background: white;
   padding: 10px 10px 0 10px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-  width: 380px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: var(--polaroid-width);
+  transition: transform var(--animation-fast) ease, 
+              box-shadow var(--animation-fast) ease;
   cursor: pointer;
+}
+
+[data-theme="light"] .polaroid {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 
+              0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .polaroid:hover {
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
 }
 
+[data-theme="light"] .polaroid:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15), 
+              0 3px 6px rgba(0, 0, 0, 0.08);
+}
+
 .polaroid-image {
-  width: 360px;
-  height: 360px;
+  width: var(--polaroid-image-size);
+  height: var(--polaroid-image-size);
   display: block;
   border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .polaroid-caption {
-  width: 360px;
-  height: 140px;
+  width: var(--polaroid-image-size);
+  height: var(--polaroid-caption-height);
   padding: 14px 0 10px 2px;
   background: white;
-  font-family: 'Space Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 8px;
   color: #333;
 }
 
+/* Specification sheet within polaroid */
 .spec-sheet {
   padding: 0 14px;
 }
@@ -1396,159 +623,456 @@
   padding-right: 0;
 }
 
+.spec-label,
+.spec-value {
+  font-size: 10px;
+}
+
 .spec-label {
   color: #999;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  font-size: 10px;
 }
 
 .spec-value {
   font-weight: 600;
   color: #333;
-  font-size: 10px;
 }
 
-/* Stat cards - for Bio section */
+/* ============================================================================
+   FLOATING STATE & OVERLAYS
+   ============================================================================ */
+
+.tactical-floating {
+  position: fixed;
+  z-index: 50;
+  transition: opacity var(--animation-fast) ease-out;
+}
+
+.tactical-floating.animate-in {
+  animation: fadeIn var(--animation-fast) ease-out;
+}
+
+.tactical-floating.animate-in .tactical-about-container {
+  animation: scaleIn var(--animation-fast) cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.tactical-floating.dragging .tactical-about-container {
+  cursor: grabbing;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), 
+              0 0 0 1px rgba(var(--primary-rgb), 0.3);
+}
+
+.tactical-overlay-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(10px);
+  z-index: 48;
+  display: none;
+}
+
+.tactical-connection-line {
+  display: block;
+}
+
+.tactical-connection-line line {
+  animation: drawLine var(--animation-medium) ease-out;
+}
+
+/* ============================================================================
+   STAT CARDS (Additional UI Elements)
+   ============================================================================ */
+
 .tactical-stat-card {
-  background: rgba(0, 255, 209, 0.05);
-  border: 1px solid rgba(0, 255, 209, 0.2);
+  background: rgba(var(--primary-rgb), 0.05);
+  border: 1px solid rgba(var(--primary-rgb), 0.2);
   padding: 20px;
   text-align: center;
-  font-family: 'Space Mono', monospace;
+  font-family: var(--font-mono);
+}
+
+[data-theme="light"] .tactical-stat-card {
+  background: rgba(var(--primary-rgb), 0.04);
 }
 
 .stat-label {
   font-size: 11px;
-  color: rgba(0, 255, 209, 0.8);
+  color: rgba(var(--primary-rgb), 0.8);
   letter-spacing: 0.1em;
   margin-bottom: 8px;
 }
 
+[data-theme="light"] .stat-label {
+  color: var(--primary);
+}
+
 .stat-value {
   font-size: 32px;
-  color: #00FFD1;
+  color: var(--primary);
   font-weight: 700;
 }
 
-/* Light theme overrides */
-[data-theme="light"] .tactical-about-container {
-  background: #f5f5f5;
-  border: 1px solid rgba(0, 0, 0, 0.08);
+/* ============================================================================
+   RESPONSIVE DESIGN - Mobile First Approach
+   ============================================================================ */
+
+/* Mobile devices (max-width: 767px) */
+@media (max-width: 767px) {
+  .tactical-about-container {
+    --border-offset: 15px;
+    --content-padding-x: 20px;
+    --content-padding-y: 20px;
+    --cross-h-width: 25px;
+    --cross-v-height: 25px;
+    --polaroid-width: 240px;
+    --polaroid-image-size: 220px;
+    --polaroid-caption-height: 100px;
+    
+    width: 100%;
+    max-width: min(calc(100vw - 2rem), 640px);
+    height: auto;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  
+  .tactical-header {
+    display: none;
+  }
+  
+  .main-content {
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 36px;
+  }
+  
+  
+  /* Typography scaling */
+  .name { font-size: 28px; }
+  .callsign, .unit { font-size: 10px; }
+  .section-header { font-size: 11px; }
+  .parameters-grid, .status-row { font-size: 11px; }
+  
+  /* Polaroid scaling */
+  .polaroid {
+    margin: 0 auto;
+  }
+  
+  .polaroid-caption {
+    font-size: 7px;
+  }
+  
+  .spec-header {
+    padding-bottom: 4px;
+    margin-bottom: 6px;
+  }
+  
+  .spec-id { font-size: 9px; }
+  .spec-classification { font-size: 8px; }
+  .spec-item { 
+    font-size: 8px;
+    margin-bottom: 2px;
+  }
 }
 
-[data-theme="light"] .tactical-stat-card {
-  background: rgba(0, 95, 184, 0.04);
-  border: 1px solid rgba(0, 95, 184, 0.2);
+/* Tablet devices (768px - 1199px) */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .tactical-about-container {
+    --border-offset: 10px;
+    --header-offset: 10px;
+    --content-padding-x: clamp(16px, 2.5vw, 24px);
+    --content-padding-y: clamp(16px, 2.5vw, 24px);
+    --cross-h-width: 20px;
+    --cross-v-height: 20px;
+    --status-label-width: 45px;
+    --status-bar-width: 70px;
+    --status-bar-height: 5px;
+    --command-indicator-size: 6px;
+    --container-max-width: 860px;
+    
+    width: calc(100vw - 48px);
+    height: auto;
+    aspect-ratio: 2.1 / 1;
+    max-height: none;
+    overflow: hidden;
+  }
+  
+  .tactical-header {
+    font-size: 7px;
+    padding: 2px 8px;
+  }
+  
+  
+  .main-content {
+    flex-direction: row;
+    margin-top: clamp(20px, 3vw, 30px);
+    gap: clamp(20px, 3vw, 40px);
+    height: calc(100% - 40px);
+    padding: 0;
+    justify-content: center;
+    align-items: stretch;
+  }
+  
+  .tactical-ui {
+    flex: 1 1 55%;
+    min-width: 0;
+    max-width: 420px;
+    padding: 0 clamp(10px, 1.5vw, 20px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  /* Content spacing adjustments */
+  .identity-section { 
+    margin-bottom: 8px;
+    padding-left: 0;
+  }
+  
+  .mission-parameters {
+    margin-bottom: 8px;
+    padding: 6px 6px 6px 10px;
+  }
+  
+  .systems-status {
+    margin-bottom: 8px;
+    padding-left: 5px;
+  }
+  
+  .status-grid { padding: 6px 0; }
+  
+  .status-row {
+    font-size: clamp(9px, 1.2vw, 11px);
+    padding: 0 clamp(8px, 1.2vw, 12px);
+    margin-bottom: clamp(3px, 0.4vw, 5px);
+    gap: clamp(6px, 0.8vw, 10px);
+  }
+  
+  .status-label { 
+    font-size: 8px;
+  }
+  
+  .status-text { font-size: 9px; }
+  
+  /* Command interface */
+  .command-interface { padding: 7px 6px; }
+  .command-text { font-size: clamp(10px, 1.3vw, 12px); }
+  
+  /* Typography scaling */
+  .name {
+    font-size: clamp(24px, 3.5vw, 36px);
+    margin-bottom: clamp(3px, 0.5vw, 6px);
+    letter-spacing: 0.02em;
+    line-height: 1.1;
+  }
+  
+  .callsign {
+    font-size: clamp(9px, 1.2vw, 11px);
+    margin-bottom: clamp(2px, 0.3vw, 4px);
+  }
+  
+  .unit {
+    font-size: clamp(8px, 1.1vw, 10px);
+    margin-top: clamp(2px, 0.3vw, 4px);
+  }
+  
+  .section-header {
+    font-size: clamp(10px, 1.3vw, 12px);
+    margin-bottom: clamp(6px, 0.8vw, 8px);
+    padding-left: 2px;
+  }
+  
+  .parameters-grid {
+    font-size: clamp(10px, 1.3vw, 12px);
+    gap: clamp(4px, 0.5vw, 6px);
+    padding-left: 2px;
+  }
+  
+  /* Polaroid container */
+  .polaroid-container {
+    flex: 1 1 45%;
+    max-width: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .polaroid {
+    width: 100%;
+    max-width: 280px;
+    padding: clamp(8px, 1.2vw, 10px) clamp(8px, 1.2vw, 10px) 0;
+  }
+  
+  .polaroid-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    height: auto;
+  }
+  
+  .polaroid-caption {
+    width: 100%;
+    min-height: clamp(70px, 10vw, 85px);
+    padding: clamp(5px, 0.8vw, 8px) 0 clamp(4px, 0.6vw, 6px) clamp(3px, 0.5vw, 5px);
+  }
+  
+  /* Spec sheet scaling */
+  .spec-sheet { padding: 0 6px; }
+  .spec-header {
+    padding-bottom: 3px;
+    margin-bottom: 4px;
+  }
+  .spec-id { font-size: 8px; }
+  .spec-classification { font-size: 6px; }
+  .spec-item {
+    font-size: 7px;
+    margin-bottom: 1px;
+  }
+  .spec-grid { font-size: 7px; }
 }
 
-[data-theme="light"] .stat-label {
-  color: rgb(0, 95, 184);
+/* Desktop (1200px - 1399px) */
+@media (min-width: 1200px) {
+  .tactical-about-container {
+    --container-max-width: 1100px;
+    --polaroid-width: 380px;
+    --polaroid-image-size: 360px;
+    --polaroid-caption-height: 140px;
+    aspect-ratio: 2 / 1;
+  }
+  
+  .main-content {
+    gap: var(--main-content-gap);
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  
+  .tactical-ui {
+    flex: 0 0 50%;
+    max-width: 550px;
+    padding-right: 20px;
+    align-self: flex-start;
+  }
+  
+  .polaroid-container {
+    flex: 0 0 auto;
+    max-width: none;
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  .identity-section {
+    margin-bottom: 28px;
+  }
+  
+  .mission-parameters {
+    padding: 16px 20px;
+  }
+  
 }
 
-[data-theme="light"] .stat-value {
-  color: rgb(0, 95, 184);
+/* Large Desktop (1400px - 1599px) */
+@media (min-width: 1400px) {
+  .tactical-about-container {
+    --content-padding-x: 60px;
+    --content-padding-y: 40px;
+  }
+  
+  .main-content { gap: var(--main-content-gap); }
+  
+  .tactical-ui {
+    flex: 0 0 55%;
+    max-width: 535px;
+    padding-right: 40px;
+  }
+  
+  
+  .name { font-size: 46px; }
+  
+  .identity-section {
+    margin-bottom: 32px;
+  }
+  
+  .mission-parameters { padding: 18px 22px; }
+  
+  .polaroid-caption {
+    padding: 16px 0 12px 2px;
+  }
+  
+  .spec-id { font-size: 12px; }
+  .spec-classification { font-size: 10px; }
+  .spec-item {
+    font-size: 10px;
+    margin-bottom: 5px;
+  }
 }
 
-[data-theme="light"] .status-bars {
-  color: #0088cc;
+/* Extra Large Desktop (1600px+) */
+@media (min-width: 1600px) {
+  .tactical-about-container {
+    --content-padding-x: 72px;
+    --content-padding-y: 48px;
+    --container-max-width: 1340px;
+    aspect-ratio: 2.1 / 1;
+  }
+  
+  .main-content { gap: var(--main-content-gap); }
+  
+  .tactical-ui {
+    flex: 0 0 58%;
+    max-width: 550px;
+    padding-right: 60px;
+  }
+  
+  
+  .name { font-size: 44px; }
+  
+  .polaroid-caption {
+    padding: 18px 0 14px 2px;
+  }
 }
 
-[data-theme="light"] .status-text {
-  color: #0088cc;
+/* ============================================================================
+   RESPONSIVE UTILITIES & OVERRIDES
+   ============================================================================ */
+
+/* Interactive element cursor overrides */
+.tactical-about-container button,
+.tactical-about-container a,
+.tactical-about-container img {
+  cursor: pointer;
 }
 
-[data-theme="light"] .tactical-about {
-  background: #f5f5f5;
+/* Overlay behavior for smaller screens */
+@media (max-width: 1199px) {
+  .tactical-overlay-backdrop {
+    display: block;
+  }
+  
+  .tactical-floating {
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%);
+  }
+  
+  .tactical-floating.dragging {
+    transform: translate(-50%, -50%) !important;
+  }
+  
+  .tactical-floating .tactical-about-container {
+    cursor: default !important;
+  }
+  
+  .tactical-connection-line {
+    display: none !important;
+  }
 }
 
-[data-theme="light"] .tactical-border {
-  border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-[data-theme="light"] .cross-h,
-[data-theme="light"] .cross-v {
-  background: rgba(0, 0, 0, 0.15);
-}
-
-[data-theme="light"] .tactical-header {
-  color: rgba(0, 0, 0, 0.4) !important;
-}
-
-[data-theme="light"] .name {
-  color: #000 !important;
-}
-
-[data-theme="light"] .unit {
-  color: rgba(0, 0, 0, 0.6) !important;
-}
-
-[data-theme="light"] .callsign,
-[data-theme="light"] .section-header {
-  color: rgb(0, 95, 184) !important;
-}
-
-[data-theme="light"] .mission-parameters {
-  background: rgba(0, 95, 184, 0.04) !important;
-  border: 1px solid rgba(0, 95, 184, 0.2) !important;
-}
-
-[data-theme="light"] .parameters-grid {
-  color: rgba(0, 0, 0, 0.7) !important;
-}
-
-[data-theme="light"] .parameters-grid span {
-  color: rgba(0, 0, 0, 0.7) !important;
-}
-
-[data-theme="light"] .status-grid {
-  background: rgba(0, 95, 184, 0.04) !important;
-  border: 1px solid rgba(0, 95, 184, 0.2) !important;
-}
-
-[data-theme="light"] .status-row {
-  color: rgba(0, 0, 0, 0.7) !important;
-}
-
-[data-theme="light"] .status-label {
-  color: rgba(0, 0, 0, 0.6) !important;
-}
-
-[data-theme="light"] .status-text {
-  color: rgb(0, 95, 184) !important;
-}
-
-[data-theme="light"] .status-bar {
-  background: rgba(0, 95, 184, 0.08) !important;
-  border: 1px solid rgba(0, 95, 184, 0.3) !important;
-}
-
-[data-theme="light"] .status-fill {
-  background: linear-gradient(90deg, 
-    rgba(0, 95, 184, 0.8), 
-    rgba(0, 95, 184, 1)) !important;
-  box-shadow: 0 0 8px rgba(0, 95, 184, 0.5) !important;
-}
-
-[data-theme="light"] .command-interface {
-  background: rgba(255, 255, 255, 0.95) !important;
-  border: 1px solid rgba(0, 95, 184, 0.3) !important;
-  border-left: 3px solid rgb(0, 95, 184) !important;
-}
-
-[data-theme="light"] .command-indicator {
-  background: rgb(0, 95, 184) !important;
-  box-shadow: 0 0 10px rgba(0, 95, 184, 0.6) !important;
-}
-
-[data-theme="light"] .command-text {
-  color: rgb(0, 95, 184) !important;
-}
-
-[data-theme="light"] .param-value {
-  color: rgb(0, 95, 184) !important;
-}
-
-[data-theme="light"] .param-value.priority {
-  color: rgb(230, 126, 34) !important;
+/* Hide unit specialization text on smaller screens */
+@media (max-width: 860px) {
+  .unit-specialization {
+    display: none !important;
+  }
 }
