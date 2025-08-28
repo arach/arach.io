@@ -55,58 +55,61 @@ const layoutProps = {
                 <div class="unit">UNIT: ENGINEERING_CORPS <span class="unit-specialization">| SPECIALIZATION: FULL_STACK_SPEC_OPS</span></div>
               </div>
               
-              <!-- Mission parameters -->
-              <div class="mission-parameters">
-                <div class="section-header">◆ MISSION PARAMETERS</div>
-                <div class="parameters-grid">
-                  <div class="param-row">
-                    <span>OBJECTIVE:</span>
-                    <span class="param-value">BUILD_AND_SCALE</span>
+              <!-- Mission + Systems container for mobile alignment -->
+              <div class="mission-systems-container">
+                <!-- Mission parameters -->
+                <div class="mission-parameters">
+                  <div class="section-header">◆ MISSION PARAMETERS</div>
+                  <div class="parameters-grid">
+                    <div class="param-row">
+                      <span>OBJECTIVE:</span>
+                      <span class="param-value">BUILD_AND_SCALE</span>
+                    </div>
+                    <div class="param-row">
+                      <span>PRIORITY:</span>
+                      <span class="param-value priority">CRITICAL</span>
+                    </div>
+                    <div class="param-row">
+                      <span>STATUS:</span>
+                      <span class="param-value">ACTIVE</span>
+                    </div>
                   </div>
-                  <div class="param-row">
-                    <span>PRIORITY:</span>
-                    <span class="param-value priority">CRITICAL</span>
-                  </div>
-                  <div class="param-row">
-                    <span>STATUS:</span>
-                    <span class="param-value">ACTIVE</span>
+                </div>
+                
+                <!-- Systems status -->
+                <div class="systems-status">
+                  <div class="section-header">◆ SYSTEMS STATUS</div>
+                  <div class="status-grid">
+                    <div class="status-row">
+                      <span class="status-label">AI/ML:</span>
+                      <div class="status-bar">
+                        <div class="status-fill" style="--fill-width: 88%; --delay: 0.1s;"></div>
+                      </div>
+                      <span class="status-text" style="--delay: 0.1s;">RLHF</span>
+                    </div>
+                    <div class="status-row">
+                      <span class="status-label">STACK:</span>
+                      <div class="status-bar">
+                        <div class="status-fill" style="--fill-width: 100%; --delay: 0.3s;"></div>
+                      </div>
+                      <span class="status-text" style="--delay: 0.3s;">FULL_OPERATIONAL</span>
+                    </div>
+                    <div class="status-row">
+                      <span class="status-label">PRODUCT:</span>
+                      <div class="status-bar">
+                        <div class="status-fill" style="--fill-width: 94%; --delay: 0.5s;"></div>
+                      </div>
+                      <span class="status-text" style="--delay: 0.5s;">SHIPPING</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            
-            <!-- Systems status - moved outside tactical-ui for mobile layout flexibility -->
-            <div class="systems-status">
-              <div class="section-header">◆ SYSTEMS STATUS</div>
-              <div class="status-grid">
-                <div class="status-row">
-                  <span class="status-label">AI/ML:</span>
-                  <div class="status-bar">
-                    <div class="status-fill" style="--fill-width: 88%; --delay: 0.1s;"></div>
-                  </div>
-                  <span class="status-text" style="--delay: 0.1s;">RLHF</span>
-                </div>
-                <div class="status-row">
-                  <span class="status-label">STACK:</span>
-                  <div class="status-bar">
-                    <div class="status-fill" style="--fill-width: 100%; --delay: 0.3s;"></div>
-                  </div>
-                  <span class="status-text" style="--delay: 0.3s;">FULL_OPERATIONAL</span>
-                </div>
-                <div class="status-row">
-                  <span class="status-label">PRODUCT:</span>
-                  <div class="status-bar">
-                    <div class="status-fill" style="--fill-width: 94%; --delay: 0.5s;"></div>
-                  </div>
-                  <span class="status-text" style="--delay: 0.5s;">SHIPPING</span>
-                </div>
+              
+              <!-- Command interface -->
+              <div class="command-interface">
+                <div class="command-indicator"></div>
+                <span class="command-text">[CONNECT] ► ARACH.IO</span>
               </div>
-            </div>
-            
-            <!-- Command interface - moved below systems status -->
-            <div class="command-interface">
-              <div class="command-indicator"></div>
-              <span class="command-text">[CONNECT] ► ARACH.IO</span>
             </div>
             
             <!-- Right side - Polaroid -->

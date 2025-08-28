@@ -710,16 +710,16 @@
 @media (max-width: 767px) {
   .tactical-about-container {
     --border-offset: 15px;
-    --content-padding-x: 20px;
-    --content-padding-y: 20px;
+    --content-padding-x: 28px;
+    --content-padding-y: 28px;
     --cross-h-width: 25px;
     --cross-v-height: 25px;
     --polaroid-width: 260px;
     --polaroid-image-size: 240px;
-    --polaroid-caption-height: 100px;
+    --polaroid-caption-height: 80px;
     
     width: 100%;
-    max-width: min(calc(100vw - 2rem), 640px);
+    max-width: min(calc(100vw - 2rem), 680px);
     height: auto;
     min-height: 420px;
     max-height: 90vh;
@@ -727,54 +727,69 @@
   }
   
   .tactical-header {
-    display: none;
+    display: flex;
+    font-size: 8px;
+    top: 22px;
+    left: 28px;
+    right: 28px;
   }
   
   .main-content {
     flex-direction: row;
     flex-wrap: wrap;
     gap: 20px;
-    margin-top: 24px;
-    padding-top: 12px;
+    margin-top: 20px;
+    padding-top: 16px;
     align-items: flex-start;
   }
   
   .tactical-ui {
     flex: 1 1 auto;
     min-width: 0;
-    max-width: calc(100% - 280px); /* Leave space for polaroid + gap */
+    max-width: calc(100% - var(--polaroid-width) - 20px); /* Leave space for polaroid + gap */
     order: 1;
-    display: flex;
-    flex-direction: column;
   }
   
   .polaroid-container {
-    flex: 0 0 auto;
+    flex: 0 0 var(--polaroid-width);
     order: 2;
-    margin-left: auto;
     margin-top: -8px; /* Slight upward adjustment for better positioning */
   }
   
-  .systems-status {
-    order: 3;
-    width: var(--polaroid-width);
-    margin-left: auto;
-    margin-top: 12px;
-    flex-basis: 100%;
-    margin-bottom: 8px;
-  }
+  /* Keep systems-status and command-interface in their normal position */
   
-  .command-interface {
-    order: 4;
-    width: var(--polaroid-width);
-    margin-left: auto;
-    margin-top: 0;
-    flex-basis: 100%;
+  /* Create a container for mission + systems to align with polaroid height */
+  .mission-systems-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 235px;
+    margin-top: 5px;
   }
   
   /* Content spacing adjustments for side-by-side layout */
-  .identity-section { margin-bottom: 18px; }
-  .mission-parameters { margin-bottom: 16px; }
+  .identity-section { 
+    margin-bottom: 12px;
+  }
+  .mission-parameters { 
+    margin-bottom: 0;
+    padding: 10px 16px;
+  }
+  
+  .systems-status {
+    margin-bottom: 0;
+    margin-top: auto; /* Push to bottom to align with polaroid bottom */
+    padding: 10px 16px;
+  }
+  
+  .command-interface {
+    order: 5;
+    width: 100%;
+    margin: 16px 0 0 0;
+    padding: 12px 20px;
+    flex-basis: 100%;
+    justify-content: center;
+  }
   
   /* Typography scaling */
   .name { font-size: 28px; }
@@ -782,25 +797,189 @@
   .section-header { font-size: 11px; }
   .parameters-grid, .status-row { font-size: 11px; }
   
+  /* Tighter status bars for mobile */
+  .status-bar {
+    width: 80px;
+    height: 6px;
+  }
+  
+  .status-row {
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  
+  .status-label {
+    width: 50px;
+    font-size: 10px;
+  }
+  
+  .status-text {
+    font-size: 10px;
+  }
+  
   /* Polaroid scaling */
   .polaroid {
     margin: 0 auto;
   }
   
+  /* Mobile-specific polaroid styling */
   .polaroid-caption {
-    font-size: 7px;
+    font-size: 8px;
+    padding: 8px 0 6px 2px;
+    height: var(--polaroid-caption-height);
+  }
+  
+  .spec-sheet {
+    padding: 0 10px;
+    height: 60px;
+    display: flex;
+    flex-direction: column;
   }
   
   .spec-header {
-    padding-bottom: 4px;
-    margin-bottom: 6px;
+    padding-bottom: 2px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid #e0e0e0;
   }
   
-  .spec-id { font-size: 9px; }
-  .spec-classification { font-size: 8px; }
+  .spec-id { 
+    font-size: 9px;
+    font-weight: 700;
+  }
+  
+  .spec-classification { 
+    font-size: 7px;
+    color: #666;
+  }
+  
+  .spec-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px 8px;
+    flex: 1;
+  }
+  
   .spec-item { 
+    display: flex;
+    justify-content: space-between;
+    font-size: 7px;
+    line-height: 1.1;
+  }
+  
+  .spec-label {
+    color: #999;
+    font-size: 7px;
+    text-transform: uppercase;
+  }
+  
+  .spec-value {
+    font-weight: 600;
+    color: #333;
+    font-size: 7px;
+  }
+}
+
+/* Reset styles for larger screens */
+@media (min-width: 768px) {
+  /* Hide the mission-systems-container on larger screens */
+  .mission-systems-container {
+    display: none;
+  }
+  
+  /* Reset tactical-ui to normal layout */
+  .tactical-ui {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: center;
+    max-width: none;
+  }
+  
+  .main-content {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: var(--main-content-gap);
+    margin-top: 30px;
+    padding-top: 0;
+    align-items: center;
+  }
+  
+  .polaroid-container {
+    flex: 0 0 auto;
+    order: unset;
+    margin-top: 0;
+    margin-left: 0;
+  }
+
+  .polaroid-caption {
+    width: var(--polaroid-image-size);
+    height: var(--polaroid-caption-height);
+    padding: 14px 0 10px 2px;
+    background: white;
+    font-family: var(--font-mono);
     font-size: 8px;
-    margin-bottom: 2px;
+    color: #333;
+  }
+  
+  .spec-sheet {
+    padding: 0 14px;
+  }
+  
+  .spec-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+  }
+  
+  .spec-id {
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+  }
+  
+  .spec-classification {
+    font-size: 9px;
+    color: #666;
+    letter-spacing: 0.1em;
+  }
+  
+  .spec-grid {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 10px;
+    width: 100%;
+  }
+  
+  .spec-item {
+    display: flex;
+    justify-content: space-between;
+    flex: 0 0 48%;
+    padding-right: 14px;
+    margin-bottom: 4px;
+  }
+  
+  .spec-item:nth-child(even) {
+    flex: 0 0 52%;
+    padding-right: 0;
+  }
+  
+  .spec-label,
+  .spec-value {
+    font-size: 10px;
+  }
+  
+  .spec-label {
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .spec-value {
+    font-weight: 600;
+    color: #333;
   }
 }
 
