@@ -678,11 +678,14 @@
   text-align: center;
   font-family: 'Space Mono', monospace;
   border: 1px solid #08c3;
+  border-radius: 6px;
+  box-shadow: 0 0 10px rgba(244, 244, 244, 0.1);
 }
 
 [data-theme="light"] .tactical-stat-card {
   background: #0088cc0d;
   border: 1px solid #08c3;
+  box-shadow: 0 0 10px rgba(63, 63, 63, 0.1);
 }
 
 .stat-label {
@@ -756,29 +759,20 @@
     margin-top: -8px; /* Slight upward adjustment for better positioning */
   }
   
-  /* Keep systems-status and command-interface in their normal position */
-  
-  /* Create a container for mission + systems to align with polaroid height */
-  .mission-systems-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 235px;
-    margin-top: 5px;
-  }
-  
-  /* Content spacing adjustments for side-by-side layout */
+  /* Content spacing adjustments for mobile alignment */
   .identity-section { 
     margin-bottom: 12px;
   }
-  .mission-parameters { 
+  
+  /* Create flex container for mission + systems alignment */
+  .mission-parameters {
     margin-bottom: 0;
     padding: 10px 16px;
   }
   
   .systems-status {
     margin-bottom: 0;
-    margin-top: auto; /* Push to bottom to align with polaroid bottom */
+    margin-top: 24px;
     padding: 10px 16px;
   }
   
@@ -816,6 +810,8 @@
   .status-text {
     font-size: 10px;
   }
+  
+
   
   /* Polaroid scaling */
   .polaroid {
@@ -879,13 +875,72 @@
   }
 }
 
-/* Reset styles for larger screens */
-@media (min-width: 768px) {
-  /* Hide the mission-systems-container on larger screens */
-  .mission-systems-container {
+/* Stack all main content vertically on very small screens */
+@media (max-width: 555px) {
+  .tactical-header {
+    font-size: 6.5px;
+  }
+
+  .identity-section {
+    text-align: center;
+  }
+
+  .mission-parameters {
+    margin-bottom: 0;
+  }
+  .main-content {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+  /* Force polaroid-container to appear first in the column flex order */
+  .polaroid-container {
+    max-width: 100%;
+    width: 100%;
+    order: -10 !important;
+    margin-top: 0;
+    margin-left: 0;
+  }
+  .tactical-ui {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 100%;
+    justify-content: flex-start;
+    align-items: stretch;
+    max-width: 100%;
+    width: 100%;
+    order: 0;
+  }
+}
+
+@media (max-width: 550px) {
+  .name {
+    font-size: 19px;
+  }
+  .status-bar {
     display: none;
   }
-  
+  .command-interface {
+    display: none;
+  }
+}
+
+/* Hide status-fill animation on very small screens */
+  @media (max-width: 650px) {
+    .status-bar {
+      display: none;
+    }
+
+    .name {
+      font-size: 23px;
+    }
+    .command-interface {
+      display: none;
+    }
+  }
+
+/* Reset styles for larger screens */
+@media (min-width: 768px) {
   /* Reset tactical-ui to normal layout */
   .tactical-ui {
     display: flex;
@@ -893,6 +948,18 @@
     flex: 1;
     justify-content: center;
     max-width: none;
+  }
+  
+  /* Reset spacing for desktop */
+  .mission-parameters {
+    margin-bottom: 32px;
+    padding: 14px 20px;
+  }
+  
+  .systems-status {
+    margin-top: 0;
+    margin-bottom: 32px;
+    padding: 14px 20px;
   }
   
   .main-content {
@@ -1187,7 +1254,7 @@
 /* Desktop (1050px - 1399px) */
 @media (min-width: 1050px) {
   .tactical-about-container {
-    --container-max-width: 1100px;
+    --container-max-width: 1084px;
     --polaroid-width: 380px;
     --polaroid-image-size: 360px;
     --polaroid-caption-height: 140px;
@@ -1263,7 +1330,6 @@
 /* Extra Large Desktop (1600px+) */
 @media (min-width: 1600px) {
   .tactical-about-container {
-    --container-max-width: 1340px;
     aspect-ratio: 2.1 / 1;
   }
   
