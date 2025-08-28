@@ -1,0 +1,157 @@
+---
+export interface Props {
+  isFullPage?: boolean;
+}
+
+const { isFullPage = false } = Astro.props;
+---
+
+<div class={`tactical-about-container shadow-2xl rounded-lg overflow-hidden ${isFullPage ? '' : 'modal-container'}`} 
+     style={isFullPage ? '' : 'position: relative;'}>
+  <div class="tactical-about">
+    <!-- Thin border -->
+    <div class="tactical-border"></div>
+    
+    <!-- Corner crosses -->
+    <div class="corner-cross top-left">
+      <div class="cross-h"></div>
+      <div class="cross-v"></div>
+    </div>
+    <div class="corner-cross top-right">
+      <div class="cross-h"></div>
+      <div class="cross-v"></div>
+    </div>
+    <div class="corner-cross bottom-left">
+      <div class="cross-h"></div>
+      <div class="cross-v"></div>
+    </div>
+    <div class="corner-cross bottom-right">
+      <div class="cross-h"></div>
+      <div class="cross-v"></div>
+    </div>
+    
+    <!-- Header bar -->
+    <div class="tactical-header">
+      <span>SECTOR: ALPHA-7 | GRID: 37.7749°N, 122.4194°W | AUTH: VERIFIED</span>
+      <span>CLEARANCE: LEVEL_5</span>
+    </div>
+    
+    <!-- Main content -->
+    <div class="main-content">
+      <!-- Left side - Tactical UI -->
+      <div class="tactical-ui">
+        <!-- Callsign and name -->
+        <div class="identity-section">
+          <div class="callsign">CALLSIGN: PERSIAN_EAGLE</div>
+          <h1 class="name">ARACH_TCHOUPANI</h1>
+          <div class="unit">UNIT: ENGINEERING_CORPS | SPECIALIZATION: FULL_STACK_SPEC_OPS</div>
+        </div>
+        
+        <!-- Mission parameters -->
+        <div class="mission-parameters">
+          <div class="section-header">◆ MISSION PARAMETERS</div>
+          <div class="parameters-grid">
+            <div class="param-row">
+              <span>OBJECTIVE:</span>
+              <span class="param-value">BUILD_AND_SCALE</span>
+            </div>
+            <div class="param-row">
+              <span>PRIORITY:</span>
+              <span class="param-value priority">CRITICAL</span>
+            </div>
+            <div class="param-row">
+              <span>STATUS:</span>
+              <span class="param-value">ACTIVE</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Systems status -->
+        <div class="systems-status">
+          <div class="section-header">◆ SYSTEMS STATUS</div>
+          <div class="status-grid">
+            <div class="status-row">
+              <span class="status-label">AI/ML:</span>
+              <div class="status-bar">
+                <div class="status-fill" style="--fill-width: 88%; --delay: 0.1s;"></div>
+              </div>
+              <span class="status-text" style="--delay: 0.1s;">RLHF</span>
+            </div>
+            <div class="status-row">
+              <span class="status-label">STACK:</span>
+              <div class="status-bar">
+                <div class="status-fill" style="--fill-width: 100%; --delay: 0.3s;"></div>
+              </div>
+              <span class="status-text" style="--delay: 0.3s;">FULL_OPERATIONAL</span>
+            </div>
+            <div class="status-row">
+              <span class="status-label">PRODUCT:</span>
+              <div class="status-bar">
+                <div class="status-fill" style="--fill-width: 94%; --delay: 0.5s;"></div>
+              </div>
+              <span class="status-text" style="--delay: 0.5s;">SHIPPING</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Command interface -->
+        <div class="command-interface">
+          <div class="command-indicator"></div>
+          <span class="command-text">[CONNECT] ► ARACH.IO</span>
+        </div>
+      </div>
+      
+      <!-- Right side - Polaroid -->
+      <div class="polaroid-container">
+        <div class="polaroid">
+          <img
+            src="/assets/arach.jpg"
+            alt="Arach Tchoupani"
+            class="polaroid-image"
+          />
+          <div class="polaroid-caption">
+            <div class="spec-sheet">
+              <div class="spec-header">
+                <span class="spec-id">ARACH_TCHOUPANI</span>
+                <span class="spec-classification">CLASS_MILLENNIAL</span>
+              </div>
+              <div class="spec-grid">
+                <div class="spec-item">
+                  <span class="spec-label">TYPE:</span>
+                  <span class="spec-value">FOUNDER</span>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-label">STACK:</span>
+                  <span class="spec-value">FULL</span>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-label">AI/ML:</span>
+                  <span class="spec-value">RLHF</span>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-label">EST:</span>
+                  <span class="spec-value">2010</span>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-label">LOC:</span>
+                  <span class="spec-value">SF_BAY</span>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-label">STATUS:</span>
+                  <span class="spec-value">VERY_ONLINE</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Krub:wght@400;600&display=swap');
+  
+  /* Import the styles from about.astro */
+  /* We'll move all the tactical styles here */
+</style>

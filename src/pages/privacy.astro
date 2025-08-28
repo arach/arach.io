@@ -1,0 +1,109 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import { SITE } from "@config";
+---
+
+<Layout title={`Privacy Policy | ${SITE.title}`}>
+  <Header />
+  
+  <main id="main-content">
+    <div class="privacy-container">
+      <h1>Privacy Policy</h1>
+      <p class="last-updated">Last updated: {new Date().toLocaleDateString()}</p>
+      
+      <section>
+        <h2>The Short Version</h2>
+        <p>
+          I respect your privacy. This site collects minimal data to understand how people use it, 
+          and I don't sell or share your information with anyone.
+        </p>
+      </section>
+
+      <section>
+        <h2>What I Collect</h2>
+        <ul>
+          <li><strong>Analytics:</strong> Basic usage data through Google Analytics (page views, general location, device type)</li>
+          <li><strong>No cookies:</strong> This site doesn't use tracking cookies</li>
+          <li><strong>No personal info:</strong> I don't collect names, emails, or other personal information unless you explicitly provide it</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>What I Don't Do</h2>
+        <ul>
+          <li>Sell your data (there's nothing to sell anyway)</li>
+          <li>Track you across the web</li>
+          <li>Use invasive advertising</li>
+          <li>Share data with third parties (except Google Analytics for metrics)</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Your Rights</h2>
+        <p>
+          You can browse this site with JavaScript disabled, use ad blockers, or access it through Tor. 
+          The content will still work. If you have concerns about privacy, feel free to reach out.
+        </p>
+      </section>
+
+      <section>
+        <h2>Contact</h2>
+        <p>
+          Questions about privacy? Find me on <a href="https://github.com/arach">GitHub</a> or <a href="https://twitter.com/arachid">Twitter</a>.
+        </p>
+      </section>
+    </div>
+  </main>
+  
+  <Footer />
+</Layout>
+
+<style>
+  .privacy-container {
+    @apply mx-auto max-w-3xl px-4 py-12;
+  }
+
+  h1 {
+    @apply mb-4 text-3xl font-bold;
+    color: rgb(var(--color-text-base));
+  }
+
+  .last-updated {
+    @apply mb-8 text-sm;
+    color: rgb(var(--color-text-base) / 0.6);
+  }
+
+  section {
+    @apply mb-8;
+  }
+
+  h2 {
+    @apply mb-4 text-xl font-semibold;
+    color: rgb(var(--color-text-base));
+  }
+
+  p {
+    @apply mb-4 leading-relaxed;
+    color: rgb(var(--color-text-base) / 0.85);
+  }
+
+  ul {
+    @apply mb-4 ml-6 list-disc space-y-2;
+    color: rgb(var(--color-text-base) / 0.85);
+  }
+
+  li {
+    @apply leading-relaxed;
+  }
+
+  strong {
+    color: rgb(var(--color-text-base));
+  }
+
+  a {
+    color: rgb(var(--color-accent));
+    @apply underline underline-offset-2 transition-colors hover:no-underline;
+  }
+</style>

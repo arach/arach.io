@@ -28,6 +28,9 @@ pnpm-debug.log*
 # Claude settings (local configuration)
 .claude/
 
+# Playwright screenshots and test artifacts
+.playwright-mcp/
+
 # yarn
 .yarn/*
 !.yarn/patches

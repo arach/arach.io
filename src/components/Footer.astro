@@ -11,14 +11,52 @@ export interface Props {
 const { noMarginTop = false } = Astro.props;
 ---
 
-<footer class={`${noMarginTop ? "" : "mt-auto"}`}>
-  <Hr noPadding lightBorder={true} />
-  <div class="footer-wrapper">
-    <Socials centered />
-    <div class="copyright-wrapper">
-      <span>Copyright arach.io &#169; {currentYear}</span>
-      <span class="separator">&nbsp;|&nbsp;</span>
-      <span>All rights reserved.</span>
+<footer class={`professional-footer ${noMarginTop ? "" : "mt-auto"}`}>
+  <div class="footer-container">
+    <div class="footer-content">
+      <div class="footer-section brand-section">
+        <div class="brand">
+          <h3 class="brand-name">ARACH.IO</h3>
+          <p class="tagline">Engineering & Innovation</p>
+        </div>
+      </div>
+      
+      <div class="footer-section links-section">
+        <h4 class="section-title">Connect</h4>
+        <div class="connect-inline">
+          <Socials centered={false} />
+        </div>
+      </div>
+      
+      <div class="footer-section nav-section">
+        <h4 class="section-title">Navigate</h4>
+        <nav class="footer-nav">
+          <a href="/posts/" class="footer-link">Blog</a>
+          <a href="/books/" class="footer-link">Books</a>
+          <a href="/about/" class="footer-link">About</a>
+          <a href="/resume/" class="footer-link">Resume</a>
+        </nav>
+      </div>
+      
+      <div class="footer-section legal-section">
+        <h4 class="section-title">Misc</h4>
+        <nav class="footer-nav">
+          <a href="/rss.xml" class="footer-link">RSS</a>
+          <a href="/privacy/" class="footer-link">Privacy stuff</a>
+          <a href="https://github.com/arach" class="footer-link">Code crimes</a>
+        </nav>
+      </div>
+    </div>
+    
+    <Hr noPadding lightBorder={true} />
+    
+    <div class="footer-bottom">
+      <div class="copyright">
+        <span>© {currentYear} Arach Tchoupani. All rights reserved.</span>
+      </div>
+      <div class="location">
+        <span>San Francisco, CA</span>
+      </div>
     </div>
   </div>
 </footer>
@@ -35,22 +73,113 @@ const { noMarginTop = false } = Astro.props;
     flex: 1;
   }
 
-  footer {
+  .professional-footer {
     @apply w-full;
+    background: rgb(var(--color-fill));
+    border-top: 1px solid rgb(var(--color-border) / 0.1);
+    margin-top: 60px;
   }
-  .footer-wrapper {
-    @apply flex flex-col items-center justify-between py-6 sm:flex-row-reverse sm:py-4;
+  
+  .footer-container {
+    @apply mx-auto max-w-6xl px-4;
   }
-  .link-button {
-    @apply my-1 p-2 hover:rotate-6;
+  
+  .footer-content {
+    @apply grid gap-8 py-12;
+    grid-template-columns: 1fr;
   }
-  .link-button svg {
-    @apply scale-125;
+  
+  @media (min-width: 640px) {
+    .footer-content {
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 4rem;
+    }
   }
-  .copyright-wrapper {
-    @apply my-2 flex flex-col items-center whitespace-nowrap sm:flex-row;
+  
+  .footer-section {
+    @apply flex flex-col;
   }
-  .separator {
-    @apply hidden sm:inline;
+  
+  .brand-section {
+    @apply space-y-3;
+  }
+  
+  .brand-name {
+    @apply text-lg font-bold tracking-wider;
+    color: rgb(var(--color-text-base));
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.1em;
+  }
+  
+  .tagline {
+    @apply text-sm;
+    color: rgb(var(--color-text-base) / 0.6);
+    font-weight: 450;
+  }
+  
+  .section-title {
+    @apply mb-3 text-xs font-semibold uppercase tracking-wider;
+    color: rgb(var(--color-text-base) / 0.5);
+    letter-spacing: 0.1em;
+  }
+  
+  .footer-nav {
+    @apply flex flex-col space-y-2;
+  }
+  
+  .footer-link {
+    @apply text-sm transition-colors;
+    color: rgb(var(--color-text-base) / 0.7);
+    font-weight: 450;
+  }
+  
+  .footer-link:hover {
+    color: rgb(var(--color-accent));
+  }
+  
+  /* Adjust Socials styling */
+  .connect-inline :global(.social-icons) {
+    @apply flex-row items-start gap-3;
+  }
+  
+  .links-section :global(.link-button) {
+    @apply p-0 my-0;
+  }
+  
+  .links-section :global(.link-button:hover) {
+    transform: translateY(-2px);
+  }
+  
+  .footer-bottom {
+    @apply flex flex-col items-center justify-between py-6 text-xs sm:flex-row;
+    color: rgb(var(--color-text-base) / 0.5);
+  }
+  
+  .copyright {
+    @apply mb-2 sm:mb-0;
+  }
+  
+  .location {
+    font-weight: 450;
+  }
+  
+  /* Mobile responsiveness */
+  @media (max-width: 639px) {
+    .footer-content {
+      @apply text-center;
+    }
+    
+    .brand-section,
+    .section-title {
+      @apply text-center;
+    }
+    
+    .footer-nav {
+      @apply items-center;
+    }
+    
+    .connect-inline :global(.social-icons) {
+      @apply flex-row items-center justify-center gap-3;
+    }
   }
 </style>

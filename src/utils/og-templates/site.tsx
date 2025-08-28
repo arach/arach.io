@@ -1,6 +1,9 @@
 import { SITE } from "@config";
 
 export default () => {
+  // Use the actual site URL for the image  
+  const imageUrl = `${SITE.website}/assets/arach.jpg`;
+  
   return (
     <div
       style={{
@@ -9,10 +12,10 @@ export default () => {
         height: "100%",
         position: "relative",
         background: "#000000",
-        padding: "32px 48px",
+        padding: "48px 60px",
       }}
     >
-      {/* Thin border around entire content */}
+      {/* Thin border */}
       <div
         style={{
           position: "absolute",
@@ -24,95 +27,17 @@ export default () => {
         }}
       />
       
-      {/* Corner crosses - Top Left */}
-      <div
-        style={{
-          position: "absolute",
-          top: "20px",
-          left: "20px",
-          width: "40px",
-          height: "2px",
-          background: "rgba(255,255,255,0.5)",
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          top: "20px",
-          left: "20px",
-          width: "2px",
-          height: "40px",
-          background: "rgba(255,255,255,0.5)",
-        }}
-      />
+      {/* Corner crosses - simplified, just top corners */}
+      <div style={{ position: "absolute", top: "20px", left: "20px", width: "40px", height: "2px", background: "rgba(255,255,255,0.5)" }} />
+      <div style={{ position: "absolute", top: "20px", left: "20px", width: "2px", height: "40px", background: "rgba(255,255,255,0.5)" }} />
+      <div style={{ position: "absolute", top: "20px", right: "20px", width: "40px", height: "2px", background: "rgba(255,255,255,0.5)" }} />
+      <div style={{ position: "absolute", top: "20px", right: "20px", width: "2px", height: "40px", background: "rgba(255,255,255,0.5)" }} />
+      <div style={{ position: "absolute", bottom: "20px", left: "20px", width: "40px", height: "2px", background: "rgba(255,255,255,0.5)" }} />
+      <div style={{ position: "absolute", bottom: "20px", left: "20px", width: "2px", height: "40px", background: "rgba(255,255,255,0.5)" }} />
+      <div style={{ position: "absolute", bottom: "20px", right: "20px", width: "40px", height: "2px", background: "rgba(255,255,255,0.5)" }} />
+      <div style={{ position: "absolute", bottom: "20px", right: "20px", width: "2px", height: "40px", background: "rgba(255,255,255,0.5)" }} />
       
-      {/* Corner crosses - Top Right */}
-      <div
-        style={{
-          position: "absolute",
-          top: "20px",
-          right: "20px",
-          width: "40px",
-          height: "2px",
-          background: "rgba(255,255,255,0.5)",
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          top: "20px",
-          right: "20px",
-          width: "2px",
-          height: "40px",
-          background: "rgba(255,255,255,0.5)",
-        }}
-      />
-      
-      {/* Corner crosses - Bottom Left */}
-      <div
-        style={{
-          position: "absolute",
-          bottom: "20px",
-          left: "20px",
-          width: "40px",
-          height: "2px",
-          background: "rgba(255,255,255,0.5)",
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          bottom: "20px",
-          left: "20px",
-          width: "2px",
-          height: "40px",
-          background: "rgba(255,255,255,0.5)",
-        }}
-      />
-      
-      {/* Corner crosses - Bottom Right */}
-      <div
-        style={{
-          position: "absolute",
-          bottom: "20px",
-          right: "20px",
-          width: "40px",
-          height: "2px",
-          background: "rgba(255,255,255,0.5)",
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          bottom: "20px",
-          right: "20px",
-          width: "2px",
-          height: "40px",
-          background: "rgba(255,255,255,0.5)",
-        }}
-      />
-      
-      {/* Header bar */}
+      {/* Header metadata line */}
       <div
         style={{
           position: "absolute",
@@ -137,25 +62,28 @@ export default () => {
         style={{
           display: "flex",
           width: "100%",
-          marginTop: "48px",
           gap: "60px",
+          alignItems: "flex-start",
+          marginTop: "20px",
         }}
       >
-        {/* Left side - Tactical UI */}
+        {/* Left side - Cleaner text */}
         <div
           style={{
             display: "flex",
             flexDirection: "column",
             flex: 1,
-            justifyContent: "center",
+            justifyContent: "flex-start",
+            gap: "28px",
+            paddingTop: "0",
           }}
         >
-          {/* Callsign and name */}
+          {/* Callsign and Name */}
           <div
             style={{
               display: "flex",
               flexDirection: "column",
-              marginBottom: "32px",
+              gap: "8px",
             }}
           >
             <div
@@ -163,25 +91,24 @@ export default () => {
                 fontSize: "12px",
                 fontFamily: "'Space Mono', monospace",
                 color: "rgba(0,255,209,0.7)",
-                marginBottom: "8px",
                 letterSpacing: "0.15em",
               }}
             >
-              CALLSIGN: FOUNDER-1
+              CALLSIGN: PERSIAN_EAGLE
             </div>
             <h1
               style={{
-                fontSize: "48px",
+                fontSize: "72px",
                 fontFamily: "'Space Mono', 'Courier New', monospace",
                 fontWeight: 700,
                 margin: 0,
                 color: "#FFFFFF",
-                letterSpacing: "0.02em",
+                letterSpacing: "-0.02em",
                 textTransform: "uppercase",
                 lineHeight: 1,
               }}
             >
-              ARACH TCHOUPANI
+              ARACH_TCHOUPANI
             </h1>
             <div
               style={{
@@ -197,20 +124,19 @@ export default () => {
             </div>
           </div>
           
-          {/* Mission parameters */}
+          {/* Mission Parameters - bigger fonts */}
           <div
             style={{
               display: "flex",
               flexDirection: "column",
-              marginBottom: "32px",
             }}
           >
             <div
               style={{
-                fontSize: "12px",
+                fontSize: "13px",
                 fontFamily: "'Space Mono', monospace",
                 color: "rgba(0,255,209,0.8)",
-                marginBottom: "12px",
+                marginBottom: "14px",
                 letterSpacing: "0.1em",
                 fontWeight: 700,
               }}
@@ -221,11 +147,11 @@ export default () => {
               style={{
                 display: "flex",
                 flexDirection: "column",
-                gap: "8px",
+                gap: "10px",
                 background: "rgba(0,255,209,0.05)",
                 border: "1px solid rgba(0,255,209,0.2)",
-                padding: "16px 20px",
-                fontSize: "12px",
+                padding: "18px 22px",
+                fontSize: "13px",
                 fontFamily: "'Space Mono', monospace",
                 fontWeight: 600,
                 color: "rgba(255,255,255,0.7)",
@@ -246,71 +172,13 @@ export default () => {
             </div>
           </div>
           
-          {/* System status */}
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              marginBottom: "32px",
-            }}
-          >
-            <div
-              style={{
-                fontSize: "12px",
-                fontFamily: "'Space Mono', monospace",
-                color: "rgba(0,255,209,0.8)",
-                marginBottom: "12px",
-                letterSpacing: "0.1em",
-                fontWeight: 700,
-              }}
-            >
-              ◆ SYSTEMS STATUS
-            </div>
-            <div style={{
-              display: "flex",
-              flexDirection: "column",
-              background: "rgba(0,255,209,0.05)",
-              border: "1px solid rgba(0,255,209,0.2)",
-              paddingTop: "16px",
-              paddingBottom: "16px",
-              }}>
-
-            {[
-              ["AI/ML:", "RLHF", "[========--]"],
-              ["STACK:", "FULL_OPERATIONAL", "[==========]"],
-              ["PRODUCT:", "SHIPPING", "[=========-]"],
-            ].map(([system, status, bars]) => (
-              <div
-                key={system}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  fontSize: "12px",
-                  fontFamily: "'Space Mono', monospace",
-                  color: "rgba(255,255,255,0.7)",
-                  paddingLeft: "20px",
-                  paddingRight: "20px",
-                  marginBottom: "6px",
-                }}
-              >
-                <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                  <span style={{ width: "70px", fontSize: "12px", fontWeight: 600 }}>{system}</span>
-                  <span style={{ color: "rgba(0,255,209,1)", fontSize: "13px", fontFamily: "monospace", letterSpacing: "-1px" }}>{bars}</span>
-                </div>
-                <span style={{ color: "rgba(0,255,209,0.8)", fontSize: "12px", fontWeight: 600 }}>{status}</span>
-              </div>
-            ))}
-            </div>
-          </div>
-          
-          {/* Command interface */}
+          {/* Command interface / URL */}
           <div
             style={{
               display: "flex",
               alignItems: "center",
               gap: "12px",
-              padding: "14px 18px",
+              padding: "16px 20px",
               background: "rgba(0,0,0,0.5)",
               border: "1px solid rgba(0,255,209,0.3)",
               borderLeft: "3px solid rgba(0,255,209,0.8)",
@@ -318,40 +186,22 @@ export default () => {
           >
             <div
               style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
+                width: "8px",
+                height: "8px",
+                background: "rgba(0,255,209,0.8)",
+                boxShadow: "0 0 10px rgba(0,255,209,0.6)",
               }}
-            >
-              <div
-                style={{
-                  width: "8px",
-                  height: "8px",
-                  background: "rgba(0,255,209,0.8)",
-                  boxShadow: "0 0 10px rgba(0,255,209,0.6)",
-                }}
-              />
-              <span
-                style={{
-                  fontSize: "12px",
-                  fontFamily: "'Space Mono', monospace",
-                  color: "rgba(0,255,209,0.9)",
-                  letterSpacing: "0.05em",
-                }}
-              >
-                [CONNECT]
-              </span>
-            </div>
+            />
             <span
               style={{
-                fontSize: "12px",
+                fontSize: "14px",
                 fontFamily: "'Space Mono', monospace",
                 color: "rgba(255,255,255,0.9)",
                 fontWeight: 600,
                 letterSpacing: "0.05em",
               }}
             >
-              ► ARACH.IO
+              [CONNECT] ► HTTPS://ARACH.IO
             </span>
           </div>
         </div>
@@ -378,14 +228,14 @@ export default () => {
           >
             {/* Color photo */}
             <img
-              src={"https://arach.io/assets/arach.jpg"}
-              alt={SITE.author}
+              src={imageUrl}
               width={360}
               height={360}
               style={{
                 display: "block",
                 border: "1px solid rgba(0,0,0,0.05)",
               }}
+              alt="Profile"
             />
             
             {/* Military spec sheet caption */}
