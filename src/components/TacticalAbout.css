@@ -138,31 +138,32 @@
   }
 }
 
-/* Container - properly responsive with content scaling */
+/* Container */
 .tactical-about-container {
   background: #000;
   position: relative;
   width: 100%;
-  max-width: 896px; /* Match site's max-w-4xl for content consistency */
-  aspect-ratio: 1.9 / 1; /* Maintain proper aspect ratio */
+  max-width: 1200px;
+  height: 630px;
   margin: 0 auto;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(0, 255, 209, 0.1);
   cursor: grab;
   user-select: none;
-  overflow: hidden;
 }
 
 /* Larger screens - slightly wider but still within bounds */
 @media (min-width: 1200px) {
   .tactical-about-container {
-    max-width: 1024px; /* max-w-5xl - wider but not excessive */
+    max-width: 1100px;
+    aspect-ratio: 2 / 1;
   }
 }
 
 /* Extra large screens - maintain content alignment */
 @media (min-width: 1600px) {
   .tactical-about-container {
-    max-width: 1152px; /* max-w-6xl - reasonable for very large screens */
+    max-width: 1280px;
+    aspect-ratio: 2.1 / 1;
   }
 }
 
@@ -566,7 +567,7 @@
 /* Larger tablets can have slightly bigger elements */
 @media (min-width: 1000px) and (max-width: 1199px) {
   .tactical-about-container {
-    max-width: min(95%, 896px); /* Maintain content alignment */
+    max-width: min(95%, 1024px);
   }
   
   .polaroid {
@@ -743,6 +744,122 @@
   }
 }
 
+/* Desktop-specific optimizations for large screens */
+@media (min-width: 1200px) {
+  .tactical-about {
+    padding: 32px 48px;
+  }
+  
+  .main-content {
+    gap: 60px;
+    justify-content: space-between;
+  }
+  
+  .tactical-ui {
+    flex: 0 0 45%;
+    max-width: 500px;
+  }
+  
+  .polaroid-container {
+    flex: 0 0 auto;
+    max-width: none;
+  }
+  
+  .name {
+    font-size: 42px;
+  }
+  
+  .callsign {
+    font-size: 12px;
+  }
+  
+  .unit {
+    font-size: 11px;
+  }
+  
+  .identity-section {
+    margin-bottom: 24px;
+  }
+  
+  .mission-parameters,
+  .systems-status {
+    margin-bottom: 24px;
+  }
+  
+  .mission-parameters {
+    padding: 14px 18px;
+  }
+  
+  .section-header {
+    font-size: 12px;
+  }
+  
+  .parameters-grid {
+    font-size: 12px;
+  }
+  
+  .status-row {
+    font-size: 12px;
+  }
+  
+  .status-label {
+    width: 80px;
+    font-size: 12px;
+  }
+  
+  .status-bar {
+    width: 120px;
+  }
+  
+  .command-text {
+    font-size: 12px;
+  }
+  
+  .polaroid {
+    width: 340px;
+    max-width: 340px;
+  }
+  
+  .polaroid-image {
+    width: 320px;
+    height: 320px;
+  }
+  
+  .polaroid-caption {
+    width: 320px;
+    min-height: 120px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .tactical-about {
+    padding: 36px 56px;
+  }
+  
+  .main-content {
+    gap: 80px;
+  }
+  
+  .name {
+    font-size: 44px;
+  }
+  
+  .polaroid {
+    width: 380px;
+    max-width: 380px;
+  }
+  
+  .polaroid-image {
+    width: 360px;
+    height: 360px;
+  }
+  
+  .polaroid-caption {
+    width: 360px;
+    min-height: 140px;
+  }
+}
+
 /* Mobile - stack vertically */
 @media (max-width: 767px) {
   .tactical-about {
@@ -868,7 +985,7 @@
   height: 100%;
   position: relative;
   background: #000;
-  padding: 3% 4%;
+  padding: 32px 48px;
   font-family: 'Space Mono', monospace;
   display: flex;
   flex-direction: column;
@@ -978,12 +1095,9 @@
 .main-content {
   display: flex;
   width: 100%;
-  margin-top: 4%;
-  gap: 4%;
+  margin-top: 48px;
+  gap: 60px;
   z-index: 10;
-  flex: 1;
-  align-items: center;
-  justify-content: space-between;
 }
 
 .tactical-ui {
@@ -998,14 +1112,14 @@
 }
 
 .callsign {
-  font-size: clamp(10px, 1.2vw, 12px);
+  font-size: 12px;
   color: rgba(0, 255, 209, 0.7);
-  margin-bottom: 0.5%;
+  margin-bottom: 6px;
   letter-spacing: 0.15em;
 }
 
 .name {
-  font-size: clamp(24px, 4vw, 44px);
+  font-size: 44px;
   font-weight: 700;
   color: #fff;
   margin: 0;
@@ -1015,10 +1129,10 @@
 }
 
 .unit {
-  font-size: clamp(9px, 1.1vw, 11px);
+  font-size: 11px;
   color: rgba(255, 255, 255, 0.5);
   font-weight: 600;
-  margin-top: 0.5%;
+  margin-top: 6px;
   letter-spacing: 0.1em;
 }
 
@@ -1087,26 +1201,32 @@
 }
 
 .status-label {
-  width: 25%;
-  min-width: 60px;
+  width: 80px;
   font-weight: 600;
-  font-size: clamp(10px, 1.2vw, 12px);
-  color: rgb(var(--primary) / 0.8);
+  font-size: 12px;
+  color: rgba(0, 255, 209, 0.8);
 }
 
 .status-bar {
   flex: 0 0 auto;
-  width: 35%;
-  min-width: 80px;
-  max-width: 120px;
+  width: 120px;
   height: 8px;
-  background: rgb(var(--primary) / 0.15);
-  border: 1px solid rgb(var(--primary) / 0.3);
+  background: rgba(0, 255, 209, 0.1);
+  border: 1px solid rgba(0, 255, 209, 0.3);
   position: relative;
   overflow: hidden;
 }
 
 .status-fill {
+  height: 100%;
+  background: linear-gradient(90deg, rgba(0, 255, 209, 0.8), rgba(0, 255, 209, 1));
+  box-shadow: 0 0 10px rgba(0, 255, 209, 0.5);
+  width: 0;
+  animation: fillBar 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation-delay: var(--delay, 0s);
+}
+
+.status-fill-old {
   height: 100%;
   background: linear-gradient(90deg, 
     rgb(var(--primary) / 0.8), 
@@ -1138,13 +1258,24 @@
 }
 
 .status-text {
-  color: rgb(var(--primary) / 0.8);
+  color: rgba(0, 255, 209, 0.8);
   font-weight: 600;
   opacity: 0;
   animation: fadeIn 0.3s ease-out forwards;
   animation-delay: calc(var(--delay, 0s) + 0.5s);
   font-size: 12px;
   margin-left: auto;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 /* Command interface */
@@ -1188,38 +1319,35 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  flex: 0 0 auto;
-  max-width: 40%;
 }
 
 .polaroid {
   background: white;
-  padding: 2.5% 2.5% 0 2.5%;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  width: 100%;
-  max-width: 380px;
+  padding: 10px 10px 0 10px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  width: 380px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
 }
 
 .polaroid:hover {
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
 }
 
 .polaroid-image {
-  width: 100%;
-  aspect-ratio: 1 / 1;
+  width: 360px;
+  height: 360px;
   display: block;
   border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .polaroid-caption {
-  width: 100%;
-  min-height: 100px;
-  padding: 3% 0 2.5% 1%;
+  width: 360px;
+  height: 140px;
+  padding: 14px 0 10px 2px;
   background: white;
   font-family: 'Space Mono', monospace;
-  font-size: clamp(7px, 0.8vw, 10px);
+  font-size: 8px;
   color: #333;
 }
 

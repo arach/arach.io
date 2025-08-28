@@ -12,9 +12,9 @@ const layoutProps = {
 
 <Layout {...layoutProps}>
   <Header activeNav="about" />
-  <main id="main-content" class="mx-auto flex flex-col w-full items-center px-4 py-12 pb-20" style="max-width: 1600px;">
+  <main id="main-content" class="mx-auto flex flex-col w-full items-center px-4 py-12 pb-20" style="max-width: 1280px;">
     <!-- Full-size tactical about section -->
-    <div class="tactical-about-container rounded-lg overflow-hidden">
+    <div class="tactical-about-container shadow-2xl rounded-lg overflow-hidden" style="width: 100%; max-width: 1200px; height: 630px; margin: 0 auto;">
         <div class="tactical-about">
           <!-- Thin border -->
           <div class="tactical-border"></div>
@@ -79,15 +79,24 @@ const layoutProps = {
                 <div class="status-grid">
                   <div class="status-row">
                     <span class="status-label">AI/ML:</span>
-                    <span class="status-text">RLHF</span>
+                    <div class="status-bar">
+                      <div class="status-fill" style="--fill-width: 88%; --delay: 0.1s;"></div>
+                    </div>
+                    <span class="status-text" style="--delay: 0.1s;">RLHF</span>
                   </div>
                   <div class="status-row">
                     <span class="status-label">STACK:</span>
-                    <span class="status-text">FULL_OPERATIONAL</span>
+                    <div class="status-bar">
+                      <div class="status-fill" style="--fill-width: 100%; --delay: 0.3s;"></div>
+                    </div>
+                    <span class="status-text" style="--delay: 0.3s;">FULL_OPERATIONAL</span>
                   </div>
                   <div class="status-row">
                     <span class="status-label">PRODUCT:</span>
-                    <span class="status-text">SHIPPING</span>
+                    <div class="status-bar">
+                      <div class="status-fill" style="--fill-width: 94%; --delay: 0.5s;"></div>
+                    </div>
+                    <span class="status-text" style="--delay: 0.5s;">SHIPPING</span>
                   </div>
                 </div>
               </div>
@@ -148,15 +157,15 @@ const layoutProps = {
       </div>
       
       <!-- Bio section below -->
-      <div class="mt-12 max-w-4xl mx-auto px-4 prose dark:prose-invert">
+      <div class="mt-12 max-w-4xl mx-auto prose dark:prose-invert">
         <h2 class="text-2xl font-bold mb-6" style="font-family: 'Krub', sans-serif;">Bio</h2>
-        <p class="text-base leading-relaxed mb-6" style="font-family: 'Krub', sans-serif;">
+        <p class="text-lg leading-relaxed mb-6" style="font-family: 'Krub', sans-serif;">
           With a 15-year track record in technology leadership in fast-growing startups, Arach has held various roles from Software Engineer to CTO, leading engineering for 4 venture-backed companies in NY and Montreal.
         </p>
-        <p class="text-base leading-relaxed mb-6" style="font-family: 'Krub', sans-serif;">
+        <p class="text-lg leading-relaxed mb-6" style="font-family: 'Krub', sans-serif;">
           He co-founded Breathe Life in 2018 in Montreal, supported by Diagram Ventures and Real Ventures, and rapidly grew its InsurTech product until its acquisition by Zinnia in 2022. He joined Meta and worked on Creators initiatives on a standalone 0->1 product as well as on the blue app.
         </p>
-        <p class="text-base leading-relaxed" style="font-family: 'Krub', sans-serif;">
+        <p class="text-lg leading-relaxed" style="font-family: 'Krub', sans-serif;">
           He is currently focused on coding every day and learning new things.
         </p>
         
@@ -183,23 +192,40 @@ const layoutProps = {
   /* Page-specific overrides only - main styles are in TacticalAbout.css */
   @import '../components/TacticalAbout.css';
   
-  /* Override container max-width and height for this page */
-  .tactical-about-container {
-    max-width: min(calc(100vw - 48px), 900px);
-    margin: 0 auto;
-    min-height: 500px;
-  }
-  
-  /* Ensure proper height at large breakpoints */
-  @media (min-width: 1200px) {
+  /* Responsive overrides */
+  @media (max-width: 1280px) {
     .tactical-about-container {
-      min-height: 560px;
+      transform: scale(0.9);
+      transform-origin: center top;
     }
   }
   
-  @media (min-width: 1400px) {
+  @media (max-width: 1100px) {
     .tactical-about-container {
-      min-height: 580px;
+      transform: scale(0.75);
+    }
+  }
+  
+  @media (max-width: 920px) {
+    .tactical-about-container {
+      transform: scale(0.6);
+      height: 378px;
+    }
+    
+    .main-content {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .polaroid {
+      transform: scale(0.5);
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .tactical-about-container {
+      transform: scale(0.5);
+      height: 315px;
     }
   }
   
@@ -249,6 +275,62 @@ const layoutProps = {
       flex: 1;
       display: flex;
       justify-content: center;
+    }
+  }
+  
+  /* Large desktop optimizations */
+  @media (min-width: 1200px) {
+    .tactical-about {
+      padding: 32px 48px !important;
+    }
+    
+    .main-content {
+      gap: 60px !important;
+    }
+    
+    .tactical-ui {
+      flex: 0 0 420px !important;
+      max-width: 420px;
+    }
+    
+    .name {
+      font-size: 42px !important;
+    }
+    
+    .polaroid {
+      width: 340px !important;
+      max-width: 340px !important;
+    }
+    
+    .polaroid-image {
+      width: 320px !important;
+      height: 320px !important;
+    }
+    
+    .polaroid-caption {
+      width: 320px !important;
+    }
+  }
+  
+  @media (min-width: 1400px) {
+    .tactical-ui {
+      flex: 0 0 480px !important;
+      max-width: 480px;
+    }
+    
+    .polaroid {
+      width: 380px !important;
+      max-width: 380px !important;
+    }
+    
+    .polaroid-image {
+      width: 360px !important;
+      height: 360px !important;
+    }
+    
+    .polaroid-caption {
+      width: 360px !important;
+      min-height: 140px !important;
     }
   }
   
