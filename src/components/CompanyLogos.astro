@@ -45,7 +45,7 @@ const regularCompanies = companies.filter(c => !c.isLarge);
 ---
 
 <div class={`companies-container ${className || ''}`}>
-  <h3 class="companies-title">Companies I've Worked With</h3>
+  <h3 class="companies-title">Work</h3>
   
   <!-- All companies in one row -->
   <div class="companies-row">
@@ -206,15 +206,3 @@ const regularCompanies = companies.filter(c => !c.isLarge);
   }
 </style>
 
-<script>
-  // Add hover interactions
-  document.querySelectorAll('.company-item').forEach(item => {
-    item.addEventListener('mouseenter', function() {
-      this.classList.add('hovered');
-    });
-    
-    item.addEventListener('mouseleave', function() {
-      this.classList.remove('hovered');
-    });
-  });
-</script>

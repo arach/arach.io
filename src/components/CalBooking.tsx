@@ -33,12 +33,28 @@ export default function CalBooking() {
       data-cal-link="arach/chat"
       data-cal-namespace="chat"
       data-cal-config='{"layout":"month_view"}'
-      className="cal-booking-button inline-flex items-center rounded-lg bg-skin-card px-5 py-2.5 text-sm font-medium transition-all border border-skin-border shadow-sm hover:bg-skin-card-muted hover:border-skin-accent hover:-translate-y-px hover:shadow-md"
+      className="cal-booking-button inline-flex items-center rounded-lg px-5 py-2.5 text-sm font-medium transition-all"
       style={{
-        borderColor: 'rgb(var(--color-border))',
-        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)'
+        background: 'rgba(255, 255, 255, 0.05)',
+        backdropFilter: 'blur(12px)',
+        border: '1px solid rgba(255, 255, 255, 0.1)',
+        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
       }}
-      onMouseEnter={() => setIsHovered(true)}
+      onMouseEnter={(e) => {
+        setIsHovered(true);
+        const target = e.currentTarget;
+        target.style.background = 'rgba(255, 255, 255, 0.08)';
+        target.style.borderColor = 'rgba(255, 255, 255, 0.15)';
+        target.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)';
+        target.style.transform = 'translateY(-1px)';
+      }}
+      onMouseLeave={(e) => {
+        const target = e.currentTarget;
+        target.style.background = 'rgba(255, 255, 255, 0.05)';
+        target.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+        target.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1)';
+        target.style.transform = 'translateY(0)';
+      }}
       onFocus={() => setIsHovered(true)}
     >
       Connect
