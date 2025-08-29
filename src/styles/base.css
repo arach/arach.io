@@ -89,12 +89,12 @@
 
   :root,
   html[data-theme="dark"] {
-    --color-fill: 24, 24, 27;           /* Warm charcoal background #18181B */
+    --color-fill: 24, 24, 27;           /* Lighter dark gray background #18181B */
     --color-text-base: 245, 245, 244;   /* Soft warm white #F5F5F4 */
     --color-accent: 251, 191, 36;       /* Warm amber accent #FBB024 */
-    --color-card: 39, 39, 42;           /* Lighter warm gray #27272A */
-    --color-card-muted: 52, 52, 56;     /* Medium warm gray #343438 */
-    --color-border: 100, 100, 108;      /* Muted gray border #64646C */
+    --color-card: 24, 24, 27;           /* Dark gray cards #18181B */
+    --color-card-muted: 39, 39, 42;     /* Medium gray #27272A */
+    --color-border: 64, 64, 72;         /* Muted gray border #404048 */
     
     /* Font variables (same in dark mode by default) */
     --font-heading: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", "Roboto", sans-serif;

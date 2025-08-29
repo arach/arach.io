@@ -45,7 +45,7 @@ export default function PostCard({
             <img
               src={thumbnailSrc}
               alt={title}
-              className="h-full w-full object-cover transition-all duration-500 group-hover:scale-[1.02] group-hover:brightness-105"
+              className="h-full w-full object-cover transition-transform duration-200 group-hover:scale-110"
               loading="lazy"
             />
           ) : (

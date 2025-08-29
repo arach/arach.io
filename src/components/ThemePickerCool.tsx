@@ -171,9 +171,9 @@ const ThemePickerCool: React.FC = () => {
     // Define dark mode versions for each theme - thematically aligned
     const darkThemes: Record<string, Partial<Theme['colors']>> = {
       minimal: {
-        bg: '#09090b',  // zinc-950 - pure black theme
-        text: '#fafafa',  // zinc-50
-        accent: '#f4f4f5',  // zinc-100 - inverted from light
+        bg: '#18181b',  // Lighter dark gray (24, 24, 27) - matches base.css
+        text: '#f5f5f4',  // Soft warm white (245, 245, 244) - matches base.css
+        accent: '#fbbf24',  // Warm amber (251, 191, 36) - matches base.css
         muted: '#a1a1aa',  // zinc-400
         border: '#27272a',  // zinc-800
       },
