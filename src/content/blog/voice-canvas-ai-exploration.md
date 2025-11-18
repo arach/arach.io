@@ -4,6 +4,7 @@ description: "Reflections on AI's current capabilities and exploring voice-first
 pubDatetime: 2025-11-18
 tags: ["ai", "voice-interface", "openscout", "local-models", "product"]
 featured: true
+thumbnail: "https://cdn.midjourney.com/fee2c0c8-530e-4887-a5ac-3c415579bc48/0_3.png"
 ---
 
 There's a lot of noise right now about AI investment cycles, potential bubbles, and concerns about the scaling of mega models. While those conversations are happening, I find myself increasingly convinced of something simpler: **the current models and capabilities we have right now are sufficiently interesting that there's just a ton to do**. In other words, in my opinion, if we made no progress today, we have you know work for at least a few years just to deploy the current capabilities in a way that kind of works for everyone. So again, that depends on no next new innovation.
@@ -17,6 +18,8 @@ I've been deep in exploration mode with voice-first interfaces and local model u
 There's something about voice interaction that feels fundamentally more powerful and delightful than typing. And now the blend with LLMs with text-to-speech and speech-to-text models that allows us to have dynamic, permissive systems that aren't some decision tree, that they're flexible and  on par with the JNI kind of LLMs, and so the quality is great and a lot of it can be done on device, which is a huge unlock.  It's one of the most profound net new high-quality interface paradigms that has emerged from this AI wave. Speaking is immediate, natural, and captures nuance in ways that typing often misses. For me, it frees up my eyes and my mind.
 
 I believe we're going to see a cultural shift here. The stigma of speaking publicly into your phone or headset is going to fade. People will get comfortable with it. Even offices—traditionally quiet, keyboard-focused environments—are going to adapt to this new mode of interaction.
+
+<div id="midjourney-interactive-mount-voice-canvas"></div>
 
 ## The Vision: Voice + Local + Private + AI
 
