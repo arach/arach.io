@@ -1,7 +1,7 @@
 ---
 title: "Voice Canvas: Building with What We Have"
 description: "Reflections on AI's current capabilities and exploring voice-first interfaces as the next evolution of human-computer interaction."
-date: 2025-11-18
+pubDatetime: 2025-11-18
 tags: ["ai", "voice-interface", "openscout", "local-models", "product"]
 featured: true
 ---
