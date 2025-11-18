@@ -44,7 +44,7 @@ The LLM does something similar with the combination of quickly retrieving soluti
 
 Here's what matters for business: The machine can search any solution humanity has ever found, customize it perfectly for your specific needs, and combine solutions in ways that create new ones. Whether you call it intelligence or sophisticated paste is somewhat irrelevant - it's not perfect and AGI will take some time so you better get to work with what you have.
 
-<!-- MIDJOURNEY_COMPONENT_HERE -->
+<div id="midjourney-interactive-mount"></div>
 
 ## The New Strategic Framework: Paste vs. Intelligence Tasks
 
