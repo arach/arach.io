@@ -12,8 +12,6 @@ import SeriesNavigationMinimal from "@components/SeriesNavigationMinimal";
 import { Icon } from 'astro-icon/components';
 import { SITE } from "@config";
 import { getCollection } from "astro:content";
-import MidjourneyPrompt from "@components/MidjourneyPrompt";
-import infinitePasteMachineImg from "../assets/images/infinite-paste-machine-1.png";
 
 export interface Props {
   post: CollectionEntry<"blog">;
@@ -47,7 +45,53 @@ const {
   pubDatetime,
   modDatetime,
   tags,
+  thumbnailCrop,
 } = post.data;
+
+// Handle both string URLs and Astro image objects
+const thumbnailSrc = typeof thumbnail === 'string' ? thumbnail : thumbnail?.src;
+
+// Build thumbnail crop styles
+let thumbnailStyle: Record<string, string> = {};
+if (thumbnailCrop) {
+  // New intuitive API takes precedence
+  if (thumbnailCrop.anchor || thumbnailCrop.shift) {
+    const anchorMap: Record<string, string> = {
+      top: 'center top',
+      bottom: 'center bottom',
+      left: 'left center',
+      right: 'right center',
+      center: 'center center',
+    };
+
+    let position = thumbnailCrop.anchor ? anchorMap[thumbnailCrop.anchor] : 'center center';
+
+    // Apply shift if provided
+    if (thumbnailCrop.shift) {
+      const [xPos, yPos] = position.split(' ');
+      if (thumbnailCrop.anchor === 'top' || thumbnailCrop.anchor === 'bottom') {
+        position = `${xPos} calc(${yPos} + ${thumbnailCrop.shift})`;
+      } else if (thumbnailCrop.anchor === 'left' || thumbnailCrop.anchor === 'right') {
+        position = `calc(${xPos} + ${thumbnailCrop.shift}) ${yPos}`;
+      }
+    }
+
+    thumbnailStyle.objectPosition = position;
+  }
+  // Fallback to legacy x/y positioning
+  else if (thumbnailCrop.x || thumbnailCrop.y) {
+    thumbnailStyle.objectPosition = `${thumbnailCrop.x || 'center'} ${thumbnailCrop.y || 'center'}`;
+  }
+
+  // Apply zoom/scale
+  if (thumbnailCrop.zoom) {
+    thumbnailStyle.transform = `scale(${thumbnailCrop.zoom})`;
+  }
+
+  // Apply width/height if specified
+  if (thumbnailCrop.width) thumbnailStyle.width = thumbnailCrop.width;
+  if (thumbnailCrop.height) thumbnailStyle.height = thumbnailCrop.height;
+}
 
 const { Content } = await post.render();
 
@@ -81,45 +125,54 @@ const layoutProps = {
   <main id="main-content" class="relative z-0 bg-skin-fill" style="background: rgb(var(--color-fill));">
     <!-- Series tag removed - now handled by minimal navigation -->
     
-    <!-- Title with Go back and Series tag on same line for iPad -->
-    <div class="mb-2 flex items-start justify-between">
-      <div class="flex-1">
-        <div class="header-row">
-          <button
-            class="go-back-btn-inline"
-            onclick="(() => (history.length === 1) ? window.location = '/' : history.back())()"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
-              ><path
-                d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"
-              ></path>
-            </svg><span class="go-back-full">Go back</span><span class="go-back-short">Back</span>
-          </button>
-          <!-- Series tag removed - now handled by minimal navigation -->
-        </div>
-        
-        <div class="title-with-series">
-        <h1 transition:name={slugifyStr(title)} class="post-title">{title}</h1>
-        {showSeriesNav && (
-          <SeriesNavigationMinimal 
-            currentPost={post} 
-            seriesPosts={seriesPosts}
-            currentIndex={currentIndex}
-            previousPost={previousPost}
-            nextPost={nextPost}
-            client:load
-          />
-        )}
-      </div>
-      </div>
+    <!-- Go back button -->
+    <div class="mb-4">
+      <button
+        class="go-back-btn-inline"
+        onclick="(() => (history.length === 1) ? window.location = '/' : history.back())()"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+          ><path
+            d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"
+          ></path>
+        </svg><span class="go-back-full">Go back</span><span class="go-back-short">Back</span>
+      </button>
     </div>
+
+    <!-- Wired-style: Title ABOVE image -->
+    <div class="title-with-series mb-6">
+      <h1 transition:name={slugifyStr(title)} class="post-title-wired">{title}</h1>
+      {showSeriesNav && (
+        <SeriesNavigationMinimal
+          currentPost={post}
+          seriesPosts={seriesPosts}
+          currentIndex={currentIndex}
+          previousPost={previousPost}
+          nextPost={nextPost}
+          client:load
+        />
+      )}
+    </div>
+
+    <!-- Hero Image (Wired-style) -->
+    {thumbnailSrc && (
+      <div class="hero-image-container">
+        <img
+          src={thumbnailSrc}
+          alt={title}
+          class="hero-image"
+          loading="eager"
+          style={thumbnailStyle}
+        />
+      </div>
+    )}
 
     <!-- Series navigation now handled by minimal component in top-right -->
 
     <!-- Series navigation slot removed - now handled by minimal component -->
-    
-    
-    
+
+
+
     <!-- Date/Reading time + Actions row -->
     <div class="flex items-center justify-between gap-4 date-time-row">
       <div class="flex items-center gap-4">
@@ -181,6 +234,47 @@ const layoutProps = {
     @apply mx-auto w-full pb-12 px-4 sm:px-6 lg:px-8;
     max-width: 1200px; /* Match header width exactly */
   }
+  /* Wired-style Hero Image */
+  .hero-image-container {
+    @apply w-full overflow-hidden;
+    max-height: 500px;
+    margin-bottom: 2rem;
+  }
+
+  .hero-image {
+    @apply w-full h-auto object-cover;
+    display: block;
+    object-position: center bottom;
+    min-height: 500px;
+  }
+
+  /* Wired-style Title (above image) */
+  .post-title-wired {
+    @apply text-4xl md:text-6xl font-bold text-skin-accent;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+
+  /* Mobile adjustments */
+  @media (max-width: 767px) {
+    .hero-image-container {
+      max-height: 350px;
+      margin-left: -1rem;
+      margin-right: -1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-image {
+      min-height: 350px;
+    }
+
+    .post-title-wired {
+      @apply text-3xl font-bold;
+      line-height: 1.15;
+    }
+  }
+
   .header-row {
     @apply flex items-center justify-between mb-2 relative z-30;
   }
@@ -223,8 +317,9 @@ const layoutProps = {
   }
 
   .post-title {
-    @apply text-3xl font-bold text-skin-accent;
+    @apply text-4xl md:text-5xl font-bold text-skin-accent;
     flex: 1;
+    line-height: 1.2;
   }
 
   /* Mobile: Stack vertically */
@@ -256,7 +351,8 @@ const layoutProps = {
   /* iPhone optimizations */
   @media (max-width: 767px) {
     .post-title {
-      @apply text-xl font-bold text-skin-accent mb-1; /* Reduced spacing */
+      @apply text-2xl font-bold text-skin-accent mb-1; /* Reduced spacing */
+      line-height: 1.2;
     }
 
     .reading-time-full {
@@ -581,66 +677,4 @@ const layoutProps = {
   }
   backToTop();
   
-  /** Insert Midjourney component for specific posts */
-  function insertMidjourneyComponent() {
-    if (!window.location.pathname.includes('infinite-bespoke-magic-paste-machine')) return;
-    
-    // Find the comment marker in the rendered HTML
-    const article = document.getElementById('article');
-    if (!article) return;
-    
-    // Create a div for the component
-    const componentDiv = document.createElement('div');
-    componentDiv.id = 'midjourney-interactive-mount';
-    componentDiv.className = 'my-12';
-    
-    // Find the heading "The New Strategic Framework"
-    const headings = article.querySelectorAll('h2');
-    for (const heading of headings) {
-      if (heading.textContent?.includes('The New Strategic Framework')) {
-        // Insert before this heading
-        heading.parentNode?.insertBefore(componentDiv, heading);
-        break;
-      }
-    }
-  }
-  
-  // Run after DOM is loaded
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', insertMidjourneyComponent);
-  } else {
-    insertMidjourneyComponent();
-  }
-</script>
-
-{/* Render the Midjourney component that will be portaled to the right location */}
-{post.slug === "infinite-bespoke-magic-paste-machine" && (
-  <div id="midjourney-component-source" style="display: none;">
-    <MidjourneyPrompt
-      client:idle
-      prompt="A sophisticated retro-futuristic paste machine, art deco industrial design, chrome and brass mechanisms, vacuum tubes glowing with data, streams of text flowing through transparent pipes, knowledge crystals being processed, technical blueprint aesthetic, cross-section view showing intricate gears and circuits processing information, vintage scientific illustration style --chaos 15 --stylize 750 --ar 16:9"
-      imageUrl={infinitePasteMachineImg.src}
-      midjourneyUrl="https://cdn.midjourney.com/68db614b-6818-4f5a-856a-7f4d64ef2c91/0_0.png"
-    />
-  </div>
-)}
-
-<script>
-  // Move the component from hidden source to the mount point
-  function moveComponent() {
-    const source = document.getElementById('midjourney-component-source');
-    const mount = document.getElementById('midjourney-interactive-mount');
-    
-    if (source && mount) {
-      // Move all children from source to mount
-      while (source.firstChild) {
-        mount.appendChild(source.firstChild);
-      }
-      // Remove the source container
-      source.remove();
-    }
-  }
-  
-  // Wait a bit for Astro to hydrate the component
-  setTimeout(moveComponent, 100);
 </script>

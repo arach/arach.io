@@ -57,7 +57,22 @@ export async function generateOgImageForPost(post: CollectionEntry<"blog">, layo
       
       if (typeof post.data.thumbnail === 'string') {
         // String path in frontmatter
-        if (post.data.thumbnail.startsWith("../../assets/")) {
+        if (post.data.thumbnail.startsWith("http://") || post.data.thumbnail.startsWith("https://")) {
+          // External URL - fetch and convert to base64
+          try {
+            const response = await fetch(post.data.thumbnail);
+            const arrayBuffer = await response.arrayBuffer();
+            const buffer = Buffer.from(arrayBuffer);
+            const ext = path.extname(new URL(post.data.thumbnail).pathname).toLowerCase();
+            const mimeType = ext === '.png' ? 'image/png' :
+                            ext === '.webp' ? 'image/webp' : 'image/jpeg';
+            thumbnailBase64 = `data:${mimeType};base64,${buffer.toString('base64')}`;
+            return; // Skip the file reading below
+          } catch (err) {
+            console.warn(`Could not fetch external thumbnail from ${post.data.thumbnail}:`, err);
+            return; // Skip the file reading below
+          }
+        } else if (post.data.thumbnail.startsWith("../../assets/")) {
           // Convert relative path to absolute
           imagePath = join(process.cwd(), "src", "assets", post.data.thumbnail.replace("../../assets/", ""));
         } else if (post.data.thumbnail.startsWith("/src/assets/")) {

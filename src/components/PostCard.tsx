@@ -13,7 +13,7 @@ export default function PostCard({
   frontmatter,
   secHeading = true,
 }: Props) {
-  const { title, pubDatetime, modDatetime, description, thumbnail } =
+  const { title, pubDatetime, modDatetime, description, thumbnail, thumbnailCrop } =
     frontmatter;
 
   const headerProps = {
@@ -21,8 +21,55 @@ export default function PostCard({
     className: "text-xl font-bold line-clamp-2",
   };
 
-  // Default thumbnail if none provided - using a gradient placeholder
-  const thumbnailSrc = thumbnail?.src || null;
+  // Handle both image objects (with .src) and string URLs
+  const thumbnailSrc = typeof thumbnail === 'string' ? thumbnail : thumbnail?.src || null;
+
+  // Build image styles from thumbnailCrop
+  const imageStyle: React.CSSProperties = {};
+
+  if (thumbnailCrop) {
+    // New intuitive API takes precedence
+    if (thumbnailCrop.anchor || thumbnailCrop.shift) {
+      // Map anchor to CSS object-position
+      const anchorMap: Record<string, string> = {
+        top: 'center top',
+        bottom: 'center bottom',
+        left: 'left center',
+        right: 'right center',
+        center: 'center center',
+      };
+
+      let position = thumbnailCrop.anchor ? anchorMap[thumbnailCrop.anchor] : 'center center';
+
+      // Apply shift if provided
+      if (thumbnailCrop.shift) {
+        const [xPos, yPos] = position.split(' ');
+        // For vertical anchors (top/bottom), shift affects Y
+        if (thumbnailCrop.anchor === 'top' || thumbnailCrop.anchor === 'bottom') {
+          position = `${xPos} calc(${yPos} + ${thumbnailCrop.shift})`;
+        }
+        // For horizontal anchors (left/right), shift affects X
+        else if (thumbnailCrop.anchor === 'left' || thumbnailCrop.anchor === 'right') {
+          position = `calc(${xPos} + ${thumbnailCrop.shift}) ${yPos}`;
+        }
+      }
+
+      imageStyle.objectPosition = position;
+    }
+    // Fallback to legacy x/y positioning
+    else if (thumbnailCrop.x || thumbnailCrop.y) {
+      imageStyle.objectPosition = `${thumbnailCrop.x || 'center'} ${thumbnailCrop.y || 'center'}`;
+    }
+
+    // Apply zoom/scale
+    if (thumbnailCrop.zoom) {
+      imageStyle.transform = `scale(${thumbnailCrop.zoom})`;
+    }
+
+    // Apply width/height if specified (legacy support)
+    if (thumbnailCrop.width) imageStyle.width = thumbnailCrop.width;
+    if (thumbnailCrop.height) imageStyle.height = thumbnailCrop.height;
+  }
 
   return (
     <article className="group relative flex flex-col overflow-hidden rounded-2xl bg-skin-card">
@@ -46,6 +93,7 @@ export default function PostCard({
               src={thumbnailSrc}
               alt={title}
               className="h-full w-full object-cover transition-transform duration-200 group-hover:scale-110"
+              style={imageStyle}
               loading="lazy"
             />
           ) : (

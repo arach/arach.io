@@ -598,49 +598,17 @@ export default (post: CollectionEntry<"blog">, thumbnailBase64?: string, layoutO
     <div
       style={{
         display: "flex",
+        flexDirection: "column",
         width: "100%",
         height: "100%",
-        position: "relative",
         background: tacticalTheme.background,
         padding: "32px 48px",
         fontFamily: "'Space Mono', monospace",
       }}
     >
-      {/* Thin border around entire content */}
-      <div
-        style={{
-          position: "absolute",
-          top: "20px",
-          left: "20px",
-          right: "20px",
-          bottom: "20px",
-          border: `1px solid ${tacticalTheme.borderLight}`,
-        }}
-      />
-      
-      {/* Corner crosses - Top Left */}
-      <div style={{ position: "absolute", top: "20px", left: "20px", width: "30px", height: "2px", background: tacticalTheme.whiteLight }} />
-      <div style={{ position: "absolute", top: "20px", left: "20px", width: "2px", height: "30px", background: tacticalTheme.whiteLight }} />
-      
-      {/* Corner crosses - Top Right */}
-      <div style={{ position: "absolute", top: "20px", right: "20px", width: "30px", height: "2px", background: tacticalTheme.whiteLight }} />
-      <div style={{ position: "absolute", top: "20px", right: "20px", width: "2px", height: "30px", background: tacticalTheme.whiteLight }} />
-      
-      {/* Corner crosses - Bottom Left */}
-      <div style={{ position: "absolute", bottom: "20px", left: "20px", width: "30px", height: "2px", background: tacticalTheme.whiteLight }} />
-      <div style={{ position: "absolute", bottom: "20px", left: "20px", width: "2px", height: "30px", background: tacticalTheme.whiteLight }} />
-      
-      {/* Corner crosses - Bottom Right */}
-      <div style={{ position: "absolute", bottom: "20px", right: "20px", width: "30px", height: "2px", background: tacticalTheme.whiteLight }} />
-      <div style={{ position: "absolute", bottom: "20px", right: "20px", width: "2px", height: "30px", background: tacticalTheme.whiteLight }} />
-      
       {/* Header bar */}
       <div
         style={{
-          position: "absolute",
-          top: "32px",
-          left: "48px",
-          right: "48px",
           display: "flex",
           justifyContent: "space-between",
           fontSize: "10px",
@@ -648,21 +616,21 @@ export default (post: CollectionEntry<"blog">, thumbnailBase64?: string, layoutO
           color: tacticalTheme.whiteLight,
           fontWeight: 600,
           letterSpacing: "0.1em",
+          marginBottom: "28px",
         }}
       >
         <span>ARTICLE: BRIEFING | TYPE: {tags && tags.length > 0 ? sanitizeText(tags[0]).toUpperCase() : "TECHNICAL"} | STATUS: PUBLISHED</span>
         <span>ACCESS: PUBLIC</span>
       </div>
-      
+
       {/* Main content */}
       <div
         style={{
           display: "flex",
           flexDirection: "column",
           width: "100%",
-          marginTop: "60px",
+          flex: 1,
           justifyContent: "space-between",
-          height: "100%",
         }}
       >
         {/* Article classification */}
@@ -675,6 +643,7 @@ export default (post: CollectionEntry<"blog">, thumbnailBase64?: string, layoutO
         >
           <div
             style={{
+              display: "flex",
               fontSize: "12px",
               fontFamily: "'Space Mono', monospace",
               color: tacticalTheme.cyanMuted,
@@ -715,6 +684,7 @@ export default (post: CollectionEntry<"blog">, thumbnailBase64?: string, layoutO
           >
             <div
               style={{
+                display: "flex",
                 fontSize: "12px",
                 fontFamily: "'Space Mono', monospace",
                 color: tacticalTheme.cyanMuted,
@@ -832,6 +802,7 @@ export default (post: CollectionEntry<"blog">, thumbnailBase64?: string, layoutO
             >
               <div
                 style={{
+                  display: "flex",
                   width: "8px",
                   height: "8px",
                   background: tacticalTheme.cyanMuted,
