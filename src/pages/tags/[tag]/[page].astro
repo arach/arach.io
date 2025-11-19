@@ -13,7 +13,10 @@ export interface Props {
 }
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blog");
+  // Get posts from both blog and til collections
+  const blogPosts = await getCollection("blog");
+  const tilPosts = await getCollection("til");
+  const posts = [...blogPosts, ...tilPosts];
 
   const tags = getUniqueTags(posts);
 
@@ -35,7 +38,10 @@ export async function getStaticPaths() {
 const { page } = Astro.params;
 const { tag, tagName } = Astro.props;
 
-const posts = await getCollection("blog", ({ data }) => !data.draft);
+// Get posts from both blog and til collections, filter out drafts
+const blogPosts = await getCollection("blog", ({ data }) => !data.draft);
+const tilPosts = await getCollection("til", ({ data }) => !data.draft);
+const posts = [...blogPosts, ...tilPosts];
 
 const postsByTag = getPostsByTag(posts, tag);
 

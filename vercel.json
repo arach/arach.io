@@ -7,6 +7,21 @@
       "source": "/about-tactical",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/blog/:slug*",
+      "destination": "/posts/:slug*",
+      "permanent": true
+    },
+    {
+      "source": "/posts/:slug*.md",
+      "destination": "/posts/:slug*",
+      "permanent": true
+    },
+    {
+      "source": "/til/:slug*.md",
+      "destination": "/til/:slug*",
+      "permanent": true
     }
   ]
 }
