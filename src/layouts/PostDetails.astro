@@ -51,6 +51,48 @@ const {
 // Handle both string URLs and Astro image objects
 const thumbnailSrc = typeof thumbnail === 'string' ? thumbnail : thumbnail?.src;
 
+// Build thumbnail crop styles
+let thumbnailStyle: Record<string, string> = {};
+if (thumbnailCrop) {
+  // New intuitive API takes precedence
+  if (thumbnailCrop.anchor || thumbnailCrop.shift) {
+    const anchorMap: Record<string, string> = {
+      top: 'center top',
+      bottom: 'center bottom',
+      left: 'left center',
+      right: 'right center',
+      center: 'center center',
+    };
+
+    let position = thumbnailCrop.anchor ? anchorMap[thumbnailCrop.anchor] : 'center center';
+
+    // Apply shift if provided
+    if (thumbnailCrop.shift) {
+      const [xPos, yPos] = position.split(' ');
+      if (thumbnailCrop.anchor === 'top' || thumbnailCrop.anchor === 'bottom') {
+        position = `${xPos} calc(${yPos} + ${thumbnailCrop.shift})`;
+      } else if (thumbnailCrop.anchor === 'left' || thumbnailCrop.anchor === 'right') {
+        position = `calc(${xPos} + ${thumbnailCrop.shift}) ${yPos}`;
+      }
+    }
+
+    thumbnailStyle.objectPosition = position;
+  }
+  // Fallback to legacy x/y positioning
+  else if (thumbnailCrop.x || thumbnailCrop.y) {
+    thumbnailStyle.objectPosition = `${thumbnailCrop.x || 'center'} ${thumbnailCrop.y || 'center'}`;
+  }
+
+  // Apply zoom/scale
+  if (thumbnailCrop.zoom) {
+    thumbnailStyle.transform = `scale(${thumbnailCrop.zoom})`;
+  }
+
+  // Apply width/height if specified
+  if (thumbnailCrop.width) thumbnailStyle.width = thumbnailCrop.width;
+  if (thumbnailCrop.height) thumbnailStyle.height = thumbnailCrop.height;
+}
+
 const { Content } = await post.render();
 
 // Always use the generated OG image endpoint which includes the thumbnail if available
@@ -120,54 +162,7 @@ const layoutProps = {
           alt={title}
           class="hero-image"
           loading="eager"
-          style={(() => {
-            if (!thumbnailCrop) return {};
-
-            const style: Record<string, string> = {};
-
-            // New intuitive API takes precedence
-            if (thumbnailCrop.anchor || thumbnailCrop.shift) {
-              const anchorMap: Record<string, string> = {
-                top: 'center top',
-                bottom: 'center bottom',
-                left: 'left center',
-                right: 'right center',
-                center: 'center center',
-              };
-
-              let position = thumbnailCrop.anchor ? anchorMap[thumbnailCrop.anchor] : 'center center';
-
-              // Apply shift if provided
-              if (thumbnailCrop.shift) {
-                const [xPos, yPos] = position.split(' ');
-                // For vertical anchors (top/bottom), shift affects Y
-                if (thumbnailCrop.anchor === 'top' || thumbnailCrop.anchor === 'bottom') {
-                  position = `${xPos} calc(${yPos} + ${thumbnailCrop.shift})`;
-                }
-                // For horizontal anchors (left/right), shift affects X
-                else if (thumbnailCrop.anchor === 'left' || thumbnailCrop.anchor === 'right') {
-                  position = `calc(${xPos} + ${thumbnailCrop.shift}) ${yPos}`;
-                }
-              }
-
-              style.objectPosition = position;
-            }
-            // Fallback to legacy x/y positioning
-            else if (thumbnailCrop.x || thumbnailCrop.y) {
-              style.objectPosition = `${thumbnailCrop.x || 'center'} ${thumbnailCrop.y || 'center'}`;
-            }
-
-            // Apply zoom/scale
-            if (thumbnailCrop.zoom) {
-              style.transform = `scale(${thumbnailCrop.zoom})`;
-            }
-
-            // Apply width/height if specified
-            if (thumbnailCrop.width) style.width = thumbnailCrop.width;
-            if (thumbnailCrop.height) style.height = thumbnailCrop.height;
-
-            return style;
-          })()}
+          style={thumbnailStyle}
         />
       </div>
     )}
