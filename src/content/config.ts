@@ -11,7 +11,7 @@ const blog = defineCollection({
       title: z.string(),
       featured: z.boolean().optional(),
       draft: z.boolean().optional(),
-      thumbnail: image().optional(),
+      thumbnail: image().or(z.string()).optional(),
       tags: z.array(z.string()).default(["others"]),
       ogImage: image()
         .refine(img => img.width >= 1200 && img.height >= 630, {
@@ -25,6 +25,18 @@ const blog = defineCollection({
       series: z.object({
         name: z.string(),
         order: z.number(),
+      }).optional(),
+      thumbnailCrop: z.object({
+        // Legacy CSS-based positioning (still supported)
+        x: z.string().optional(), // e.g., "left", "center", "right" or percentage/px
+        y: z.string().optional(), // e.g., "top", "center", "bottom" or percentage/px
+        width: z.string().optional(), // e.g., "100%"
+        height: z.string().optional(), // e.g., "100%"
+
+        // New intuitive API
+        anchor: z.enum(["top", "center", "bottom", "left", "right"]).optional(), // Where to anchor the view
+        shift: z.string().optional(), // Offset from anchor (e.g., "20%", "-10px")
+        zoom: z.number().optional(), // Scale factor (e.g., 1.5 for 150%)
       }).optional(),
     }),
 });
@@ -52,7 +64,7 @@ const book = defineCollection({
       featured: z.boolean().optional(),
       rating: z.number().optional(),
       readingTime: z.string().optional(),
-      thumbnail: image().optional(),
+      thumbnail: image().or(z.string()).optional(),
       goodreads: z.string().optional(),
       amazon: z.string().optional(),
     }),
