@@ -6,7 +6,6 @@ import Tag from "@components/Tag.astro";
 import Datetime from "@components/Datetime";
 import type { CollectionEntry } from "astro:content";
 import { slugifyStr } from "@utils/slugify";
-import ShareLinks from "@components/ShareLinks.astro";
 import DownloadLink from "@components/DownloadLink.astro";
 import SeriesNavigationMinimal from "@components/SeriesNavigationMinimal";
 import { Icon } from 'astro-icon/components';
@@ -126,7 +125,7 @@ const layoutProps = {
     <!-- Series tag removed - now handled by minimal navigation -->
     
     <!-- Go back button -->
-    <div class="mb-4">
+    <div class="mb-4 mt-6">
       <button
         class="go-back-btn-inline"
         onclick="(() => (history.length === 1) ? window.location = '/' : history.back())()"
@@ -135,35 +134,55 @@ const layoutProps = {
           ><path
             d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"
           ></path>
-        </svg><span class="go-back-full">Go back</span><span class="go-back-short">Back</span>
+        </svg><span>back</span>
       </button>
     </div>
 
-    <!-- Wired-style: Title ABOVE image -->
-    <div class="title-with-series mb-6">
-      <h1 transition:name={slugifyStr(title)} class="post-title-wired">{title}</h1>
-      {showSeriesNav && (
-        <SeriesNavigationMinimal
-          currentPost={post}
-          seriesPosts={seriesPosts}
-          currentIndex={currentIndex}
-          previousPost={previousPost}
-          nextPost={nextPost}
-          client:load
-        />
-      )}
-    </div>
-
-    <!-- Hero Image (Wired-style) -->
+    <!-- Hero Image with overlapping title -->
     {thumbnailSrc && (
-      <div class="hero-image-container">
-        <img
-          src={thumbnailSrc}
-          alt={title}
-          class="hero-image"
-          loading="eager"
-          style={thumbnailStyle}
-        />
+      <div class="hero-image-wrapper">
+        <div class="hero-image-container">
+          <img
+            src={thumbnailSrc}
+            alt={title}
+            class="hero-image"
+            loading="eager"
+            style={thumbnailStyle}
+          />
+          <div class="hero-gradient"></div>
+        </div>
+        <div class="title-overlay">
+          <div class="title-with-series">
+            <h1 transition:name={slugifyStr(title)} class="post-title-wired">{title}</h1>
+            {showSeriesNav && (
+              <SeriesNavigationMinimal
+                currentPost={post}
+                seriesPosts={seriesPosts}
+                currentIndex={currentIndex}
+                previousPost={previousPost}
+                nextPost={nextPost}
+                client:load
+              />
+            )}
+          </div>
+        </div>
+      </div>
+    )}
+
+    <!-- Fallback title if no thumbnail -->
+    {!thumbnailSrc && (
+      <div class="title-with-series mb-4">
+        <h1 transition:name={slugifyStr(title)} class="post-title-wired">{title}</h1>
+        {showSeriesNav && (
+          <SeriesNavigationMinimal
+            currentPost={post}
+            seriesPosts={seriesPosts}
+            currentIndex={currentIndex}
+            previousPost={previousPost}
+            nextPost={nextPost}
+            client:load
+          />
+        )}
       </div>
     )}
 
@@ -174,7 +193,7 @@ const layoutProps = {
 
 
     <!-- Date/Reading time + Actions row -->
-    <div class="flex items-center justify-between gap-4 date-time-row">
+    <div class="flex items-center justify-between gap-4 date-time-row max-w-[700px] mx-auto">
       <div class="flex items-center gap-4">
         <Datetime
           pubDatetime={pubDatetime}
@@ -199,30 +218,28 @@ const layoutProps = {
       </article>
     </div>
 
-    <ul class="my-8">
-      {tags.map(tag => <Tag tag={slugifyStr(tag)} />)}
-    </ul>
+    <div class="max-w-[700px] mx-auto">
+      <ul class="my-8">
+        {tags.map(tag => <Tag tag={slugifyStr(tag)} />)}
+      </ul>
 
-    <div class="my-6 flex justify-center">
-      <DownloadLink collection="blog" slug={post.slug} />
-    </div>
+      <div class="my-6 flex justify-center">
+        <DownloadLink collection="blog" slug={post.slug} />
+      </div>
 
-    <div
-      class="flex flex-col-reverse items-center justify-between gap-6 sm:flex-row-reverse sm:items-end sm:gap-4"
-    >
-      <button
-        id="back-to-top"
-        class="focus-outline whitespace-nowrap py-1 hover:opacity-75"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" class="rotate-90">
-          <path
-            d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"
-          ></path>
-        </svg>
-        <span>Back to Top</span>
-      </button>
-
-      <ShareLinks />
+      <div class="flex justify-end">
+        <button
+          id="back-to-top"
+          class="focus-outline whitespace-nowrap py-1 hover:opacity-75"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="rotate-90">
+            <path
+              d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"
+            ></path>
+          </svg>
+          <span>Back to Top</span>
+        </button>
+      </div>
     </div>
   </main>
   <Footer />
@@ -234,18 +251,53 @@ const layoutProps = {
     @apply mx-auto w-full pb-12 px-4 sm:px-6 lg:px-8;
     max-width: 1200px; /* Match header width exactly */
   }
-  /* Wired-style Hero Image */
+  /* Hero wrapper for overlapping title */
+  .hero-image-wrapper {
+    position: relative;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Full-bleed Hero Image */
   .hero-image-container {
     @apply w-full overflow-hidden;
-    max-height: 500px;
-    margin-bottom: 2rem;
+    max-height: 400px;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    width: 100vw;
+    position: relative;
   }
 
   .hero-image {
     @apply w-full h-auto object-cover;
     display: block;
-    object-position: center bottom;
-    min-height: 500px;
+    object-position: center center;
+    max-height: 400px;
+  }
+
+  .hero-gradient {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 150px;
+    background: linear-gradient(to top, rgb(var(--color-fill)) 0%, transparent 100%);
+    pointer-events: none;
+  }
+
+  /* Title overlapping the image */
+  .title-overlay {
+    position: relative;
+    margin-top: -2.5rem;
+    z-index: 10;
+  }
+
+  .title-overlay {
+    background: linear-gradient(to top, rgb(var(--color-fill)) 20%, rgb(var(--color-fill) / 0.15) 60%, rgb(var(--color-fill) / 0) 100%);
+    padding: 3rem 0 0.5rem 0;
+  }
+
+  .title-overlay .post-title-wired {
+    background: none;
   }
 
   /* Wired-style Title (above image) */
@@ -259,14 +311,15 @@ const layoutProps = {
   /* Mobile adjustments */
   @media (max-width: 767px) {
     .hero-image-container {
-      max-height: 350px;
-      margin-left: -1rem;
-      margin-right: -1rem;
+      max-height: 250px;
+      margin-left: calc(-50vw + 50%);
+      margin-right: calc(-50vw + 50%);
+      width: 100vw;
       margin-bottom: 1.5rem;
     }
 
     .hero-image {
-      min-height: 350px;
+      max-height: 250px;
     }
 
     .post-title-wired {
@@ -314,6 +367,9 @@ const layoutProps = {
   .title-with-series {
     @apply flex items-start gap-3;
     justify-content: space-between;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .post-title {
@@ -410,10 +466,12 @@ const layoutProps = {
 
   /* Flexible content layout system */
   .prose {
-    max-width: none;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     font-size: 1.1875rem;
-    line-height: 1.5; /* Tight like premium sites - efficient but comfortable */
+    line-height: 1.6;
     font-weight: 275; /* Ultra-light like Vercel/Linear - ethereal feel */
     letter-spacing: 0.005em; /* Subtle breathing room */
     color: rgb(var(--color-text-base));
@@ -494,7 +552,7 @@ const layoutProps = {
   }
 
   .prose p {
-    margin-bottom: 1.75em; /* 1.75em based on line-height for rhythm */
+    margin-bottom: 1.25em;
     text-align: left;
   }
 
