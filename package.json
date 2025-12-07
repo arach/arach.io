@@ -1,24 +1,13 @@
 {
-  "packageManager": "bun@0.1.10",
   "name": "arach-io",
   "version": "4.2.0",
-  "private": false,
-  "engines": {
-    "node": ">=22.0.0"
-  },
+  "private": true,
   "scripts": {
-    "dev": "astro dev --experimental-https",
-    "start": "astro dev",
+    "dev": "astro dev",
     "build": "astro build && jampack ./dist",
     "preview": "astro preview",
-    "sync": "astro sync",
-    "astro": "astro",
-    "format:check": "prettier --check . --plugin=prettier-plugin-astro",
     "format": "prettier --write . --plugin=prettier-plugin-astro",
-    "cz": "cz",
-    "prepare": "bun x husky install",
-    "lint": "eslint",
-    "postinstall": "bun scripts/install-sharp.js"
+    "format:check": "prettier --check . --plugin=prettier-plugin-astro"
   },
   "dependencies": {
     "@astrojs/check": "0.9.4",
@@ -38,7 +27,6 @@
     "@types/react-dom": "^19.0.0",
     "astro": "5.12.3",
     "astro-icon": "^1.1.5",
-    "bun": "^1.2.16",
     "framer-motion": "^12.23.12",
     "fuse.js": "^7.0.0",
     "geist": "^1.3.0",
@@ -54,38 +42,14 @@
     "tailwindcss": "^3.4.3",
     "typescript": "^5.4.5"
   },
-  "resolutions": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
-  },
   "devDependencies": {
     "@astrojs/react": "4.3.0",
     "@astrojs/sitemap": "3.4.1",
     "@astrojs/tailwind": "6.0.2",
     "@types/github-slugger": "^1.3.0",
     "@types/react": "^19.0.0",
-    "@typescript-eslint/parser": "^6.21.0",
-    "astro-eslint-parser": "^0.16.3",
-    "caniuse-lite": "^1.0.30001727",
-    "commitizen": "^4.3.0",
-    "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^8.57.0",
-    "eslint-plugin-astro": "^0.31.4",
-    "husky": "^8.0.3",
-    "lint-staged": "^15.2.2",
-    "node-gyp": "^9.1.0",
     "prettier": "^3.2.5",
     "prettier-plugin-astro": "^0.13.0",
     "prettier-plugin-tailwindcss": "^0.5.14"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx,md,mdx,json,astro}": [
-      "prettier --write --plugin=prettier-plugin-astro"
-    ]
   }
 }
