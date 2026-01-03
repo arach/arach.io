@@ -78,7 +78,7 @@ const layoutProps = {
         <DownloadLink collection="til" slug={entry.slug} />
       </div>
     </div>
-    <article id="article" role="article" class="prose mx-auto mt-8 max-w-3xl">
+    <article id="article" role="article" class="prose til-content mx-auto mt-8 max-w-3xl">
       <Content />
     </article>
 
@@ -114,9 +114,33 @@ const layoutProps = {
 <style>
   main {
     @apply mx-auto w-full max-w-3xl px-4 pb-12;
+    font-family: 'Fira Code', 'JetBrains Mono', 'Berkeley Mono', monospace;
   }
   .til-title {
     @apply text-2xl font-semibold text-skin-accent;
+    font-family: 'Fira Code', 'JetBrains Mono', 'Berkeley Mono', monospace !important;
+  }
+  button {
+    font-family: 'Fira Code', 'JetBrains Mono', 'Berkeley Mono', monospace;
+    font-size: 0.875rem;
+  }
+  .til-content {
+    font-family: 'Fira Code', 'JetBrains Mono', 'Berkeley Mono', monospace;
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+  .til-content :global(h2), .til-content :global(h3), .til-content :global(h4) {
+    font-family: 'Fira Code', 'JetBrains Mono', 'Berkeley Mono', monospace !important;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .til-content :global(p) {
+    margin-bottom: 0.75rem;
+  }
+  .til-content :global(pre) {
+    font-size: 0.8125rem;
   }
 </style>
 

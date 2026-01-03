@@ -20,7 +20,7 @@ const socialImageURL = new URL(
 <Layout title={`TIL | ${SITE.title}`} socialImageURL={socialImageURL}>
   <Header activeNav="til" />
   <Main pageTitle="Today I Learned" pageDesc="Small things I've learned along the way">
-    <ul>
+    <ul class="til-list">
       {
         sortedTILs.map(
           ({ data, slug }, index) =>
@@ -33,3 +33,20 @@ const socialImageURL = new URL(
   </Main>
   <Footer />
 </Layout>
+
+<style>
+  .til-list {
+    font-family: 'Fira Code', 'JetBrains Mono', 'Berkeley Mono', monospace;
+    font-size: 0.875rem;
+  }
+  .til-list :global(a) {
+    font-family: inherit;
+  }
+  .til-list :global(h2), .til-list :global(h3) {
+    font-family: inherit;
+    font-size: 1rem;
+  }
+  .til-list :global(p) {
+    font-size: 0.8125rem;
+  }
+</style>

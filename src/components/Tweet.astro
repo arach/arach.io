@@ -1,0 +1,258 @@
+---
+import { getTweet } from 'react-tweet/api';
+
+interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+
+const tweetId = id.includes('/')
+  ? id.split('/status/')[1]?.split('?')[0]
+  : id;
+
+const tweet = await getTweet(tweetId);
+
+
+const formatDate = (dateStr: string) => {
+  const date = new Date(dateStr);
+  return date.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric'
+  });
+};
+
+const formatNumber = (num: number) => {
+  if (num >= 1000) return (num / 1000).toFixed(1) + 'k';
+  return num.toString();
+};
+
+const decodeHtml = (text: string) => {
+  return text
+    .replace(/&gt;/g, '>')
+    .replace(/&lt;/g, '<')
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'");
+};
+
+const cleanTweetText = (text: string) => {
+  let cleaned = decodeHtml(text);
+  // Remove all leading @mentions
+  cleaned = cleaned.replace(/^(@\w+\s*)+/, '');
+  return cleaned.trim();
+};
+---
+
+{tweet ? (
+  <div class="tweet-card">
+    <div class="tweet-header">
+      <img src={tweet.user.profile_image_url_https} alt="" class="tweet-avatar" />
+      <span class="tweet-name">{tweet.user.name}</span>
+      {(tweet.user.verified || tweet.user.is_blue_verified) && (
+        <svg viewBox="0 0 22 22" class="tweet-verified" aria-label="Verified"><path d="M20.396 11c-.018-.646-.215-1.275-.57-1.816-.354-.54-.852-.972-1.438-1.246.223-.607.27-1.264.14-1.897-.131-.634-.437-1.218-.882-1.687-.47-.445-1.053-.75-1.687-.882-.633-.13-1.29-.083-1.897.14-.273-.587-.704-1.086-1.245-1.44S11.647 1.62 11 1.604c-.646.017-1.273.213-1.813.568s-.969.854-1.24 1.44c-.608-.223-1.267-.272-1.902-.14-.635.13-1.22.436-1.69.882-.445.47-.749 1.055-.878 1.688-.13.633-.08 1.29.144 1.896-.587.274-1.087.705-1.443 1.245-.356.54-.555 1.17-.574 1.817.02.647.218 1.276.574 1.817.356.54.856.972 1.443 1.245-.224.606-.274 1.263-.144 1.896.13.634.433 1.218.877 1.688.47.443 1.054.747 1.687.878.633.132 1.29.084 1.897-.136.274.586.705 1.084 1.246 1.439.54.354 1.17.551 1.816.569.647-.016 1.276-.213 1.817-.567s.972-.854 1.245-1.44c.604.239 1.266.296 1.903.164.636-.132 1.22-.447 1.68-.907.46-.46.776-1.044.908-1.681s.075-1.299-.165-1.903c.586-.274 1.084-.705 1.439-1.246.354-.54.551-1.17.569-1.816zM9.662 14.85l-3.429-3.428 1.293-1.302 2.072 2.072 4.4-4.794 1.347 1.246z"></path></svg>
+      )}
+      <a href={`https://x.com/${tweet.user.screen_name}`} class="tweet-handle" target="_blank" rel="noopener">@{tweet.user.screen_name}</a>
+      <a href={`https://x.com/${tweet.user.screen_name}/status/${tweetId}`} class="tweet-x" target="_blank" rel="noopener" title="View on X">𝕏</a>
+    </div>
+
+    {tweet.in_reply_to_screen_name && tweet.text.toLowerCase().startsWith(`@${tweet.in_reply_to_screen_name.toLowerCase()}`) && (
+      <div class="tweet-reply-to">
+        → <a href={tweet.in_reply_to_status_id_str
+          ? `https://x.com/${tweet.in_reply_to_screen_name}/status/${tweet.in_reply_to_status_id_str}`
+          : `https://x.com/${tweet.in_reply_to_screen_name}`} target="_blank" rel="noopener">@{tweet.in_reply_to_screen_name}</a>
+      </div>
+    )}
+
+    <div class="tweet-text">{cleanTweetText(tweet.text).replace(/https:\/\/t\.co\/\w+$/g, '').trim()}</div>
+
+    {tweet.mediaDetails && tweet.mediaDetails.length > 0 && (
+      <div class="tweet-media">
+        {tweet.mediaDetails.map((media: any) => (
+          media.type === 'photo' ? (
+            <img src={media.media_url_https} alt="" class="tweet-media-img" loading="lazy" />
+          ) : media.type === 'video' || media.type === 'animated_gif' ? (
+            <img src={media.media_url_https} alt="" class="tweet-media-img" loading="lazy" />
+          ) : null
+        ))}
+      </div>
+    )}
+
+    <div class="tweet-footer">
+      <div class="tweet-actions">
+        <span class="tweet-action" title="Likes">♥ {formatNumber(tweet.favorite_count)}</span>
+        <span class="tweet-action" title="Replies">↩ {formatNumber(tweet.conversation_count || 0)}</span>
+        <a href={`https://x.com/${tweet.user.screen_name}/status/${tweetId}`} class="tweet-action tweet-link" target="_blank" rel="noopener">↗ open</a>
+      </div>
+      <a href={`https://x.com/${tweet.user.screen_name}/status/${tweetId}`} class="tweet-date" target="_blank" rel="noopener">
+        {formatDate(tweet.created_at)}
+      </a>
+    </div>
+  </div>
+) : (
+  <div class="tweet-card tweet-not-found">
+    <span>Tweet not found</span>
+    <a href={`https://x.com/i/status/${tweetId}`} target="_blank" rel="noopener">View on X →</a>
+  </div>
+)}
+
+<style>
+  .tweet-card {
+    font-family: 'Fira Code', 'JetBrains Mono', 'Berkeley Mono', monospace;
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin: 1rem 0;
+  }
+
+  .tweet-header {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin: 0 0 2px 0;
+    padding: 0;
+    font-size: 0.75rem;
+    line-height: 1;
+  }
+
+  .tweet-header * {
+    margin: 0;
+    padding: 0;
+  }
+
+  .tweet-avatar {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .tweet-name {
+    font-weight: 600;
+    color: rgb(var(--color-text-base));
+    white-space: nowrap;
+  }
+
+  .tweet-verified {
+    width: 12px !important;
+    height: 12px !important;
+    min-width: 12px;
+    min-height: 12px;
+    max-width: 12px;
+    max-height: 12px;
+    fill: #1d9bf0 !important;
+    flex-shrink: 0;
+  }
+
+  .tweet-handle {
+    color: rgba(var(--color-text-base), 0.5);
+    white-space: nowrap;
+    text-decoration: none;
+  }
+
+  .tweet-handle:hover {
+    color: rgb(var(--color-accent));
+  }
+
+  .tweet-x {
+    margin-left: auto;
+    color: rgba(var(--color-text-base), 0.4);
+    text-decoration: none;
+    font-size: 0.75rem;
+  }
+
+  .tweet-x:hover {
+    color: rgb(var(--color-text-base));
+  }
+
+  .tweet-reply-to {
+    font-size: 0.75rem;
+    color: rgba(var(--color-text-base), 0.5);
+    margin-bottom: 4px;
+  }
+
+  .tweet-reply-to a {
+    color: rgb(var(--color-accent));
+    text-decoration: none;
+  }
+
+  .tweet-text {
+    color: rgb(var(--color-text-base));
+    margin-bottom: 6px;
+    white-space: pre-wrap;
+  }
+
+  .tweet-media {
+    margin-bottom: 6px;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .tweet-media-img {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .tweet-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .tweet-actions {
+    display: flex;
+    gap: 14px;
+    font-size: 0.7rem;
+    color: rgba(var(--color-text-base), 0.5);
+  }
+
+  .tweet-action {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .tweet-link {
+    color: rgba(var(--color-text-base), 0.4);
+    text-decoration: none;
+  }
+
+  .tweet-link:hover {
+    color: rgb(var(--color-accent));
+  }
+
+  .tweet-date {
+    font-size: 0.7rem;
+    color: rgba(var(--color-text-base), 0.4);
+    text-decoration: none;
+  }
+
+  .tweet-date:hover {
+    color: rgb(var(--color-accent));
+  }
+
+  .tweet-not-found {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: rgba(var(--color-text-base), 0.5);
+  }
+
+  .tweet-not-found a {
+    color: rgb(var(--color-accent));
+    text-decoration: none;
+  }
+
+  /* Light mode */
+  html[data-theme="light"] .tweet-card {
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+</style>

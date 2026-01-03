@@ -534,3 +534,43 @@ article {
   filter: grayscale(0%) contrast(1);
   opacity: 1;
 }
+
+/* react-tweet styling */
+.tweet-container {
+  margin: 1.5rem 0;
+}
+
+.tweet-container [data-theme="dark"] {
+  --tweet-bg-color: rgba(255, 255, 255, 0.03);
+  --tweet-bg-color-hover: rgba(255, 255, 255, 0.05);
+  --tweet-border: 1px solid rgba(255, 255, 255, 0.1);
+  --tweet-font-color: rgb(245, 245, 244);
+  --tweet-font-color-secondary: rgb(161, 161, 170);
+  --tweet-color-blue-secondary: rgb(var(--color-accent));
+  --tweet-color-blue-secondary-hover: rgb(var(--color-accent));
+  --tweet-actions-font-weight: 500;
+  --tweet-replies-link-color: rgb(var(--color-accent));
+}
+
+.tweet-container [data-theme="dark"] article {
+  border-radius: 16px !important;
+}
+
+/* Tone down the "Read replies" button */
+.tweet-container [data-theme="dark"] a[href*="/status/"] {
+  background: rgba(var(--color-accent), 0.1) !important;
+  color: rgb(var(--color-accent)) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.tweet-container [data-theme="dark"] a[href*="/status/"]:hover {
+  background: rgba(var(--color-accent), 0.2) !important;
+}
+
+html[data-theme="light"] .tweet-container [data-theme="dark"] {
+  --tweet-bg-color: #fff;
+  --tweet-bg-color-hover: #f7f7f7;
+  --tweet-border: 1px solid rgb(229, 229, 229);
+  --tweet-font-color: rgb(15, 20, 25);
+  --tweet-font-color-secondary: rgb(83, 100, 113);
+}
