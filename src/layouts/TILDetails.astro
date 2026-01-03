@@ -32,7 +32,7 @@ const { Content } = await entry.render();
 
 const ogImageUrl = typeof ogImage === "string" ? ogImage : ogImage?.src;
 const ogUrl = new URL(
-  ogImageUrl ?? `/til/${slugifyStr(title)}.png`,
+  ogImageUrl ?? `/til/${entry.slug}/og.png`,
   Astro.url.origin
 ).href;
 

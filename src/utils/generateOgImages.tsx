@@ -7,6 +7,7 @@ import { join } from "node:path";
 
 import postOgImage from "./og-templates/post";
 import siteOgImage from "./og-templates/site";
+import tilOgImage from "./og-templates/til";
 import path from "path";
 
 // Use Space Mono fonts for tactical look
@@ -110,5 +111,10 @@ export async function generateOgImageForPost(post: CollectionEntry<"blog">, layo
 
 export async function generateOgImageForSite() {
   const svg = await satori(siteOgImage(), options);
+  return svgBufferToPngBuffer(svg);
+}
+
+export async function generateOgImageForTIL(til: CollectionEntry<"til">) {
+  const svg = await satori(tilOgImage(til), options);
   return svgBufferToPngBuffer(svg);
 }
