@@ -1,0 +1,58 @@
+---
+author: Arach Tchoupani
+pubDatetime: 2026-01-03T12:00:00Z
+title: Teleporting Claude Code sessions between CLI and web
+tags:
+  - claude
+  - cli
+  - productivity
+description: How to seamlessly transfer Claude Code sessions between your local terminal and claude.ai/code using the --teleport flag
+---
+
+import { Tweet } from '@astro-community/astro-embed-twitter';
+
+Learned about the `--teleport` flag in Claude Code CLI. It moves sessions between your terminal and claude.ai/code.
+
+Came from this thread with Boris Cherny ([@bcherny](https://x.com/bcherny)) who built Claude Code:
+
+<Tweet id="2007192120755663199" />
+
+Feature shipped in v2.0.45.
+
+## Web to Local
+
+When working on claude.ai/code, click "Open in CLI" to get:
+
+```bash
+claude --teleport session_abc123xyz
+```
+
+Run it in your project directory. It pulls the conversation, syncs files, and preserves git state.
+
+## Local to Web
+
+Add `&` at the end of a prompt to ship it to claude.ai/code:
+
+```bash
+> Refactor auth to use OAuth2 &
+```
+
+Frees your terminal. Grab it back later with `--teleport`.
+
+## Why bother
+
+Boris mentioned he runs 5 CLI instances + 5-10 web sessions in parallel. Teleport lets you:
+
+- Start on phone, finish on desktop
+- Run multiple sessions at once
+- Keep context intact across devices
+
+## Notes
+
+- Be in the right repo directory before teleporting
+- Pull latest if the repo changed remotely
+- Web features need Claude Pro/Max
+
+More from the community:
+
+<Tweet id="2007243876353093683" />
