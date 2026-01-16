@@ -23,6 +23,7 @@
     "@fontsource/inter": "^5.2.6",
     "@fontsource/share-tech-mono": "^5.0.12",
     "@iconify-json/lucide": "^1.2.57",
+    "@react-pdf/renderer": "^4.3.2",
     "@resvg/resvg-js": "^2.6.2",
     "@tailwindcss/typography": "^0.5.13",
     "@types/react-dom": "^19.0.0",
