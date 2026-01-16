@@ -289,9 +289,10 @@
   margin-bottom: var(--section-gap);
   position: relative;
   padding-left: 24px;
+  padding-right: 24px;
 }
 
-/* Timeline line */
+/* Timeline line (left) */
 .experience-section::before {
   content: '';
   position: absolute;
@@ -300,6 +301,17 @@
   bottom: 0;
   width: 1px;
   background: rgba(var(--border-rgb), 0.4);
+}
+
+/* Right border for symmetry */
+.experience-section::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(var(--border-rgb), 0.2);
 }
 
 .experience-card {
@@ -554,9 +566,10 @@
   margin-bottom: var(--section-gap);
   position: relative;
   padding-left: 24px;
+  padding-right: 24px;
 }
 
-/* Continue the timeline through these sections */
+/* Continue the timeline through these sections (left) */
 .education-section::before,
 .volunteer-section::before {
   content: '';
@@ -566,6 +579,18 @@
   bottom: 0;
   width: 1px;
   background: rgba(var(--border-rgb), 0.4);
+}
+
+/* Right border for symmetry */
+.education-section::after,
+.volunteer-section::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(var(--border-rgb), 0.2);
 }
 
 .compact-card {
@@ -703,6 +728,7 @@
   .education-section,
   .volunteer-section {
     padding-left: 16px;
+    padding-right: 16px;
   }
 
   .experience-card::before,
