@@ -5,18 +5,10 @@ import {
   Text,
   Link,
   StyleSheet,
-  Font,
 } from '@react-pdf/renderer';
 import { resumeData } from '../data/resume';
 
-// Register Space Mono font
-Font.register({
-  family: 'Space Mono',
-  fonts: [
-    { src: 'https://fonts.gstatic.com/s/spacemono/v12/i7dPIFZifjKcF5UAWdDRYEF8RQ.ttf', fontWeight: 400 },
-    { src: 'https://fonts.gstatic.com/s/spacemono/v12/i7dMIFZifjKcF5UAWdDRaPpZYFKQHwyVd3U.ttf', fontWeight: 700 },
-  ],
-});
+// Using built-in Courier for monospace tactical look
 
 const colors = {
   primary: '#0088cc',
@@ -30,7 +22,7 @@ const colors = {
 const styles = StyleSheet.create({
   page: {
     padding: 40,
-    fontFamily: 'Space Mono',
+    fontFamily: 'Courier',
     fontSize: 9,
     color: colors.text,
     backgroundColor: colors.background,

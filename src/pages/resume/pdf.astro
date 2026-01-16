@@ -4,29 +4,11 @@
 
 import Layout from "@layouts/Layout.astro";
 import { SITE } from "@config";
+import PDFViewerWrapper from "@components/PDFViewer";
 ---
 
 <Layout title={`Resume PDF | ${SITE.title}`}>
-  <div id="pdf-root" style="width: 100%; height: 100vh;"></div>
+  <div style="width: 100%; height: 100vh;">
+    <PDFViewerWrapper client:only="react" />
+  </div>
 </Layout>
-
-<script>
-  import { createElement } from 'react';
-  import { createRoot } from 'react-dom/client';
-  import { PDFViewer } from '@react-pdf/renderer';
-  import ResumePDF from '../../components/ResumePDF';
-
-  const container = document.getElementById('pdf-root');
-  if (container) {
-    const root = createRoot(container);
-    root.render(
-      createElement(PDFViewer, {
-        width: '100%',
-        height: '100%',
-        style: { border: 'none' }
-      },
-        createElement(ResumePDF)
-      )
-    );
-  }
-</script>
