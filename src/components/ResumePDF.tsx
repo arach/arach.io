@@ -5,283 +5,367 @@ import {
   Text,
   Link,
   StyleSheet,
+  Font,
 } from '@react-pdf/renderer';
 import { resumeData } from '../data/resume';
 
-// Using built-in Courier for monospace tactical look
+// Register Space Mono
+Font.register({
+  family: 'SpaceMono',
+  fonts: [
+    {
+      src: 'https://cdn.jsdelivr.net/fontsource/fonts/space-mono@latest/latin-400-normal.ttf',
+      fontWeight: 'normal',
+    },
+    {
+      src: 'https://cdn.jsdelivr.net/fontsource/fonts/space-mono@latest/latin-700-normal.ttf',
+      fontWeight: 'bold',
+    },
+  ],
+});
 
 const colors = {
-  primary: '#0088cc',
-  text: '#1e1e1e',
-  textMuted: '#646464',
-  border: '#c8c8c8',
-  background: '#fafafa',
-  surface: '#ffffff',
+  text: '#111111',
+  textMuted: '#666666',
+  border: '#cccccc',
+  accent: '#0088cc',
 };
 
 const styles = StyleSheet.create({
   page: {
     padding: 40,
-    fontFamily: 'Courier',
-    fontSize: 9,
+    paddingBottom: 50,
+    fontFamily: 'SpaceMono',
+    fontSize: 8,
     color: colors.text,
-    backgroundColor: colors.background,
+    backgroundColor: '#ffffff',
   },
-  // Header
+  // Header - two column layout
   header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginBottom: 24,
     paddingBottom: 16,
-    borderBottom: `1px solid ${colors.border}`,
-    textAlign: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+  },
+  headerLeft: {
+    flex: 1,
+  },
+  headerRight: {
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
   },
   name: {
-    fontSize: 20,
-    fontWeight: 700,
+    fontSize: 18,
+    fontWeight: 'bold',
     letterSpacing: 1,
-    marginBottom: 6,
+    marginBottom: 4,
   },
-  subtitle: {
+  title: {
     fontSize: 9,
     color: colors.textMuted,
-    letterSpacing: 2,
-    marginBottom: 12,
+    marginBottom: 2,
   },
-  contactRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    gap: 16,
-  },
-  contactLink: {
+  location: {
     fontSize: 8,
     color: colors.textMuted,
-    textDecoration: 'none',
   },
-  // Sections
+  contactLink: {
+    fontSize: 7.5,
+    color: colors.textMuted,
+    textDecoration: 'none',
+    marginBottom: 3,
+  },
+  tacticalId: {
+    fontSize: 6,
+    color: colors.border,
+    marginTop: 4,
+  },
+  // Section
   section: {
-    marginBottom: 20,
+    marginBottom: 18,
   },
   sectionHeader: {
-    fontSize: 9,
-    fontWeight: 700,
-    letterSpacing: 3,
+    fontSize: 8,
+    fontWeight: 'bold',
+    letterSpacing: 2,
     color: colors.textMuted,
-    marginBottom: 12,
-    paddingBottom: 4,
-    borderBottom: `1px solid ${colors.border}`,
+    marginBottom: 10,
   },
-  // Experience cards
+  // Experience - clean cards
   card: {
-    marginBottom: 14,
-    paddingLeft: 12,
-    borderLeft: `2px solid ${colors.primary}`,
+    marginBottom: 12,
   },
   cardHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    marginBottom: 2,
+    alignItems: 'center',
+    marginBottom: 1,
   },
-  cardCompany: {
-    fontSize: 11,
-    fontWeight: 700,
+  company: {
+    fontSize: 10,
+    fontWeight: 'bold',
   },
-  cardStatus: {
-    fontSize: 7,
-    color: colors.primary,
-    padding: '2px 6px',
-    border: `1px solid ${colors.primary}`,
+  status: {
+    fontSize: 6,
+    color: colors.accent,
   },
-  cardMeta: {
-    fontSize: 8,
+  meta: {
+    fontSize: 7.5,
     color: colors.textMuted,
-    marginBottom: 6,
+    marginBottom: 4,
   },
-  cardDetails: {
+  detailsRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 6,
-    marginBottom: 6,
+    marginBottom: 4,
   },
   detailBadge: {
-    fontSize: 7,
+    fontSize: 6,
     color: colors.textMuted,
-    padding: '2px 6px',
-    backgroundColor: '#f0f0f0',
-    border: `1px solid ${colors.border}`,
   },
   bulletList: {
-    marginBottom: 6,
+    marginBottom: 4,
   },
   bullet: {
-    fontSize: 8,
-    marginBottom: 3,
-    paddingLeft: 10,
+    fontSize: 7.5,
+    marginBottom: 2,
+    lineHeight: 1.5,
+    color: colors.text,
   },
   techRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 4,
+    marginTop: 2,
   },
   techBadge: {
-    fontSize: 7,
+    fontSize: 6,
     color: colors.textMuted,
-    padding: '1px 4px',
-    backgroundColor: '#f5f5f5',
   },
-  // Compact cards (education, volunteer)
+  // Compact cards
   compactCard: {
     marginBottom: 10,
-    paddingLeft: 12,
-    borderLeft: `2px solid ${colors.primary}`,
+  },
+  compactHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 1,
   },
   compactTitle: {
-    fontSize: 10,
-    fontWeight: 700,
-    marginBottom: 2,
+    fontSize: 9,
+    fontWeight: 'bold',
+  },
+  compactBadge: {
+    fontSize: 6,
+    color: colors.accent,
+    marginLeft: 8,
   },
   compactMeta: {
-    fontSize: 8,
+    fontSize: 7,
     color: colors.textMuted,
     marginBottom: 2,
   },
   compactDescription: {
-    fontSize: 8,
+    fontSize: 7,
     color: colors.text,
-    lineHeight: 1.4,
+    lineHeight: 1.5,
+  },
+  // Narrative section for earlier roles
+  narrativeSection: {
+    marginTop: 8,
+    paddingTop: 8,
+    borderTopWidth: 1,
+    borderTopColor: colors.border,
+    borderStyle: 'dashed',
+  },
+  narrativeTitle: {
+    fontSize: 8,
+    fontWeight: 'bold',
+    marginBottom: 4,
+    color: colors.textMuted,
+  },
+  narrativeText: {
+    fontSize: 7.5,
+    color: colors.text,
+    lineHeight: 1.5,
+    marginBottom: 6,
+  },
+  moreLink: {
+    fontSize: 7,
+    color: colors.accent,
+    textDecoration: 'none',
+  },
+  // Skills
+  skillRow: {
+    marginBottom: 8,
+  },
+  skillName: {
+    fontSize: 7.5,
+    fontWeight: 'bold',
+    marginBottom: 2,
+  },
+  skillItems: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 6,
+  },
+  skillItem: {
+    fontSize: 7,
+    color: colors.textMuted,
   },
   // Footer
   footer: {
     position: 'absolute',
-    bottom: 30,
+    bottom: 28,
     left: 40,
     right: 40,
-    textAlign: 'center',
-    fontSize: 7,
-    color: colors.textMuted,
-    borderTop: `1px solid ${colors.border}`,
-    paddingTop: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    fontSize: 6,
+    color: colors.border,
+  },
+  // Tactical decorations
+  cornerMark: {
+    position: 'absolute',
+    fontSize: 8,
+    color: colors.border,
   },
 });
 
 export default function ResumePDF() {
   const currentYear = new Date().getFullYear();
+  const docId = `ID-001-${currentYear}`;
 
   return (
     <Document>
-      <Page size="A4" style={styles.page}>
-        {/* Header */}
+      {/* Page 1: Header + Experience */}
+      <Page size="LETTER" style={styles.page}>
+        {/* Corner marks for tactical feel */}
+        <Text style={[styles.cornerMark, { top: 20, left: 20 }]}>+</Text>
+        <Text style={[styles.cornerMark, { top: 20, right: 20 }]}>+</Text>
+
+        {/* Header - two columns */}
         <View style={styles.header}>
-          <Text style={styles.name}>{resumeData.name.replace(' ', '_').toUpperCase()}</Text>
-          <Text style={styles.subtitle}>
-            {resumeData.title.toUpperCase()} | {resumeData.location.toUpperCase().replace(/ /g, '_')}
-          </Text>
-          <View style={styles.contactRow}>
-            {resumeData.contact.github && (
-              <Link style={styles.contactLink} src={`https://github.com/${resumeData.contact.github}`}>
-                github.com/{resumeData.contact.github}
-              </Link>
-            )}
-            {resumeData.contact.linkedin && (
-              <Link style={styles.contactLink} src={`https://linkedin.com/in/${resumeData.contact.linkedin}`}>
-                linkedin.com/in/{resumeData.contact.linkedin}
-              </Link>
-            )}
-            {resumeData.contact.website && (
-              <Link style={styles.contactLink} src={`https://${resumeData.contact.website}`}>
-                {resumeData.contact.website}
-              </Link>
-            )}
+          <View style={styles.headerLeft}>
+            <Text style={styles.name}>{resumeData.name.toUpperCase()}</Text>
+            <Text style={styles.title}>{resumeData.title}</Text>
+            <Text style={styles.location}>{resumeData.location}</Text>
+            <Text style={styles.tacticalId}>{docId}</Text>
+          </View>
+          <View style={styles.headerRight}>
+            <Link style={styles.contactLink} src={`https://${resumeData.contact.website}`}>
+              https://{resumeData.contact.website}
+            </Link>
+            <Link style={styles.contactLink} src={`https://github.com/${resumeData.contact.github}`}>
+              https://github.com/{resumeData.contact.github}
+            </Link>
+            <Link style={styles.contactLink} src={`https://linkedin.com/in/${resumeData.contact.linkedin}`}>
+              https://linkedin.com/in/{resumeData.contact.linkedin}
+            </Link>
           </View>
         </View>
 
-        {/* Experience */}
+        {/* Experience - Full details for first 3, condensed for rest */}
         <View style={styles.section}>
-          <Text style={styles.sectionHeader}>OPERATIONAL HISTORY</Text>
-          {resumeData.experience.map((exp, index) => (
+          <Text style={styles.sectionHeader}>EXPERIENCE</Text>
+          {resumeData.experience.slice(0, 3).map((exp, index) => (
             <View key={index} style={styles.card} wrap={false}>
               <View style={styles.cardHeader}>
-                <Text style={styles.cardCompany}>{exp.company}</Text>
-                {exp.status === 'active' && <Text style={styles.cardStatus}>CURRENT</Text>}
+                <Text style={styles.company}>{exp.company}</Text>
+                {exp.status === 'active' && <Text style={styles.status}>CURRENT</Text>}
               </View>
-              <Text style={styles.cardMeta}>
-                {exp.title} | {exp.dates} | {exp.location}
+              <Text style={styles.meta}>
+                {exp.title} · {exp.dates} · {exp.location}
               </Text>
               {(exp.scope || exp.revenue || exp.funding || exp.exit) && (
-                <View style={styles.cardDetails}>
+                <View style={styles.detailsRow}>
                   {exp.scope && <Text style={styles.detailBadge}>{exp.scope}</Text>}
-                  {exp.revenue && <Text style={styles.detailBadge}>{exp.revenue}</Text>}
-                  {exp.funding && <Text style={styles.detailBadge}>{exp.funding}</Text>}
-                  {exp.exit && <Text style={styles.detailBadge}>{exp.exit}</Text>}
+                  {exp.revenue && <Text style={styles.detailBadge}>· {exp.revenue}</Text>}
+                  {exp.funding && <Text style={styles.detailBadge}>· {exp.funding}</Text>}
+                  {exp.exit && <Text style={styles.detailBadge}>· {exp.exit}</Text>}
                 </View>
               )}
               <View style={styles.bulletList}>
                 {exp.bullets.slice(0, 3).map((bullet, i) => (
-                  <Text key={i} style={styles.bullet}>› {bullet}</Text>
+                  <Text key={i} style={styles.bullet}>– {bullet}</Text>
                 ))}
               </View>
               <View style={styles.techRow}>
                 {exp.techStack.map((tech, i) => (
-                  <Text key={i} style={styles.techBadge}>{tech}</Text>
+                  <Text key={i} style={styles.techBadge}>{tech}{i < exp.techStack.length - 1 ? ' ·' : ''}</Text>
                 ))}
               </View>
             </View>
           ))}
+
+          {/* Earlier roles - narrative summary */}
+          <View style={styles.narrativeSection}>
+            <Text style={styles.narrativeTitle}>Earlier Experience</Text>
+            <Text style={styles.narrativeText}>
+              Progressively gained responsibility from IC to engineering leadership across
+              {' '}{resumeData.experience.slice(3).map(exp => exp.company).join(', ')}.
+              {' '}Built products from zero to scale, led teams through growth phases, and
+              contributed to multiple successful outcomes including acquisitions and major partnerships.
+            </Text>
+            <Link style={styles.moreLink} src="https://arach.io/resume/detailed">
+              Full history at https://arach.io/resume/detailed
+            </Link>
+          </View>
         </View>
 
-        {/* Footer */}
-        <Text style={styles.footer}>
-          ID-001-{currentYear} | Generated from arach.io/resume
-        </Text>
+        <View style={styles.footer}>
+          <Text>{docId}</Text>
+          <Text>arach.io/resume</Text>
+        </View>
+
+        {/* Bottom corner marks */}
+        <Text style={[styles.cornerMark, { bottom: 20, left: 20 }]}>+</Text>
+        <Text style={[styles.cornerMark, { bottom: 20, right: 20 }]}>+</Text>
       </Page>
 
-      {/* Page 2: Education & Volunteer */}
-      <Page size="A4" style={styles.page}>
+      {/* Page 2: Education + Skills */}
+      <Page size="LETTER" style={styles.page}>
+        <Text style={[styles.cornerMark, { top: 20, left: 20 }]}>+</Text>
+        <Text style={[styles.cornerMark, { top: 20, right: 20 }]}>+</Text>
+
         {/* Education */}
         <View style={styles.section}>
-          <Text style={styles.sectionHeader}>TRAINING</Text>
+          <Text style={styles.sectionHeader}>EDUCATION</Text>
           {resumeData.education.map((edu, index) => (
             <View key={index} style={styles.compactCard}>
               <Text style={styles.compactTitle}>{edu.institution}</Text>
               <Text style={styles.compactMeta}>
-                {edu.degree} in {edu.field} | {edu.year} | {edu.location}
+                {edu.degree} in {edu.field} · {edu.year} · {edu.location}
               </Text>
-            </View>
-          ))}
-        </View>
-
-        {/* Volunteer */}
-        <View style={styles.section}>
-          <Text style={styles.sectionHeader}>ALLIED OPERATIONS</Text>
-          {resumeData.volunteer.map((vol, index) => (
-            <View key={index} style={styles.compactCard}>
-              <Text style={styles.compactTitle}>{vol.organization}</Text>
-              <Text style={styles.compactMeta}>{vol.role} | {vol.dates}</Text>
-              <Text style={styles.compactDescription}>{vol.description}</Text>
             </View>
           ))}
         </View>
 
         {/* Skills */}
         <View style={styles.section}>
-          <Text style={styles.sectionHeader}>SYSTEMS STATUS</Text>
+          <Text style={styles.sectionHeader}>SKILLS</Text>
           {resumeData.skills.map((skill, index) => (
-            <View key={index} style={{ marginBottom: 8 }}>
-              <Text style={{ fontSize: 9, fontWeight: 700, marginBottom: 3 }}>
-                {skill.name.toUpperCase()}
-              </Text>
-              <View style={styles.techRow}>
+            <View key={index} style={styles.skillRow}>
+              <Text style={styles.skillName}>{skill.name}</Text>
+              <View style={styles.skillItems}>
                 {skill.items.map((item, i) => (
-                  <Text key={i} style={styles.techBadge}>{item}</Text>
+                  <Text key={i} style={styles.skillItem}>{item}{i < skill.items.length - 1 ? ' ·' : ''}</Text>
                 ))}
               </View>
             </View>
           ))}
         </View>
 
-        {/* Footer */}
-        <Text style={styles.footer}>
-          ID-001-{currentYear} | Generated from arach.io/resume
-        </Text>
+        <View style={styles.footer}>
+          <Text>{docId}</Text>
+          <Text>arach.io/resume</Text>
+        </View>
+
+        <Text style={[styles.cornerMark, { bottom: 20, left: 20 }]}>+</Text>
+        <Text style={[styles.cornerMark, { bottom: 20, right: 20 }]}>+</Text>
       </Page>
     </Document>
   );
