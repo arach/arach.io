@@ -38,7 +38,7 @@
   color: var(--text);
   max-width: 900px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 2rem;
 }
 
 /* Dark theme base */
@@ -1029,6 +1029,56 @@ a.contact-value:hover {
   color: rgb(var(--highlight-rgb));
 }
 
+/* ============================================================================
+   VIEW MODE INDICATOR
+   ============================================================================ */
+
+.view-mode-indicator {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(var(--surface-rgb), 0.9);
+  border: 1px solid rgba(var(--border-rgb), 0.3);
+  font-size: 10px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  z-index: 50;
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.view-mode-indicator:hover {
+  border-color: rgba(var(--highlight-rgb), 0.5);
+  color: var(--text);
+}
+
+.view-mode-indicator kbd {
+  padding: 2px 6px;
+  background: rgba(var(--border-rgb), 0.2);
+  border-radius: 3px;
+  font-size: 9px;
+}
+
+.view-mode-label {
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+
+/* ============================================================================
+   SUMMARY MODE STYLES
+   ============================================================================ */
+
+/* In summary mode, hide non-featured items */
+.tactical-resume.view-summary .experience-card[data-featured="false"],
+.tactical-resume.view-summary .compact-card[data-featured="false"] {
+  display: none;
+}
+
 /* Keyboard shortcut hint on resume page */
 .keyboard-hint {
   position: fixed;
@@ -1070,5 +1120,12 @@ a.contact-value:hover {
     bottom: 10px;
     right: 10px;
     font-size: 10px;
+  }
+
+  .view-mode-indicator {
+    bottom: 10px;
+    left: 10px;
+    padding: 6px 10px;
+    font-size: 9px;
   }
 }

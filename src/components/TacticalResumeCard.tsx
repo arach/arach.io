@@ -10,6 +10,7 @@ export default function TacticalResumeCard({ experience, index }: Props) {
     <div
       className="experience-card"
       style={{ animationDelay: `${0.1 + index * 0.05}s` }}
+      data-featured={experience.featured ? "true" : "false"}
     >
       <div className="card-header">
         <span className="card-company">{experience.company}</span>

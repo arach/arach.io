@@ -13,6 +13,7 @@ export interface Experience {
   bullets: string[];
   techStack: string[];
   status: 'active' | 'completed';
+  featured?: boolean; // Show in summary/one-pager view
 }
 
 export interface Education {
@@ -29,6 +30,7 @@ export interface Volunteer {
   dates: string;
   description: string;
   badge?: string;
+  featured?: boolean; // Show in summary/one-pager view
 }
 
 export interface SkillCategory {
@@ -92,6 +94,7 @@ export const resumeData: ResumeData = {
       ],
       techStack: ["TypeScript", "React", "Node.js", "Python", "LLMs/AI APIs", "Cloud Infrastructure"],
       status: 'active',
+      featured: true,
     },
     {
       company: "Meta Platforms (Facebook)",
@@ -110,6 +113,7 @@ export const resumeData: ResumeData = {
       ],
       techStack: ["React", "Bloks", "Hack", "Ent"],
       status: 'completed',
+      featured: true,
     },
     {
       company: "Breathe Life",
@@ -134,6 +138,7 @@ export const resumeData: ResumeData = {
       ],
       techStack: ["React", "Redux", "TypeScript", "Node.js", "Golang", "PostgreSQL", "BigQuery", "Kubernetes", "Terraform"],
       status: 'completed',
+      featured: true,
     },
     {
       company: "Starbucks (via C3 Technologies)",
@@ -188,6 +193,7 @@ export const resumeData: ResumeData = {
       ],
       techStack: ["Ruby on Rails", "Angular", "AWS (EC2, RDS, S3)", "Imgix", "CloudFront"],
       status: 'completed',
+      featured: true,
     },
     {
       company: "Lot18",
@@ -274,6 +280,7 @@ export const resumeData: ResumeData = {
       dates: "2007 - 2011",
       description: "Started the group and co-organized activities for the first few years. Now 5,000 members strong and hosted global PyCon in 2014-15.",
       badge: "FOUNDED",
+      featured: true,
     },
     {
       organization: "FuturPreneur",
@@ -282,7 +289,14 @@ export const resumeData: ResumeData = {
       description: "Mentored a team of young entrepreneurs through their early entrepreneurial milestones.",
     },
     {
-      organization: "FounderFuel & McGill X1-Accelerator",
+      organization: "McGill Dobson Centre",
+      role: "X-1 Accelerator Mentor & Dobson Cup Judge",
+      dates: "2018 - 2020",
+      description: "Mentored founding teams at McGill's X-1 Accelerator program and served as semi-finalist judge for the Dobson Cup startup competition.",
+      featured: true,
+    },
+    {
+      organization: "FounderFuel",
       role: "Mentor",
       dates: "2018 - 2020",
       description: "Offered feedback and strategy consulting sessions to teams in various cohorts.",

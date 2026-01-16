@@ -12,9 +12,11 @@ interface Command {
 interface CommandPaletteProps {
   isOpen: boolean;
   onClose: () => void;
+  viewMode: 'detailed' | 'summary';
+  onToggleViewMode: () => void;
 }
 
-export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
+export default function CommandPalette({ isOpen, onClose, viewMode, onToggleViewMode }: CommandPaletteProps) {
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [activeView, setActiveView] = useState<'commands' | 'skills' | 'contact'>('commands');
@@ -30,6 +32,16 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
   };
 
   const commands: Command[] = [
+    {
+      id: 'view-mode',
+      label: viewMode === 'detailed' ? 'Switch to Summary View' : 'Switch to Detailed View',
+      shortcut: 'V',
+      action: () => {
+        onToggleViewMode();
+        onClose();
+      },
+      category: 'Views',
+    },
     {
       id: 'skills',
       label: 'View Systems Status',
@@ -284,9 +296,32 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
   );
 }
 
-// Wrapper component that handles the keyboard shortcut
+// Wrapper component that handles the keyboard shortcut and view mode
 export function CommandPaletteProvider({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [viewMode, setViewMode] = useState<'detailed' | 'summary'>('detailed');
+
+  // Initialize view mode from localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem('resume-view-mode');
+    if (saved === 'summary' || saved === 'detailed') {
+      setViewMode(saved);
+    }
+  }, []);
+
+  // Apply view mode class to document
+  useEffect(() => {
+    const resume = document.querySelector('.tactical-resume');
+    if (resume) {
+      resume.classList.remove('view-detailed', 'view-summary');
+      resume.classList.add(`view-${viewMode}`);
+    }
+    localStorage.setItem('resume-view-mode', viewMode);
+  }, [viewMode]);
+
+  const toggleViewMode = () => {
+    setViewMode(prev => prev === 'detailed' ? 'summary' : 'detailed');
+  };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -295,16 +330,37 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
         e.preventDefault();
         setIsOpen(prev => !prev);
       }
+      // V to toggle view mode (when not in an input)
+      if (e.key === 'v' && !isOpen && !(e.target instanceof HTMLInputElement)) {
+        e.preventDefault();
+        toggleViewMode();
+      }
     };
 
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [isOpen]);
 
   return (
     <>
       {children}
-      <CommandPalette isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      <ViewModeIndicator mode={viewMode} onToggle={toggleViewMode} />
+      <CommandPalette
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        viewMode={viewMode}
+        onToggleViewMode={toggleViewMode}
+      />
     </>
+  );
+}
+
+// View mode indicator component
+function ViewModeIndicator({ mode, onToggle }: { mode: 'detailed' | 'summary'; onToggle: () => void }) {
+  return (
+    <button className="view-mode-indicator" onClick={onToggle} title="Toggle view mode (V)">
+      <span className="view-mode-label">{mode === 'detailed' ? 'DETAILED' : 'SUMMARY'}</span>
+      <kbd>V</kbd>
+    </button>
   );
 }

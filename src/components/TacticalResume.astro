@@ -77,7 +77,7 @@ const docId = `ID-001-${currentYear}`;
   <section class="volunteer-section">
     <h2 class="section-header">ALLIED OPERATIONS</h2>
     {resumeData.volunteer.map((vol) => (
-      <div class="compact-card">
+      <div class="compact-card" data-featured={vol.featured ? "true" : "false"}>
         <div class="compact-header">
           <span class="compact-title">{vol.organization}</span>
           {vol.badge && <span class="compact-badge">{vol.badge}</span>}
