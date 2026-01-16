@@ -257,15 +257,21 @@
   align-items: center;
   gap: 12px;
   margin-bottom: 24px;
+  margin-left: -24px;
+  padding-left: 24px;
   font-size: 12px;
   letter-spacing: 0.15em;
   color: var(--text-muted);
   font-weight: 700;
+  position: relative;
 }
 
 .section-header::before {
   content: '◆';
   color: rgba(var(--primary-rgb), 0.5);
+  position: absolute;
+  left: -4px;
+  font-size: 8px;
 }
 
 .section-header::after {
@@ -281,15 +287,12 @@
 
 .experience-section {
   margin-bottom: var(--section-gap);
-}
-
-.experience-timeline {
   position: relative;
   padding-left: 24px;
 }
 
 /* Timeline line */
-.experience-timeline::before {
+.experience-section::before {
   content: '';
   position: absolute;
   left: 0;
@@ -549,9 +552,24 @@
 .education-section,
 .volunteer-section {
   margin-bottom: var(--section-gap);
+  position: relative;
+  padding-left: 24px;
+}
+
+/* Continue the timeline through these sections */
+.education-section::before,
+.volunteer-section::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(var(--border-rgb), 0.4);
 }
 
 .compact-card {
+  position: relative;
   padding: 16px 20px;
   background: rgba(var(--surface-rgb), 0.5);
   border: 1px solid rgba(var(--border-rgb), 0.3);
@@ -560,8 +578,27 @@
   transition: border-color 0.2s ease;
 }
 
+/* Timeline dot for compact cards */
+.compact-card::before {
+  content: '';
+  position: absolute;
+  left: -29px;
+  top: 20px;
+  width: 8px;
+  height: 8px;
+  background: var(--bg);
+  border: 2px solid rgba(var(--primary-rgb), 0.4);
+  border-radius: 50%;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
 .compact-card:hover {
   border-left-color: rgb(var(--highlight-rgb));
+}
+
+.compact-card:hover::before {
+  border-color: rgb(var(--highlight-rgb));
+  background: rgb(var(--highlight-rgb));
 }
 
 .compact-header {
@@ -662,11 +699,14 @@
     font-size: 20px;
   }
 
-  .experience-timeline {
+  .experience-section,
+  .education-section,
+  .volunteer-section {
     padding-left: 16px;
   }
 
-  .experience-card::before {
+  .experience-card::before,
+  .compact-card::before {
     left: -21px;
     width: 6px;
     height: 6px;

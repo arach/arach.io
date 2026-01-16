@@ -53,11 +53,9 @@ const docId = `ID-001-${currentYear}`;
   <!-- Experience Section - Operational History -->
   <section class="experience-section">
     <h2 class="section-header">OPERATIONAL HISTORY</h2>
-    <div class="experience-timeline">
-      {resumeData.experience.map((exp, index) => (
-        <TacticalResumeCard experience={exp} index={index} client:visible />
-      ))}
-    </div>
+    {resumeData.experience.map((exp, index) => (
+      <TacticalResumeCard experience={exp} index={index} client:visible />
+    ))}
   </section>
 
   <!-- Education Section - Training -->
