@@ -5,6 +5,7 @@ export interface Experience {
   dates: string;
   startDate: string;
   location: string;
+  badge?: string;
   scope?: string;
   revenue?: string;
   budget?: string;
@@ -125,6 +126,7 @@ export const resumeData: ResumeData & { oneLiner: string } = {
       dates: "2018 - 2021",
       startDate: "2018-01",
       location: "Montreal, Canada",
+      badge: "FOUNDED",
       scope: "20+ people: 2 Directors, 2 EMs, 16 Engineers",
       revenue: "$0M/yr to $3M+/yr ARR",
       budget: "$2.25M/yr",
@@ -146,9 +148,10 @@ export const resumeData: ResumeData & { oneLiner: string } = {
     {
       company: "Starbucks (via C3 Technologies)",
       title: "Tech Lead",
-      dates: "Oct 2016 - Dec 2017",
+      dates: "2016 - 2017",
       startDate: "2016-10",
       location: "Montreal, Canada",
+      badge: "FOUNDED C3",
       scope: "3 contract developers",
       revenue: "$80M+/yr",
       budget: "$750k",
@@ -165,7 +168,7 @@ export const resumeData: ResumeData & { oneLiner: string } = {
     {
       company: "PhotoShelter",
       title: "Vice-President, Engineering",
-      dates: "Oct 2015 - Oct 2016",
+      dates: "2015 - 2016",
       startDate: "2015-10",
       location: "New York, NY",
       scope: "20+: 3 EMs, 3 QA, 15 Engineers, 1 Architect",
@@ -183,7 +186,7 @@ export const resumeData: ResumeData & { oneLiner: string } = {
     {
       company: "Primary.com",
       title: "CTO",
-      dates: "Aug 2014 - Oct 2015",
+      dates: "2014 - 2015",
       startDate: "2014-08",
       location: "New York, NY",
       scope: "4 engineers",
@@ -201,7 +204,7 @@ export const resumeData: ResumeData & { oneLiner: string } = {
     {
       company: "Lot18",
       title: "Engineering Manager to Director to CTO",
-      dates: "Jan 2011 - Aug 2014",
+      dates: "2011 - 2014",
       startDate: "2011-01",
       location: "New York, NY",
       scope: "Team of teams: 15 as CTO, 10 as Director, 6 as EM",
@@ -220,7 +223,7 @@ export const resumeData: ResumeData & { oneLiner: string } = {
     {
       company: "Outbox Technology",
       title: "Software Engineer",
-      dates: "Mar 2006 - Apr 2011",
+      dates: "2006 - 2011",
       startDate: "2006-03",
       location: "Montreal, Canada",
       scope: "IC on team of 4 at launch, 15 by 2011",
