@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && jampack ./dist",
+    "generate:pdf": "bun run scripts/generate-pdf.tsx",
+    "build": "bun run generate:pdf && astro build && jampack ./dist",
     "preview": "astro preview",
     "format": "prettier --write . --plugin=prettier-plugin-astro",
     "format:check": "prettier --check . --plugin=prettier-plugin-astro"
