@@ -1,0 +1,14 @@
+---
+// Dev-only PDF preview route
+// Visit /resume/pdf in development to view and download the PDF
+
+import Layout from "@layouts/Layout.astro";
+import { SITE } from "@config";
+import PDFViewerWrapper from "@components/PDFViewer";
+---
+
+<Layout title={`Resume PDF | ${SITE.title}`}>
+  <div style="width: 100%; height: 100vh;">
+    <PDFViewerWrapper client:only="react" />
+  </div>
+</Layout>
