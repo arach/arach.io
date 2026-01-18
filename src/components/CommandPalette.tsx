@@ -175,7 +175,7 @@ export default function CommandPalette({
     if (isOpen) {
       setQuery('');
       setSelectedIndex(0);
-      setActiveView('commands');
+      // activeView is set by the other useEffect that uses initialView
       setTimeout(() => inputRef.current?.focus(), 50);
     }
   }, [isOpen]);

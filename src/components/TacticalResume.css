@@ -1199,7 +1199,13 @@ a.contact-value:hover {
 
 .toolbar-section:hover {
   color: var(--text);
-  background: rgba(var(--highlight-rgb), 0.08);
+  background: rgba(var(--highlight-rgb), 0.06);
+}
+
+.toolbar-section:hover kbd {
+  background: rgba(var(--highlight-rgb), 0.12);
+  border-color: rgba(var(--highlight-rgb), 0.3);
+  color: rgb(var(--highlight-rgb));
 }
 
 .toolbar-divider {
@@ -1214,20 +1220,19 @@ a.contact-value:hover {
 }
 
 .toolbar-section kbd {
-  padding: 3px 7px;
-  background: rgba(var(--border-rgb), 0.25);
+  padding: 4px 8px;
+  background: rgba(var(--border-rgb), 0.15);
+  border: 1px solid rgba(var(--border-rgb), 0.25);
   border-radius: 4px;
   font-size: 10px;
-  font-weight: 500;
+  font-weight: 600;
+  box-shadow: 0 1px 0 rgba(var(--border-rgb), 0.3);
+  transition: all 0.15s ease;
 }
 
 .toolbar-keys {
   display: flex;
   gap: 2px;
-}
-
-.toolbar-section:hover kbd {
-  background: rgba(var(--highlight-rgb), 0.15);
 }
 
 /* ============================================================================
