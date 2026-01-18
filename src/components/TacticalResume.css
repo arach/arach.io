@@ -1071,7 +1071,6 @@ a.contact-value:hover {
 .resume-toolbar {
   position: fixed;
   bottom: 24px;
-  left: 24px;
   display: flex;
   align-items: center;
   background: rgba(var(--surface-rgb), 0.95);
@@ -1084,9 +1083,22 @@ a.contact-value:hover {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
+.resume-toolbar-left {
+  left: 24px;
+}
+
+.resume-toolbar-right {
+  right: 24px;
+}
+
 [data-theme="dark"] .resume-toolbar {
   background: rgba(var(--surface-rgb), 0.9);
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.toolbar-icon {
+  font-size: 14px;
+  line-height: 1;
 }
 
 .toolbar-section {
@@ -1133,6 +1145,11 @@ a.contact-value:hover {
   font-weight: 500;
 }
 
+.toolbar-keys {
+  display: flex;
+  gap: 2px;
+}
+
 .toolbar-section:hover kbd {
   background: rgba(var(--highlight-rgb), 0.15);
 }
@@ -1156,8 +1173,15 @@ a.contact-value:hover {
 
   .resume-toolbar {
     bottom: 12px;
-    left: 12px;
     font-size: 10px;
+  }
+
+  .resume-toolbar-left {
+    left: 12px;
+  }
+
+  .resume-toolbar-right {
+    right: 12px;
   }
 
   .toolbar-section {

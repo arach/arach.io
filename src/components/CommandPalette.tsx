@@ -351,11 +351,32 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
   }, [isOpen]);
 
   const isMac = typeof navigator !== 'undefined' && navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+  const [isDark, setIsDark] = useState(false);
+
+  // Sync with theme
+  useEffect(() => {
+    const updateTheme = () => {
+      setIsDark(document.documentElement.getAttribute('data-theme') === 'dark');
+    };
+    updateTheme();
+
+    // Listen for theme changes
+    const observer = new MutationObserver(updateTheme);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const toggleTheme = () => {
+    const themeBtn = document.getElementById('theme-btn');
+    if (themeBtn) themeBtn.click();
+  };
 
   return (
     <>
       {children}
-      <div className="resume-toolbar">
+      {/* Left toolbar: Keyboard shortcuts */}
+      <div className="resume-toolbar resume-toolbar-left">
         <button
           className="toolbar-section"
           onClick={toggleViewMode}
@@ -370,8 +391,19 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
           onClick={() => setIsOpen(true)}
           title="Open command palette"
         >
-          <kbd>{isMac ? '⌘' : 'Ctrl'}</kbd>
-          <kbd>K</kbd>
+          <span className="toolbar-label">COMMANDS</span>
+          <span className="toolbar-keys"><kbd>{isMac ? '⌘' : 'Ctrl'}</kbd><kbd>K</kbd></span>
+        </button>
+      </div>
+      {/* Right toolbar: Visual controls */}
+      <div className="resume-toolbar resume-toolbar-right">
+        <button
+          className="toolbar-section"
+          onClick={toggleTheme}
+          title="Toggle theme (T)"
+        >
+          <span className="toolbar-icon">{isDark ? '◐' : '◑'}</span>
+          <span className="toolbar-label">{isDark ? 'DARK' : 'LIGHT'}</span>
         </button>
       </div>
       <CommandPalette
