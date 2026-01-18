@@ -64,7 +64,7 @@ export interface ResumeData {
   volunteer: Volunteer[];
 }
 
-export const resumeData: ResumeData & { oneLiner: string } = {
+export const resumeData: ResumeData & { oneLiner: string; locationLine: string } = {
   name: "Arach Tchoupani",
   title: "Engineering Leader & Founder",
   oneLiner: "3x CTO/VP Eng · 1 exit · 15 yrs building teams 0 to 50+",
@@ -81,7 +81,7 @@ export const resumeData: ResumeData & { oneLiner: string } = {
     website: "arach.io",
     linkedin: "arach",
     github: "arach",
-    twitter: "arach",
+    twitter: "arach_tchoupani",
   },
   experience: [
     {
