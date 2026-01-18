@@ -351,25 +351,28 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
   }, [isOpen]);
 
   const isMac = typeof navigator !== 'undefined' && navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-  const [isDark, setIsDark] = useState(false);
+  const [fontSize, setFontSize] = useState<'S' | 'M' | 'L'>('M');
 
-  // Sync with theme
+  // Initialize font size from localStorage
   useEffect(() => {
-    const updateTheme = () => {
-      setIsDark(document.documentElement.getAttribute('data-theme') === 'dark');
-    };
-    updateTheme();
-
-    // Listen for theme changes
-    const observer = new MutationObserver(updateTheme);
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-
-    return () => observer.disconnect();
+    const saved = localStorage.getItem('resume-font-size');
+    if (saved === 'S' || saved === 'M' || saved === 'L') {
+      setFontSize(saved);
+    }
   }, []);
 
-  const toggleTheme = () => {
-    const themeBtn = document.getElementById('theme-btn');
-    if (themeBtn) themeBtn.click();
+  // Apply font size class to resume
+  useEffect(() => {
+    const resume = document.querySelector('.tactical-resume');
+    if (resume) {
+      resume.classList.remove('font-small', 'font-medium', 'font-large');
+      resume.classList.add(`font-${fontSize === 'S' ? 'small' : fontSize === 'M' ? 'medium' : 'large'}`);
+    }
+    localStorage.setItem('resume-font-size', fontSize);
+  }, [fontSize]);
+
+  const cycleFontSize = () => {
+    setFontSize(prev => prev === 'S' ? 'M' : prev === 'M' ? 'L' : 'S');
   };
 
   return (
@@ -395,15 +398,19 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
           <span className="toolbar-keys"><kbd>{isMac ? '⌘' : 'Ctrl'}</kbd><kbd>K</kbd></span>
         </button>
       </div>
-      {/* Right toolbar: Visual controls */}
+      {/* Right toolbar: Presentation controls */}
       <div className="resume-toolbar resume-toolbar-right">
         <button
           className="toolbar-section"
-          onClick={toggleTheme}
-          title="Toggle theme (T)"
+          onClick={cycleFontSize}
+          title="Cycle font size"
         >
-          <span className="toolbar-icon">{isDark ? '◐' : '◑'}</span>
-          <span className="toolbar-label">{isDark ? 'DARK' : 'LIGHT'}</span>
+          <span className="toolbar-label">SIZE</span>
+          <span className="toolbar-size-options">
+            <span className={`size-option ${fontSize === 'S' ? 'active' : ''}`}>S</span>
+            <span className={`size-option ${fontSize === 'M' ? 'active' : ''}`}>M</span>
+            <span className={`size-option ${fontSize === 'L' ? 'active' : ''}`}>L</span>
+          </span>
         </button>
       </div>
       <CommandPalette

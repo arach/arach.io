@@ -1096,11 +1096,6 @@ a.contact-value:hover {
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
 }
 
-.toolbar-icon {
-  font-size: 14px;
-  line-height: 1;
-}
-
 .toolbar-section {
   display: flex;
   align-items: center;
@@ -1150,6 +1145,35 @@ a.contact-value:hover {
   gap: 2px;
 }
 
+.toolbar-size-options {
+  display: flex;
+  gap: 4px;
+}
+
+.size-option {
+  padding: 2px 6px;
+  background: rgba(var(--border-rgb), 0.15);
+  border-radius: 3px;
+  font-size: 9px;
+  font-weight: 600;
+  opacity: 0.5;
+  transition: all 0.2s ease;
+}
+
+.size-option.active {
+  background: rgba(var(--highlight-rgb), 0.2);
+  color: rgb(var(--highlight-rgb));
+  opacity: 1;
+}
+
+.toolbar-section:hover .size-option {
+  opacity: 0.7;
+}
+
+.toolbar-section:hover .size-option.active {
+  opacity: 1;
+}
+
 .toolbar-section:hover kbd {
   background: rgba(var(--highlight-rgb), 0.15);
 }
@@ -1162,6 +1186,53 @@ a.contact-value:hover {
 .tactical-resume.view-summary .experience-card[data-featured="false"],
 .tactical-resume.view-summary .compact-card[data-featured="false"] {
   display: none;
+}
+
+/* ============================================================================
+   FONT SIZE MODES
+   ============================================================================ */
+
+/* Small - compact reading */
+.tactical-resume.font-small {
+  font-size: 13px;
+}
+
+.tactical-resume.font-small .resume-name {
+  font-size: clamp(20px, 3.5vw, 30px);
+}
+
+.tactical-resume.font-small .section-header {
+  font-size: 11px;
+}
+
+.tactical-resume.font-small .experience-header h3 {
+  font-size: 14px;
+}
+
+/* Medium - default (no changes needed) */
+.tactical-resume.font-medium {
+  /* Default sizing */
+}
+
+/* Large - accessibility / presentation */
+.tactical-resume.font-large {
+  font-size: 17px;
+}
+
+.tactical-resume.font-large .resume-name {
+  font-size: clamp(28px, 5vw, 44px);
+}
+
+.tactical-resume.font-large .section-header {
+  font-size: 15px;
+}
+
+.tactical-resume.font-large .experience-header h3 {
+  font-size: 20px;
+}
+
+.tactical-resume.font-large .compact-title {
+  font-size: 16px;
 }
 
 @media (max-width: 640px) {
