@@ -1,6 +1,16 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { resumeData } from '../data/resume';
 
+// Theme definitions (matching ThemePickerCool)
+const themes = [
+  { name: 'minimal', displayName: 'Minimal', colors: { bg: '#ffffff', accent: '#18181b' } },
+  { name: 'midnight', displayName: 'Midnight', colors: { bg: '#e1e7f5', accent: '#3b82f6' } },
+  { name: 'ocean', displayName: 'Ocean', colors: { bg: '#f0f9ff', accent: '#0284c7' } },
+  { name: 'sunset', displayName: 'Sunset', colors: { bg: '#fffbeb', accent: '#f59e0b' } },
+  { name: 'neon', displayName: 'Neon', colors: { bg: '#fdf4ff', accent: '#d946ef' } },
+  { name: 'paper', displayName: 'Paper', colors: { bg: '#fafaf9', accent: '#92400e' } },
+];
+
 interface Command {
   id: string;
   label: string;
@@ -17,13 +27,15 @@ interface CommandPaletteProps {
   fontSize: 'S' | 'M' | 'L';
   onSetFontSize: (size: 'S' | 'M' | 'L') => void;
   isDark: boolean;
-  onToggleTheme: () => void;
+  onToggleDarkMode: () => void;
+  currentTheme: string;
+  onSetTheme: (themeName: string) => void;
   initialView?: 'commands' | 'skills' | 'contact' | 'size' | 'theme';
 }
 
 export default function CommandPalette({
   isOpen, onClose, viewMode, onToggleViewMode,
-  fontSize, onSetFontSize, isDark, onToggleTheme, initialView = 'commands'
+  fontSize, onSetFontSize, isDark, onToggleDarkMode, currentTheme, onSetTheme, initialView = 'commands'
 }: CommandPaletteProps) {
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -335,22 +347,30 @@ export default function CommandPalette({
             <div className="command-view">
               <div className="command-view-header">◆ THEME</div>
               <div className="settings-options">
+                {/* Dark mode toggle */}
                 <button
-                  className={`settings-option ${!isDark ? 'active' : ''}`}
-                  onClick={() => { if (isDark) onToggleTheme(); onClose(); }}
+                  className="settings-option settings-option-toggle"
+                  onClick={onToggleDarkMode}
                 >
-                  <span className="settings-option-label">LIGHT</span>
-                  <span className="settings-option-icon">☀</span>
-                  {!isDark && <span className="settings-option-check">●</span>}
+                  <span className="settings-option-label">{isDark ? 'DARK MODE' : 'LIGHT MODE'}</span>
+                  <span className="settings-option-icon">{isDark ? '☾' : '☀'}</span>
                 </button>
-                <button
-                  className={`settings-option ${isDark ? 'active' : ''}`}
-                  onClick={() => { if (!isDark) onToggleTheme(); onClose(); }}
-                >
-                  <span className="settings-option-label">DARK</span>
-                  <span className="settings-option-icon">☾</span>
-                  {isDark && <span className="settings-option-check">●</span>}
-                </button>
+                <div className="settings-divider" />
+                {/* Theme options */}
+                {themes.map((theme) => (
+                  <button
+                    key={theme.name}
+                    className={`settings-option ${currentTheme === theme.name ? 'active' : ''}`}
+                    onClick={() => { onSetTheme(theme.name); onClose(); }}
+                  >
+                    <span className="theme-swatches">
+                      <span className="theme-swatch" style={{ backgroundColor: theme.colors.bg, border: '1px solid rgba(0,0,0,0.1)' }} />
+                      <span className="theme-swatch" style={{ backgroundColor: theme.colors.accent }} />
+                    </span>
+                    <span className="settings-option-label">{theme.displayName.toUpperCase()}</span>
+                    {currentTheme === theme.name && <span className="settings-option-check">●</span>}
+                  </button>
+                ))}
               </div>
             </div>
           )}
@@ -397,21 +417,36 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Cmd+K or Ctrl+K to open
+      // Cmd+K or Ctrl+K to open command palette
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
-        setIsOpen(prev => !prev);
+        openPalette('commands');
       }
-      // V to toggle view mode (when not in an input)
-      if (e.key === 'v' && !isOpen && !(e.target instanceof HTMLInputElement)) {
+      // Skip shortcuts when typing in an input
+      if (e.target instanceof HTMLInputElement) return;
+      // Skip when palette is open (let it handle its own keys)
+      if (isOpen) return;
+
+      // V to toggle view mode
+      if (e.key === 'v') {
         e.preventDefault();
         toggleViewMode();
       }
-      // T to toggle theme (when not in an input)
-      if (e.key === 't' && !isOpen && !(e.target instanceof HTMLInputElement)) {
+      // D to download PDF
+      if (e.key === 'd') {
         e.preventDefault();
-        const themeBtn = document.getElementById('theme-btn');
-        if (themeBtn) themeBtn.click();
+        const link = document.querySelector('.download-btn') as HTMLAnchorElement;
+        if (link) link.click();
+      }
+      // S to open size picker
+      if (e.key === 's') {
+        e.preventDefault();
+        openPalette('size');
+      }
+      // T to open theme picker
+      if (e.key === 't') {
+        e.preventDefault();
+        openPalette('theme');
       }
     };
 
@@ -441,22 +476,44 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
   }, [fontSize]);
 
   const [isDark, setIsDark] = useState(false);
+  const [currentTheme, setCurrentTheme] = useState('minimal');
 
-  // Sync with theme
+  // Sync with theme state
   useEffect(() => {
-    const updateTheme = () => {
+    const updateThemeState = () => {
       setIsDark(document.documentElement.getAttribute('data-theme') === 'dark');
+      const savedTheme = localStorage.getItem('cool-theme') || 'minimal';
+      setCurrentTheme(savedTheme);
     };
-    updateTheme();
+    updateThemeState();
 
-    const observer = new MutationObserver(updateTheme);
+    // Listen for storage changes (from ThemePickerCool)
+    window.addEventListener('storage', updateThemeState);
+    const observer = new MutationObserver(updateThemeState);
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-    return () => observer.disconnect();
+
+    return () => {
+      window.removeEventListener('storage', updateThemeState);
+      observer.disconnect();
+    };
   }, []);
 
-  const toggleTheme = () => {
-    const themeBtn = document.getElementById('theme-btn');
-    if (themeBtn) themeBtn.click();
+  const toggleDarkMode = () => {
+    const newDark = !isDark;
+    setIsDark(newDark);
+    document.documentElement.setAttribute('data-theme', newDark ? 'dark' : 'light');
+    localStorage.setItem('theme', newDark ? 'dark' : 'light');
+    // Dispatch event for ThemePickerCool to sync
+    window.dispatchEvent(new CustomEvent('theme-change', { detail: { isDark: newDark } }));
+  };
+
+  const setTheme = (themeName: string) => {
+    setCurrentTheme(themeName);
+    localStorage.setItem('cool-theme', themeName);
+    // Trigger a storage event to sync with ThemePickerCool
+    window.dispatchEvent(new StorageEvent('storage', { key: 'cool-theme', newValue: themeName }));
+    // Reload to apply theme (ThemePickerCool will pick it up)
+    window.location.reload();
   };
 
   const openPalette = (view: 'commands' | 'skills' | 'contact' | 'size' | 'theme' = 'commands') => {
@@ -467,7 +524,7 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
   return (
     <>
       {children}
-      {/* Left toolbar: Keyboard shortcuts */}
+      {/* Left toolbar: Actions */}
       <div className="resume-toolbar resume-toolbar-left">
         <button
           className="toolbar-section"
@@ -480,6 +537,18 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
         <span className="toolbar-divider" />
         <button
           className="toolbar-section"
+          onClick={() => {
+            const link = document.querySelector('.download-btn') as HTMLAnchorElement;
+            if (link) link.click();
+          }}
+          title="Download PDF (D)"
+        >
+          <span className="toolbar-label">DOWNLOAD</span>
+          <kbd>D</kbd>
+        </button>
+        <span className="toolbar-divider" />
+        <button
+          className="toolbar-section"
           onClick={() => openPalette('commands')}
           title="Open command palette"
         >
@@ -487,15 +556,15 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
           <span className="toolbar-keys"><kbd>{isMac ? '⌘' : 'Ctrl'}</kbd><kbd>K</kbd></span>
         </button>
       </div>
-      {/* Right toolbar: Presentation controls */}
+      {/* Right toolbar: Display controls */}
       <div className="resume-toolbar resume-toolbar-right">
         <button
           className="toolbar-section"
           onClick={() => openPalette('size')}
-          title="Change font size"
+          title="Change font size (S)"
         >
           <span className="toolbar-label">SIZE</span>
-          <kbd>{fontSize}</kbd>
+          <kbd>S</kbd>
         </button>
         <span className="toolbar-divider" />
         <button
@@ -515,7 +584,9 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
         fontSize={fontSize}
         onSetFontSize={setFontSize}
         isDark={isDark}
-        onToggleTheme={toggleTheme}
+        onToggleDarkMode={toggleDarkMode}
+        currentTheme={currentTheme}
+        onSetTheme={setTheme}
         initialView={initialView}
       />
     </>

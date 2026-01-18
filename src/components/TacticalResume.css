@@ -1124,6 +1124,27 @@ a.contact-value:hover {
   color: rgb(var(--highlight-rgb));
 }
 
+.settings-option-toggle {
+  border-style: dashed;
+}
+
+.settings-divider {
+  height: 1px;
+  background: rgba(var(--border-rgb), 0.2);
+  margin: 8px 0;
+}
+
+.theme-swatches {
+  display: flex;
+  gap: 4px;
+}
+
+.theme-swatch {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+}
+
 /* ============================================================================
    RESUME TOOLBAR (Unified View Mode + Command Palette)
    ============================================================================ */
