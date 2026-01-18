@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Krub:wght@400;600&display=swap');
 
-/* Hide header theme button - toolbar handles it on resume page */
-#theme-btn {
+/* Hide site-level theme controls - toolbar handles it on resume page */
+#theme-btn,
+button[aria-label="Theme"] {
   display: none !important;
 }
 
@@ -1069,6 +1070,60 @@ a.contact-value:hover {
   color: rgb(var(--highlight-rgb));
 }
 
+/* Settings options (Size, Theme) in command palette */
+.settings-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.settings-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: transparent;
+  border: 1px solid rgba(var(--border-rgb), 0.2);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  font-family: var(--font-mono);
+}
+
+.settings-option:hover {
+  border-color: rgba(var(--highlight-rgb), 0.3);
+  background: rgba(var(--highlight-rgb), 0.05);
+}
+
+.settings-option.active {
+  border-color: rgba(var(--highlight-rgb), 0.5);
+  background: rgba(var(--highlight-rgb), 0.08);
+}
+
+.settings-option-label {
+  flex: 1;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--text);
+}
+
+.settings-option-preview {
+  font-family: var(--font-secondary);
+  color: var(--text-muted);
+}
+
+.settings-option-icon {
+  font-size: 16px;
+  opacity: 0.7;
+}
+
+.settings-option-check {
+  font-size: 8px;
+  color: rgb(var(--highlight-rgb));
+}
+
 /* ============================================================================
    RESUME TOOLBAR (Unified View Mode + Command Palette)
    ============================================================================ */
@@ -1148,35 +1203,6 @@ a.contact-value:hover {
 .toolbar-keys {
   display: flex;
   gap: 2px;
-}
-
-.toolbar-size-options {
-  display: flex;
-  gap: 4px;
-}
-
-.size-option {
-  padding: 2px 6px;
-  background: rgba(var(--border-rgb), 0.15);
-  border-radius: 3px;
-  font-size: 9px;
-  font-weight: 600;
-  opacity: 0.5;
-  transition: all 0.2s ease;
-}
-
-.size-option.active {
-  background: rgba(var(--highlight-rgb), 0.2);
-  color: rgb(var(--highlight-rgb));
-  opacity: 1;
-}
-
-.toolbar-section:hover .size-option {
-  opacity: 0.7;
-}
-
-.toolbar-section:hover .size-option.active {
-  opacity: 1;
 }
 
 .toolbar-section:hover kbd {

@@ -14,14 +14,29 @@ interface CommandPaletteProps {
   onClose: () => void;
   viewMode: 'detailed' | 'summary';
   onToggleViewMode: () => void;
+  fontSize: 'S' | 'M' | 'L';
+  onSetFontSize: (size: 'S' | 'M' | 'L') => void;
+  isDark: boolean;
+  onToggleTheme: () => void;
+  initialView?: 'commands' | 'skills' | 'contact' | 'size' | 'theme';
 }
 
-export default function CommandPalette({ isOpen, onClose, viewMode, onToggleViewMode }: CommandPaletteProps) {
+export default function CommandPalette({
+  isOpen, onClose, viewMode, onToggleViewMode,
+  fontSize, onSetFontSize, isDark, onToggleTheme, initialView = 'commands'
+}: CommandPaletteProps) {
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [activeView, setActiveView] = useState<'commands' | 'skills' | 'contact'>('commands');
+  const [activeView, setActiveView] = useState<'commands' | 'skills' | 'contact' | 'size' | 'theme'>(initialView);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
+
+  // Reset to initial view when opening
+  useEffect(() => {
+    if (isOpen) {
+      setActiveView(initialView);
+    }
+  }, [isOpen, initialView]);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.querySelector(sectionId);
@@ -292,6 +307,53 @@ export default function CommandPalette({ isOpen, onClose, viewMode, onToggleView
               </div>
             </div>
           )}
+
+          {activeView === 'size' && (
+            <div className="command-view">
+              <div className="command-view-header">◆ FONT SIZE</div>
+              <div className="settings-options">
+                {(['S', 'M', 'L'] as const).map((size) => (
+                  <button
+                    key={size}
+                    className={`settings-option ${fontSize === size ? 'active' : ''}`}
+                    onClick={() => { onSetFontSize(size); onClose(); }}
+                  >
+                    <span className="settings-option-label">
+                      {size === 'S' ? 'SMALL' : size === 'M' ? 'MEDIUM' : 'LARGE'}
+                    </span>
+                    <span className="settings-option-preview" style={{ fontSize: size === 'S' ? '12px' : size === 'M' ? '14px' : '16px' }}>
+                      Aa
+                    </span>
+                    {fontSize === size && <span className="settings-option-check">●</span>}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {activeView === 'theme' && (
+            <div className="command-view">
+              <div className="command-view-header">◆ THEME</div>
+              <div className="settings-options">
+                <button
+                  className={`settings-option ${!isDark ? 'active' : ''}`}
+                  onClick={() => { if (isDark) onToggleTheme(); onClose(); }}
+                >
+                  <span className="settings-option-label">LIGHT</span>
+                  <span className="settings-option-icon">☀</span>
+                  {!isDark && <span className="settings-option-check">●</span>}
+                </button>
+                <button
+                  className={`settings-option ${isDark ? 'active' : ''}`}
+                  onClick={() => { if (!isDark) onToggleTheme(); onClose(); }}
+                >
+                  <span className="settings-option-label">DARK</span>
+                  <span className="settings-option-icon">☾</span>
+                  {isDark && <span className="settings-option-check">●</span>}
+                </button>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Footer */}
@@ -308,6 +370,7 @@ export default function CommandPalette({ isOpen, onClose, viewMode, onToggleView
 // Wrapper component that handles the keyboard shortcut and view mode
 export function CommandPaletteProvider({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [initialView, setInitialView] = useState<'commands' | 'skills' | 'contact' | 'size' | 'theme'>('commands');
   const [viewMode, setViewMode] = useState<'detailed' | 'summary'>('detailed');
 
   // Initialize view mode from localStorage
@@ -377,10 +440,6 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
     localStorage.setItem('resume-font-size', fontSize);
   }, [fontSize]);
 
-  const cycleFontSize = () => {
-    setFontSize(prev => prev === 'S' ? 'M' : prev === 'M' ? 'L' : 'S');
-  };
-
   const [isDark, setIsDark] = useState(false);
 
   // Sync with theme
@@ -400,6 +459,11 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
     if (themeBtn) themeBtn.click();
   };
 
+  const openPalette = (view: 'commands' | 'skills' | 'contact' | 'size' | 'theme' = 'commands') => {
+    setInitialView(view);
+    setIsOpen(true);
+  };
+
   return (
     <>
       {children}
@@ -416,7 +480,7 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
         <span className="toolbar-divider" />
         <button
           className="toolbar-section"
-          onClick={() => setIsOpen(true)}
+          onClick={() => openPalette('commands')}
           title="Open command palette"
         >
           <span className="toolbar-label">COMMANDS</span>
@@ -427,21 +491,17 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
       <div className="resume-toolbar resume-toolbar-right">
         <button
           className="toolbar-section"
-          onClick={cycleFontSize}
-          title="Cycle font size"
+          onClick={() => openPalette('size')}
+          title="Change font size"
         >
           <span className="toolbar-label">SIZE</span>
-          <span className="toolbar-size-options">
-            <span className={`size-option ${fontSize === 'S' ? 'active' : ''}`}>S</span>
-            <span className={`size-option ${fontSize === 'M' ? 'active' : ''}`}>M</span>
-            <span className={`size-option ${fontSize === 'L' ? 'active' : ''}`}>L</span>
-          </span>
+          <kbd>{fontSize}</kbd>
         </button>
         <span className="toolbar-divider" />
         <button
           className="toolbar-section"
-          onClick={toggleTheme}
-          title="Toggle theme (T)"
+          onClick={() => openPalette('theme')}
+          title="Change theme (T)"
         >
           <span className="toolbar-label">THEME</span>
           <kbd>T</kbd>
@@ -452,6 +512,11 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
         onClose={() => setIsOpen(false)}
         viewMode={viewMode}
         onToggleViewMode={toggleViewMode}
+        fontSize={fontSize}
+        onSetFontSize={setFontSize}
+        isDark={isDark}
+        onToggleTheme={toggleTheme}
+        initialView={initialView}
       />
     </>
   );
