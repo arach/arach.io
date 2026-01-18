@@ -136,6 +136,15 @@
   width: 20px;
   height: 20px;
   border: 1px solid rgba(var(--primary-rgb), 0.3);
+  transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
+  background: transparent;
+}
+
+.resume-header:hover::before,
+.resume-header:hover::after {
+  width: 26px;
+  height: 26px;
+  border-color: rgba(var(--highlight-rgb), 0.5);
 }
 
 .resume-header::before {
