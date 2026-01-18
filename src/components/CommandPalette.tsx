@@ -96,6 +96,15 @@ export default function CommandPalette({ isOpen, onClose, viewMode, onToggleView
       },
       category: 'Actions',
     },
+    {
+      id: 'console-mode',
+      label: 'Activate Console Mode',
+      action: () => {
+        window.dispatchEvent(new Event('activate-console-mode'));
+        onClose();
+      },
+      category: 'Actions',
+    },
   ];
 
   const filteredCommands = commands.filter(cmd =>

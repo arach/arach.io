@@ -2,7 +2,7 @@
 import { resumeData } from "../data/resume";
 import TacticalResumeCard from "./TacticalResumeCard";
 import { CommandPaletteProvider } from "./CommandPalette";
-import ConsoleHeader from "./ConsoleHeader";
+import ResumeHeader from "./ResumeHeader";
 import ConsoleArt from "./ConsoleArt";
 import "@components/TacticalResume.css";
 
@@ -18,11 +18,12 @@ const { pdfUrl } = Astro.props;
 
 <CommandPaletteProvider client:load>
 <div class="tactical-resume">
-  <!-- Console Header / Boot Sequence -->
-  <ConsoleHeader
+  <!-- Header with console mode easter egg (Cmd+Click on name) -->
+  <ResumeHeader
     client:load
     name={resumeData.name}
     title={resumeData.title}
+    location={resumeData.location}
     oneLiner={resumeData.oneLiner}
     locationLine={resumeData.locationLine}
     contact={resumeData.contact}
