@@ -1065,52 +1065,76 @@ a.contact-value:hover {
 }
 
 /* ============================================================================
-   RESUME INDICATORS (View Mode + Command Palette Hint)
+   RESUME TOOLBAR (Unified View Mode + Command Palette)
    ============================================================================ */
 
-.resume-indicators {
+.resume-toolbar {
   position: fixed;
-  bottom: 20px;
-  left: 20px;
+  bottom: 24px;
+  left: 24px;
   display: flex;
   align-items: center;
-  gap: 8px;
-  z-index: 50;
-}
-
-.view-mode-indicator,
-.keyboard-hint {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  background: rgba(var(--surface-rgb), 0.9);
+  background: rgba(var(--surface-rgb), 0.95);
   border: 1px solid rgba(var(--border-rgb), 0.3);
-  font-size: 10px;
-  color: var(--text-muted);
+  border-radius: 6px;
   font-family: var(--font-mono);
-  backdrop-filter: blur(8px);
+  font-size: 11px;
+  z-index: 50;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="dark"] .resume-toolbar {
+  background: rgba(var(--surface-rgb), 0.9);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.toolbar-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: color 0.2s ease, background 0.2s ease;
 }
 
-.view-mode-indicator:hover,
-.keyboard-hint:hover {
-  border-color: rgba(var(--highlight-rgb), 0.5);
+.toolbar-section:first-child {
+  border-radius: 5px 0 0 5px;
+}
+
+.toolbar-section:last-child {
+  border-radius: 0 5px 5px 0;
+}
+
+.toolbar-section:hover {
   color: var(--text);
+  background: rgba(var(--highlight-rgb), 0.08);
 }
 
-.view-mode-indicator kbd,
-.keyboard-hint kbd {
-  padding: 2px 6px;
-  background: rgba(var(--border-rgb), 0.2);
-  border-radius: 3px;
-  font-size: 9px;
+.toolbar-divider {
+  width: 1px;
+  height: 20px;
+  background: rgba(var(--border-rgb), 0.4);
 }
 
-.view-mode-label {
-  letter-spacing: 0.1em;
+.toolbar-label {
+  letter-spacing: 0.08em;
   font-weight: 600;
+}
+
+.toolbar-section kbd {
+  padding: 3px 7px;
+  background: rgba(var(--border-rgb), 0.25);
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.toolbar-section:hover kbd {
+  background: rgba(var(--highlight-rgb), 0.15);
 }
 
 /* ============================================================================
@@ -1130,16 +1154,24 @@ a.contact-value:hover {
     max-height: 80vh;
   }
 
-  .resume-indicators {
-    bottom: 10px;
-    left: 10px;
+  .resume-toolbar {
+    bottom: 12px;
+    left: 12px;
+    font-size: 10px;
+  }
+
+  .toolbar-section {
+    padding: 8px 10px;
     gap: 6px;
   }
 
-  .view-mode-indicator,
-  .keyboard-hint {
-    padding: 6px 10px;
+  .toolbar-section kbd {
+    padding: 2px 5px;
     font-size: 9px;
+  }
+
+  .toolbar-divider {
+    height: 16px;
   }
 }
 

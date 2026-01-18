@@ -350,12 +350,29 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isOpen]);
 
+  const isMac = typeof navigator !== 'undefined' && navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+
   return (
     <>
       {children}
-      <div className="resume-indicators">
-        <ViewModeIndicator mode={viewMode} onToggle={toggleViewMode} />
-        <KeyboardHint onClick={() => setIsOpen(true)} />
+      <div className="resume-toolbar">
+        <button
+          className="toolbar-section"
+          onClick={toggleViewMode}
+          title="Toggle view mode (V)"
+        >
+          <span className="toolbar-label">{viewMode === 'detailed' ? 'DETAILED' : 'SUMMARY'}</span>
+          <kbd>V</kbd>
+        </button>
+        <span className="toolbar-divider" />
+        <button
+          className="toolbar-section"
+          onClick={() => setIsOpen(true)}
+          title="Open command palette"
+        >
+          <kbd>{isMac ? '⌘' : 'Ctrl'}</kbd>
+          <kbd>K</kbd>
+        </button>
       </div>
       <CommandPalette
         isOpen={isOpen}
@@ -364,26 +381,5 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
         onToggleViewMode={toggleViewMode}
       />
     </>
-  );
-}
-
-// View mode indicator component
-function ViewModeIndicator({ mode, onToggle }: { mode: 'detailed' | 'summary'; onToggle: () => void }) {
-  return (
-    <button className="view-mode-indicator" onClick={onToggle} title="Toggle view mode (V)">
-      <span className="view-mode-label">{mode === 'detailed' ? 'DETAILED' : 'SUMMARY'}</span>
-      <kbd>V</kbd>
-    </button>
-  );
-}
-
-// Command palette keyboard hint
-function KeyboardHint({ onClick }: { onClick: () => void }) {
-  const isMac = typeof navigator !== 'undefined' && navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-  return (
-    <button className="keyboard-hint" onClick={onClick} title="Open command palette">
-      <kbd>{isMac ? '⌘' : 'Ctrl'}</kbd>
-      <kbd>K</kbd>
-    </button>
   );
 }
