@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Krub:wght@400;600&display=swap');
 
+/* Hide header theme button - toolbar handles it on resume page */
+#theme-btn {
+  display: none !important;
+}
+
 /* ============================================================================
    COLOR PALETTE SYSTEM
    Each palette defines primary (main accent) and highlight (hover/interaction)

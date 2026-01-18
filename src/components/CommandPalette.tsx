@@ -344,6 +344,12 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
         e.preventDefault();
         toggleViewMode();
       }
+      // T to toggle theme (when not in an input)
+      if (e.key === 't' && !isOpen && !(e.target instanceof HTMLInputElement)) {
+        e.preventDefault();
+        const themeBtn = document.getElementById('theme-btn');
+        if (themeBtn) themeBtn.click();
+      }
     };
 
     document.addEventListener('keydown', handleKeyDown);
@@ -373,6 +379,25 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
 
   const cycleFontSize = () => {
     setFontSize(prev => prev === 'S' ? 'M' : prev === 'M' ? 'L' : 'S');
+  };
+
+  const [isDark, setIsDark] = useState(false);
+
+  // Sync with theme
+  useEffect(() => {
+    const updateTheme = () => {
+      setIsDark(document.documentElement.getAttribute('data-theme') === 'dark');
+    };
+    updateTheme();
+
+    const observer = new MutationObserver(updateTheme);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    return () => observer.disconnect();
+  }, []);
+
+  const toggleTheme = () => {
+    const themeBtn = document.getElementById('theme-btn');
+    if (themeBtn) themeBtn.click();
   };
 
   return (
@@ -411,6 +436,15 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
             <span className={`size-option ${fontSize === 'M' ? 'active' : ''}`}>M</span>
             <span className={`size-option ${fontSize === 'L' ? 'active' : ''}`}>L</span>
           </span>
+        </button>
+        <span className="toolbar-divider" />
+        <button
+          className="toolbar-section"
+          onClick={toggleTheme}
+          title="Toggle theme (T)"
+        >
+          <span className="toolbar-label">THEME</span>
+          <kbd>T</kbd>
         </button>
       </div>
       <CommandPalette
