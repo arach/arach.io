@@ -1056,13 +1056,21 @@ a.contact-value:hover {
 }
 
 /* ============================================================================
-   VIEW MODE INDICATOR
+   RESUME INDICATORS (View Mode + Command Palette Hint)
    ============================================================================ */
 
-.view-mode-indicator {
+.resume-indicators {
   position: fixed;
   bottom: 20px;
   left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 50;
+}
+
+.view-mode-indicator,
+.keyboard-hint {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -1072,18 +1080,19 @@ a.contact-value:hover {
   font-size: 10px;
   color: var(--text-muted);
   font-family: var(--font-mono);
-  z-index: 50;
   backdrop-filter: blur(8px);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
-.view-mode-indicator:hover {
+.view-mode-indicator:hover,
+.keyboard-hint:hover {
   border-color: rgba(var(--highlight-rgb), 0.5);
   color: var(--text);
 }
 
-.view-mode-indicator kbd {
+.view-mode-indicator kbd,
+.keyboard-hint kbd {
   padding: 2px 6px;
   background: rgba(var(--border-rgb), 0.2);
   border-radius: 3px;
@@ -1105,36 +1114,6 @@ a.contact-value:hover {
   display: none;
 }
 
-/* Keyboard shortcut hint on resume page */
-.keyboard-hint {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  background: rgba(var(--surface-rgb), 0.9);
-  border: 1px solid rgba(var(--border-rgb), 0.3);
-  font-size: 11px;
-  color: var(--text-muted);
-  font-family: var(--font-mono);
-  z-index: 50;
-  backdrop-filter: blur(8px);
-  transition: opacity 0.2s ease;
-}
-
-.keyboard-hint:hover {
-  opacity: 0.7;
-}
-
-.keyboard-hint kbd {
-  padding: 2px 6px;
-  background: rgba(var(--border-rgb), 0.2);
-  border-radius: 3px;
-  font-size: 10px;
-}
-
 @media (max-width: 640px) {
   .command-palette {
     top: 10%;
@@ -1142,15 +1121,14 @@ a.contact-value:hover {
     max-height: 80vh;
   }
 
-  .keyboard-hint {
-    bottom: 10px;
-    right: 10px;
-    font-size: 10px;
-  }
-
-  .view-mode-indicator {
+  .resume-indicators {
     bottom: 10px;
     left: 10px;
+    gap: 6px;
+  }
+
+  .view-mode-indicator,
+  .keyboard-hint {
     padding: 6px 10px;
     font-size: 9px;
   }

@@ -81,7 +81,7 @@ export const resumeData: ResumeData & { oneLiner: string; locationLine: string }
     website: "arach.io",
     linkedin: "arach",
     github: "arach",
-    twitter: "arach_tchoupani",
+    twitter: "arach",
   },
   experience: [
     {

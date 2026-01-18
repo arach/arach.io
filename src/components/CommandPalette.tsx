@@ -353,7 +353,10 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
   return (
     <>
       {children}
-      <ViewModeIndicator mode={viewMode} onToggle={toggleViewMode} />
+      <div className="resume-indicators">
+        <ViewModeIndicator mode={viewMode} onToggle={toggleViewMode} />
+        <KeyboardHint onClick={() => setIsOpen(true)} />
+      </div>
       <CommandPalette
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
@@ -370,6 +373,17 @@ function ViewModeIndicator({ mode, onToggle }: { mode: 'detailed' | 'summary'; o
     <button className="view-mode-indicator" onClick={onToggle} title="Toggle view mode (V)">
       <span className="view-mode-label">{mode === 'detailed' ? 'DETAILED' : 'SUMMARY'}</span>
       <kbd>V</kbd>
+    </button>
+  );
+}
+
+// Command palette keyboard hint
+function KeyboardHint({ onClick }: { onClick: () => void }) {
+  const isMac = typeof navigator !== 'undefined' && navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+  return (
+    <button className="keyboard-hint" onClick={onClick} title="Open command palette">
+      <kbd>{isMac ? '⌘' : 'Ctrl'}</kbd>
+      <kbd>K</kbd>
     </button>
   );
 }
