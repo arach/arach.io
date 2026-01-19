@@ -532,28 +532,30 @@ export default function CommandPalette({
         <div className="command-palette-content" ref={listRef}>
           {activeView === 'commands' && (
             <>
-              {Object.entries(groupedCommands).map(([category, cmds]) => (
-                <div key={category} className="command-group">
-                  <div className="command-group-label">{category.toUpperCase()}</div>
-                  {cmds.map((cmd) => {
-                    const globalIndex = filteredCommands.findIndex(c => c.id === cmd.id);
-                    return (
-                      <div
-                        key={cmd.id}
-                        data-index={globalIndex}
-                        className={`command-item ${globalIndex === selectedIndex ? 'selected' : ''}`}
-                        onClick={() => cmd.action()}
-                        onMouseEnter={() => setSelectedIndex(globalIndex)}
-                      >
-                        <span className="command-label">{cmd.label}</span>
-                        {cmd.shortcut && (
-                          <span className="command-shortcut">{cmd.shortcut}</span>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              ))}
+              <div className="command-groups-grid">
+                {Object.entries(groupedCommands).map(([category, cmds]) => (
+                  <div key={category} className="command-group">
+                    <div className="command-group-label">{category.toUpperCase()}</div>
+                    {cmds.map((cmd) => {
+                      const globalIndex = filteredCommands.findIndex(c => c.id === cmd.id);
+                      return (
+                        <div
+                          key={cmd.id}
+                          data-index={globalIndex}
+                          className={`command-item ${globalIndex === selectedIndex ? 'selected' : ''}`}
+                          onClick={() => cmd.action()}
+                          onMouseEnter={() => setSelectedIndex(globalIndex)}
+                        >
+                          <span className="command-label">{cmd.label}</span>
+                          {cmd.shortcut && (
+                            <kbd className="command-shortcut">{cmd.shortcut}</kbd>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                ))}
+              </div>
               {filteredCommands.length === 0 && (
                 <div className="command-empty">No commands found</div>
               )}
@@ -712,11 +714,54 @@ export default function CommandPalette({
   );
 }
 
+// Easter egg messages
+const easterEggs: Record<string, { title: string; lines: string[]; accent: string }> = {
+  enea: {
+    title: 'ENEA',
+    accent: '#00a3e0',
+    lines: [
+      '> SIGNAL DETECTED: ENEA',
+      '',
+      'Hey Enea,',
+      '',
+      'Really appreciate the intro—',
+      'means a lot coming from you.',
+      '',
+      'Looking forward to seeing',
+      'where this goes.',
+      '',
+      'Thanks for thinking of me.',
+      '',
+      '—A',
+    ],
+  },
+  xai: {
+    title: 'xAI',
+    accent: '#000000',
+    lines: [
+      '> SIGNAL DETECTED: xAI',
+      '',
+      'Understanding the universe,',
+      'one model at a time.',
+      '',
+      'I\'ve been building with LLMs daily—',
+      'agentic workflows, RAG systems,',
+      'and tools that amplify human capability.',
+      '',
+      'Ready to help Grok think bigger.',
+      '',
+      '— Arach',
+    ],
+  },
+};
+
 // Wrapper component that handles the keyboard shortcut and view mode
 export function CommandPaletteProvider({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
   const [initialView, setInitialView] = useState<'commands' | 'skills' | 'contact' | 'size' | 'theme'>('commands');
   const [viewMode, setViewMode] = useState<'detailed' | 'summary'>('detailed');
+  const [easterEgg, setEasterEgg] = useState<string | null>(null);
+  const keyBufferRef = useRef<string>('');
 
   // Initialize view mode from localStorage
   useEffect(() => {
@@ -740,6 +785,49 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
     setViewMode(prev => prev === 'detailed' ? 'summary' : 'detailed');
   };
 
+  // Easter egg key sequence detection
+  useEffect(() => {
+    const sequences = Object.keys(easterEggs);
+    const maxLength = Math.max(...sequences.map(s => s.length));
+
+    const handleKeyPress = (e: KeyboardEvent) => {
+      // Skip if in input or if modals are open
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+      if (isOpen || easterEgg) return;
+
+      // Only track letter keys
+      if (e.key.length === 1 && /[a-z]/i.test(e.key)) {
+        keyBufferRef.current = (keyBufferRef.current + e.key.toLowerCase()).slice(-maxLength);
+
+        // Check for matches
+        for (const seq of sequences) {
+          if (keyBufferRef.current.endsWith(seq)) {
+            setEasterEgg(seq);
+            keyBufferRef.current = '';
+            break;
+          }
+        }
+      }
+    };
+
+    // Clear buffer after 2 seconds of inactivity
+    let clearTimer: NodeJS.Timeout;
+    const handleKeyUp = () => {
+      clearTimeout(clearTimer);
+      clearTimer = setTimeout(() => {
+        keyBufferRef.current = '';
+      }, 2000);
+    };
+
+    document.addEventListener('keypress', handleKeyPress);
+    document.addEventListener('keyup', handleKeyUp);
+    return () => {
+      document.removeEventListener('keypress', handleKeyPress);
+      document.removeEventListener('keyup', handleKeyUp);
+      clearTimeout(clearTimer);
+    };
+  }, [isOpen, easterEgg]);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       // Cmd+K or Ctrl+K to open command palette
@@ -751,6 +839,13 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
       if (e.target instanceof HTMLInputElement) return;
       // Skip when palette is open (let it handle its own keys)
       if (isOpen) return;
+      // Skip when easter egg is showing
+      if (easterEgg) {
+        if (e.key === 'Escape') {
+          setEasterEgg(null);
+        }
+        return;
+      }
 
       // V to toggle view mode
       if (e.key === 'v') {
@@ -777,7 +872,7 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
 
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen]);
+  }, [isOpen, easterEgg]);
 
   const isMac = typeof navigator !== 'undefined' && navigator.platform.toUpperCase().indexOf('MAC') >= 0;
   const [fontSize, setFontSize] = useState<'S' | 'M' | 'L'>('M');
@@ -915,6 +1010,33 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
         onSetTheme={setTheme}
         initialView={initialView}
       />
+
+      {/* Easter egg overlay */}
+      {easterEgg && easterEggs[easterEgg] && (
+        <>
+          <div
+            className="easter-egg-backdrop"
+            onClick={() => setEasterEgg(null)}
+          />
+          <div
+            className="easter-egg-modal"
+            style={{ '--egg-accent': easterEggs[easterEgg].accent } as React.CSSProperties}
+          >
+            <div className="easter-egg-content">
+              {easterEggs[easterEgg].lines.map((line, i) => (
+                <div
+                  key={i}
+                  className={`easter-egg-line ${line.startsWith('>') ? 'easter-egg-signal' : ''} ${line.startsWith('—') ? 'easter-egg-signature' : ''}`}
+                  style={{ animationDelay: `${i * 0.08}s` }}
+                >
+                  {line || '\u00A0'}
+                </div>
+              ))}
+            </div>
+            <div className="easter-egg-hint">press esc to close</div>
+          </div>
+        </>
+      )}
     </>
   );
 }

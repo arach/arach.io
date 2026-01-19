@@ -146,7 +146,7 @@ export const resumeData: ResumeData & { oneLiner: string; locationLine: string }
       featured: true,
     },
     {
-      company: "Starbucks (via C3 Technologies)",
+      company: "Starbucks (via C3)",
       title: "Tech Lead",
       dates: "2016 - 2017",
       startDate: "2016-10",

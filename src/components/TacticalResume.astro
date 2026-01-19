@@ -31,7 +31,7 @@ const { pdfUrl } = Astro.props;
 
   <!-- Experience Section - Operational History -->
   <section class="experience-section">
-    <h2 class="section-header">OPERATIONAL HISTORY</h2>
+    <h2 class="section-header"><span>OPERATIONAL HISTORY</span></h2>
     {resumeData.experience.map((exp, index) => (
       <TacticalResumeCard experience={exp} index={index} client:visible />
     ))}
@@ -39,7 +39,7 @@ const { pdfUrl } = Astro.props;
 
   <!-- Education Section - Training -->
   <section class="education-section">
-    <h2 class="section-header">TRAINING</h2>
+    <h2 class="section-header"><span>TRAINING</span></h2>
     {resumeData.education.map((edu) => (
       <div class="compact-card">
         <div class="compact-header">
@@ -54,7 +54,7 @@ const { pdfUrl } = Astro.props;
 
   <!-- Volunteer Section - Allied Operations -->
   <section class="volunteer-section">
-    <h2 class="section-header">ALLIED OPERATIONS</h2>
+    <h2 class="section-header"><span>ALLIED OPERATIONS</span></h2>
     {resumeData.volunteer.map((vol) => (
       <div class="compact-card" data-featured={vol.featured ? "true" : "false"}>
         <div class="compact-header">

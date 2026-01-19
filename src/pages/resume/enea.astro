@@ -1,0 +1,402 @@
+---
+import ResumeLayout from "@layouts/ResumeLayout.astro";
+import { resumeData } from "../../data/resume";
+import TacticalResumeCard from "@components/TacticalResumeCard";
+import { CommandPaletteProvider } from "@components/CommandPalette";
+import ResumeHeader from "@components/ResumeHeader";
+import ConsoleArt from "@components/ConsoleArt";
+import CopyButton from "@components/CopyButton";
+import "@components/TacticalResume.css";
+
+const title = "Arach Tchoupani - Introduction for xAI";
+const description = "Personal introduction and resume for xAI";
+const pdfUrl = "/Arach_Tchoupani_Resume.pdf";
+---
+
+<ResumeLayout title={title} description={description}>
+  <ConsoleArt client:load />
+
+  <CommandPaletteProvider client:load>
+  <div class="tactical-resume">
+
+    <!-- Intro Overlay - styled like command palette -->
+    <div class="intro-backdrop" id="intro-backdrop"></div>
+    <div class="intro-panel" id="intro-panel">
+      <div class="intro-panel-header">
+        <span class="intro-panel-label">FOR_ENEA_CAPITAL</span>
+        <span class="intro-panel-hint">ESC to explore</span>
+      </div>
+
+      <div class="intro-panel-content">
+        <div class="intro-hero">
+          <p class="intro-greeting">Hey Amirteymour, thanks for offering to intro me. Here's a quick blurb you can forward.</p>
+          <p class="intro-resume-line">And here's my updated resume: <a href={pdfUrl} class="intro-pdf-link" download>download</a></p>
+        </div>
+
+        <div class="intro-blurb-box">
+          <div class="blurb-divider"></div>
+          <div class="blurb-content" id="blurb-text"><strong>Arach Tchoupani</strong> is a builder who's done the full arc: from engineer #1 at a pre-launch startup to co-founding <em class="highlight">Breathe Life</em> (acquired by Zinnia) to leading engineering at <em class="highlight">Meta</em>.<span class="blurb-bullets">
+<span class="blurb-bullet">›</span> <strong>3x CTO/VP Eng</strong> across venture-backed startups, one with a successful exit
+<span class="blurb-bullet">›</span> <strong>Scaled teams 0→50+</strong>, built orgs from scratch, shipped products to millions
+<span class="blurb-bullet">›</span> <strong>Career arc:</strong> Outbox → Lot18 <em class="highlight">(IC→CTO)</em> → Primary.com <em class="highlight">(Founding CTO)</em> → PhotoShelter → Breathe Life (Co-founder/CTO) → Meta
+</span>
+After a decade of leadership, took a technical sabbatical to go deep on AI: building daily with LLMs, agentic workflows, and shipping a voice-to-action app.
+
+<strong>Rare combo:</strong> founder grit + scaled-company experience + current hands-on AI chops.</div>
+          <CopyButton client:load targetId="blurb-text" className="blurb-copy" />
+        </div>
+
+        <div class="intro-thanks-row">
+          <span class="intro-thanks">Thanks again. Means a lot.</span>
+        </div>
+      </div>
+
+      <button class="intro-explore-btn" id="explore-btn">
+        <kbd>↵</kbd> Explore interactive resume
+      </button>
+    </div>
+
+    <!-- Resume Content -->
+    <ResumeHeader
+      client:load
+      name={resumeData.name}
+      title={resumeData.title}
+      location={resumeData.location}
+      oneLiner={resumeData.oneLiner}
+      locationLine={resumeData.locationLine}
+      contact={resumeData.contact}
+    />
+
+    <section class="experience-section">
+      <h2 class="section-header"><span>EXPERIENCE</span></h2>
+      {resumeData.experience.map((exp, index) => (
+        <TacticalResumeCard experience={exp} index={index} client:visible />
+      ))}
+    </section>
+
+    <section class="education-section">
+      <h2 class="section-header"><span>EDUCATION</span></h2>
+      {resumeData.education.map((edu) => (
+        <div class="compact-card">
+          <div class="compact-header">
+            <span class="compact-title">{edu.institution}</span>
+          </div>
+          <div class="compact-meta">
+            {edu.degree} in {edu.field} | {edu.year} | {edu.location}
+          </div>
+        </div>
+      ))}
+    </section>
+
+    <section class="volunteer-section">
+      <h2 class="section-header"><span>COMMUNITY</span></h2>
+      {resumeData.volunteer.map((vol) => (
+        <div class="compact-card" data-featured={vol.featured ? "true" : "false"}>
+          <div class="compact-header">
+            <span class="compact-title">{vol.organization}</span>
+            {vol.badge && <span class="compact-badge">{vol.badge}</span>}
+          </div>
+          <div class="compact-meta">
+            {vol.role} | {vol.dates}
+          </div>
+          <div class="compact-description">{vol.description}</div>
+        </div>
+      ))}
+    </section>
+
+    <div class="download-section">
+      <a href={pdfUrl} class="download-btn" download>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+        DOWNLOAD_PDF
+      </a>
+    </div>
+
+  </div>
+  </CommandPaletteProvider>
+</ResumeLayout>
+
+<script>
+  const backdrop = document.getElementById('intro-backdrop');
+  const panel = document.getElementById('intro-panel');
+  const exploreBtn = document.getElementById('explore-btn');
+
+  function dismiss() {
+    backdrop?.classList.add('dismissed');
+    panel?.classList.add('dismissed');
+    document.body.style.overflow = '';
+  }
+
+  document.body.style.overflow = 'hidden';
+
+  backdrop?.addEventListener('click', dismiss);
+  exploreBtn?.addEventListener('click', dismiss);
+
+  document.addEventListener('keydown', (e) => {
+    if ((e.key === 'Escape' || e.key === 'Enter') && panel && !panel.classList.contains('dismissed')) {
+      dismiss();
+    }
+  });
+</script>
+
+<style>
+  /* Intro Overlay - matches command palette exactly */
+  .intro-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    z-index: 100;
+    animation: commandPaletteBackdropIn 0.1s ease-out;
+  }
+
+  .intro-backdrop.dismissed {
+    display: none;
+  }
+
+  .intro-panel {
+    position: fixed;
+    top: 12%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 94%;
+    max-width: 680px;
+    max-height: 75vh;
+    overflow-y: auto;
+    background: rgb(var(--surface-rgb));
+    border: 1px solid rgba(var(--primary-rgb), 0.2);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+    z-index: 101;
+    animation: commandPaletteIn 0.15s ease-out forwards;
+  }
+
+  [data-theme="dark"] .intro-panel {
+    background: rgb(15, 15, 15);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+  }
+
+  .intro-panel.dismissed {
+    display: none;
+  }
+
+  .intro-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(var(--border-rgb), 0.3);
+  }
+
+  .intro-panel-label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--primary);
+    font-weight: 600;
+  }
+
+  .intro-panel-hint {
+    font-size: 10px;
+    color: var(--text-muted);
+  }
+
+  .intro-panel-content {
+    padding: 16px;
+  }
+
+  .intro-hero {
+    margin-bottom: 16px;
+  }
+
+  .intro-greeting {
+    font-size: 13px;
+    line-height: 1.5;
+    color: #fff;
+    margin: 0 0 6px 0;
+  }
+
+  .intro-resume-line {
+    font-size: 13px;
+    line-height: 1.5;
+    color: #fff;
+    margin: 0;
+  }
+
+  .intro-pdf-link {
+    display: inline-block;
+    padding: 4px 10px;
+    background: rgba(var(--highlight-rgb), 0.15);
+    border: 1px solid rgba(var(--highlight-rgb), 0.3);
+    border-radius: 4px;
+    color: rgb(var(--highlight-rgb));
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    transition: all 0.15s ease;
+  }
+
+  .intro-pdf-link:hover {
+    background: rgba(var(--highlight-rgb), 0.25);
+    border-color: rgba(var(--highlight-rgb), 0.5);
+  }
+
+  .intro-blurb-box {
+    position: relative;
+    background: rgba(var(--border-rgb), 0.08);
+    border: 1px solid rgba(var(--highlight-rgb), 0.25);
+    border-radius: 4px;
+    margin-bottom: 16px;
+  }
+
+  [data-theme="dark"] .intro-blurb-box {
+    background: rgb(20, 20, 24);
+  }
+
+  .blurb-divider {
+    height: 1px;
+    background: rgba(var(--border-rgb), 0.15);
+  }
+
+  [data-theme="dark"] .blurb-divider {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .blurb-copy {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    color: var(--text-muted);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    opacity: 0.35;
+    transition: all 0.15s ease;
+  }
+
+  .blurb-copy:hover {
+    opacity: 1;
+    background: rgba(var(--highlight-rgb), 0.12);
+    color: rgb(var(--highlight-rgb));
+  }
+
+  .blurb-content {
+    padding: 14px 16px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1.7;
+    color: var(--text);
+    white-space: pre-wrap;
+  }
+
+  [data-theme="dark"] .blurb-content {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .blurb-content strong {
+    color: var(--text);
+    font-weight: 700;
+  }
+
+  [data-theme="dark"] .blurb-content strong {
+    color: #fff;
+  }
+
+  .blurb-content em.highlight {
+    font-style: normal;
+    color: rgb(var(--highlight-rgb));
+    font-weight: 600;
+  }
+
+  .blurb-bullets {
+    display: block;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+
+  .blurb-bullet {
+    color: rgb(var(--highlight-rgb));
+    font-weight: 700;
+  }
+
+  .intro-thanks-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .intro-thanks {
+    font-family: var(--font-secondary);
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+
+  .intro-explore-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 12px 16px;
+    background: rgba(var(--highlight-rgb), 0.05);
+    border: none;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .intro-explore-btn:hover {
+    background: rgba(var(--highlight-rgb), 0.1);
+    color: rgb(var(--highlight-rgb));
+  }
+
+  .intro-explore-btn kbd {
+    display: inline-block;
+    padding: 3px 7px;
+    background: rgba(var(--border-rgb), 0.15);
+    border: 1px solid rgba(var(--border-rgb), 0.25);
+    border-radius: 3px;
+    font-size: 10px;
+    box-shadow: 0 1px 0 rgba(var(--border-rgb), 0.3);
+  }
+
+  .intro-explore-btn:hover kbd {
+    background: rgba(var(--highlight-rgb), 0.12);
+    border-color: rgba(var(--highlight-rgb), 0.3);
+    color: rgb(var(--highlight-rgb));
+  }
+
+  @media (max-width: 480px) {
+    .intro-panel {
+      top: 8%;
+      width: 94%;
+    }
+
+    .intro-name {
+      font-size: 20px;
+    }
+
+    .intro-blurb {
+      font-size: 13px;
+    }
+
+    .intro-stats-row {
+      gap: 16px;
+    }
+
+    .intro-stat-value {
+      font-size: 18px;
+    }
+  }
+</style>
