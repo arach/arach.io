@@ -35,11 +35,9 @@ const pdfUrl = "/Arach_Tchoupani_Resume.pdf";
 
         <div class="intro-blurb-box">
           <div class="blurb-divider"></div>
-          <div class="blurb-content" id="blurb-text"><strong>Arach Tchoupani</strong> is a builder who's done the full arc: from engineer #1 at a pre-launch startup to co-founding <em class="highlight">Breathe Life</em> (acquired by Zinnia) to leading engineering at <em class="highlight">Meta</em>.<span class="blurb-bullets">
-<span class="blurb-bullet">›</span> <strong>3x CTO/VP Eng</strong> across venture-backed startups, one with a successful exit
+          <div class="blurb-content" id="blurb-text"><strong>Arach Tchoupani</strong> is a builder who's done the full arc: from engineer #1 at a pre-launch startup to <em class="highlight">co-founding</em> <em class="highlight">Breathe Life</em> (acquired by Zinnia) to leading engineering at <em class="highlight">Meta</em>.<span class="blurb-bullets"><span class="blurb-bullet">›</span> <strong>3x CTO/VP Eng</strong> across venture-backed startups, one with a successful exit
 <span class="blurb-bullet">›</span> <strong>Scaled teams 0→50+</strong>, built orgs from scratch, shipped products to millions
-<span class="blurb-bullet">›</span> <strong>Career arc:</strong> Outbox → Lot18 <em class="highlight">(IC→CTO)</em> → Primary.com <em class="highlight">(Founding CTO)</em> → PhotoShelter → Breathe Life (Co-founder/CTO) → Meta
-</span>
+<span class="blurb-bullet">›</span> <strong>Career arc:</strong> Outbox → Lot18 <strong>(IC→CTO)</strong> → Primary.com <strong>(Founding CTO)</strong> → PhotoShelter <strong>(20 person team)</strong> → Breathe Life <strong>(Co-founder/CTO, exit)</strong> → Meta <strong>(big tech eng excellence)</strong></span>
 After a decade of leadership, took a technical sabbatical to go deep on AI: building daily with LLMs, agentic workflows, and shipping a voice-to-action app.
 
 <strong>Rare combo:</strong> founder grit + scaled-company experience + current hands-on AI chops.</div>
@@ -47,7 +45,7 @@ After a decade of leadership, took a technical sabbatical to go deep on AI: buil
         </div>
 
         <div class="intro-thanks-row">
-          <span class="intro-thanks">Thanks again. Means a lot.</span>
+          <span class="intro-thanks">Thanks again, super appreciated!</span>
         </div>
       </div>
 
@@ -275,17 +273,18 @@ After a decade of leadership, took a technical sabbatical to go deep on AI: buil
     width: 28px;
     height: 28px;
     color: var(--text-muted);
-    background: transparent;
-    border: none;
+    background: rgba(var(--border-rgb), 0.1);
+    border: 1px solid rgba(var(--border-rgb), 0.2);
     cursor: pointer;
     border-radius: 4px;
-    opacity: 0.35;
+    opacity: 0.6;
     transition: all 0.15s ease;
   }
 
   .blurb-copy:hover {
     opacity: 1;
     background: rgba(var(--highlight-rgb), 0.12);
+    border-color: rgba(var(--highlight-rgb), 0.3);
     color: rgb(var(--highlight-rgb));
   }
 
@@ -335,9 +334,8 @@ After a decade of leadership, took a technical sabbatical to go deep on AI: buil
   }
 
   .intro-thanks {
-    font-family: var(--font-secondary);
-    font-size: 14px;
-    color: var(--text-muted);
+    font-size: 13px;
+    color: #fff;
   }
 
   .intro-explore-btn {
