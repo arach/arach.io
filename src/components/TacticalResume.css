@@ -1,5 +1,50 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Krub:wght@400;600&display=swap');
 
+/* Hide site-level theme controls - toolbar handles it on resume page */
+#theme-btn,
+button[aria-label="Theme"] {
+  display: none !important;
+}
+
+/* Smooth theme transitions - applied to specific elements, not wildcards */
+html,
+body {
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.tactical-resume,
+.tactical-resume .resume-header,
+.tactical-resume .experience-section,
+.tactical-resume .education-section,
+.tactical-resume .volunteer-section,
+.tactical-resume .experience-card,
+.tactical-resume .compact-card,
+.tactical-resume .section-header,
+.tactical-resume .console-header {
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+/* Interactive elements with faster transitions */
+.tactical-resume button,
+.tactical-resume a,
+.tactical-resume kbd,
+.resume-toolbar,
+.resume-toolbar *,
+.command-palette,
+.command-palette * {
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
 /* ============================================================================
    COLOR PALETTE SYSTEM
    Each palette defines primary (main accent) and highlight (hover/interaction)
@@ -136,6 +181,15 @@
   width: 20px;
   height: 20px;
   border: 1px solid rgba(var(--primary-rgb), 0.3);
+  transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
+  background: transparent;
+}
+
+.resume-header:hover::before,
+.resume-header:hover::after {
+  width: 26px;
+  height: 26px;
+  border-color: rgba(var(--highlight-rgb), 0.5);
 }
 
 .resume-header::before {
@@ -379,6 +433,12 @@
   font-weight: 700;
   color: var(--text);
   letter-spacing: 0.02em;
+}
+
+.card-company-via {
+  font-weight: 400;
+  color: var(--text-muted);
+  font-size: 14px;
 }
 
 .card-status {
@@ -813,7 +873,7 @@
   left: 50%;
   transform: translateX(-50%);
   width: 90%;
-  max-width: 520px;
+  max-width: 640px;
   max-height: 70vh;
   background: rgb(var(--surface-rgb));
   border: 1px solid rgba(var(--primary-rgb), 0.2);
@@ -880,8 +940,15 @@
 .command-palette-content {
   flex: 1;
   overflow-y: auto;
-  padding: 8px 0;
+  padding: 12px 16px;
   max-height: 400px;
+}
+
+/* 2-column grid for commands view */
+.command-groups-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 20px;
 }
 
 .command-group {
@@ -889,20 +956,24 @@
 }
 
 .command-group-label {
-  padding: 8px 16px 4px;
+  padding: 8px 0 6px;
   font-size: 9px;
   letter-spacing: 0.15em;
   color: var(--text-muted);
   font-weight: 600;
+  border-bottom: 1px solid rgba(var(--border-rgb), 0.2);
+  margin-bottom: 4px;
 }
 
 .command-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 16px;
+  padding: 8px 10px;
   cursor: pointer;
   transition: background-color 0.1s ease;
+  border-radius: 4px;
+  gap: 8px;
 }
 
 .command-item:hover,
@@ -911,21 +982,35 @@
 }
 
 .command-item.selected {
-  border-left: 2px solid rgb(var(--highlight-rgb));
-  padding-left: 14px;
+  background: rgba(var(--highlight-rgb), 0.12);
 }
 
 .command-label {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--text);
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .command-shortcut {
   font-size: 10px;
-  padding: 2px 6px;
-  background: rgba(var(--border-rgb), 0.2);
+  padding: 3px 6px;
+  background: rgba(var(--border-rgb), 0.15);
+  border: 1px solid rgba(var(--border-rgb), 0.25);
   border-radius: 3px;
   color: var(--text-muted);
+  font-weight: 600;
+  box-shadow: 0 1px 0 rgba(var(--border-rgb), 0.3);
+  flex-shrink: 0;
+}
+
+.command-item:hover .command-shortcut,
+.command-item.selected .command-shortcut {
+  background: rgba(var(--highlight-rgb), 0.12);
+  border-color: rgba(var(--highlight-rgb), 0.3);
+  color: rgb(var(--highlight-rgb));
 }
 
 .command-empty {
@@ -1055,44 +1140,198 @@ a.contact-value:hover {
   color: rgb(var(--highlight-rgb));
 }
 
-/* ============================================================================
-   VIEW MODE INDICATOR
-   ============================================================================ */
-
-.view-mode-indicator {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
+/* Settings options (Size, Theme) in command palette */
+.settings-options {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 8px;
-  padding: 8px 12px;
-  background: rgba(var(--surface-rgb), 0.9);
-  border: 1px solid rgba(var(--border-rgb), 0.3);
-  font-size: 10px;
-  color: var(--text-muted);
-  font-family: var(--font-mono);
-  z-index: 50;
-  backdrop-filter: blur(8px);
-  cursor: pointer;
-  transition: all 0.2s ease;
 }
 
-.view-mode-indicator:hover {
+.settings-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: transparent;
+  border: 1px solid rgba(var(--border-rgb), 0.2);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  font-family: var(--font-mono);
+}
+
+.settings-option:hover {
+  border-color: rgba(var(--highlight-rgb), 0.3);
+  background: rgba(var(--highlight-rgb), 0.05);
+}
+
+.settings-option.active {
   border-color: rgba(var(--highlight-rgb), 0.5);
+  background: rgba(var(--highlight-rgb), 0.08);
+}
+
+.settings-shortcut {
+  min-width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+  background: rgba(var(--border-rgb), 0.15);
+  border: 1px solid rgba(var(--border-rgb), 0.25);
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  box-shadow: 0 1px 0 rgba(var(--border-rgb), 0.3);
+}
+
+.settings-option:hover .settings-shortcut {
+  background: rgba(var(--highlight-rgb), 0.12);
+  border-color: rgba(var(--highlight-rgb), 0.3);
+  color: rgb(var(--highlight-rgb));
+}
+
+.settings-option.active .settings-shortcut {
+  background: rgba(var(--highlight-rgb), 0.15);
+  border-color: rgba(var(--highlight-rgb), 0.4);
+  color: rgb(var(--highlight-rgb));
+}
+
+.settings-option-label {
+  flex: 1;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   color: var(--text);
 }
 
-.view-mode-indicator kbd {
-  padding: 2px 6px;
-  background: rgba(var(--border-rgb), 0.2);
-  border-radius: 3px;
-  font-size: 9px;
+.settings-option-preview {
+  font-family: var(--font-secondary);
+  color: var(--text-muted);
 }
 
-.view-mode-label {
-  letter-spacing: 0.1em;
+.settings-option-icon {
+  font-size: 16px;
+  opacity: 0.7;
+}
+
+.settings-option-check {
+  font-size: 8px;
+  color: rgb(var(--highlight-rgb));
+}
+
+.settings-option-toggle {
+  border-style: dashed;
+}
+
+.settings-divider {
+  height: 1px;
+  background: rgba(var(--border-rgb), 0.2);
+  margin: 8px 0;
+}
+
+.theme-swatches {
+  display: flex;
+  gap: 4px;
+}
+
+.theme-swatch {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+}
+
+/* ============================================================================
+   RESUME TOOLBAR (Unified View Mode + Command Palette)
+   ============================================================================ */
+
+.resume-toolbar {
+  position: fixed;
+  bottom: 24px;
+  display: flex;
+  align-items: center;
+  background: rgba(var(--surface-rgb), 0.95);
+  border: 1px solid rgba(var(--border-rgb), 0.3);
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  z-index: 50;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.resume-toolbar-left {
+  left: 24px;
+}
+
+.resume-toolbar-right {
+  right: 24px;
+}
+
+[data-theme="dark"] .resume-toolbar {
+  background: rgba(var(--surface-rgb), 0.9);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.toolbar-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.toolbar-section:first-child {
+  border-radius: 5px 0 0 5px;
+}
+
+.toolbar-section:last-child {
+  border-radius: 0 5px 5px 0;
+}
+
+.toolbar-section:hover {
+  color: var(--text);
+  background: rgba(var(--highlight-rgb), 0.06);
+}
+
+.toolbar-section:hover kbd {
+  background: rgba(var(--highlight-rgb), 0.12);
+  border-color: rgba(var(--highlight-rgb), 0.3);
+  color: rgb(var(--highlight-rgb));
+}
+
+.toolbar-divider {
+  width: 1px;
+  height: 20px;
+  background: rgba(var(--border-rgb), 0.4);
+}
+
+.toolbar-label {
+  letter-spacing: 0.08em;
   font-weight: 600;
+}
+
+.toolbar-section kbd {
+  padding: 4px 8px;
+  background: rgba(var(--border-rgb), 0.15);
+  border: 1px solid rgba(var(--border-rgb), 0.25);
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  box-shadow: 0 1px 0 rgba(var(--border-rgb), 0.3);
+  transition: all 0.15s ease;
+}
+
+.toolbar-keys {
+  display: flex;
+  gap: 2px;
 }
 
 /* ============================================================================
@@ -1105,34 +1344,51 @@ a.contact-value:hover {
   display: none;
 }
 
-/* Keyboard shortcut hint on resume page */
-.keyboard-hint {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  background: rgba(var(--surface-rgb), 0.9);
-  border: 1px solid rgba(var(--border-rgb), 0.3);
+/* ============================================================================
+   FONT SIZE MODES
+   ============================================================================ */
+
+/* Small - compact reading */
+.tactical-resume.font-small {
+  font-size: 13px;
+}
+
+.tactical-resume.font-small .resume-name {
+  font-size: clamp(20px, 3.5vw, 30px);
+}
+
+.tactical-resume.font-small .section-header {
   font-size: 11px;
-  color: var(--text-muted);
-  font-family: var(--font-mono);
-  z-index: 50;
-  backdrop-filter: blur(8px);
-  transition: opacity 0.2s ease;
 }
 
-.keyboard-hint:hover {
-  opacity: 0.7;
+.tactical-resume.font-small .experience-header h3 {
+  font-size: 14px;
 }
 
-.keyboard-hint kbd {
-  padding: 2px 6px;
-  background: rgba(var(--border-rgb), 0.2);
-  border-radius: 3px;
-  font-size: 10px;
+/* Medium - default (no changes needed) */
+.tactical-resume.font-medium {
+  /* Default sizing */
+}
+
+/* Large - accessibility / presentation */
+.tactical-resume.font-large {
+  font-size: 17px;
+}
+
+.tactical-resume.font-large .resume-name {
+  font-size: clamp(28px, 5vw, 44px);
+}
+
+.tactical-resume.font-large .section-header {
+  font-size: 15px;
+}
+
+.tactical-resume.font-large .experience-header h3 {
+  font-size: 20px;
+}
+
+.tactical-resume.font-large .compact-title {
+  font-size: 16px;
 }
 
 @media (max-width: 640px) {
@@ -1142,16 +1398,413 @@ a.contact-value:hover {
     max-height: 80vh;
   }
 
-  .keyboard-hint {
-    bottom: 10px;
-    right: 10px;
+  .command-groups-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .resume-toolbar {
+    bottom: 12px;
     font-size: 10px;
   }
 
-  .view-mode-indicator {
-    bottom: 10px;
-    left: 10px;
-    padding: 6px 10px;
+  .resume-toolbar-left {
+    left: 12px;
+  }
+
+  .resume-toolbar-right {
+    right: 12px;
+  }
+
+  .toolbar-section {
+    padding: 8px 10px;
+    gap: 6px;
+  }
+
+  .toolbar-section kbd {
+    padding: 2px 5px;
     font-size: 9px;
+  }
+
+  .toolbar-divider {
+    height: 16px;
+  }
+}
+
+/* ============================================================================
+   CONSOLE HEADER - TERMINAL BOOT SEQUENCE
+   ============================================================================ */
+
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.console-header {
+  margin-bottom: var(--section-gap);
+  background: rgba(var(--surface-rgb), 0.8);
+  border: 1px solid rgba(var(--primary-rgb), 0.2);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Scanline effect overlay */
+.console-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    transparent 50%,
+    rgba(var(--primary-rgb), 0.02) 50%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Glow effect */
+.console-header::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  box-shadow: inset 0 0 60px rgba(var(--primary-rgb), 0.1);
+  pointer-events: none;
+  z-index: 1;
+  animation: glowPulse 4s ease-in-out infinite;
+}
+
+.console-chrome {
+  display: flex;
+  align-items: center;
+  padding: 10px 14px;
+  background: rgba(var(--surface-rgb), 0.9);
+  border-bottom: 1px solid rgba(var(--border-rgb), 0.3);
+  position: relative;
+  z-index: 3;
+}
+
+.console-dots {
+  display: flex;
+  gap: 6px;
+  margin-right: 16px;
+}
+
+.console-dots .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.console-dots .dot.red {
+  background: #ff5f57;
+}
+
+.console-dots .dot.yellow {
+  background: #ffbd2e;
+}
+
+.console-dots .dot.green {
+  background: #28c940;
+}
+
+[data-theme="dark"] .console-dots .dot.red,
+[data-theme="dark"] .console-dots .dot.yellow,
+[data-theme="dark"] .console-dots .dot.green {
+  opacity: 0.9;
+}
+
+.console-title {
+  flex: 1;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.console-id {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: rgba(var(--primary-rgb), 0.5);
+  font-weight: 600;
+}
+
+.console-body {
+  padding: 24px 28px;
+  min-height: 360px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.8;
+  position: relative;
+  z-index: 3;
+}
+
+.console-line {
+  white-space: pre;
+  overflow-x: auto;
+}
+
+.console-line:empty {
+  height: 1.7em;
+}
+
+.console-line-system {
+  color: var(--text-muted);
+}
+
+.console-line-success {
+  color: #28c940;
+}
+
+[data-theme="dark"] .console-line-success {
+  color: #4ade80;
+}
+
+.console-line-info {
+  color: rgba(var(--primary-rgb), 0.9);
+}
+
+.console-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.console-link:hover,
+.console-link:focus-visible {
+  color: rgb(var(--highlight-rgb));
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.console-line-data {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.console-line-highlight {
+  color: rgb(var(--highlight-rgb));
+  font-weight: 600;
+}
+
+.console-line-ascii {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 12px;
+  line-height: 1.15;
+  letter-spacing: 0;
+  color: rgba(var(--primary-rgb), 0.8);
+  background: linear-gradient(
+    90deg,
+    rgba(var(--primary-rgb), 0.8) 0%,
+    rgba(var(--primary-rgb), 0.8) 40%,
+    rgba(var(--highlight-rgb), 1) 50%,
+    rgba(var(--primary-rgb), 0.8) 60%,
+    rgba(var(--primary-rgb), 0.8) 100%
+  );
+  background-size: 200% 100%;
+  background-position: 100% center;
+  background-clip: text;
+  -webkit-background-clip: text;
+  transition: background-position 0.8s ease-out;
+}
+
+.console-ascii-container {
+  cursor: pointer;
+  padding: 8px 0;
+}
+
+/* Shimmer once when triggered */
+.console-ascii-container.shimmer .console-line-ascii {
+  color: transparent;
+  animation: shimmer 1.2s ease-in-out forwards;
+}
+
+/* Shimmer on hover */
+.console-ascii-container:hover .console-line-ascii {
+  color: transparent;
+  animation: shimmer 0.8s ease-in-out forwards;
+}
+
+[data-theme="dark"] .console-line-ascii {
+  color: rgba(var(--primary-rgb), 0.9);
+  background: linear-gradient(
+    90deg,
+    rgba(var(--primary-rgb), 0.9) 0%,
+    rgba(var(--primary-rgb), 0.9) 40%,
+    rgba(var(--highlight-rgb), 1) 50%,
+    rgba(var(--primary-rgb), 0.9) 60%,
+    rgba(var(--primary-rgb), 0.9) 100%
+  );
+  background-size: 200% 100%;
+  background-position: 100% center;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.console-line-prompt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.console-prompt {
+  color: rgb(var(--highlight-rgb));
+  font-weight: 600;
+}
+
+.console-cursor {
+  color: rgb(var(--highlight-rgb));
+  font-weight: 400;
+}
+
+.console-cursor.blink {
+  animation: blink 1s step-end infinite;
+}
+
+/* ============================================================================
+   EASTER EGG OVERLAY
+   ============================================================================ */
+
+.easter-egg-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.easter-egg-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  padding: 48px;
+  max-width: 400px;
+  font-family: var(--font-mono);
+  animation: eggFadeIn 0.4s ease;
+}
+
+.easter-egg-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.easter-egg-line {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+  opacity: 0;
+  animation: fadeInLine 0.3s ease forwards;
+}
+
+.easter-egg-signal {
+  color: var(--egg-accent, #00ffcc);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.easter-egg-signature {
+  margin-top: 8px;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.easter-egg-hint {
+  margin-top: 32px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.3);
+  text-align: center;
+  letter-spacing: 0.1em;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes eggFadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -45%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes fadeInLine {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Corner decorations */
+/* Mobile adjustments */
+@media (max-width: 640px) {
+  .console-body {
+    padding: 16px;
+    min-height: 280px;
+    font-size: 9px;
+    overflow-x: auto;
+  }
+
+  .console-line-ascii {
+    font-size: 7px;
+  }
+
+  .console-chrome {
+    padding: 8px 12px;
+  }
+
+  .console-dots .dot {
+    width: 8px;
+    height: 8px;
+  }
+
+  .console-title {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .console-line-ascii {
+    font-size: 5px;
+  }
+
+  .console-body {
+    font-size: 8px;
   }
 }

@@ -5,7 +5,18 @@ interface Props {
   index: number;
 }
 
+// Parse company name to extract "(via ...)" suffix
+function parseCompanyName(company: string): { main: string; via?: string } {
+  const match = company.match(/^(.+?)\s*(\(via .+\))$/);
+  if (match) {
+    return { main: match[1], via: match[2] };
+  }
+  return { main: company };
+}
+
 export default function TacticalResumeCard({ experience, index }: Props) {
+  const { main: companyName, via: companyVia } = parseCompanyName(experience.company);
+
   return (
     <div
       className="experience-card"
@@ -13,7 +24,10 @@ export default function TacticalResumeCard({ experience, index }: Props) {
       data-featured={experience.featured ? "true" : "false"}
     >
       <div className="card-header">
-        <span className="card-company">{experience.company}</span>
+        <span className="card-company">
+          {companyName}
+          {companyVia && <span className="card-company-via"> {companyVia}</span>}
+        </span>
         {experience.status === 'active' && (
           <span className="card-status">CURRENT</span>
         )}

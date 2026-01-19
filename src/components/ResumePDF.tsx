@@ -215,6 +215,11 @@ const styles = StyleSheet.create({
     color: '#22863a',
     fontWeight: 'bold',
   },
+  foundedBadge: {
+    fontSize: 6,
+    color: colors.accent,
+    fontWeight: 'bold',
+  },
   meta: {
     fontSize: 7.5,
     color: colors.textMuted,
@@ -474,6 +479,7 @@ export default function ResumePDF({ mode = 'dev' }: ResumePDFProps) {
                 ) : (
                   <Text style={styles.company}>{exp.company}</Text>
                 )}
+                {exp.badge && <Text style={styles.foundedBadge}>{exp.badge}</Text>}
                 {exp.exit && <Text style={styles.exitBadge}>EXIT</Text>}
               </View>
               <Text style={styles.meta}>
