@@ -19,6 +19,7 @@ interface LogLine {
   text: string;
   type: 'system' | 'success' | 'info' | 'data' | 'highlight' | 'ascii';
   delay: number;
+  href?: string;
 }
 
 export default function ResumeHeader({ name, title, location, oneLiner, locationLine, contact }: ResumeHeaderProps) {
@@ -92,6 +93,9 @@ export default function ResumeHeader({ name, title, location, oneLiner, location
 
   const asciiStartIndex = 3;
   const asciiEndIndex = asciiStartIndex + asciiArt.length;
+  const githubUrl = `https://github.com/${contact.github}`;
+  const linkedinUrl = `https://linkedin.com/in/${contact.linkedin}`;
+  const twitterUrl = `https://x.com/${contact.twitter}`;
 
   const logLines: LogLine[] = [
     { text: `[INIT] Loading candidate profile...`, type: 'system', delay: 0 },
@@ -104,9 +108,9 @@ export default function ResumeHeader({ name, title, location, oneLiner, location
     { text: `[DATA] ${oneLiner}`, type: 'highlight', delay: 1500 },
     { text: `[DATA] Status: ${locationLine}`, type: 'info', delay: 1700 },
     { text: '', type: 'system', delay: 1900 },
-    { text: `[LINK] github.com/${contact.github}`, type: 'info', delay: 2000 },
-    { text: `[LINK] linkedin.com/in/${contact.linkedin}`, type: 'info', delay: 2100 },
-    { text: `[LINK] x.com/${contact.twitter}`, type: 'info', delay: 2200 },
+    { text: `[LINK] ${githubUrl}`, type: 'info', delay: 2000, href: githubUrl },
+    { text: `[LINK] ${linkedinUrl}`, type: 'info', delay: 2100, href: linkedinUrl },
+    { text: `[LINK] ${twitterUrl}`, type: 'info', delay: 2200, href: twitterUrl },
     { text: '', type: 'system', delay: 2400 },
     { text: `[SYS] Document ${docId} loaded successfully`, type: 'success', delay: 2500 },
     { text: `[SYS] Ready. Scroll to view operational history.`, type: 'system', delay: 2700 },
@@ -192,6 +196,18 @@ export default function ResumeHeader({ name, title, location, oneLiner, location
     }
   };
 
+  const renderConsoleLine = (line: LogLine, textOverride?: string) => {
+    const text = textOverride ?? line.text;
+
+    if (!line.href) return text;
+
+    return (
+      <a className="console-link" href={line.href} target="_blank" rel="noopener noreferrer">
+        {text}
+      </a>
+    );
+  };
+
   // Default header view
   if (!consoleMode) {
     return (
@@ -272,13 +288,13 @@ export default function ResumeHeader({ name, title, location, oneLiner, location
 
           return (
             <div key={i} className={`console-line ${getLineClass(line.type)}`}>
-              {line.text}
+              {renderConsoleLine(line)}
             </div>
           );
         })}
         {isTyping && visibleLines < logLines.length && (
           <div className={`console-line ${getLineClass(logLines[visibleLines].type)}`}>
-            {currentText}
+            {renderConsoleLine(logLines[visibleLines], currentText)}
             <span className="console-cursor">▌</span>
           </div>
         )}
