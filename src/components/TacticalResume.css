@@ -1541,6 +1541,18 @@ a.contact-value:hover {
   color: rgba(var(--primary-rgb), 0.9);
 }
 
+.console-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.console-link:hover,
+.console-link:focus-visible {
+  color: rgb(var(--highlight-rgb));
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .console-line-data {
   color: var(--text);
   font-weight: 500;
@@ -1627,29 +1639,6 @@ a.contact-value:hover {
 }
 
 /* Corner decorations */
-.console-header .console-body::before,
-.console-header .console-body::after {
-  content: '';
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  border: 1px solid rgba(var(--primary-rgb), 0.2);
-}
-
-.console-header .console-body::before {
-  bottom: 12px;
-  left: 12px;
-  border-right: none;
-  border-top: none;
-}
-
-.console-header .console-body::after {
-  bottom: 12px;
-  right: 12px;
-  border-left: none;
-  border-top: none;
-}
-
 /* Mobile adjustments */
 @media (max-width: 640px) {
   .console-body {
