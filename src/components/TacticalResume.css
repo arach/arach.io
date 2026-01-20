@@ -295,10 +295,17 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
+}
+
+.comm-link svg {
+  flex-shrink: 0;
+}
+
+.comm-link span {
   transition: color 0.2s ease;
 }
 
-.comm-link:hover {
+.comm-link:hover span {
   color: rgb(var(--highlight-rgb));
 }
 
@@ -395,8 +402,24 @@ body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
+.experience-card:hover .card-company,
+.experience-card:hover .card-meta,
+.experience-card:hover .card-title,
+.experience-card:hover .card-bullets li,
+.experience-card:hover .tech-badge {
+  color: var(--text);
+}
+
 [data-theme="dark"] .experience-card:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .experience-card:hover .card-company,
+[data-theme="dark"] .experience-card:hover .card-meta,
+[data-theme="dark"] .experience-card:hover .card-title,
+[data-theme="dark"] .experience-card:hover .card-bullets li,
+[data-theme="dark"] .experience-card:hover .tech-badge {
+  color: #fff;
 }
 
 /* Timeline dot */
@@ -423,7 +446,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 12px;
+  margin-bottom: 6px;
   flex-wrap: wrap;
   gap: 8px;
 }
@@ -490,6 +513,12 @@ body {
   border: 1px solid rgba(var(--primary-rgb), 0.15);
   color: var(--text-muted);
   letter-spacing: 0.03em;
+  transition: all 0.2s ease;
+}
+
+.experience-card:hover .detail-badge {
+  border-color: rgba(var(--highlight-rgb), 0.3);
+  color: rgb(var(--highlight-rgb));
 }
 
 /* Bullets */
@@ -515,6 +544,27 @@ body {
   left: 0;
   color: rgba(var(--primary-rgb), 0.4);
   font-weight: 700;
+  font-size: 14px;
+  transition: color 0.2s ease;
+}
+
+.experience-card:hover .card-bullets li::before {
+  color: rgb(var(--highlight-rgb));
+}
+
+.bullet-highlight {
+  color: rgb(var(--highlight-rgb));
+  font-weight: 600;
+}
+
+.bullet-link {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.bullet-link:hover {
+  color: rgb(var(--highlight-rgb));
 }
 
 /* Tech stack */
