@@ -14,6 +14,36 @@ function parseCompanyName(company: string): { main: string; via?: string } {
   return { main: company };
 }
 
+// Parse ==text== for highlights and [text](url) for links
+function parseHighlights(text: string): React.ReactNode {
+  // First split by links [text](url), then by highlights ==text==
+  const linkRegex = /(\[.+?\]\(.+?\))/g;
+  const highlightRegex = /(==.+?==)/g;
+
+  const parts = text.split(linkRegex);
+
+  return parts.map((part, i) => {
+    // Check if it's a link
+    const linkMatch = part.match(/^\[(.+?)\]\((.+?)\)$/);
+    if (linkMatch) {
+      return (
+        <a key={i} href={linkMatch[2]} target="_blank" rel="noopener noreferrer" className="bullet-link">
+          {linkMatch[1]}
+        </a>
+      );
+    }
+
+    // Split remaining text by highlights
+    const subParts = part.split(highlightRegex);
+    return subParts.map((subPart, j) => {
+      if (subPart.startsWith('==') && subPart.endsWith('==')) {
+        return <span key={`${i}-${j}`} className="bullet-highlight">{subPart.slice(2, -2)}</span>;
+      }
+      return subPart;
+    });
+  });
+}
+
 export default function TacticalResumeCard({ experience, index }: Props) {
   const { main: companyName, via: companyVia } = parseCompanyName(experience.company);
 
@@ -52,7 +82,7 @@ export default function TacticalResumeCard({ experience, index }: Props) {
 
       <ul className="card-bullets">
         {experience.bullets.map((bullet, i) => (
-          <li key={i}>{bullet}</li>
+          <li key={i}>{parseHighlights(bullet)}</li>
         ))}
       </ul>
 

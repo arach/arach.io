@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from 'react';
-import { Clipboard, ClipboardCheck } from 'lucide-react';
 
 interface CopyButtonProps {
   targetId: string;
@@ -15,7 +14,12 @@ export default function CopyButton({ targetId, className = '' }: CopyButtonProps
     const target = document.getElementById(targetId);
     if (target) {
       try {
-        await navigator.clipboard.writeText(target.innerText);
+        // Get clean plain text, normalize whitespace
+        const text = target.innerText
+          .replace(/\n{3,}/g, '\n\n')  // Collapse multiple newlines
+          .trim();
+
+        await navigator.clipboard.writeText(text);
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
       } catch (err) {
@@ -31,7 +35,7 @@ export default function CopyButton({ targetId, className = '' }: CopyButtonProps
       title="Copy to clipboard"
       type="button"
     >
-      {copied ? <ClipboardCheck size={16} strokeWidth={1.5} /> : <Clipboard size={16} strokeWidth={1.5} />}
+      {copied ? '✓' : 'copy'}
     </button>
   );
 }
