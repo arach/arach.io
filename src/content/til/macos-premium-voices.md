@@ -31,7 +31,7 @@ That's it. Apple will download the enhanced voice directly to your Mac.
 
 ## Why This Matters
 
-I used to throttle my usage of voice features to avoid subscribing to paid services. Now I can use these built-in voices as much as I want. They have natural intonation, proper pacing, and none of that robotic quality you'd expect from system voices.
+I used to throttle my usage of voice features to avoid subscribing to paid services. Now I can use these built-in voices as much as I want. They have natural intonation, proper pacing, and less of that robotic quality you'd expect from system voices. It's not perfect, but it's free and reasonably fast on M1+.
 
 ## The Possibilities
 
