@@ -12,6 +12,7 @@ featured: false
 draft: false
 goodreads: "https://www.goodreads.com/book/show/5544.Surely_You_re_Joking_Mr_Feynman"
 amazon: "https://www.amazon.com/Surely-Youre-Joking-Mr-Feynman/dp/0393316041"
+sortOrder: 27
 ---
 
 ### Key Points:

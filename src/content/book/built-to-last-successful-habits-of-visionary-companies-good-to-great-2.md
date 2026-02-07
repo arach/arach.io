@@ -20,6 +20,7 @@ draft: false
 goodreads: "https://www.goodreads.com/book/show/4853.Built_to_Last"
 amazon: "https://www.amazon.com/Built-Last-Successful-Visionary-Companies-ebook/dp/B000FC12C8/"
 rating: 4
+sortOrder: 13
 ---
 
 ### Key Points:

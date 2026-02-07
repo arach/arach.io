@@ -20,6 +20,7 @@ rating: 4
 draft: false
 goodreads: "https://www.goodreads.com/book/show/9805525-delivering-happiness"
 amazon: "https://www.amazon.com/Delivering-Happiness-Profits-Passion-Purpose/dp/0446563048"
+sortOrder: 17
 ---
 
 ### Key Points:

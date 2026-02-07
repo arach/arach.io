@@ -22,6 +22,7 @@ draft: false
 rating: 5
 goodreads: https://www.goodreads.com/book/show/10945360-good-strategy-bad-strategy
 amazon: https://www.amazon.com/Good-Strategy-Bad/dp/0307886239
+sortOrder: 11
 ---
 
 “Good Strategy/Bad Strategy” by Richard Rumelt clears up the confusion around effective strategy. It explains that a good strategy is a clear, action-oriented approach to overcoming obstacles, while bad strategy relies on vague buzzwords and motivational slogans. Rumelt introduces nine practical sources of power for developing strong strategies and uses real-world examples from business, nonprofits, and military affairs to illustrate his points. This book is a must-read for leaders looking to create impactful and coherent strategies.

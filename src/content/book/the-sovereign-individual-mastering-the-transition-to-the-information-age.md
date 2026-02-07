@@ -12,6 +12,7 @@ draft: false
 goodreads: "https://www.goodreads.com/book/show/101687.The_Sovereign_Individual"
 amazon: "https://www.amazon.com/Sovereign-Individual-Mastering-Transition-Information/dp/0684832720"
 rating: 4
+sortOrder: 20
 ---
 
 ### Key Points:

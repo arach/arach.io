@@ -20,6 +20,7 @@ featured: false
 draft: false
 goodreads: "https://www.goodreads.com/book/show/11084145-steve-jobs"
 amazon: "https://www.amazon.com/Steve-Jobs-Walter-Isaacson/dp/1451648537/"
+sortOrder: 21
 ---
 
 ### Key Points:

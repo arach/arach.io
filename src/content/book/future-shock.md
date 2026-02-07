@@ -20,6 +20,7 @@ draft: false
 rating: 5
 goodreads: "https://www.goodreads.com/book/show/466537.Future_Shock"
 amazon: "https://www.amazon.com/Future-Shock-Alvin-Toffler/dp/0553277375"
+sortOrder: 24
 ---
 
 ### Key Points:

@@ -12,6 +12,7 @@ featured: false
 draft: false
 goodreads: "https://www.goodreads.com/book/show/7126.The_Count_of_Monte_Cristo"
 amazon: "https://www.amazon.com/Count-Monte-Cristo-Penguin-Classics/dp/0140449264"
+sortOrder: 41
 ---
 
 I read the book by Alexandre Dumas in French as part of my 8th grade French class taught by the extraordinary Miss Iammonico. One of my all-time favorite books.

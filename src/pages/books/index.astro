@@ -1,12 +1,25 @@
 ---
 import { getCollection } from "astro:content";
 import Books from "@layouts/Books.astro";
-import getSortedContent from "@utils/getSortedContent";
 import getContentPagination from "@utils/getContentPagination";
 
 const books = await getCollection("book");
 
-const sortedBooks = getSortedContent(books);
+// Sort books: by sortOrder (if set), then by pubDatetime
+const sortedBooks = books
+  .filter(book => !book.data.draft)
+  .sort((a, b) => {
+    // If both have sortOrder, use that
+    if (a.data.sortOrder !== undefined && b.data.sortOrder !== undefined) {
+      return a.data.sortOrder - b.data.sortOrder;
+    }
+    // If only one has sortOrder, it comes first
+    if (a.data.sortOrder !== undefined) return -1;
+    if (b.data.sortOrder !== undefined) return 1;
+    // Otherwise sort by date (newest first)
+    return new Date(b.data.pubDatetime).getTime() - new Date(a.data.pubDatetime).getTime();
+  });
+
 const url = new URL(import.meta.url);
 const currentPage = parseInt(url.searchParams.get("page") || "1", 10);
 

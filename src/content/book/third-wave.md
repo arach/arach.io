@@ -20,6 +20,7 @@ draft: false
 rating: 5
 goodreads: "https://www.goodreads.com/book/show/41658.Third_Wave"
 amazon: "https://www.amazon.com/Third-Wave-Alvin-Toffler/dp/0553271631"
+sortOrder: 25
 ---
 
 ### Key Points:

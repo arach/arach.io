@@ -18,6 +18,7 @@ isbn: "9780307463746"
 featured: false
 draft: false
 rating: 5
+sortOrder: 15
 ---
 
 ### Key Points:

@@ -12,6 +12,7 @@ featured: false
 draft: false
 goodreads: "https://www.goodreads.com/book/show/9418327-bossypants"
 amazon: "https://www.amazon.com/Bossypants-Tina-Fey/dp/0316056871"
+sortOrder: 31
 ---
 
 ### Key Points:

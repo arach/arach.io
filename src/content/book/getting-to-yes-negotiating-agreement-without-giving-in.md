@@ -20,6 +20,7 @@ draft: false
 rating: 3.5
 goodreads: "https://www.goodreads.com/book/show/313622.Getting_to_Yes"
 amazon: "https://www.amazon.com/Getting-Yes-Negotiating-Agreement-Without/dp/0140157352"
+sortOrder: 16
 ---
 
 ### Key Points:

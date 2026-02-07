@@ -20,6 +20,7 @@ rating: 4.5
 draft: false
 goodreads: "https://www.goodreads.com/book/show/10127019-the-lean-startup"
 amazon: "https://www.amazon.com/Lean-Startup-Entrepreneurs-Continuous-Innovation/dp/0307887898"
+sortOrder: 12
 ---
 
 ### Key Points:

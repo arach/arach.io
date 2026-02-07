@@ -20,6 +20,7 @@ draft: false
 rating: 4
 goodreads: "https://www.goodreads.com/book/show/76865.Good_to_Great"
 amazon: "https://www.amazon.com/Good-Great-Some-Companies-Others/dp/0066620996"
+sortOrder: 10
 ---
 
 ### Key Points:

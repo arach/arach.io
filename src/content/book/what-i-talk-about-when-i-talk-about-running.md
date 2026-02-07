@@ -20,6 +20,7 @@ draft: false
 rating: 5
 goodreads: "https://www.goodreads.com/book/show/9715.What_I_Talk_About_When_I_Talk_About_Running"
 amazon: "https://www.amazon.com/What-About-Running-Vintage-International/dp/0307389839"
+sortOrder: 32
 ---
 
 ### Key Points:

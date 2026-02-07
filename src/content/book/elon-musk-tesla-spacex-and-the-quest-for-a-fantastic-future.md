@@ -20,6 +20,7 @@ draft: false
 rating: 5
 goodreads: "https://www.goodreads.com/book/show/25541028-elon-musk"
 amazon: "https://www.amazon.com/Elon-Musk-SpaceX-Fantastic-Future/dp/0062301233"
+sortOrder: 22
 ---
 
 ### Key Points:

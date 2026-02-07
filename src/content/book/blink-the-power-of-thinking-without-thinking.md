@@ -20,6 +20,7 @@ featured: false
 draft: false
 goodreads: "https://www.goodreads.com/book/show/40102.Blink_The_Power_of_Thinking_Without_Thinking"
 amazon: "https://www.amazon.com/Blink-Power-Thinking-Without/dp/0316010669"
+sortOrder: 23
 ---
 
 ### Key Points:

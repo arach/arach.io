@@ -67,6 +67,7 @@ const book = defineCollection({
       thumbnail: image().or(z.string()).optional(),
       goodreads: z.string().optional(),
       amazon: z.string().optional(),
+      sortOrder: z.number().optional(), // Lower numbers appear first
     }),
 });
 

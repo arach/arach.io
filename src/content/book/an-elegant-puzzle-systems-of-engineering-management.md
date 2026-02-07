@@ -19,6 +19,7 @@ featured: false
 draft: false
 goodreads: "https://www.goodreads.com/book/show/43561856-an-elegant-puzzle"
 amazon: "https://www.amazon.com/Elegant-Puzzle-Systems-Engineering-Management/dp/1953953333"
+sortOrder: 14
 ---
 
 ### Key Points:

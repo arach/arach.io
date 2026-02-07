@@ -20,6 +20,7 @@ draft: false
 rating: 5
 goodreads: https://www.goodreads.com/book/show/88061.Dreams_from_My_Father
 amazon: https://www.amazon.com/Dreams-Father-Story-Race-Inheritance/dp/1400082773/
+sortOrder: 30
 ---
 
 Key Points:

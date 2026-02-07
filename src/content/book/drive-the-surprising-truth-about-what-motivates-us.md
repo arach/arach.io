@@ -20,6 +20,7 @@ draft: false
 rating: 4
 goodreads: "https://www.goodreads.com/book/show/6452796-drive"
 amazon: "https://www.amazon.com/Drive-Surprising-Truth-About-Motivates/dp/1594488843/"
+sortOrder: 18
 ---
 
 this book by Daniel H. Pink argues that true motivation comes from intrinsic factors and outlines three key elements that drive people:
