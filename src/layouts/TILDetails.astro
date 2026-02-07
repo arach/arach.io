@@ -114,26 +114,32 @@ const layoutProps = {
 <style>
   main {
     @apply mx-auto w-full max-w-3xl px-4 pb-12;
-    font-family: 'Fira Code', 'JetBrains Mono', 'Berkeley Mono', monospace;
+    font-family: 'Space Grotesk', system-ui, sans-serif;
   }
   .til-title {
-    @apply text-2xl font-semibold text-skin-accent;
-    font-family: 'Fira Code', 'JetBrains Mono', 'Berkeley Mono', monospace !important;
+    @apply text-2xl text-skin-accent;
+    font-family: 'Space Grotesk', system-ui, sans-serif !important;
+    font-weight: 500;
+    letter-spacing: -0.02em;
   }
   button {
-    font-family: 'Fira Code', 'JetBrains Mono', 'Berkeley Mono', monospace;
+    font-family: 'Space Grotesk', system-ui, sans-serif;
     font-size: 0.875rem;
+    font-weight: 400;
   }
   .til-content {
-    font-family: 'Fira Code', 'JetBrains Mono', 'Berkeley Mono', monospace;
-    font-size: 0.875rem;
-    line-height: 1.6;
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.7;
+    letter-spacing: 0.01em;
   }
   .til-content :global(h2), .til-content :global(h3), .til-content :global(h4) {
-    font-family: 'Fira Code', 'JetBrains Mono', 'Berkeley Mono', monospace !important;
-    font-size: 1rem;
-    font-weight: 600;
-    margin-top: 1.5rem;
+    font-family: 'Space Grotesk', system-ui, sans-serif !important;
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin-top: 1.75rem;
     margin-bottom: 0.5rem;
   }
   .til-content :global(p) {
@@ -141,6 +147,14 @@ const layoutProps = {
   }
   .til-content :global(pre) {
     font-size: 0.8125rem;
+  }
+  .til-content :global(strong) {
+    font-weight: 500;
+  }
+  .til-content :global(code:not(pre code)) {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85em;
+    font-weight: 400;
   }
 </style>
 
