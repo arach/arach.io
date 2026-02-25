@@ -1,42 +1,44 @@
 /* ==========================================================================
-   NEO-INDUSTRIAL TEMPLATE — Hudson-inspired glassmorphism
-   Scoped to [data-template="industrial"]
-   Always dark mode.
+   NEO-INDUSTRIAL TEMPLATE — Brutalist-meets-glass
+   Sharp angles, heavy borders, dramatic contrast.
+   Grid-based panels, monospace labels, emerald system accents.
+   Always dark.
    ========================================================================== */
 
-/* --- Color Tokens --- */
+/* ── Color Tokens ── */
 [data-template="industrial"] {
-  --ind-bg: #0A0A0A;
-  --ind-text: #EDEDED;
-  --ind-text-secondary: #9CA3AF;
+  --ind-bg: #050505;
+  --ind-surface: rgba(255, 255, 255, 0.02);
+  --ind-surface-hover: rgba(255, 255, 255, 0.04);
+  --ind-text: #F0F0F0;
+  --ind-text-secondary: #888888;
+  --ind-text-label: #666666;
   --ind-accent: #10B981;
-  --ind-accent-glow: rgba(16, 185, 129, 0.15);
+  --ind-accent-dim: rgba(16, 185, 129, 0.6);
+  --ind-accent-glow: rgba(16, 185, 129, 0.12);
   --ind-border: rgba(255, 255, 255, 0.06);
-  --ind-glass: rgba(10, 10, 10, 0.85);
-  --ind-glass-border: rgba(255, 255, 255, 0.08);
-  --ind-card-bg: rgba(23, 23, 23, 0.6);
-  --ind-chrome: #171717;
+  --ind-border-strong: rgba(255, 255, 255, 0.10);
+  --ind-glass: rgba(255, 255, 255, 0.03);
+  --ind-glass-border: rgba(255, 255, 255, 0.06);
 
-  --color-fill: 10, 10, 10;
-  --color-text-base: 237, 237, 237;
+  --color-fill: 5, 5, 5;
+  --color-text-base: 240, 240, 240;
   --color-accent: 16, 185, 129;
-  --color-card: 23, 23, 23;
-  --color-card-muted: 38, 38, 38;
-  --color-border: 38, 38, 38;
-}
+  --color-card: 12, 12, 12;
+  --color-card-muted: 20, 20, 20;
+  --color-border: 30, 30, 30;
 
-/* Force dark */
-[data-template="industrial"] {
   color-scheme: dark;
 }
 
-/* --- Typography --- */
+/* ── Typography ── */
 [data-template="industrial"] body {
-  font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
-  background: var(--ind-bg);
-  color: var(--ind-text);
-  font-size: 15px;
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif !important;
+  background: var(--ind-bg) !important;
+  color: var(--ind-text) !important;
+  font-size: 14.5px;
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
 [data-template="industrial"] h1,
@@ -45,60 +47,66 @@
 [data-template="industrial"] h4,
 [data-template="industrial"] h5,
 [data-template="industrial"] h6 {
-  font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  color: var(--ind-text);
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.03em !important;
+  color: var(--ind-text) !important;
 }
 
-/* Monospace labels & metadata */
+/* Monospace labels */
 [data-template="industrial"] .section-title,
 [data-template="industrial"] .brand-name,
 [data-template="industrial"] time,
-[data-template="industrial"] .reading-time {
-  font-family: "JetBrains Mono", "Fira Code", "SF Mono", monospace !important;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 0.6875rem !important;
+[data-template="industrial"] .reading-time,
+[data-template="industrial"] .sidebar-section-title {
+  font-family: "JetBrains Mono", "IBM Plex Mono", monospace !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.12em !important;
+  font-size: 0.625rem !important;
+  font-weight: 500 !important;
 }
 
-/* --- Layout --- */
+/* ── Layout ── */
 [data-template="industrial"] .template-sidebar {
   display: none !important;
 }
 
 [data-template="industrial"] .template-layout-wrapper {
-  display: block;
+  display: block !important;
 }
 
-/* --- Glass card mixin (applied via direct selectors) --- */
+/* ── Ambient background grain ── */
+[data-template="industrial"] body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.015;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
 
-/* --- Header: chrome bar with status indicator --- */
+/* ── Header: chrome bar ── */
 [data-template="industrial"] .header {
-  background: rgba(10, 10, 10, 0.8) !important;
-  backdrop-filter: blur(20px) saturate(1.5);
-  border-bottom: 1px solid var(--ind-glass-border) !important;
+  background: rgba(5, 5, 5, 0.85) !important;
+  backdrop-filter: blur(24px) saturate(1.8) !important;
+  border-bottom: 1px solid var(--ind-border) !important;
   position: relative;
 }
 
-/* Top-edge highlight gradient */
+/* Top highlight */
 [data-template="industrial"] .header::before {
   content: "";
   position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
+  left: 10%;
+  right: 10%;
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.08) 50%,
-    transparent 100%
-  );
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
 }
 
 [data-template="industrial"] .header .logo img {
-  filter: brightness(0) invert(1);
+  filter: brightness(0) invert(1) !important;
 }
 
 [data-template="industrial"] .header .logo-light {
@@ -109,42 +117,43 @@
   display: block !important;
 }
 
-/* Status indicator (green dot) */
+/* Status dot */
 [data-template="industrial"] .header .logo::before {
   content: "";
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   background: var(--ind-accent);
-  box-shadow: 0 0 8px var(--ind-accent), 0 0 16px rgba(16, 185, 129, 0.3);
-  margin-right: 10px;
-  animation: indPulse 3s ease-in-out infinite;
+  box-shadow: 0 0 6px var(--ind-accent), 0 0 12px rgba(16, 185, 129, 0.2);
+  margin-right: 8px;
   flex-shrink: 0;
+  animation: indPing 3s ease-in-out infinite;
 }
 
-@keyframes indPulse {
-  0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--ind-accent); }
-  50% { opacity: 0.5; box-shadow: 0 0 4px var(--ind-accent); }
+@keyframes indPing {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
 }
 
 [data-template="industrial"] .header .nav-link {
   color: var(--ind-text-secondary) !important;
-  font-size: 0.8125rem;
-  font-weight: 450;
-  letter-spacing: 0.02em;
-  border-radius: 6px;
+  font-size: 0.8125rem !important;
+  font-weight: 450 !important;
+  padding: 0.375rem 0.75rem !important;
+  border-radius: 4px !important;
+  letter-spacing: 0.01em;
 }
 
 [data-template="industrial"] .header .nav-link:hover {
   color: var(--ind-text) !important;
-  background: rgba(255, 255, 255, 0.04) !important;
+  background: var(--ind-surface-hover) !important;
 }
 
 [data-template="industrial"] .header .nav-link.active {
   color: var(--ind-accent) !important;
-  background: rgba(16, 185, 129, 0.08) !important;
-  border: 1px solid rgba(16, 185, 129, 0.15) !important;
-  box-shadow: 0 0 12px rgba(16, 185, 129, 0.08) !important;
+  background: var(--ind-accent-glow) !important;
+  border: 1px solid rgba(16, 185, 129, 0.12) !important;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.06) !important;
   backdrop-filter: none !important;
 }
 
@@ -154,143 +163,206 @@
 
 [data-template="industrial"] .header .icon-btn:hover {
   color: var(--ind-accent) !important;
-  background: rgba(16, 185, 129, 0.06) !important;
+  background: var(--ind-accent-glow) !important;
 }
 
 [data-template="industrial"] .header .nav-actions {
-  border-left-color: var(--ind-glass-border) !important;
+  border-left-color: var(--ind-border) !important;
 }
 
-/* --- Hero section --- */
+/* ── Post Cards: glass panels with hard edges ── */
+[data-template="industrial"] .grid.grid-cols-1,
+[data-template="industrial"] .grid.md\:grid-cols-2,
+[data-template="industrial"] div[class*="grid"][class*="grid-cols"] {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+  gap: 1px !important;
+  background: var(--ind-border) !important;
+  border: 1px solid var(--ind-border) !important;
+}
+
+[data-template="industrial"] .grid > article,
+[data-template="industrial"] div[class*="grid"] > article {
+  border-radius: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Hide gradient decoration */
+[data-template="industrial"] article > .absolute.inset-0 {
+  display: none !important;
+}
+
+/* Inner card: glass panel */
+[data-template="industrial"] article .relative.flex.flex-col.overflow-hidden.rounded-2xl {
+  border: none !important;
+  border-radius: 0 !important;
+  background: var(--ind-bg) !important;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+/* Top highlight on each card */
+[data-template="industrial"] article .relative.flex.flex-col.overflow-hidden.rounded-2xl::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.04), transparent);
+  z-index: 1;
+}
+
+/* Hover: emerald glow edge */
+[data-template="industrial"] article:hover .relative.flex.flex-col.overflow-hidden.rounded-2xl {
+  background: rgba(16, 185, 129, 0.02) !important;
+}
+
+[data-template="industrial"] article:hover .relative.flex.flex-col.overflow-hidden.rounded-2xl::before {
+  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.15), transparent);
+}
+
+/* Thumbnail */
+[data-template="industrial"] article .p-4.bg-white {
+  background: rgba(0, 0, 0, 0.4) !important;
+  padding: 0.75rem !important;
+}
+
+[data-template="industrial"] article .p-4.bg-white .aspect-\[16\/9\] {
+  border-radius: 2px !important;
+}
+
+/* Card content */
+[data-template="industrial"] article .flex.flex-1.flex-col {
+  padding: 0.75rem 1rem 1rem !important;
+}
+
+[data-template="industrial"] article .text-xl {
+  color: var(--ind-text) !important;
+  font-size: 0.9375rem !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.02em;
+}
+
+[data-template="industrial"] article .mb-3.text-sm {
+  font-family: "JetBrains Mono", monospace !important;
+  font-size: 0.625rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
+  color: var(--ind-text-label) !important;
+  opacity: 1 !important;
+}
+
+[data-template="industrial"] article .line-clamp-3 {
+  color: var(--ind-text-secondary) !important;
+  font-size: 0.8125rem !important;
+  -webkit-line-clamp: 2 !important;
+}
+
+[data-template="industrial"] article .mt-4.flex.items-center {
+  margin-top: 0.75rem !important;
+}
+
+[data-template="industrial"] article .text-skin-base\/60 {
+  color: var(--ind-accent) !important;
+  font-family: "JetBrains Mono", monospace !important;
+  font-size: 0.6875rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.06em !important;
+}
+
+/* ── Hero ── */
 [data-template="industrial"] .hero-title {
   color: var(--ind-text) !important;
-  font-weight: 800;
+  font-weight: 800 !important;
+  letter-spacing: -0.04em !important;
 }
 
 [data-template="industrial"] .hero-description {
   color: var(--ind-text-secondary) !important;
+  font-size: 1rem !important;
 }
 
 [data-template="industrial"] .hero-image {
-  border-color: rgba(16, 185, 129, 0.2) !important;
+  border-color: rgba(16, 185, 129, 0.15) !important;
 }
 
 [data-template="industrial"] .hero-image-gradient {
-  background: radial-gradient(circle at center, rgba(16, 185, 129, 0.15), transparent) !important;
+  background: radial-gradient(circle at center, rgba(16, 185, 129, 0.1), transparent) !important;
 }
 
-/* Hide company logos */
 [data-template="industrial"] .companies-section {
   display: none !important;
 }
 
-/* --- CTA buttons --- */
+/* ── CTA ── */
 [data-template="industrial"] .cta-primary {
   background: var(--ind-accent) !important;
   color: #000 !important;
   font-weight: 600 !important;
-  border: none !important;
+  border-radius: 4px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  font-size: 0.8125rem !important;
 }
 
 [data-template="industrial"] .cta-primary:hover {
-  box-shadow: 0 0 20px rgba(16, 185, 129, 0.3) !important;
+  box-shadow: 0 0 24px rgba(16, 185, 129, 0.25) !important;
 }
 
-/* --- Section titles --- */
-[data-template="industrial"] .section-title {
-  color: var(--ind-text-secondary) !important;
+/* ── Section Titles ── */
+[data-template="industrial"] #featured .section-title,
+[data-template="industrial"] #recent-posts .section-title {
+  color: var(--ind-accent) !important;
+  font-family: "JetBrains Mono", monospace !important;
+  font-size: 0.625rem !important;
+  letter-spacing: 0.15em !important;
+  text-transform: uppercase !important;
   font-weight: 500;
 }
 
-[data-template="industrial"] #featured .section-title,
-[data-template="industrial"] #recent-posts .section-title {
-  font-size: 0.75rem !important;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--ind-accent) !important;
-}
-
-/* --- Post Cards: glass panels --- */
-[data-template="industrial"] .grid > article {
-  border-radius: 12px !important;
-}
-
-/* Glass effect on inner card */
-[data-template="industrial"] .grid > article .relative.flex.flex-col.overflow-hidden {
-  background: var(--ind-card-bg) !important;
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--ind-glass-border) !important;
-  border-radius: 12px !important;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-/* Top-edge highlight on cards */
-[data-template="industrial"] .grid > article .relative.flex.flex-col.overflow-hidden::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.06) 50%,
-    transparent 100%
-  );
-  z-index: 1;
-}
-
-/* Hover glow */
-[data-template="industrial"] .grid > article:hover .relative.flex.flex-col.overflow-hidden {
-  border-color: rgba(16, 185, 129, 0.2) !important;
-  box-shadow: 0 0 24px rgba(16, 185, 129, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-}
-
-/* Hide gradient border effect (replaced by glass) */
-[data-template="industrial"] .grid > article > .absolute.inset-0 {
-  display: none !important;
-}
-
-/* Thumbnail area */
-[data-template="industrial"] .grid > article .p-4.bg-white {
-  background: rgba(0, 0, 0, 0.3) !important;
-}
-
-/* Card content */
-[data-template="industrial"] .grid > article .text-xl {
+[data-template="industrial"] #main-content h1 {
   color: var(--ind-text) !important;
-  font-weight: 600;
 }
 
-[data-template="industrial"] .grid > article .opacity-80 {
-  color: var(--ind-text-secondary) !important;
-}
-
-[data-template="industrial"] .grid > article .text-skin-base\/60 {
-  color: var(--ind-accent) !important;
-}
-
-/* --- Post Details --- */
+/* ── Post Detail ── */
 [data-template="industrial"] .post-title-wired {
   color: var(--ind-text) !important;
+  font-weight: 800 !important;
 }
 
 [data-template="industrial"] .article-surface {
   background: var(--ind-bg) !important;
 }
 
-/* --- Prose --- */
+[data-template="industrial"] .go-back-btn-inline {
+  color: var(--ind-text-secondary) !important;
+  font-family: "JetBrains Mono", monospace !important;
+  font-size: 0.6875rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.06em !important;
+}
+
+[data-template="industrial"] .go-back-btn-inline:hover {
+  color: var(--ind-accent) !important;
+}
+
+/* ── Prose ── */
 [data-template="industrial"] .prose {
   color: var(--ind-text-secondary) !important;
+  font-size: 1rem !important;
+  line-height: 1.75 !important;
 }
 
 [data-template="industrial"] .prose h1,
 [data-template="industrial"] .prose h2,
 [data-template="industrial"] .prose h3 {
   color: var(--ind-text) !important;
+}
+
+[data-template="industrial"] .prose h2 {
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--ind-border);
 }
 
 [data-template="industrial"] .prose a {
@@ -306,20 +378,22 @@
 }
 
 [data-template="industrial"] .prose code {
-  background: rgba(16, 185, 129, 0.08) !important;
+  background: rgba(16, 185, 129, 0.06) !important;
   color: var(--ind-accent) !important;
+  font-family: "JetBrains Mono", monospace !important;
+  border: 1px solid var(--ind-border);
 }
 
 [data-template="industrial"] .prose blockquote {
-  border-left-color: var(--ind-accent) !important;
-  background: rgba(16, 185, 129, 0.04) !important;
+  border-left: 2px solid var(--ind-accent) !important;
+  background: var(--ind-accent-glow) !important;
 }
 
-/* --- Footer: status-bar chrome --- */
+/* ── Footer: status bar ── */
 [data-template="industrial"] .professional-footer {
-  background: rgba(10, 10, 10, 0.9) !important;
-  backdrop-filter: blur(20px);
-  border-top: 1px solid var(--ind-glass-border) !important;
+  background: rgba(5, 5, 5, 0.9) !important;
+  backdrop-filter: blur(20px) !important;
+  border-top: 1px solid var(--ind-border) !important;
   position: relative;
 }
 
@@ -327,26 +401,19 @@
   content: "";
   position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
+  left: 10%;
+  right: 10%;
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.06) 50%,
-    transparent 100%
-  );
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.04), transparent);
 }
 
 [data-template="industrial"] .professional-footer .brand-name {
   color: var(--ind-accent) !important;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.15em !important;
 }
 
 [data-template="industrial"] .professional-footer .section-title {
-  color: var(--ind-text-secondary) !important;
-  font-size: 0.625rem !important;
-  letter-spacing: 0.15em;
+  color: var(--ind-text-label) !important;
 }
 
 [data-template="industrial"] .professional-footer .footer-link {
@@ -357,74 +424,90 @@
   color: var(--ind-accent) !important;
 }
 
-/* --- Scrollbar --- */
+/* ── Scrollbar ── */
+[data-template="industrial"] ::-webkit-scrollbar {
+  width: 4px;
+}
+
 [data-template="industrial"] ::-webkit-scrollbar-track {
   background: var(--ind-bg);
 }
 
 [data-template="industrial"] ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 2px;
 }
 
 [data-template="industrial"] ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.10);
 }
 
-/* --- Selection --- */
+/* ── Selection ── */
 [data-template="industrial"] ::selection {
-  background: rgba(16, 185, 129, 0.3);
+  background: rgba(16, 185, 129, 0.25);
   color: #fff;
 }
 
-/* --- Mobile menu --- */
+/* ── Mobile ── */
 @media (max-width: 768px) {
   [data-template="industrial"] .nav-list {
-    background: rgba(10, 10, 10, 0.97) !important;
-    border-color: var(--ind-glass-border) !important;
-    backdrop-filter: blur(20px);
+    background: rgba(5, 5, 5, 0.97) !important;
+    border-color: var(--ind-border) !important;
+    backdrop-filter: blur(20px) !important;
+  }
+
+  [data-template="industrial"] .grid.grid-cols-1,
+  [data-template="industrial"] div[class*="grid"][class*="grid-cols"] {
+    grid-template-columns: 1fr !important;
   }
 }
 
-/* --- Book details overrides --- */
-[data-template="industrial"] .btn {
-  background: var(--ind-card-bg) !important;
-  border-color: var(--ind-glass-border) !important;
-  color: var(--ind-text-secondary) !important;
-}
-
-[data-template="industrial"] .btn:hover {
-  border-color: rgba(16, 185, 129, 0.2) !important;
-  color: var(--ind-text) !important;
-}
-
-/* --- Link buttons (View All Posts, etc.) --- */
+/* ── View All Posts button ── */
 [data-template="industrial"] .all-posts-btn-wrapper a {
-  background: rgba(16, 185, 129, 0.08) !important;
-  border: 1px solid rgba(16, 185, 129, 0.15);
+  background: transparent !important;
+  border: 1px solid var(--ind-border) !important;
   color: var(--ind-accent) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.06em !important;
+  font-family: "JetBrains Mono", monospace !important;
+  font-size: 0.75rem !important;
+  border-radius: 2px !important;
 }
 
 [data-template="industrial"] .all-posts-btn-wrapper a:hover {
-  background: rgba(16, 185, 129, 0.15) !important;
-  box-shadow: 0 0 20px rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.2) !important;
+  background: var(--ind-accent-glow) !important;
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.08) !important;
 }
 
-/* --- Go-back button --- */
-[data-template="industrial"] .go-back-btn-inline {
+/* ── Book detail buttons ── */
+[data-template="industrial"] .btn {
+  background: var(--ind-surface) !important;
+  border: 1px solid var(--ind-border) !important;
   color: var(--ind-text-secondary) !important;
+  border-radius: 2px !important;
 }
 
-[data-template="industrial"] .go-back-btn-inline:hover {
-  color: var(--ind-accent) !important;
+[data-template="industrial"] .btn:hover {
+  border-color: rgba(16, 185, 129, 0.15) !important;
+  color: var(--ind-text) !important;
 }
 
-/* --- Pagination --- */
+/* ── Pagination ── */
 [data-template="industrial"] nav[aria-label="pagination"] a,
 [data-template="industrial"] nav[aria-label="pagination"] span {
   color: var(--ind-text-secondary) !important;
+  font-family: "JetBrains Mono", monospace !important;
+  font-size: 0.75rem !important;
 }
 
 [data-template="industrial"] nav[aria-label="pagination"] a:hover {
   color: var(--ind-accent) !important;
+}
+
+/* ── Newsletter ── */
+[data-template="industrial"] .newsletter-section {
+  border: 1px solid var(--ind-border);
+  background: var(--ind-surface);
+  padding: 1.5rem !important;
 }

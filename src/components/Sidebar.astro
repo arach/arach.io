@@ -56,15 +56,35 @@ const navSections = [
   ))}
 </aside>
 
-<!-- Mobile hamburger for sidebar (docs template only) -->
+<!-- Mobile hamburger for sidebar (docs template only, visibility controlled by CSS) -->
 <button
   class="sidebar-mobile-toggle"
   id="sidebar-mobile-toggle"
   aria-label="Toggle sidebar"
-  style="display: none; position: fixed; bottom: 4.5rem; right: 1rem; z-index: 998; width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.9); backdrop-filter: blur(8px); cursor: pointer; align-items: center; justify-content: center; font-size: 16px;"
 >
-  &#9776;
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
 </button>
+
+<style>
+  .sidebar-mobile-toggle {
+    display: none;
+    position: fixed;
+    bottom: 4.5rem;
+    right: 1rem;
+    z-index: 998;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgb(var(--color-border));
+    background: rgb(var(--color-fill));
+    backdrop-filter: blur(8px);
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    color: rgb(var(--color-text-base));
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+</style>
 
 <script>
   function setupSidebar() {
