@@ -343,6 +343,27 @@
 }
 
 @layer components {
+  /* Template layout wrapper defaults */
+  .template-layout-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  .template-main-area {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Sidebar hidden by default (shown by template CSS) */
+  .template-sidebar {
+    display: none;
+  }
+
+  .sidebar-overlay {
+    display: none;
+  }
+
   .display-none {
     @apply hidden;
   }

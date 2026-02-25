@@ -1,0 +1,90 @@
+---
+import { SITE } from "@config";
+
+export interface Props {
+  activeNav?: string;
+}
+
+const { activeNav } = Astro.props;
+
+const navSections = [
+  {
+    title: "Content",
+    links: [
+      { href: "/posts/", label: "Blog", id: "posts" },
+      { href: "/til/", label: "TIL", id: "til" },
+      { href: "/books/", label: "Books", id: "books" },
+    ],
+  },
+  {
+    title: "Meta",
+    links: [
+      { href: "/about/", label: "About", id: "about" },
+      { href: "/search/", label: "Search", id: "search" },
+      { href: "/resume/", label: "Resume", id: "resume" },
+    ],
+  },
+];
+---
+
+<!-- Sidebar overlay for mobile -->
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+<!-- Sidebar -->
+<aside class="template-sidebar" id="template-sidebar">
+  <div class="sidebar-logo">
+    <a href="/" style="text-decoration: none; color: inherit;">{SITE.title}</a>
+  </div>
+
+  {navSections.map(section => (
+    <div>
+      <div class="sidebar-section-title">{section.title}</div>
+      {section.links.map(link => (
+        <a
+          href={link.href}
+          class={`sidebar-link ${
+            activeNav === link.id ||
+            (activeNav === "posts" && link.id === "posts")
+              ? "active"
+              : ""
+          }`}
+        >
+          {link.label}
+        </a>
+      ))}
+    </div>
+  ))}
+</aside>
+
+<!-- Mobile hamburger for sidebar (docs template only) -->
+<button
+  class="sidebar-mobile-toggle"
+  id="sidebar-mobile-toggle"
+  aria-label="Toggle sidebar"
+  style="display: none; position: fixed; bottom: 4.5rem; right: 1rem; z-index: 998; width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.9); backdrop-filter: blur(8px); cursor: pointer; align-items: center; justify-content: center; font-size: 16px;"
+>
+  &#9776;
+</button>
+
+<script>
+  function setupSidebar() {
+    const toggle = document.getElementById("sidebar-mobile-toggle");
+    const sidebar = document.getElementById("template-sidebar");
+    const overlay = document.getElementById("sidebar-overlay");
+
+    if (!toggle || !sidebar || !overlay) return;
+
+    toggle.addEventListener("click", () => {
+      sidebar.classList.toggle("sidebar-open");
+      overlay.classList.toggle("active");
+    });
+
+    overlay.addEventListener("click", () => {
+      sidebar.classList.remove("sidebar-open");
+      overlay.classList.remove("active");
+    });
+  }
+
+  setupSidebar();
+  document.addEventListener("astro:after-swap", setupSidebar);
+</script>

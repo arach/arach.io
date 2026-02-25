@@ -27,6 +27,7 @@ const navItems = [
           <>
             <img src="/assets/arach.io-logo-photo.png" alt={SITE.title} class="logo-light" />
             <img src="/assets/arach.io-logo-photo-white.png" alt={SITE.title} class="logo-dark" />
+            <span class="logo-text-terminal">arach@io:~$</span>
           </>
         ) : (
           <span class="logo-text">{SITE.title}</span>
@@ -158,6 +159,24 @@ const navItems = [
     font-weight: 600;
     color: rgb(var(--color-text-base));
     letter-spacing: -0.025em;
+  }
+
+  /* Terminal template: show text prompt instead of logo images */
+  .logo-text-terminal {
+    display: none;
+    font-family: "Berkeley Mono", "Fira Code", monospace;
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: rgb(var(--color-text-base));
+  }
+
+  :global([data-template="terminal"]) .logo-text-terminal {
+    display: block;
+  }
+
+  :global([data-template="terminal"]) .logo-light,
+  :global([data-template="terminal"]) .logo-dark {
+    display: none !important;
   }
 
   /* Navigation */
@@ -374,16 +393,20 @@ const navItems = [
     const htmlElement = document.documentElement;
     
     themeBtn?.addEventListener("click", () => {
+      // Only allow theme toggle for docs template
+      const template = htmlElement.getAttribute("data-template") || "docs";
+      if (template !== "docs") return;
+
       const currentTheme = htmlElement.getAttribute("data-theme");
       const newTheme = currentTheme === "light" ? "dark" : "light";
       const isDark = newTheme === "dark";
-      
+
       htmlElement.setAttribute("data-theme", newTheme);
       localStorage.setItem("theme", newTheme);
-      
-      // Dispatch custom event for ThemePickerCool to sync
-      window.dispatchEvent(new CustomEvent('theme-change', { 
-        detail: { isDark: isDark } 
+
+      // Dispatch custom event for TemplateSwitcher to sync
+      window.dispatchEvent(new CustomEvent('theme-change', {
+        detail: { isDark: isDark }
       }));
     });
     

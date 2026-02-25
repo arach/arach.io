@@ -4,6 +4,12 @@ const primaryColorScheme = ""; // "light" | "dark"
 const currentTheme = localStorage.getItem("theme");
 
 function getPreferTheme() {
+  // If template forces dark, return dark
+  var template = document.documentElement.getAttribute('data-template') || 'docs';
+  if (template === 'terminal' || template === 'industrial') {
+    return 'dark';
+  }
+
   // return theme value in local storage if it is set
   if (currentTheme) return currentTheme;
 
@@ -44,7 +50,6 @@ function reflectPreference() {
       .querySelector("meta[name='theme-color']")
       ?.setAttribute("content", bgColor);
   }
-  // Logo switching is now handled by CSS classes
 }
 
 // set early so no page flashes / CSS is made aware
@@ -58,11 +63,10 @@ window.onload = () => {
   setTimeout(() => {
     document.documentElement.classList.remove("no-transition");
   }, 100);
-  
+
   function setThemeFeature() {
     // set on load so screen readers can get the latest value on the button
     reflectPreference();
-    // Theme button click is now handled in Header.astro to dispatch custom events
   }
 
   setThemeFeature();
@@ -71,15 +75,17 @@ window.onload = () => {
   document.addEventListener("astro:after-swap", setThemeFeature);
 };
 
-// sync with system changes
+// sync with system changes (only for docs template)
 window
   .matchMedia("(prefers-color-scheme: dark)")
   .addEventListener("change", ({ matches: isDark }) => {
+    var template = document.documentElement.getAttribute('data-template') || 'docs';
+    if (template !== 'docs') return;
+
     themeValue = isDark ? "dark" : "light";
     setPreference();
-    
-    // Dispatch custom event for ThemePickerCool to sync
-    window.dispatchEvent(new CustomEvent('theme-change', { 
-      detail: { isDark: isDark } 
+
+    window.dispatchEvent(new CustomEvent('theme-change', {
+      detail: { isDark: isDark }
     }));
   });

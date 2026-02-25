@@ -1,0 +1,430 @@
+/* ==========================================================================
+   NEO-INDUSTRIAL TEMPLATE — Hudson-inspired glassmorphism
+   Scoped to [data-template="industrial"]
+   Always dark mode.
+   ========================================================================== */
+
+/* --- Color Tokens --- */
+[data-template="industrial"] {
+  --ind-bg: #0A0A0A;
+  --ind-text: #EDEDED;
+  --ind-text-secondary: #9CA3AF;
+  --ind-accent: #10B981;
+  --ind-accent-glow: rgba(16, 185, 129, 0.15);
+  --ind-border: rgba(255, 255, 255, 0.06);
+  --ind-glass: rgba(10, 10, 10, 0.85);
+  --ind-glass-border: rgba(255, 255, 255, 0.08);
+  --ind-card-bg: rgba(23, 23, 23, 0.6);
+  --ind-chrome: #171717;
+
+  --color-fill: 10, 10, 10;
+  --color-text-base: 237, 237, 237;
+  --color-accent: 16, 185, 129;
+  --color-card: 23, 23, 23;
+  --color-card-muted: 38, 38, 38;
+  --color-border: 38, 38, 38;
+}
+
+/* Force dark */
+[data-template="industrial"] {
+  color-scheme: dark;
+}
+
+/* --- Typography --- */
+[data-template="industrial"] body {
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
+  background: var(--ind-bg);
+  color: var(--ind-text);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+[data-template="industrial"] h1,
+[data-template="industrial"] h2,
+[data-template="industrial"] h3,
+[data-template="industrial"] h4,
+[data-template="industrial"] h5,
+[data-template="industrial"] h6 {
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--ind-text);
+}
+
+/* Monospace labels & metadata */
+[data-template="industrial"] .section-title,
+[data-template="industrial"] .brand-name,
+[data-template="industrial"] time,
+[data-template="industrial"] .reading-time {
+  font-family: "JetBrains Mono", "Fira Code", "SF Mono", monospace !important;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.6875rem !important;
+}
+
+/* --- Layout --- */
+[data-template="industrial"] .template-sidebar {
+  display: none !important;
+}
+
+[data-template="industrial"] .template-layout-wrapper {
+  display: block;
+}
+
+/* --- Glass card mixin (applied via direct selectors) --- */
+
+/* --- Header: chrome bar with status indicator --- */
+[data-template="industrial"] .header {
+  background: rgba(10, 10, 10, 0.8) !important;
+  backdrop-filter: blur(20px) saturate(1.5);
+  border-bottom: 1px solid var(--ind-glass-border) !important;
+  position: relative;
+}
+
+/* Top-edge highlight gradient */
+[data-template="industrial"] .header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    transparent 100%
+  );
+}
+
+[data-template="industrial"] .header .logo img {
+  filter: brightness(0) invert(1);
+}
+
+[data-template="industrial"] .header .logo-light {
+  display: none !important;
+}
+
+[data-template="industrial"] .header .logo-dark {
+  display: block !important;
+}
+
+/* Status indicator (green dot) */
+[data-template="industrial"] .header .logo::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ind-accent);
+  box-shadow: 0 0 8px var(--ind-accent), 0 0 16px rgba(16, 185, 129, 0.3);
+  margin-right: 10px;
+  animation: indPulse 3s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes indPulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--ind-accent); }
+  50% { opacity: 0.5; box-shadow: 0 0 4px var(--ind-accent); }
+}
+
+[data-template="industrial"] .header .nav-link {
+  color: var(--ind-text-secondary) !important;
+  font-size: 0.8125rem;
+  font-weight: 450;
+  letter-spacing: 0.02em;
+  border-radius: 6px;
+}
+
+[data-template="industrial"] .header .nav-link:hover {
+  color: var(--ind-text) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+}
+
+[data-template="industrial"] .header .nav-link.active {
+  color: var(--ind-accent) !important;
+  background: rgba(16, 185, 129, 0.08) !important;
+  border: 1px solid rgba(16, 185, 129, 0.15) !important;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.08) !important;
+  backdrop-filter: none !important;
+}
+
+[data-template="industrial"] .header .icon-btn {
+  color: var(--ind-text-secondary) !important;
+}
+
+[data-template="industrial"] .header .icon-btn:hover {
+  color: var(--ind-accent) !important;
+  background: rgba(16, 185, 129, 0.06) !important;
+}
+
+[data-template="industrial"] .header .nav-actions {
+  border-left-color: var(--ind-glass-border) !important;
+}
+
+/* --- Hero section --- */
+[data-template="industrial"] .hero-title {
+  color: var(--ind-text) !important;
+  font-weight: 800;
+}
+
+[data-template="industrial"] .hero-description {
+  color: var(--ind-text-secondary) !important;
+}
+
+[data-template="industrial"] .hero-image {
+  border-color: rgba(16, 185, 129, 0.2) !important;
+}
+
+[data-template="industrial"] .hero-image-gradient {
+  background: radial-gradient(circle at center, rgba(16, 185, 129, 0.15), transparent) !important;
+}
+
+/* Hide company logos */
+[data-template="industrial"] .companies-section {
+  display: none !important;
+}
+
+/* --- CTA buttons --- */
+[data-template="industrial"] .cta-primary {
+  background: var(--ind-accent) !important;
+  color: #000 !important;
+  font-weight: 600 !important;
+  border: none !important;
+}
+
+[data-template="industrial"] .cta-primary:hover {
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.3) !important;
+}
+
+/* --- Section titles --- */
+[data-template="industrial"] .section-title {
+  color: var(--ind-text-secondary) !important;
+  font-weight: 500;
+}
+
+[data-template="industrial"] #featured .section-title,
+[data-template="industrial"] #recent-posts .section-title {
+  font-size: 0.75rem !important;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ind-accent) !important;
+}
+
+/* --- Post Cards: glass panels --- */
+[data-template="industrial"] .grid > article {
+  border-radius: 12px !important;
+}
+
+/* Glass effect on inner card */
+[data-template="industrial"] .grid > article .relative.flex.flex-col.overflow-hidden {
+  background: var(--ind-card-bg) !important;
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--ind-glass-border) !important;
+  border-radius: 12px !important;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Top-edge highlight on cards */
+[data-template="industrial"] .grid > article .relative.flex.flex-col.overflow-hidden::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.06) 50%,
+    transparent 100%
+  );
+  z-index: 1;
+}
+
+/* Hover glow */
+[data-template="industrial"] .grid > article:hover .relative.flex.flex-col.overflow-hidden {
+  border-color: rgba(16, 185, 129, 0.2) !important;
+  box-shadow: 0 0 24px rgba(16, 185, 129, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Hide gradient border effect (replaced by glass) */
+[data-template="industrial"] .grid > article > .absolute.inset-0 {
+  display: none !important;
+}
+
+/* Thumbnail area */
+[data-template="industrial"] .grid > article .p-4.bg-white {
+  background: rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Card content */
+[data-template="industrial"] .grid > article .text-xl {
+  color: var(--ind-text) !important;
+  font-weight: 600;
+}
+
+[data-template="industrial"] .grid > article .opacity-80 {
+  color: var(--ind-text-secondary) !important;
+}
+
+[data-template="industrial"] .grid > article .text-skin-base\/60 {
+  color: var(--ind-accent) !important;
+}
+
+/* --- Post Details --- */
+[data-template="industrial"] .post-title-wired {
+  color: var(--ind-text) !important;
+}
+
+[data-template="industrial"] .article-surface {
+  background: var(--ind-bg) !important;
+}
+
+/* --- Prose --- */
+[data-template="industrial"] .prose {
+  color: var(--ind-text-secondary) !important;
+}
+
+[data-template="industrial"] .prose h1,
+[data-template="industrial"] .prose h2,
+[data-template="industrial"] .prose h3 {
+  color: var(--ind-text) !important;
+}
+
+[data-template="industrial"] .prose a {
+  color: var(--ind-accent) !important;
+}
+
+[data-template="industrial"] .prose a:hover {
+  color: #34D399 !important;
+}
+
+[data-template="industrial"] .prose strong {
+  color: var(--ind-text) !important;
+}
+
+[data-template="industrial"] .prose code {
+  background: rgba(16, 185, 129, 0.08) !important;
+  color: var(--ind-accent) !important;
+}
+
+[data-template="industrial"] .prose blockquote {
+  border-left-color: var(--ind-accent) !important;
+  background: rgba(16, 185, 129, 0.04) !important;
+}
+
+/* --- Footer: status-bar chrome --- */
+[data-template="industrial"] .professional-footer {
+  background: rgba(10, 10, 10, 0.9) !important;
+  backdrop-filter: blur(20px);
+  border-top: 1px solid var(--ind-glass-border) !important;
+  position: relative;
+}
+
+[data-template="industrial"] .professional-footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.06) 50%,
+    transparent 100%
+  );
+}
+
+[data-template="industrial"] .professional-footer .brand-name {
+  color: var(--ind-accent) !important;
+  letter-spacing: 0.15em;
+}
+
+[data-template="industrial"] .professional-footer .section-title {
+  color: var(--ind-text-secondary) !important;
+  font-size: 0.625rem !important;
+  letter-spacing: 0.15em;
+}
+
+[data-template="industrial"] .professional-footer .footer-link {
+  color: var(--ind-text-secondary) !important;
+}
+
+[data-template="industrial"] .professional-footer .footer-link:hover {
+  color: var(--ind-accent) !important;
+}
+
+/* --- Scrollbar --- */
+[data-template="industrial"] ::-webkit-scrollbar-track {
+  background: var(--ind-bg);
+}
+
+[data-template="industrial"] ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+}
+
+[data-template="industrial"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* --- Selection --- */
+[data-template="industrial"] ::selection {
+  background: rgba(16, 185, 129, 0.3);
+  color: #fff;
+}
+
+/* --- Mobile menu --- */
+@media (max-width: 768px) {
+  [data-template="industrial"] .nav-list {
+    background: rgba(10, 10, 10, 0.97) !important;
+    border-color: var(--ind-glass-border) !important;
+    backdrop-filter: blur(20px);
+  }
+}
+
+/* --- Book details overrides --- */
+[data-template="industrial"] .btn {
+  background: var(--ind-card-bg) !important;
+  border-color: var(--ind-glass-border) !important;
+  color: var(--ind-text-secondary) !important;
+}
+
+[data-template="industrial"] .btn:hover {
+  border-color: rgba(16, 185, 129, 0.2) !important;
+  color: var(--ind-text) !important;
+}
+
+/* --- Link buttons (View All Posts, etc.) --- */
+[data-template="industrial"] .all-posts-btn-wrapper a {
+  background: rgba(16, 185, 129, 0.08) !important;
+  border: 1px solid rgba(16, 185, 129, 0.15);
+  color: var(--ind-accent) !important;
+}
+
+[data-template="industrial"] .all-posts-btn-wrapper a:hover {
+  background: rgba(16, 185, 129, 0.15) !important;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.1);
+}
+
+/* --- Go-back button --- */
+[data-template="industrial"] .go-back-btn-inline {
+  color: var(--ind-text-secondary) !important;
+}
+
+[data-template="industrial"] .go-back-btn-inline:hover {
+  color: var(--ind-accent) !important;
+}
+
+/* --- Pagination --- */
+[data-template="industrial"] nav[aria-label="pagination"] a,
+[data-template="industrial"] nav[aria-label="pagination"] span {
+  color: var(--ind-text-secondary) !important;
+}
+
+[data-template="industrial"] nav[aria-label="pagination"] a:hover {
+  color: var(--ind-accent) !important;
+}

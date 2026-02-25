@@ -1,0 +1,241 @@
+/* ==========================================================================
+   DOCS TEMPLATE — Notion/GitBook-inspired clean reading layout
+   Scoped to [data-template="docs"]
+   ========================================================================== */
+
+/* --- Color Tokens (Light) --- */
+[data-template="docs"] {
+  --docs-sidebar-bg: #F7F7F5;
+  --docs-sidebar-text: #37352F;
+  --docs-sidebar-hover: #EFEFED;
+  --docs-sidebar-active: #E8E8E5;
+  --docs-accent: #2383E2;
+  --docs-text: #37352F;
+  --docs-text-secondary: #6B6B6B;
+  --docs-bg: #FFFFFF;
+  --docs-border: #E8E8E5;
+  --docs-card-bg: #FFFFFF;
+
+  --color-fill: 255, 255, 255;
+  --color-text-base: 55, 53, 47;
+  --color-accent: 35, 131, 226;
+  --color-card: 255, 255, 255;
+  --color-card-muted: 247, 247, 245;
+  --color-border: 232, 232, 229;
+}
+
+/* --- Color Tokens (Dark) --- */
+[data-template="docs"][data-theme="dark"] {
+  --docs-sidebar-bg: #1E1E1E;
+  --docs-sidebar-text: #E0E0E0;
+  --docs-sidebar-hover: #2A2A2A;
+  --docs-sidebar-active: #333333;
+  --docs-accent: #529CCA;
+  --docs-text: #E0E0E0;
+  --docs-text-secondary: #9B9B9B;
+  --docs-bg: #191919;
+  --docs-border: #2F2F2F;
+  --docs-card-bg: #1E1E1E;
+
+  --color-fill: 25, 25, 25;
+  --color-text-base: 224, 224, 224;
+  --color-accent: 82, 156, 202;
+  --color-card: 30, 30, 30;
+  --color-card-muted: 42, 42, 42;
+  --color-border: 47, 47, 47;
+}
+
+/* --- Typography --- */
+[data-template="docs"] body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", Roboto, sans-serif;
+}
+
+[data-template="docs"] h1,
+[data-template="docs"] h2,
+[data-template="docs"] h3,
+[data-template="docs"] h4,
+[data-template="docs"] h5,
+[data-template="docs"] h6 {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", Roboto, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* --- Layout: Show sidebar --- */
+[data-template="docs"] .template-sidebar {
+  display: flex;
+}
+
+[data-template="docs"] .template-layout-wrapper {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+}
+
+@media (max-width: 1024px) {
+  [data-template="docs"] .template-layout-wrapper {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- Sidebar styling --- */
+[data-template="docs"] .template-sidebar {
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  background: var(--docs-sidebar-bg);
+  border-right: 1px solid var(--docs-border);
+  padding: 1.5rem 0;
+  z-index: 40;
+}
+
+[data-template="docs"] .sidebar-logo {
+  padding: 0 1.25rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--docs-sidebar-text);
+  letter-spacing: -0.01em;
+}
+
+[data-template="docs"] .sidebar-section-title {
+  padding: 0.5rem 1.25rem 0.25rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--docs-text-secondary);
+}
+
+[data-template="docs"] .sidebar-link {
+  display: block;
+  padding: 0.375rem 1.25rem;
+  font-size: 0.875rem;
+  color: var(--docs-sidebar-text);
+  text-decoration: none;
+  border-radius: 0;
+  transition: background 0.15s;
+}
+
+[data-template="docs"] .sidebar-link:hover {
+  background: var(--docs-sidebar-hover);
+  opacity: 1;
+}
+
+[data-template="docs"] .sidebar-link.active {
+  background: var(--docs-sidebar-active);
+  font-weight: 600;
+  color: var(--docs-accent);
+}
+
+/* --- Header: minimal breadcrumb style --- */
+[data-template="docs"] .header {
+  background: var(--docs-bg);
+  border-bottom: 1px solid var(--docs-border);
+  position: relative;
+}
+
+[data-template="docs"][data-theme="dark"] .header {
+  background: var(--docs-bg);
+  border-bottom: 1px solid var(--docs-border);
+}
+
+/* --- Post cards: clean list style --- */
+[data-template="docs"] .grid {
+  display: flex !important;
+  flex-direction: column;
+  gap: 0 !important;
+}
+
+[data-template="docs"] .grid > article {
+  border-radius: 0;
+  border: none;
+  border-bottom: 1px solid var(--docs-border);
+  background: transparent;
+}
+
+[data-template="docs"] .grid > article .absolute.inset-0.rounded-2xl {
+  display: none;
+}
+
+[data-template="docs"] .grid > article .relative.flex.flex-col {
+  border: none;
+  border-radius: 0;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0;
+}
+
+/* Hide thumbnail in docs list view */
+[data-template="docs"] .grid > article .p-4.bg-white {
+  display: none;
+}
+
+/* Compact card content */
+[data-template="docs"] .grid > article .flex.flex-1.flex-col {
+  padding: 0;
+}
+
+[data-template="docs"] .grid > article .text-xl {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+[data-template="docs"] .grid > article .line-clamp-3 {
+  display: none;
+}
+
+/* --- Footer: minimal --- */
+[data-template="docs"] .professional-footer {
+  border-top: 1px solid var(--docs-border);
+  background: var(--docs-bg);
+}
+
+/* --- Prose/article styling --- */
+[data-template="docs"] .prose {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", Roboto, sans-serif;
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+/* --- Mobile: hide sidebar --- */
+@media (max-width: 1024px) {
+  [data-template="docs"] .template-sidebar {
+    display: none;
+  }
+
+  [data-template="docs"] .sidebar-mobile-toggle {
+    display: flex;
+  }
+
+  [data-template="docs"] .template-sidebar.sidebar-open {
+    display: flex;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 280px;
+    z-index: 100;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
+  }
+
+  [data-template="docs"] .sidebar-overlay.active {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 99;
+  }
+}
+
+@media (min-width: 1025px) {
+  [data-template="docs"] .sidebar-mobile-toggle {
+    display: none;
+  }
+
+  [data-template="docs"] .sidebar-overlay {
+    display: none;
+  }
+}

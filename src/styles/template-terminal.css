@@ -1,0 +1,402 @@
+/* ==========================================================================
+   TERMINAL TEMPLATE — Hacker/monospace aesthetic
+   Scoped to [data-template="terminal"]
+   Always dark mode.
+   ========================================================================== */
+
+/* --- Color Tokens --- */
+[data-template="terminal"] {
+  --term-bg: #0C0C0C;
+  --term-text: #00FF41;
+  --term-text-dim: #00CC33;
+  --term-text-muted: #007A1F;
+  --term-link: #00CCFF;
+  --term-border: #1A3A1A;
+  --term-card-bg: #0F1A0F;
+  --term-highlight: #00FF41;
+  --term-prompt: #00CC33;
+
+  --color-fill: 12, 12, 12;
+  --color-text-base: 0, 255, 65;
+  --color-accent: 0, 204, 255;
+  --color-card: 15, 26, 15;
+  --color-card-muted: 18, 36, 18;
+  --color-border: 26, 58, 26;
+}
+
+/* Force dark */
+[data-template="terminal"] {
+  color-scheme: dark;
+}
+
+/* --- Typography: Monospace everything --- */
+[data-template="terminal"] body,
+[data-template="terminal"] h1,
+[data-template="terminal"] h2,
+[data-template="terminal"] h3,
+[data-template="terminal"] h4,
+[data-template="terminal"] h5,
+[data-template="terminal"] h6,
+[data-template="terminal"] p,
+[data-template="terminal"] a,
+[data-template="terminal"] span,
+[data-template="terminal"] li,
+[data-template="terminal"] div {
+  font-family: "Berkeley Mono", "Fira Code", "SF Mono", "Cascadia Code", "Consolas", monospace !important;
+}
+
+[data-template="terminal"] body {
+  background: var(--term-bg);
+  color: var(--term-text);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+[data-template="terminal"] h1,
+[data-template="terminal"] h2,
+[data-template="terminal"] h3 {
+  font-weight: 700;
+  letter-spacing: 0;
+  color: var(--term-text);
+}
+
+[data-template="terminal"] a {
+  color: var(--term-link);
+  text-decoration: none;
+}
+
+[data-template="terminal"] a:hover {
+  color: var(--term-highlight);
+  opacity: 1;
+  text-decoration: underline;
+}
+
+/* --- Layout: single column, narrow --- */
+[data-template="terminal"] .template-sidebar {
+  display: none !important;
+}
+
+[data-template="terminal"] .template-layout-wrapper {
+  display: block;
+}
+
+[data-template="terminal"] section,
+[data-template="terminal"] main,
+[data-template="terminal"] footer {
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* --- Scanline overlay --- */
+[data-template="terminal"] body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9998;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.05) 0px,
+    rgba(0, 0, 0, 0.05) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+
+/* --- Header: prompt-style nav --- */
+[data-template="terminal"] .header {
+  background: var(--term-bg) !important;
+  border-bottom: 1px solid var(--term-border) !important;
+  position: relative;
+}
+
+[data-template="terminal"] .header .logo img {
+  display: none !important;
+}
+
+[data-template="terminal"] .header .logo-text,
+[data-template="terminal"] .header .logo::after {
+  font-family: "Berkeley Mono", "Fira Code", monospace !important;
+  color: var(--term-prompt);
+}
+
+/* Terminal prompt prefix */
+[data-template="terminal"] .header .logo {
+  position: relative;
+}
+
+[data-template="terminal"] .header .nav-link {
+  color: var(--term-text-dim) !important;
+  font-size: 0.8125rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0;
+  font-family: "Berkeley Mono", "Fira Code", monospace !important;
+}
+
+[data-template="terminal"] .header .nav-link:hover {
+  color: var(--term-highlight) !important;
+  background: rgba(0, 255, 65, 0.05) !important;
+}
+
+[data-template="terminal"] .header .nav-link.active {
+  color: var(--term-highlight) !important;
+  background: rgba(0, 255, 65, 0.1) !important;
+  border: 1px solid rgba(0, 255, 65, 0.2) !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+[data-template="terminal"] .header .nav-link::before {
+  content: "[";
+  opacity: 0.4;
+}
+
+[data-template="terminal"] .header .nav-link::after {
+  content: "]";
+  opacity: 0.4;
+}
+
+[data-template="terminal"] .header .icon-btn {
+  color: var(--term-text-dim) !important;
+}
+
+[data-template="terminal"] .header .icon-btn:hover {
+  color: var(--term-highlight) !important;
+  background: rgba(0, 255, 65, 0.08) !important;
+}
+
+[data-template="terminal"] .header .nav-actions {
+  border-left-color: var(--term-border) !important;
+}
+
+/* --- Post Cards: ls-style rows --- */
+[data-template="terminal"] .grid {
+  display: flex !important;
+  flex-direction: column;
+  gap: 0 !important;
+  border: 1px solid var(--term-border);
+  background: var(--term-card-bg);
+  padding: 0.5rem 0;
+}
+
+[data-template="terminal"] .grid > article {
+  border-radius: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+/* Hide gradient border effect */
+[data-template="terminal"] .grid > article > .absolute {
+  display: none !important;
+}
+
+/* Override inner card container */
+[data-template="terminal"] .grid > article .relative.flex.flex-col.overflow-hidden {
+  flex-direction: row !important;
+  border: none !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  align-items: center;
+  padding: 0.25rem 1rem !important;
+  gap: 0 !important;
+}
+
+[data-template="terminal"] .grid > article:hover .relative.flex.flex-col.overflow-hidden {
+  background: rgba(0, 255, 65, 0.03) !important;
+}
+
+/* Hide thumbnail in terminal view */
+[data-template="terminal"] .grid > article .p-4.bg-white,
+[data-template="terminal"] .grid > article .p-4.bg-white + div .line-clamp-3,
+[data-template="terminal"] .grid > article .mt-4.flex.items-center {
+  display: none !important;
+}
+
+/* ls-style date */
+[data-template="terminal"] .grid > article .mb-3.text-sm {
+  margin: 0 !important;
+  min-width: 140px;
+  font-size: 0.75rem !important;
+  color: var(--term-text-muted) !important;
+}
+
+/* Title in ls view */
+[data-template="terminal"] .grid > article .text-xl {
+  font-size: 0.8125rem !important;
+  font-weight: 400 !important;
+  color: var(--term-text) !important;
+}
+
+/* Prefix with permissions */
+[data-template="terminal"] .grid > article .relative.flex.flex-col.overflow-hidden::before {
+  content: "-rw-r--r--";
+  font-size: 0.75rem;
+  color: var(--term-text-muted);
+  margin-right: 1rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* --- Hero section --- */
+[data-template="terminal"] .hero-section {
+  border-bottom: 1px solid var(--term-border);
+}
+
+[data-template="terminal"] .hero-title {
+  font-size: 1.5rem !important;
+  color: var(--term-text) !important;
+}
+
+[data-template="terminal"] .hero-description {
+  color: var(--term-text-dim) !important;
+  font-size: 0.875rem !important;
+}
+
+/* Hide hero image */
+[data-template="terminal"] .hero-image-wrapper {
+  display: none !important;
+}
+
+/* Hide company logos section */
+[data-template="terminal"] .companies-section {
+  display: none !important;
+}
+
+/* --- Section titles --- */
+[data-template="terminal"] .section-title,
+[data-template="terminal"] #main-content h1 {
+  color: var(--term-text) !important;
+  font-size: 1rem !important;
+  font-weight: 600;
+}
+
+[data-template="terminal"] .section-title::before {
+  content: "$ ls ";
+  color: var(--term-prompt);
+  font-weight: 400;
+}
+
+/* --- Footer: minimal terminal-style --- */
+[data-template="terminal"] .professional-footer {
+  background: var(--term-bg) !important;
+  border-top: 1px solid var(--term-border) !important;
+}
+
+[data-template="terminal"] .professional-footer .brand-name {
+  color: var(--term-text-dim) !important;
+  font-family: "Berkeley Mono", "Fira Code", monospace !important;
+}
+
+[data-template="terminal"] .professional-footer .section-title {
+  color: var(--term-text-muted) !important;
+}
+
+[data-template="terminal"] .professional-footer .section-title::before {
+  content: none;
+}
+
+[data-template="terminal"] .professional-footer .footer-link {
+  color: var(--term-text-dim) !important;
+}
+
+[data-template="terminal"] .professional-footer .footer-link:hover {
+  color: var(--term-highlight) !important;
+}
+
+/* --- Article/prose --- */
+[data-template="terminal"] .prose {
+  color: var(--term-text-dim) !important;
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+[data-template="terminal"] .prose h1,
+[data-template="terminal"] .prose h2,
+[data-template="terminal"] .prose h3 {
+  color: var(--term-text) !important;
+}
+
+[data-template="terminal"] .prose a {
+  color: var(--term-link) !important;
+}
+
+[data-template="terminal"] .prose code {
+  background: rgba(0, 255, 65, 0.08) !important;
+  color: var(--term-text) !important;
+}
+
+[data-template="terminal"] .prose blockquote {
+  border-left-color: var(--term-text-muted) !important;
+  background: rgba(0, 255, 65, 0.03) !important;
+  color: var(--term-text-dim) !important;
+}
+
+[data-template="terminal"] .prose strong {
+  color: var(--term-text) !important;
+}
+
+/* --- PostDetails: cat-style header --- */
+[data-template="terminal"] .post-title-wired {
+  font-size: 1.25rem !important;
+  color: var(--term-text) !important;
+}
+
+[data-template="terminal"] .post-title-wired::before {
+  content: "$ cat ";
+  color: var(--term-prompt);
+  font-weight: 400;
+  font-size: 0.875rem;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+/* --- Hide hero image in post details --- */
+[data-template="terminal"] .hero-image-container {
+  display: none !important;
+}
+
+[data-template="terminal"] .title-overlay {
+  background: none !important;
+  margin-top: 0 !important;
+  padding: 0 !important;
+}
+
+/* --- Scrollbar --- */
+[data-template="terminal"] ::-webkit-scrollbar-track {
+  background: var(--term-bg);
+}
+
+[data-template="terminal"] ::-webkit-scrollbar-thumb {
+  background: var(--term-border);
+}
+
+/* --- CTA buttons --- */
+[data-template="terminal"] .cta-buttons {
+  display: none !important;
+}
+
+/* --- Mobile menu --- */
+@media (max-width: 768px) {
+  [data-template="terminal"] .nav-list {
+    background: rgba(12, 12, 12, 0.97) !important;
+    border-color: var(--term-border) !important;
+  }
+}
+
+/* --- Selection color --- */
+[data-template="terminal"] ::selection {
+  background: rgba(0, 255, 65, 0.3);
+  color: #fff;
+}
+
+/* --- Links global override --- */
+[data-template="terminal"] .nav-link,
+[data-template="terminal"] .footer-link,
+[data-template="terminal"] .sidebar-link {
+  font-family: "Berkeley Mono", "Fira Code", monospace !important;
+}
