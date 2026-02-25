@@ -109,10 +109,16 @@
   background: radial-gradient(ellipse at center, transparent 60%, rgba(0, 0, 0, 0.4) 100%);
 }
 
-/* ── Header ── */
+/* ── Header: fixed-width, matching content column ── */
 [data-template="terminal"] .header {
   background: var(--term-bg) !important;
   border-bottom: 1px solid var(--term-border) !important;
+}
+
+[data-template="terminal"] .header .container {
+  max-width: 680px !important;
+  padding-left: 1.5rem !important;
+  padding-right: 1.5rem !important;
 }
 
 [data-template="terminal"] .header .logo img {
@@ -386,10 +392,13 @@
   color: var(--term-text-bright) !important;
 }
 
-/* ── Footer ── */
+/* ── Footer: match content width ── */
 [data-template="terminal"] .professional-footer {
   background: var(--term-bg) !important;
   border-top: 1px solid var(--term-border) !important;
+  max-width: 680px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 
 [data-template="terminal"] .professional-footer .brand-name {

@@ -87,8 +87,8 @@
     --font-mono: "Fira Code", "Fira Mono", Consolas, Monaco, monospace;
   }
 
-  /* Default dark mode — only applies when no template overrides */
-  html[data-theme="dark"]:not([data-template="terminal"]):not([data-template="industrial"]) {
+  /* Default dark mode — only applies when no template overrides colors */
+  html[data-theme="dark"]:not([data-template="terminal"]) {
     --color-fill: 24, 24, 27;
     --color-text-base: 245, 245, 244;
     --color-accent: 251, 191, 36;

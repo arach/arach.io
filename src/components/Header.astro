@@ -9,7 +9,7 @@ export interface Props {
 const { activeNav } = Astro.props;
 
 const navItems = [
-  { href: "/posts/", label: "Blog" },
+  { href: "/posts/", label: "Ideas" },
   { href: "/til/", label: "TIL" },
   // { href: "/memos/", label: "Memos" }, // Hidden until we have 3+ memos
   { href: "/books/", label: "Books" },
@@ -47,7 +47,7 @@ const navItems = [
           <li>
             <a href={href} class={
               (activeNav === label.toLowerCase()) || 
-              (activeNav === "posts" && label === "Blog") 
+              (activeNav === "posts" && label === "Ideas")
                 ? "nav-link active" : "nav-link"
             }>
               {label}
@@ -393,9 +393,9 @@ const navItems = [
     const htmlElement = document.documentElement;
     
     themeBtn?.addEventListener("click", () => {
-      // Only allow theme toggle for docs template
+      // Only allow theme toggle for docs and industrial templates
       const template = htmlElement.getAttribute("data-template") || "docs";
-      if (template !== "docs") return;
+      if (template === "terminal") return;
 
       const currentTheme = htmlElement.getAttribute("data-theme");
       const newTheme = currentTheme === "light" ? "dark" : "light";

@@ -6,7 +6,7 @@ const currentTheme = localStorage.getItem("theme");
 function getPreferTheme() {
   // If template forces dark, return dark
   var template = document.documentElement.getAttribute('data-template') || 'docs';
-  if (template === 'terminal' || template === 'industrial') {
+  if (template === 'terminal') {
     return 'dark';
   }
 

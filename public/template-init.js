@@ -6,7 +6,7 @@
     html.setAttribute("data-template", template);
 
     // Terminal and Industrial force dark mode
-    if (template === "terminal" || template === "industrial") {
+    if (template === "terminal") {
       html.setAttribute("data-theme", "dark");
       localStorage.setItem("theme", "dark");
     }

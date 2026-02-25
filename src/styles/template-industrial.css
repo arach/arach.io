@@ -5,8 +5,33 @@
    Always dark.
    ========================================================================== */
 
-/* ── Color Tokens ── */
-[data-template="industrial"] {
+/* ── Color Tokens (Light) ── */
+[data-template="industrial"],
+[data-template="industrial"][data-theme="light"] {
+  --ind-bg: #F8F8F8;
+  --ind-surface: rgba(0, 0, 0, 0.02);
+  --ind-surface-hover: rgba(0, 0, 0, 0.04);
+  --ind-text: #111111;
+  --ind-text-secondary: #555555;
+  --ind-text-label: #888888;
+  --ind-accent: #059669;
+  --ind-accent-dim: rgba(5, 150, 105, 0.6);
+  --ind-accent-glow: rgba(5, 150, 105, 0.08);
+  --ind-border: rgba(0, 0, 0, 0.06);
+  --ind-border-strong: rgba(0, 0, 0, 0.10);
+  --ind-glass: rgba(0, 0, 0, 0.02);
+  --ind-glass-border: rgba(0, 0, 0, 0.06);
+
+  --color-fill: 248, 248, 248;
+  --color-text-base: 17, 17, 17;
+  --color-accent: 5, 150, 105;
+  --color-card: 255, 255, 255;
+  --color-card-muted: 240, 240, 240;
+  --color-border: 230, 230, 230;
+}
+
+/* ── Color Tokens (Dark) ── */
+[data-template="industrial"][data-theme="dark"] {
   --ind-bg: #050505;
   --ind-surface: rgba(255, 255, 255, 0.02);
   --ind-surface-hover: rgba(255, 255, 255, 0.04);
@@ -27,8 +52,6 @@
   --color-card: 12, 12, 12;
   --color-card-muted: 20, 20, 20;
   --color-border: 30, 30, 30;
-
-  color-scheme: dark;
 }
 
 /* ── Typography ── */
@@ -88,7 +111,7 @@
 
 /* ── Header: chrome bar ── */
 [data-template="industrial"] .header {
-  background: rgba(5, 5, 5, 0.85) !important;
+  background: rgba(var(--color-fill), 0.85) !important;
   backdrop-filter: blur(24px) saturate(1.8) !important;
   border-bottom: 1px solid var(--ind-border) !important;
   position: relative;
@@ -105,15 +128,16 @@
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
 }
 
-[data-template="industrial"] .header .logo img {
+/* Dark: show white logo */
+[data-template="industrial"][data-theme="dark"] .header .logo img {
   filter: brightness(0) invert(1) !important;
 }
 
-[data-template="industrial"] .header .logo-light {
+[data-template="industrial"][data-theme="dark"] .header .logo-light {
   display: none !important;
 }
 
-[data-template="industrial"] .header .logo-dark {
+[data-template="industrial"][data-theme="dark"] .header .logo-dark {
   display: block !important;
 }
 
@@ -196,7 +220,7 @@
 [data-template="industrial"] article .relative.flex.flex-col.overflow-hidden.rounded-2xl {
   border: none !important;
   border-radius: 0 !important;
-  background: var(--ind-bg) !important;
+  background: rgb(var(--color-fill)) !important;
   transition: all 0.25s ease;
   position: relative;
 }
@@ -391,7 +415,7 @@
 
 /* ── Footer: status bar ── */
 [data-template="industrial"] .professional-footer {
-  background: rgba(5, 5, 5, 0.9) !important;
+  background: rgba(var(--color-fill), 0.9) !important;
   backdrop-filter: blur(20px) !important;
   border-top: 1px solid var(--ind-border) !important;
   position: relative;
@@ -451,7 +475,7 @@
 /* ── Mobile ── */
 @media (max-width: 768px) {
   [data-template="industrial"] .nav-list {
-    background: rgba(5, 5, 5, 0.97) !important;
+    background: rgba(var(--color-fill), 0.97) !important;
     border-color: var(--ind-border) !important;
     backdrop-filter: blur(20px) !important;
   }

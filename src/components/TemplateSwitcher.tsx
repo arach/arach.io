@@ -43,7 +43,7 @@ export default function TemplateSwitcher() {
     localStorage.setItem("site-template", id);
     setCurrent(id);
 
-    if (id === "terminal" || id === "industrial") {
+    if (id === "terminal") {
       html.setAttribute("data-theme", "dark");
       localStorage.setItem("theme", "dark");
       setIsDark(true);
@@ -56,7 +56,7 @@ export default function TemplateSwitcher() {
   };
 
   const toggleDarkMode = () => {
-    if (current !== "docs") return;
+    if (current === "terminal") return;
     const newDark = !isDark;
     setIsDark(newDark);
     document.documentElement.setAttribute(
@@ -193,11 +193,11 @@ export default function TemplateSwitcher() {
               borderRadius: "8px",
               border: "none",
               background: "transparent",
-              cursor: current === "docs" ? "pointer" : "not-allowed",
+              cursor: current !== "terminal" ? "pointer" : "not-allowed",
               fontSize: "13px",
               color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)",
               textAlign: "left",
-              opacity: current === "docs" ? 1 : 0.4,
+              opacity: current !== "terminal" ? 1 : 0.4,
               transition: "background 0.15s",
             }}
           >
@@ -205,7 +205,7 @@ export default function TemplateSwitcher() {
               {isDark ? "☽" : "☀"}
             </span>
             <span>{isDark ? "Dark" : "Light"}</span>
-            {current !== "docs" && (
+            {current === "terminal" && (
               <span style={{ marginLeft: "auto", fontSize: "10px", opacity: 0.5 }}>
                 locked
               </span>
