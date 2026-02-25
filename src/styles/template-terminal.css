@@ -171,7 +171,7 @@
   border-left-color: var(--term-border) !important;
 }
 
-/* ── Post cards: file-listing rows ── */
+/* ── Post cards: columnar file-listing ── */
 [data-template="terminal"] .grid.grid-cols-1,
 [data-template="terminal"] .grid.md\:grid-cols-2,
 [data-template="terminal"] div[class*="grid"][class*="grid-cols"] {
@@ -181,7 +181,22 @@
   border: 1px solid var(--term-border) !important;
   border-radius: 2px;
   background: var(--term-surface) !important;
-  padding: 0.375rem 0 !important;
+  padding: 0.5rem 0 !important;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Column header row */
+[data-template="terminal"] .grid.grid-cols-1::before,
+[data-template="terminal"] div[class*="grid"][class*="grid-cols"]::before {
+  content: "PERMISSIONS    DATE          TITLE";
+  display: block;
+  padding: 0.25rem 0.875rem 0.5rem;
+  font-size: 0.625rem;
+  color: var(--term-text-muted);
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid var(--term-border);
+  margin-bottom: 0.25rem;
+  font-family: "IBM Plex Mono", "JetBrains Mono", monospace;
 }
 
 [data-template="terminal"] .grid > article,
@@ -196,14 +211,15 @@
   display: none !important;
 }
 
-/* Row layout */
+/* Row: CSS Grid for perfect column alignment */
 [data-template="terminal"] article .relative.flex.flex-col.overflow-hidden.rounded-2xl {
-  flex-direction: row !important;
+  display: grid !important;
+  grid-template-columns: 90px 110px 1fr !important;
   align-items: center !important;
   border: none !important;
   border-radius: 0 !important;
   background: transparent !important;
-  padding: 0.25rem 0.875rem !important;
+  padding: 0.1875rem 0.875rem !important;
   gap: 0 !important;
   transition: background 0.1s;
 }
@@ -217,49 +233,49 @@
   display: none !important;
 }
 
-/* ls-style prefix */
+/* ls-style permissions column */
 [data-template="terminal"] article .relative.flex.flex-col.overflow-hidden.rounded-2xl::before {
   content: "-rw-r--r--";
   font-size: 0.6875rem;
   color: var(--term-text-muted);
-  margin-right: 1.25rem;
   white-space: nowrap;
-  flex-shrink: 0;
   letter-spacing: 0.02em;
+  grid-column: 1;
 }
 
-/* Date inline */
+/* Content area — holds date + title */
+[data-template="terminal"] article .flex.flex-1.flex-col {
+  display: contents !important;
+  padding: 0 !important;
+}
+
+/* Date: fixed-width column */
 [data-template="terminal"] article .mb-3.text-sm {
   margin: 0 !important;
-  min-width: 90px;
   font-size: 0.6875rem !important;
   color: var(--term-text-muted) !important;
   opacity: 1 !important;
-  order: -1;
-  margin-right: 1.25rem !important;
   white-space: nowrap;
+  grid-column: 2;
+  order: 0;
 }
 
-/* Title */
+/* Title: fills remaining space */
 [data-template="terminal"] article .text-xl {
   font-size: 0.8125rem !important;
   font-weight: 400 !important;
   color: var(--term-text) !important;
   line-height: 1.4 !important;
+  grid-column: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* Hide description and read more in list */
 [data-template="terminal"] article .line-clamp-3,
 [data-template="terminal"] article .mt-4.flex.items-center {
   display: none !important;
-}
-
-/* Card content compact */
-[data-template="terminal"] article .flex.flex-1.flex-col {
-  padding: 0 !important;
-  flex-direction: row !important;
-  align-items: center !important;
-  gap: 0 !important;
 }
 
 /* ── Hero ── */
