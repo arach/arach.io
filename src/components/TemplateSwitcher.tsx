@@ -174,7 +174,7 @@ export default function TemplateSwitcher() {
             }}
           />
 
-          {/* Dark mode toggle (only for docs) */}
+          {/* Dark / Light toggle */}
           <button
             onClick={toggleDarkMode}
             style={{

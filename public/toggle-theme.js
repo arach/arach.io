@@ -4,12 +4,6 @@ const primaryColorScheme = ""; // "light" | "dark"
 const currentTheme = localStorage.getItem("theme");
 
 function getPreferTheme() {
-  // If template forces dark, return dark
-  var template = document.documentElement.getAttribute('data-template') || 'docs';
-  if (template === 'terminal') {
-    return 'dark';
-  }
-
   // return theme value in local storage if it is set
   if (currentTheme) return currentTheme;
 
@@ -75,13 +69,10 @@ window.onload = () => {
   document.addEventListener("astro:after-swap", setThemeFeature);
 };
 
-// sync with system changes (only for docs template)
+// sync with system changes
 window
   .matchMedia("(prefers-color-scheme: dark)")
   .addEventListener("change", ({ matches: isDark }) => {
-    var template = document.documentElement.getAttribute('data-template') || 'docs';
-    if (template !== 'docs') return;
-
     themeValue = isDark ? "dark" : "light";
     setPreference();
 

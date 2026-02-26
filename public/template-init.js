@@ -10,10 +10,13 @@
     var html = document.documentElement;
     html.setAttribute("data-template", template);
 
-    // Terminal and Industrial force dark mode
-    if (template === "terminal") {
+    // Default to dark for terminal/industrial, but respect user's saved preference
+    var savedTheme = localStorage.getItem("theme");
+    if (!savedTheme) {
       html.setAttribute("data-theme", "dark");
       localStorage.setItem("theme", "dark");
+    } else {
+      html.setAttribute("data-theme", savedTheme);
     }
   }
 
