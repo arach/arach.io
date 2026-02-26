@@ -147,8 +147,17 @@ export default function DitheredPortrait({
     const style = getComputedStyle(document.documentElement);
     const text = style.getPropertyValue("--term-text").trim();
     const bg = style.getPropertyValue("--term-bg").trim();
-    if (text) setActiveLight(text);
-    if (bg) setActiveDark(bg);
+    if (!text || !bg) return;
+    // In dark mode: text is the lighter color (amber), bg is darker
+    // In light mode: bg is the lighter color (cream), text is darker
+    const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+    if (isDark) {
+      setActiveLight(text);
+      setActiveDark(bg);
+    } else {
+      setActiveLight(bg);
+      setActiveDark(text);
+    }
   }, []);
 
   useEffect(() => {
@@ -348,8 +357,9 @@ export default function DitheredPortrait({
         <div
           style={{
             position: "absolute",
-            top: -4,
-            left: `calc(100% + 8px)`,
+            top: `calc(100% + 8px)`,
+            left: 0,
+            right: 0,
             background: activeDark,
             border: `1px solid ${activeLight}33`,
             padding: "0.75rem 0.875rem",
@@ -358,7 +368,6 @@ export default function DitheredPortrait({
             color: activeLight,
             lineHeight: 1.8,
             zIndex: 10,
-            minWidth: "180px",
             whiteSpace: "nowrap",
           }}
         >

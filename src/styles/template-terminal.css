@@ -269,7 +269,7 @@ html[data-theme="light"][data-template="terminal"] {
 
 /* ── Right powerline: nav actions ── */
 [data-template="terminal"] .header .nav-actions {
-  background: rgba(236, 207, 124, 0.10) !important;
+  background: var(--term-pl-bg) !important;
   border-left: none !important;
   margin-left: auto !important;
   padding: 0 0.625rem !important;
@@ -300,7 +300,7 @@ html[data-theme="light"][data-template="terminal"] {
 
 [data-template="terminal"] .header .icon-btn:hover {
   color: var(--term-text-bright) !important;
-  background: rgba(236, 207, 124, 0.05) !important;
+  background: rgba(var(--color-text-base), 0.05) !important;
 }
 
 /* ══════════════════════════════════════════════════════════════════════════

@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 
-type Template = "terminal" | "industrial";
+type Template = "classic" | "terminal" | "industrial";
 
 const templates: { id: Template; label: string; icon: string }[] = [
+  { id: "classic", label: "Classic", icon: "○" },
   { id: "terminal", label: "Terminal", icon: ">" },
   { id: "industrial", label: "Industrial", icon: "◆" },
 ];
@@ -14,10 +15,10 @@ export default function TemplateSwitcher() {
   const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    let saved = (localStorage.getItem("site-template") as Template) || "terminal";
+    let saved = (localStorage.getItem("site-template") as Template) || "classic";
     if (saved === ("docs" as any)) {
-      saved = "terminal";
-      localStorage.setItem("site-template", "terminal");
+      saved = "classic";
+      localStorage.setItem("site-template", "classic");
     }
     setCurrent(saved);
     setIsDark(document.documentElement.getAttribute("data-theme") === "dark");

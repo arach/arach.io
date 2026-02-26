@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Krub:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Krub:wght@300;400;600&display=swap');
 
 /* ============================================================================
    CSS CUSTOM PROPERTIES - Theme System
@@ -30,7 +30,7 @@
   --header-offset: 32px;
   --content-padding-x: 48px;
   --content-padding-y: 48px;
-  --main-content-gap: 60px;
+  --main-content-gap: 40px;
   
   /* Component dimensions */
   --container-max-width: 1200px;
@@ -358,7 +358,7 @@
   color: rgba(var(--primary-rgb), 0.8);
   margin-bottom: 8px;
   letter-spacing: 0.1em;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 [data-theme="light"] .section-header {
@@ -372,7 +372,7 @@
   gap: 6px;
   font-size: clamp(10px, 1.2vw, 12px);
   color: rgba(var(--text-rgb), 0.7);
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .param-row {
@@ -415,7 +415,7 @@
 
 .status-label {
   width: var(--status-label-width);
-  font-weight: 600;
+  font-weight: 400;
   font-size: 12px;
   color: rgba(var(--primary-rgb), 0.8);
 }
@@ -456,7 +456,7 @@
 
 .status-text {
   color: rgba(var(--primary-rgb), 0.8);
-  font-weight: 600;
+  font-weight: 400;
   opacity: 0;
   animation: fadeIn var(--animation-fast) ease-out forwards;
   animation-delay: calc(var(--delay, 0s) + 0.5s);
@@ -503,7 +503,7 @@
 .command-text {
   font-size: 12px;
   color: rgba(var(--primary-rgb), 0.9);
-  font-weight: 600;
+  font-weight: 400;
   letter-spacing: 0.05em;
 }
 
@@ -519,7 +519,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
+  flex-shrink: 1;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .polaroid {
@@ -578,7 +580,7 @@
 }
 
 .spec-id {
-  font-weight: 700;
+  font-weight: 500;
   font-size: 11px;
   letter-spacing: 0.05em;
 }
@@ -587,6 +589,11 @@
   font-size: 9px;
   color: #666;
   letter-spacing: 0.1em;
+}
+
+.spec-value {
+  font-weight: 400;
+  color: #333;
 }
 
 .spec-grid {

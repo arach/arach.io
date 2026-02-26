@@ -128,11 +128,7 @@
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
 }
 
-/* Dark: show white logo */
-[data-template="industrial"][data-theme="dark"] .header .logo img {
-  filter: brightness(0) invert(1) !important;
-}
-
+/* Dark: show the dark logo variant (no harsh filter) */
 [data-template="industrial"][data-theme="dark"] .header .logo-light {
   display: none !important;
 }
@@ -141,22 +137,9 @@
   display: block !important;
 }
 
-/* Status dot */
-[data-template="industrial"] .header .logo::before {
-  content: "";
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--ind-accent);
-  box-shadow: 0 0 6px var(--ind-accent), 0 0 12px rgba(16, 185, 129, 0.2);
-  margin-right: 8px;
-  flex-shrink: 0;
-  animation: indPing 3s ease-in-out infinite;
-}
-
-@keyframes indPing {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+/* Logo: hide terminal prompt, show standard logo */
+[data-template="industrial"] .logo-text-terminal {
+  display: none !important;
 }
 
 [data-template="industrial"] .header .nav-link {

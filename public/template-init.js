@@ -1,20 +1,21 @@
 // Initialize template immediately to prevent flash (runs before paint)
 (function () {
   function applyTemplate() {
-    var template = localStorage.getItem("site-template") || "terminal";
+    var template = localStorage.getItem("site-template") || "classic";
     // Migrate removed templates to default
     if (template === "docs") {
-      template = "terminal";
-      localStorage.setItem("site-template", "terminal");
+      template = "classic";
+      localStorage.setItem("site-template", "classic");
     }
     var html = document.documentElement;
     html.setAttribute("data-template", template);
 
-    // Default to dark for terminal/industrial, but respect user's saved preference
+    // Set theme: terminal/industrial default to dark, classic defaults to light
     var savedTheme = localStorage.getItem("theme");
     if (!savedTheme) {
-      html.setAttribute("data-theme", "dark");
-      localStorage.setItem("theme", "dark");
+      var defaultTheme = (template === "terminal" || template === "industrial") ? "dark" : "light";
+      html.setAttribute("data-theme", defaultTheme);
+      localStorage.setItem("theme", defaultTheme);
     } else {
       html.setAttribute("data-theme", savedTheme);
     }
