@@ -1,7 +1,6 @@
 ---
 import { LOCALE, SITE, GA_ID } from "@config";
 import "@styles/base.css";
-import "@styles/template-docs.css";
 import "@styles/template-terminal.css";
 import "@styles/template-industrial.css";
 import { ViewTransitions } from "astro:transitions";
@@ -13,7 +12,13 @@ import "@fontsource/inter/800.css";
 import "@fontsource/inter/900.css";
 import "@fontsource/inconsolata";
 import TemplateSwitcher from "@components/TemplateSwitcher";
-import Sidebar from "@components/Sidebar.astro";
+import AgentView from "@components/AgentView";
+import { getCollection } from "astro:content";
+
+const blogPosts = await getCollection("blog", ({ data }) => !data.draft);
+const agentPosts = blogPosts
+  .sort((a, b) => new Date(b.data.pubDatetime).getTime() - new Date(a.data.pubDatetime).getTime())
+  .map(p => ({ slug: p.slug, title: p.data.title }));
 
 const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
 const googleAnalyticsId =
@@ -54,7 +59,7 @@ const socialImageURL = new URL(
 <html
   lang={`${LOCALE.lang ?? "en"}`}
   class={`${scrollSmooth ? "scroll-smooth min-w-screen" : "min-w-screen"}`}
-  data-template="docs"
+  data-template="terminal"
 >
   <head>
     <meta charset="UTF-8" />
@@ -177,11 +182,11 @@ const socialImageURL = new URL(
   </head>
   <body class="flex min-h-screen flex-col">
     <div class="template-layout-wrapper">
-      <Sidebar activeNav={activeNav} />
       <div class="template-main-area flex min-h-screen flex-col">
         <slot />
       </div>
     </div>
+    <AgentView client:load posts={agentPosts} />
     <TemplateSwitcher client:load />
   </body>
 </html>

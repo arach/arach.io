@@ -27,7 +27,7 @@ const navItems = [
           <>
             <img src="/assets/arach.io-logo-photo.png" alt={SITE.title} class="logo-light" />
             <img src="/assets/arach.io-logo-photo-white.png" alt={SITE.title} class="logo-dark" />
-            <span class="logo-text-terminal">arach@io:~$</span>
+            <span class="logo-text-terminal"><span class="pl-user">arach@arach.io</span><span class="pl-sep1"></span><span class="pl-path">~</span><span class="pl-sep2"></span></span>
           </>
         ) : (
           <span class="logo-text">{SITE.title}</span>
@@ -161,17 +161,20 @@ const navItems = [
     letter-spacing: -0.025em;
   }
 
-  /* Terminal template: show text prompt instead of logo images */
+  /* Terminal template: powerline-style prompt (visual styles in template-terminal.css) */
   .logo-text-terminal {
     display: none;
     font-family: "Berkeley Mono", "Fira Code", monospace;
-    font-size: 0.875rem;
+    font-size: 0.8125rem;
     font-weight: 400;
     color: rgb(var(--color-text-base));
+    line-height: 1;
   }
 
   :global([data-template="terminal"]) .logo-text-terminal {
-    display: block;
+    display: flex;
+    align-items: stretch;
+    height: 100%;
   }
 
   :global([data-template="terminal"]) .logo-light,
@@ -393,10 +396,6 @@ const navItems = [
     const htmlElement = document.documentElement;
     
     themeBtn?.addEventListener("click", () => {
-      // Only allow theme toggle for docs and industrial templates
-      const template = htmlElement.getAttribute("data-template") || "docs";
-      if (template === "terminal") return;
-
       const currentTheme = htmlElement.getAttribute("data-theme");
       const newTheme = currentTheme === "light" ? "dark" : "light";
       const isDark = newTheme === "dark";

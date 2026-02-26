@@ -48,12 +48,18 @@ const { noMarginTop = false } = Astro.props;
     </div>
   </div>
 
-  <!-- Terminal footer -->
+  <!-- Terminal footer — neo-industrial -->
   <div class="footer-container footer-terminal">
     <div class="terminal-footer-inner">
-      <span class="terminal-footer-prompt">arach@io:~$</span>
-      <span class="terminal-footer-text">exit 0</span>
-      <span class="terminal-footer-meta">&copy; {currentYear}</span>
+      <span class="terminal-footer-label">ARACH.IO</span>
+      <span class="terminal-footer-sep"></span>
+      <span class="terminal-footer-links">
+        <a href="/posts/">IDEAS</a>
+        <a href="/til/">TIL</a>
+        <a href="/books/">BOOKS</a>
+        <a href="/about/">ABOUT</a>
+      </span>
+      <span class="terminal-footer-meta">&copy; {currentYear} &mdash; 37.7749&deg;N 122.4194&deg;W</span>
     </div>
   </div>
 
@@ -213,27 +219,54 @@ const { noMarginTop = false } = Astro.props;
     padding: 1.25rem 1rem;
   }
 
-  /* Terminal footer */
+  /* Terminal footer — neo-industrial */
   .terminal-footer-inner {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    font-family: "Berkeley Mono", "Fira Code", monospace;
-    font-size: 0.8125rem;
+    font-family: "IBM Plex Mono", "Fira Code", monospace;
+    font-size: 0.625rem;
+    letter-spacing: 0.08em;
   }
 
-  .terminal-footer-prompt {
+  .terminal-footer-label {
+    font-family: "Space Grotesk", "Inter", sans-serif;
+    font-weight: 500;
+    font-size: 0.6875rem;
+    letter-spacing: 0.04em;
     opacity: 0.5;
   }
 
-  .terminal-footer-text {
+  .terminal-footer-sep {
+    width: 1px;
+    height: 0.75rem;
+    opacity: 0.15;
+    background: currentColor;
+  }
+
+  .terminal-footer-links {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .terminal-footer-links a {
+    opacity: 0.35;
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.15s;
+    font-size: 0.5625rem;
+    letter-spacing: 0.12em;
+  }
+
+  .terminal-footer-links a:hover {
     opacity: 0.7;
   }
 
   .terminal-footer-meta {
     margin-left: auto;
-    opacity: 0.3;
-    font-size: 0.75rem;
+    opacity: 0.2;
+    font-size: 0.5625rem;
+    letter-spacing: 0.06em;
   }
 
   /* Industrial footer */

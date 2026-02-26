@@ -11,6 +11,7 @@ import Hero from "@components/Hero.astro";
 import Socials from "@components/Socials.astro";
 import CompanyLogos from "@components/CompanyLogos.astro";
 import CalBooking from "@components/CalBooking";
+import DitheredPortrait from "@components/DitheredPortrait";
 import TacticalAboutEmbed from "@components/TacticalAboutEmbed";
 import Newsletter from "@components/Newsletter.astro";
 import getSortedPosts from "@utils/getSortedPosts";
@@ -31,6 +32,20 @@ const socialCount = SOCIALS.filter(social => social.active).length;
   <main id="main-content" class="index-main">
     <section id="hero" class="hero-section">
       <div class="hero-container">
+        <div class="hero-dithered-wrapper">
+          <DitheredPortrait
+            client:load
+            src="/assets/arach-circle.png"
+            width={220}
+            height={220}
+            algorithm="atkinson"
+            pixelSize={1}
+            threshold={185}
+            colorLight="#ECCF7C"
+            colorDark="#0E0E0D"
+            showControls={true}
+          />
+        </div>
         <div class="hero-content">
           <h1 class="hero-title animate-in">
             Startup Founder, Engineering Leader,<br /> and AI Enthusiast
@@ -161,13 +176,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     
     /* ===== Newsletter Section ===== */
     .newsletter-section {
-      @apply max-w-2xl mx-auto py-12;
-    }
-    
-    @media (max-width: 767px) {
-      .newsletter-section {
-        @apply py-8;
-      }
+      @apply py-6;
     }
     
     /* iPhone: move main content up by reducing top margin */
@@ -321,6 +330,11 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     
     html[data-theme="dark"] .cta-secondary:hover {
       box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
+    }
+
+    /* Hidden by default — Terminal template CSS reveals it */
+    .hero-dithered-wrapper {
+      display: none;
     }
 
     .hero-image-wrapper {

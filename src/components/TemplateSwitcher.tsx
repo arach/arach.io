@@ -1,21 +1,24 @@
 import { useState, useEffect, useRef } from "react";
 
-type Template = "docs" | "terminal" | "industrial";
+type Template = "terminal" | "industrial";
 
 const templates: { id: Template; label: string; icon: string }[] = [
-  { id: "docs", label: "Docs", icon: "doc" },
   { id: "terminal", label: "Terminal", icon: ">" },
   { id: "industrial", label: "Industrial", icon: "◆" },
 ];
 
 export default function TemplateSwitcher() {
   const [isOpen, setIsOpen] = useState(false);
-  const [current, setCurrent] = useState<Template>("docs");
+  const [current, setCurrent] = useState<Template>("terminal");
   const [isDark, setIsDark] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const saved = (localStorage.getItem("site-template") as Template) || "docs";
+    let saved = (localStorage.getItem("site-template") as Template) || "terminal";
+    if (saved === ("docs" as any)) {
+      saved = "terminal";
+      localStorage.setItem("site-template", "terminal");
+    }
     setCurrent(saved);
     setIsDark(document.documentElement.getAttribute("data-theme") === "dark");
 
@@ -43,20 +46,10 @@ export default function TemplateSwitcher() {
     localStorage.setItem("site-template", id);
     setCurrent(id);
 
-    if (id === "terminal") {
-      html.setAttribute("data-theme", "dark");
-      localStorage.setItem("theme", "dark");
-      setIsDark(true);
-      window.dispatchEvent(
-        new CustomEvent("theme-change", { detail: { isDark: true } })
-      );
-    }
-
     setIsOpen(false);
   };
 
   const toggleDarkMode = () => {
-    if (current === "terminal") return;
     const newDark = !isDark;
     setIsDark(newDark);
     document.documentElement.setAttribute(
@@ -193,11 +186,10 @@ export default function TemplateSwitcher() {
               borderRadius: "8px",
               border: "none",
               background: "transparent",
-              cursor: current !== "terminal" ? "pointer" : "not-allowed",
+              cursor: "pointer",
               fontSize: "13px",
               color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)",
               textAlign: "left",
-              opacity: current !== "terminal" ? 1 : 0.4,
               transition: "background 0.15s",
             }}
           >
@@ -205,11 +197,6 @@ export default function TemplateSwitcher() {
               {isDark ? "☽" : "☀"}
             </span>
             <span>{isDark ? "Dark" : "Light"}</span>
-            {current === "terminal" && (
-              <span style={{ marginLeft: "auto", fontSize: "10px", opacity: 0.5 }}>
-                locked
-              </span>
-            )}
           </button>
         </div>
       )}
