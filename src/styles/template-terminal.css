@@ -345,7 +345,7 @@ html[data-theme="light"][data-template="terminal"] {
   padding: 2rem 1rem 1rem !important;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  overflow: visible;
 }
 
 /* Panel label: PORTRAIT */
