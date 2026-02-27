@@ -134,6 +134,7 @@ export default function DitheredPortrait({
   const grayscaleRef = useRef<Float32Array | null>(null);
   const [loaded, setLoaded] = useState(false);
   const [controlsOpen, setControlsOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
   const [algorithm, setAlgorithm] = useState<DitherAlgorithm>(initialAlgorithm);
   const [pixelSize, setPixelSize] = useState(initialPixelSize);
   const [threshold, setThreshold] = useState(initialThreshold);
@@ -282,6 +283,29 @@ export default function DitheredPortrait({
     if (loaded) render();
   }, [loaded, render]);
 
+  const handleCopy = async () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    try {
+      const blob = await new Promise<Blob | null>(resolve =>
+        canvas.toBlob(resolve, "image/png")
+      );
+      if (blob) {
+        await navigator.clipboard.write([
+          new ClipboardItem({ "image/png": blob }),
+        ]);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      }
+    } catch {
+      // Fallback: copy data URL as text
+      const dataUrl = canvas.toDataURL("image/png");
+      await navigator.clipboard.writeText(dataUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
   const algLabels: { key: DitherAlgorithm; label: string }[] = [
     { key: "atkinson", label: "ATK" },
     { key: "floyd-steinberg", label: "F-S" },
@@ -328,15 +352,40 @@ export default function DitheredPortrait({
         }}
       />
 
-      {/* Controls toggle */}
+      {/* Copy button — top right */}
+      {showControls && loaded && (
+        <button
+          onClick={handleCopy}
+          aria-label="Copy image to clipboard"
+          style={{
+            position: "absolute",
+            top: 4,
+            right: 4,
+            background: `${activeDark}cc`,
+            border: `1px solid ${activeLight}33`,
+            color: copied ? activeLight : `${activeLight}88`,
+            fontFamily: "monospace",
+            fontSize: "0.75rem",
+            padding: "2px 5px",
+            cursor: "pointer",
+            lineHeight: 1,
+            zIndex: 2,
+            transition: "color 0.15s",
+          }}
+        >
+          {copied ? "✓" : "⎘"}
+        </button>
+      )}
+
+      {/* Controls toggle — bottom left */}
       {showControls && loaded && (
         <button
           onClick={() => setControlsOpen(!controlsOpen)}
           aria-label="Toggle dithering controls"
           style={{
             position: "absolute",
-            top: 4,
-            right: 4,
+            bottom: 4,
+            left: 4,
             background: `${activeDark}cc`,
             border: `1px solid ${activeLight}33`,
             color: controlsOpen ? activeLight : `${activeLight}88`,
@@ -357,7 +406,7 @@ export default function DitheredPortrait({
         <div
           style={{
             position: "absolute",
-            top: `calc(100% + 8px)`,
+            top: `calc(100% + 4px)`,
             left: 0,
             right: 0,
             background: activeDark,

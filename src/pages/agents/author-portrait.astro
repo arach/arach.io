@@ -6,7 +6,7 @@ import Footer from "@components/Footer.astro";
 import BraillePortrait from "@components/BraillePortrait";
 ---
 
-<Layout title={`Braille Portrait | ${SITE.title}`}>
+<Layout title={`Author Portrait | ${SITE.title}`}>
   <Header />
   <main id="main-content" class="braille-page">
     <BraillePortrait client:load src="/assets/arach-circle.png" />
@@ -37,10 +37,21 @@ import BraillePortrait from "@components/BraillePortrait";
 </script>
 
 <style>
-  .braille-page {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem 1.5rem;
+  #main-content.braille-page {
+    max-width: 760px;
+    margin: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding: 2rem 1.5rem 2rem 3rem !important;
+  }
+
+  :global([data-template="terminal"]) #main-content.braille-page,
+  :global([data-template="industrial"]) #main-content.braille-page {
+    max-width: 760px !important;
+    margin: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding: 2rem 1.5rem 2rem 3rem !important;
   }
 
 </style>

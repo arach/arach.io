@@ -8,10 +8,12 @@ import { remarkReadingTime } from "./src/utils/remark-reading-time.mjs";
 import partytown from "@astrojs/partytown";
 import icon from "astro-icon";
 import mdx from "@astrojs/mdx";
+import vercel from "@astrojs/vercel";
 
 // https://astro.build/config
 export default defineConfig({
   site: SITE.website,
+  adapter: vercel(),
   integrations: [
     tailwind({
       applyBaseStyles: false,

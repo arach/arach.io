@@ -134,7 +134,7 @@ function hasParam(key: string): boolean {
 }
 
 export default function BraillePortrait({ src }: BraillePortraitProps) {
-  const [cols, setCols] = useState(() => parseInt(getParam("cols", "40"), 10));
+  const [cols, setCols] = useState(() => parseInt(getParam("cols", "50"), 10));
   const [threshold, setThreshold] = useState(() =>
     parseInt(getParam("threshold", "100"), 10)
   );
@@ -145,7 +145,10 @@ export default function BraillePortrait({ src }: BraillePortraitProps) {
   // Vertical stretch compensates for monospace char cell aspect ratio
   // A braille char is 2×4 dots but the cell is ~0.6:1, so vertical needs ~1.2× boost
   const [vStretch, setVStretch] = useState(() =>
-    parseFloat(getParam("vstretch", "1.35"))
+    parseFloat(getParam("vstretch", "2.0"))
+  );
+  const [pixelSize, setPixelSize] = useState(() =>
+    parseInt(getParam("px", "1"), 10)
   );
   const [charset, setCharset] = useState(() => getParam("chars", "braille"));
   const [brailleText, setBrailleText] = useState("");
@@ -241,15 +244,43 @@ export default function BraillePortrait({ src }: BraillePortraitProps) {
     if (!loaded || !grayscaleRef.current) return;
 
     const { w: fullW, h: fullH } = imgDimsRef.current;
-    const gray = grayscaleRef.current;
+    let srcGray = grayscaleRef.current;
+    let srcW = fullW;
+    let srcH = fullH;
+
+    // Apply pixel size: block-average to reduce detail
+    if (pixelSize > 1) {
+      const pw = Math.ceil(fullW / pixelSize);
+      const ph = Math.ceil(fullH / pixelSize);
+      const blocked = new Float32Array(pw * ph);
+      for (let y = 0; y < ph; y++) {
+        for (let x = 0; x < pw; x++) {
+          let sum = 0, count = 0;
+          for (let dy = 0; dy < pixelSize; dy++) {
+            for (let dx = 0; dx < pixelSize; dx++) {
+              const sx = x * pixelSize + dx;
+              const sy = y * pixelSize + dy;
+              if (sx < fullW && sy < fullH) {
+                sum += grayscaleRef.current![sy * fullW + sx];
+                count++;
+              }
+            }
+          }
+          blocked[y * pw + x] = sum / count;
+        }
+      }
+      srcGray = blocked;
+      srcW = pw;
+      srcH = ph;
+    }
 
     if (isBrailleMode) {
       // Braille: 2 dots wide × 4 dots tall per char
       const targetW = cols * 2;
-      const scale = targetW / fullW;
-      const targetH = Math.round(fullH * scale * vStretch);
+      const scale = targetW / srcW;
+      const targetH = Math.round(srcH * scale * vStretch);
 
-      const downscaled = bilinearDownscale(gray, fullW, fullH, targetW, targetH);
+      const downscaled = bilinearDownscale(srcGray, srcW, srcH, targetW, targetH);
 
       let dithered: Uint8Array;
       switch (algorithm) {
@@ -269,14 +300,14 @@ export default function BraillePortrait({ src }: BraillePortraitProps) {
     } else {
       // ASCII mode: 1 char per pixel, cols = output width
       const targetW = cols;
-      const scale = targetW / fullW;
+      const scale = targetW / srcW;
       // Halve vertical for char cell aspect ratio (~2:1 h:w in monospace)
-      const targetH = Math.round(fullH * scale * vStretch * 0.5);
+      const targetH = Math.round(srcH * scale * vStretch * 0.5);
 
-      const downscaled = bilinearDownscale(gray, fullW, fullH, targetW, targetH);
+      const downscaled = bilinearDownscale(srcGray, srcW, srcH, targetW, targetH);
       setBrailleText(toAsciiArt(downscaled, targetW, targetH, ramp, invert));
     }
-  }, [loaded, cols, threshold, algorithm, invert, vStretch, charset, isBrailleMode, ramp]);
+  }, [loaded, cols, threshold, algorithm, invert, vStretch, pixelSize, charset, isBrailleMode, ramp]);
 
   // Update URL params on change
   useEffect(() => {
@@ -286,6 +317,7 @@ export default function BraillePortrait({ src }: BraillePortraitProps) {
     params.set("threshold", String(threshold));
     params.set("algorithm", algorithm);
     params.set("vstretch", vStretch.toFixed(2));
+    params.set("px", String(pixelSize));
     params.set("chars", charset);
     if (invert) {
       params.set("invert", "");
@@ -295,7 +327,7 @@ export default function BraillePortrait({ src }: BraillePortraitProps) {
     const newUrl =
       window.location.pathname + "?" + params.toString().replace(/=(?=&|$)/g, "");
     history.replaceState(null, "", newUrl);
-  }, [loaded, cols, threshold, algorithm, invert, vStretch, charset]);
+  }, [loaded, cols, threshold, algorithm, invert, vStretch, pixelSize, charset]);
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(brailleText);
@@ -320,6 +352,95 @@ export default function BraillePortrait({ src }: BraillePortraitProps) {
     gap: "0.375rem",
   };
 
+  const numStyle: React.CSSProperties = {
+    display: "inline-block",
+    minWidth: "2ch",
+    textAlign: "right",
+    fontVariantNumeric: "tabular-nums",
+  };
+
+  const controls = (
+    <div
+      style={{
+        ...controlStyle,
+        display: "flex",
+        flexDirection: "column",
+        gap: "0.375rem",
+        marginTop: "0.75rem",
+      }}
+    >
+      {/* Sliders */}
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", alignItems: "center" }}>
+        <label style={sliderLabel}>
+          <span style={{ opacity: 0.6 }}>cols</span>
+          <input type="range" min={16} max={80} value={cols}
+            onChange={e => setCols(Number(e.target.value))}
+            style={{ width: "60px", accentColor: textColor, cursor: "pointer" }} />
+          <span style={numStyle}>{cols}</span>
+        </label>
+        <label style={sliderLabel}>
+          <span style={{ opacity: 0.6 }}>thresh</span>
+          <input type="range" min={0} max={255} value={threshold}
+            onChange={e => setThreshold(Number(e.target.value))}
+            style={{ width: "60px", accentColor: textColor, cursor: "pointer" }} />
+          <span style={{ ...numStyle, minWidth: "3ch" }}>{threshold}</span>
+        </label>
+        <label style={sliderLabel}>
+          <span style={{ opacity: 0.6 }}>px</span>
+          <input type="range" min={1} max={6} value={pixelSize}
+            onChange={e => setPixelSize(Number(e.target.value))}
+            style={{ width: "40px", accentColor: textColor, cursor: "pointer" }} />
+          <span style={numStyle}>{pixelSize}</span>
+        </label>
+        <label style={sliderLabel}>
+          <span style={{ opacity: 0.6 }}>stretch</span>
+          <input type="range" min={80} max={200} value={Math.round(vStretch * 100)}
+            onChange={e => setVStretch(Number(e.target.value) / 100)}
+            style={{ width: "50px", accentColor: textColor, cursor: "pointer" }} />
+          <span style={{ ...numStyle, minWidth: "4ch" }}>{vStretch.toFixed(2)}</span>
+        </label>
+      </div>
+
+      {/* Algo + invert */}
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", alignItems: "center" }}>
+        <span style={{ opacity: 0.6 }}>algo</span>
+        {algLabels.map(({ key, label }) => (
+          <button key={key} onClick={() => setAlgorithm(key)}
+            style={{
+              background: "transparent", border: "none",
+              color: algorithm === key ? textColor : `${textColor}55`,
+              fontFamily: "inherit", fontSize: "0.75rem", cursor: "pointer", padding: "0 0.125rem",
+            }}>
+            [{algorithm === key ? "\u00d7" : "\u00A0"}] {label}
+          </button>
+        ))}
+        <button onClick={() => setInvert(!invert)}
+          style={{
+            background: "transparent", border: "none",
+            color: invert ? textColor : `${textColor}55`,
+            fontFamily: "inherit", fontSize: "0.75rem", cursor: "pointer", padding: "0 0.125rem",
+          }}>
+          [{invert ? "\u00d7" : "\u00A0"}] INV
+        </button>
+      </div>
+
+      {/* Charset */}
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", alignItems: "center" }}>
+        <span style={{ opacity: 0.6 }}>chars</span>
+        {Object.keys(CHARSET_PRESETS).map(key => (
+          <button key={key} onClick={() => setCharset(key)}
+            style={{
+              background: "transparent", border: "none",
+              color: charset === key ? textColor : `${textColor}55`,
+              fontFamily: "inherit", fontSize: "0.75rem", cursor: "pointer", padding: "0 0.125rem",
+            }}>
+            [{charset === key ? "\u00d7" : "\u00A0"}] {key}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+
   return (
     <div
       style={{
@@ -329,135 +450,6 @@ export default function BraillePortrait({ src }: BraillePortraitProps) {
         maxWidth: "100%",
       }}
     >
-      {/* Row 1: sliders + copy */}
-      <div
-        style={{
-          ...controlStyle,
-          display: "flex",
-          flexWrap: "wrap",
-          gap: "0.75rem",
-          alignItems: "center",
-          marginBottom: "0.5rem",
-        }}
-      >
-        <label style={sliderLabel}>
-          <span style={{ opacity: 0.6 }}>cols</span>
-          <input
-            type="range"
-            min={16}
-            max={80}
-            value={cols}
-            onChange={e => setCols(Number(e.target.value))}
-            style={{ width: "60px", accentColor: textColor, cursor: "pointer" }}
-          />
-          <span>{cols}</span>
-        </label>
-
-        <label style={sliderLabel}>
-          <span style={{ opacity: 0.6 }}>thresh</span>
-          <input
-            type="range"
-            min={0}
-            max={255}
-            value={threshold}
-            onChange={e => setThreshold(Number(e.target.value))}
-            style={{ width: "60px", accentColor: textColor, cursor: "pointer" }}
-          />
-          <span>{threshold}</span>
-        </label>
-
-        <label style={sliderLabel}>
-          <span style={{ opacity: 0.6 }}>stretch</span>
-          <input
-            type="range"
-            min={80}
-            max={200}
-            value={Math.round(vStretch * 100)}
-            onChange={e => setVStretch(Number(e.target.value) / 100)}
-            style={{ width: "50px", accentColor: textColor, cursor: "pointer" }}
-          />
-          <span>{vStretch.toFixed(2)}</span>
-        </label>
-
-      </div>
-
-      {/* Row 2: algo + invert */}
-      <div
-        style={{
-          ...controlStyle,
-          display: "flex",
-          flexWrap: "wrap",
-          gap: "0.5rem",
-          alignItems: "center",
-          marginBottom: "0.5rem",
-        }}
-      >
-        <span style={{ opacity: 0.6 }}>algo</span>
-        {algLabels.map(({ key, label }) => (
-          <button
-            key={key}
-            onClick={() => setAlgorithm(key)}
-            style={{
-              background: "transparent",
-              border: "none",
-              color: algorithm === key ? textColor : `${textColor}55`,
-              fontFamily: "inherit",
-              fontSize: "0.75rem",
-              cursor: "pointer",
-              padding: "0 0.125rem",
-            }}
-          >
-            [{algorithm === key ? "\u00d7" : "\u00A0"}] {label}
-          </button>
-        ))}
-
-        <button
-          onClick={() => setInvert(!invert)}
-          style={{
-            background: "transparent",
-            border: "none",
-            color: invert ? textColor : `${textColor}55`,
-            fontFamily: "inherit",
-            fontSize: "0.75rem",
-            cursor: "pointer",
-            padding: "0 0.125rem",
-          }}
-        >
-          [{invert ? "\u00d7" : "\u00A0"}] INV
-        </button>
-      </div>
-
-      {/* Row 3: charset */}
-      <div
-        style={{
-          ...controlStyle,
-          display: "flex",
-          flexWrap: "wrap",
-          gap: "0.5rem",
-          alignItems: "center",
-          marginBottom: "0.75rem",
-        }}
-      >
-        <span style={{ opacity: 0.6 }}>chars</span>
-        {Object.keys(CHARSET_PRESETS).map(key => (
-          <button
-            key={key}
-            onClick={() => setCharset(key)}
-            style={{
-              background: "transparent",
-              border: "none",
-              color: charset === key ? textColor : `${textColor}55`,
-              fontFamily: "inherit",
-              fontSize: "0.75rem",
-              cursor: "pointer",
-              padding: "0 0.125rem",
-            }}
-          >
-            [{charset === key ? "\u00d7" : "\u00A0"}] {key}
-          </button>
-        ))}
-      </div>
-
       {/* Portrait output */}
       {!loaded ? (
         <div
@@ -515,6 +507,9 @@ export default function BraillePortrait({ src }: BraillePortraitProps) {
           </pre>
         </div>
       )}
+
+      {/* Controls below portrait */}
+      {loaded && controls}
     </div>
   );
 }

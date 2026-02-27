@@ -1,0 +1,289 @@
+---
+import { SITE } from "@config";
+import Layout from "@layouts/Layout.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import { bio, career, projects, tech, accounts, sites } from "@data/agents";
+import { portrait } from "@data/portrait";
+---
+
+<Layout title={`Agents | ${SITE.title}`}>
+  <Header />
+  <main id="main-content" class="ap">
+    <div class="tui">
+      <div class="line"><span class="dim">$</span> arach <span class="dim">--info</span></div>
+      <div class="blank"></div>
+      <div class="line heading">ARACH TCHOUPANI</div>
+      <div class="line dim">Engineer, founder, builder. San Francisco / Montreal.</div>
+      <div class="line dim">15 years shipping product across 4 venture-backed companies.</div>
+      <div class="line dim">Currently building voice-first tools and exploring what happens</div>
+      <div class="line dim">when AI gives one person the leverage of twenty.</div>
+      <div class="blank"></div>
+      <div class="stats-table">
+        <div class="stat"><span class="key">years</span><span class="val">15+</span></div>
+        <div class="stat"><span class="key">ventures</span><span class="val">4</span></div>
+        <div class="stat"><span class="key">exit</span><span class="val">1</span></div>
+        <div class="stat"><span class="key">raised</span><span class="val">$15M</span></div>
+      </div>
+      <div class="blank"></div>
+      {career.map(c => (
+        <div class="line"><span class="dim">  ·</span> <span class="dim">{c}</span></div>
+      ))}
+      <div class="blank"></div>
+      <div class="line dim">---</div>
+      <div class="blank"></div>
+
+      <div class="line"><span class="dim">$</span> arach <span class="dim">--info --agents-view</span></div>
+      <div class="blank"></div>
+      <div class="line heading">AGENT: AUTHOR PORTRAIT</div>
+      <a href="/agents/author-portrait" class="portrait-link"><pre class="portrait" set:html={portrait} /></a>
+      <div class="line dim">  Parametric braille & ASCII portrait generator.</div>
+      <div class="line dim">  Dithering, charset presets, copy-to-clipboard.</div>
+      <div class="line">  <a href="/agents/author-portrait" class="link">Interactive version →</a> <span class="dim">https://arach.io/agents/author-portrait</span></div>
+      <div class="blank"></div>
+      <div class="line dim">---</div>
+      <div class="blank"></div>
+
+      <div class="line"><span class="dim">$</span> arach projects <span class="dim">--featured</span></div>
+      <div class="blank"></div>
+      <div class="line heading">PROJECTS</div>
+      {projects.map((p, i) => (
+        <Fragment>
+          <div class="line"><span class="num">{i + 1}/</span> {p.href
+            ? <a href={p.href} class="name" target="_blank" rel="noopener">{p.name}</a>
+            : <span class="name">{p.name}</span>
+          }</div>
+          <div class="line indent">{p.desc}</div>
+          <div class="line indent dim">{p.stack}</div>
+          {i < projects.length - 1 && <div class="blank half"></div>}
+        </Fragment>
+      ))}
+      <div class="blank"></div>
+      <div class="line dim">  15+ projects at <a href="https://arach.dev" class="link" target="_blank" rel="noopener">arach.dev</a></div>
+      <div class="blank"></div>
+      <div class="line dim">---</div>
+      <div class="blank"></div>
+
+      <div class="line"><span class="dim">$</span> arach stack</div>
+      <div class="blank"></div>
+      <div class="line heading">STACK</div>
+      {tech.map(t => (
+        <div class="line">  <span class="key stack-key">{t.k}</span><span class="dim">{t.v}</span></div>
+      ))}
+      <div class="blank"></div>
+      <div class="line dim">---</div>
+      <div class="blank"></div>
+
+      <div class="line"><span class="dim">$</span> arach accounts</div>
+      <div class="blank"></div>
+      <div class="line heading">ACCOUNTS</div>
+      {accounts.map((a, i) => (
+        <div class="line"><span class="num">{i + 1}/</span> <span class="key acct-key">{a.name}</span><a href={a.href} class="link" target="_blank" rel="noopener">{a.handle}</a></div>
+      ))}
+      <div class="blank"></div>
+      <div class="line dim">---</div>
+      <div class="blank"></div>
+
+      <div class="line"><span class="dim">$</span> arach sites</div>
+      <div class="blank"></div>
+      <div class="line heading">SITES</div>
+      {sites.map((s, i) => (
+        <div class="line"><span class="num">{i + 1}/</span> <a href={s.href} class="link" target="_blank" rel="noopener"><span class="site-name">{s.name}</span></a><span class="dim">{s.desc}</span></div>
+      ))}
+      <div class="blank"></div>
+      <div class="line dim">---</div>
+      <div class="blank"></div>
+
+      <div class="line"><span class="dim">$</span> cat <span class="dim">arach.{"{"}json,md{"}"}</span></div>
+      <div class="blank"></div>
+      <div class="line"><span class="num">1/</span> <a href="/agents/index.json" class="link">arach.json</a> <span class="dim">Structured data — all fields, machine-readable</span></div>
+      <div class="line"><span class="num">2/</span> <a href="/agents/index.md" class="link">arach.md</a> <span class="dim">Markdown — human-readable, copy-pasteable</span></div>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  #main-content.ap {
+    max-width: 760px;
+    margin: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding: 2rem 1.5rem 4rem 3rem !important;
+  }
+
+  :global([data-template="terminal"]) #main-content.ap,
+  :global([data-template="industrial"]) #main-content.ap {
+    max-width: 760px !important;
+    margin: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding: 2rem 1.5rem 4rem 3rem !important;
+  }
+
+  .tui {
+    font-family: "Berkeley Mono", "Fira Code", "JetBrains Mono", monospace;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    color: rgb(var(--color-text-base));
+  }
+
+  .tui .line {
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .tui .blank {
+    height: 1.7em;
+  }
+
+  .tui .blank.half {
+    height: 0.85em;
+  }
+
+  .tui .indent {
+    padding-left: 1.75em;
+  }
+
+  .tui .heading {
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  .tui .dim {
+    opacity: 0.4;
+  }
+
+  .tui .num {
+    font-weight: 700;
+    opacity: 0.9;
+    color: rgb(var(--color-accent));
+  }
+
+  .tui .key {
+    font-weight: 500;
+    opacity: 0.65;
+  }
+
+  .tui .val {
+    font-weight: 600;
+    opacity: 0.9;
+  }
+
+  .tui .stack-key {
+    display: inline-block;
+    min-width: 11ch;
+  }
+
+  .tui .acct-key {
+    display: inline-block;
+    min-width: 14ch;
+  }
+
+  .tui .site-name {
+    display: inline-block;
+    min-width: 20ch;
+    font-weight: 500;
+  }
+
+  .tui .name {
+    font-weight: 600;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .tui a.name:hover,
+  .tui a.link:hover {
+    text-decoration: underline;
+    opacity: 1;
+  }
+
+  .tui .link {
+    color: inherit;
+    text-decoration: none;
+    opacity: 0.7;
+  }
+
+  .tui .stats-table {
+    display: inline-grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 0;
+    border: 1px solid currentColor;
+    opacity: 0.5;
+  }
+
+  .tui .stat {
+    padding: 0.15em 1.25em 0.15em 0.75em;
+    border-right: 1px solid currentColor;
+  }
+
+  .tui .stat:last-child {
+    border-right: none;
+  }
+
+  .tui .stat .key {
+    display: block;
+    font-size: 0.6875rem;
+    opacity: 0.7;
+  }
+
+  .tui .stat .val {
+    display: block;
+    font-weight: 700;
+    opacity: 1;
+  }
+
+  .tui a.portrait-link,
+  .tui a.portrait-link:hover,
+  .tui a.portrait-link:active,
+  .tui a.portrait-link:focus {
+    display: block;
+    text-decoration: none !important;
+    margin: 0.5em 0;
+  }
+
+  .tui a.portrait-link:hover .portrait {
+    opacity: 0.75;
+  }
+
+  .tui .portrait,
+  .tui .portrait * {
+    font-family: inherit;
+    font-size: 0.5rem;
+    line-height: 1.15;
+    margin: 0;
+    color: inherit;
+    opacity: 0.55;
+    text-decoration: none !important;
+  }
+
+  /* Terminal template */
+  :global([data-template="terminal"]) .tui {
+    color: var(--term-text);
+  }
+
+  :global([data-template="terminal"]) .tui .num {
+    color: var(--term-text-bright, var(--term-text));
+  }
+
+  :global([data-template="terminal"]) .tui .heading {
+    color: var(--term-text-bright, var(--term-text));
+  }
+
+  :global([data-template="terminal"]) .tui .val {
+    color: var(--term-text-bright, var(--term-text));
+  }
+
+  /* Industrial template */
+  :global([data-template="industrial"]) .tui {
+    color: var(--ind-text);
+  }
+
+  :global([data-template="industrial"]) .tui .num {
+    color: var(--ind-accent);
+  }
+
+  :global([data-template="industrial"]) .tui .val {
+    color: var(--ind-accent);
+  }
+</style>
