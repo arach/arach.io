@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 
-type DitherAlgorithm = "floyd-steinberg" | "atkinson" | "ordered";
+export type DitherAlgorithm = "floyd-steinberg" | "atkinson" | "ordered";
 
 interface DitheredPortraitProps {
   src: string;
@@ -16,14 +16,14 @@ interface DitheredPortraitProps {
 }
 
 // Bayer 4x4 ordered dithering matrix
-const BAYER_4X4 = [
+export const BAYER_4X4 = [
   [0, 8, 2, 10],
   [12, 4, 14, 6],
   [3, 11, 1, 9],
   [15, 7, 13, 5],
 ];
 
-function hexToRgb(hex: string): [number, number, number] {
+export function hexToRgb(hex: string): [number, number, number] {
   const h = hex.replace("#", "");
   return [
     parseInt(h.substring(0, 2), 16),
@@ -32,11 +32,11 @@ function hexToRgb(hex: string): [number, number, number] {
   ];
 }
 
-function toLuminance(r: number, g: number, b: number): number {
+export function toLuminance(r: number, g: number, b: number): number {
   return 0.299 * r + 0.587 * g + 0.114 * b;
 }
 
-function applyFloydSteinberg(
+export function applyFloydSteinberg(
   buf: Float32Array,
   w: number,
   h: number,
@@ -64,7 +64,7 @@ function applyFloydSteinberg(
   return out;
 }
 
-function applyAtkinson(
+export function applyAtkinson(
   buf: Float32Array,
   w: number,
   h: number,
@@ -97,7 +97,7 @@ function applyAtkinson(
   return out;
 }
 
-function applyOrdered(
+export function applyOrdered(
   buf: Float32Array,
   w: number,
   h: number,

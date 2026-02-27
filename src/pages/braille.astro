@@ -1,0 +1,46 @@
+---
+import { SITE } from "@config";
+import Layout from "@layouts/Layout.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import BraillePortrait from "@components/BraillePortrait";
+---
+
+<Layout title={`Braille Portrait | ${SITE.title}`}>
+  <Header />
+  <main id="main-content" class="braille-page">
+    <BraillePortrait client:load src="/assets/arach-circle.png" />
+  </main>
+  <Footer />
+</Layout>
+
+<script is:inline>
+  // Override template/theme from URL params before hydration
+  (function () {
+    var params = new URLSearchParams(window.location.search);
+    var template = params.get("template");
+    var theme = params.get("theme");
+    if (template) {
+      document.documentElement.setAttribute("data-template", template);
+      localStorage.setItem("site-template", template);
+    }
+    if (theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.setItem("theme", theme);
+    } else if (template && !localStorage.getItem("theme")) {
+      // Match template-init defaults
+      var defaultTheme =
+        template === "terminal" || template === "industrial" ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", defaultTheme);
+    }
+  })();
+</script>
+
+<style>
+  .braille-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+</style>
