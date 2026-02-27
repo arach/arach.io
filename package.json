@@ -2,7 +2,6 @@
   "name": "arach-io",
   "version": "4.2.0",
   "private": true,
-  "type": "module",
   "scripts": {
     "dev": "astro dev",
     "generate:pdf": "bun run scripts/generate-pdf.tsx",

@@ -35,6 +35,7 @@ export interface Props {
   modDatetime?: Date | null;
   scrollSmooth?: boolean;
   activeNav?: string;
+  defaultTemplate?: string;
 }
 
 const {
@@ -47,6 +48,7 @@ const {
   modDatetime,
   scrollSmooth = false,
   activeNav,
+  defaultTemplate,
 } = Astro.props;
 
 const socialImageURL = new URL(
@@ -60,6 +62,7 @@ const socialImageURL = new URL(
   lang={`${LOCALE.lang ?? "en"}`}
   class={`${scrollSmooth ? "scroll-smooth min-w-screen" : "min-w-screen"}`}
   data-template="classic"
+  {...defaultTemplate ? { "data-default-template": defaultTemplate } : {}}
 >
   <head>
     <meta charset="UTF-8" />

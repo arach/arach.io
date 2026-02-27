@@ -1,13 +1,15 @@
 // Initialize template immediately to prevent flash (runs before paint)
 (function () {
   function applyTemplate() {
-    var template = localStorage.getItem("site-template") || "classic";
+    var html = document.documentElement;
+    var saved = localStorage.getItem("site-template");
+    var pageDefault = html.getAttribute("data-default-template");
+    var template = saved || pageDefault || "classic";
     // Migrate removed templates to default
     if (template === "docs") {
       template = "classic";
       localStorage.setItem("site-template", "classic");
     }
-    var html = document.documentElement;
     html.setAttribute("data-template", template);
 
     // Set theme: terminal/industrial default to dark, classic defaults to light

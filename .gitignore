@@ -24,3 +24,5 @@ node_modules/
 .claude/
 .mcp.json
 .playwright-mcp/
+.vercel
+.env.vercel
