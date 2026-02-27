@@ -1,6 +1,6 @@
+import type { IncomingMessage, ServerResponse } from "node:http";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
-import { handle } from "hono/vercel";
 import { getDb, initDb } from "./_db.js";
 import { tokenAuth, adminAuth, hashToken } from "./_auth.js";
 
@@ -146,4 +146,35 @@ app.delete("/tokens/:id", adminAuth, async (c) => {
   return c.json({ id: tokenId, revoked: true });
 });
 
-export default handle(app);
+// Convert Node.js req/res to fetch Request, pass to Hono, write back
+export default async function handler(req: IncomingMessage, res: ServerResponse) {
+  const proto = req.headers["x-forwarded-proto"] || "https";
+  const host = req.headers["x-forwarded-host"] || req.headers.host || "localhost";
+  const url = new URL(req.url || "/", `${proto}://${host}`);
+
+  // Read body for non-GET/HEAD
+  let body: BodyInit | undefined;
+  if (req.method !== "GET" && req.method !== "HEAD") {
+    const chunks: Buffer[] = [];
+    for await (const chunk of req) chunks.push(chunk as Buffer);
+    body = Buffer.concat(chunks);
+  }
+
+  const request = new Request(url.toString(), {
+    method: req.method,
+    headers: Object.entries(req.headers).reduce(
+      (h, [k, v]) => {
+        if (v) h[k] = Array.isArray(v) ? v.join(", ") : v;
+        return h;
+      },
+      {} as Record<string, string>
+    ),
+    body,
+  });
+
+  const response = await app.fetch(request);
+
+  res.writeHead(response.status, Object.fromEntries(response.headers.entries()));
+  const buf = await response.arrayBuffer();
+  res.end(Buffer.from(buf));
+}
