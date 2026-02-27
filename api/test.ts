@@ -1,10 +1,5 @@
-import { Hono } from "hono";
-import { handle } from "hono/vercel";
+export const config = { runtime: "nodejs" };
 
-const app = new Hono();
-
-app.get("/*", (c) => {
-  return c.json({ ok: true, path: c.req.path, timestamp: new Date().toISOString() });
-});
-
-export default handle(app);
+export default function handler(req: any, res: any) {
+  res.status(200).json({ ok: true, timestamp: new Date().toISOString() });
+}
