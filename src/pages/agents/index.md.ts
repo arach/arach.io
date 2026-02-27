@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { bio, career, projects, agents, tech, accounts, sites } from "@data/agents";
+import { bio, career, projects, agents, api, tech, accounts, sites } from "@data/agents";
 
 function render(): string {
   const lines: string[] = [];
@@ -27,6 +27,21 @@ function render(): string {
   for (const a of agents) {
     lines.push(`- [${a.name}](${a.href}) — ${a.desc}`);
   }
+  lines.push("");
+
+  lines.push("## API");
+  lines.push("");
+  lines.push(`Base URL: \`${api.base}\``);
+  lines.push("");
+  lines.push(`Auth: ${api.auth}`);
+  lines.push("");
+  lines.push("| Method | Path | Auth | Description |");
+  lines.push("|--------|------|------|-------------|");
+  for (const e of api.endpoints) {
+    lines.push(`| ${e.method} | \`${e.path}\` | ${e.auth} | ${e.desc} |`);
+  }
+  lines.push("");
+  lines.push(`CLI: \`${api.cli}\``);
   lines.push("");
 
   lines.push("## Projects");

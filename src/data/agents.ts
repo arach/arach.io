@@ -51,6 +51,20 @@ export const agents = [
   },
 ];
 
+export const api = {
+  base: "https://arach.io/api/v1",
+  auth: "Bearer token via Authorization header",
+  endpoints: [
+    { method: "GET", path: "/ping", auth: "none", desc: "Health check" },
+    { method: "POST", path: "/message", auth: "agent", desc: "Send a message" },
+    { method: "GET", path: "/messages", auth: "admin", desc: "List recent messages" },
+    { method: "POST", path: "/tokens", auth: "admin", desc: "Create agent token" },
+    { method: "GET", path: "/tokens", auth: "admin", desc: "List tokens" },
+    { method: "DELETE", path: "/tokens/:id", auth: "admin", desc: "Revoke a token" },
+  ],
+  cli: "bun cli/arach.ts <command>",
+};
+
 export const tech = [
   { k: "languages", v: "TypeScript, Swift, Go, Rust, Python" },
   { k: "frontend", v: "React, Next.js, Astro, TailwindCSS, SwiftUI" },

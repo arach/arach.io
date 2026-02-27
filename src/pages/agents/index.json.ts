@@ -1,9 +1,9 @@
 import type { APIRoute } from "astro";
-import { bio, career, projects, agents, tech, accounts, sites } from "@data/agents";
+import { bio, career, projects, agents, api, tech, accounts, sites } from "@data/agents";
 
 export const GET: APIRoute = () =>
   new Response(
-    JSON.stringify({ bio, career, projects, agents, tech, accounts, sites }, null, 2),
+    JSON.stringify({ bio, career, projects, agents, api, tech, accounts, sites }, null, 2),
     {
       headers: {
         "Content-Type": "application/json; charset=utf-8",
