@@ -54,7 +54,7 @@ import { portrait } from "@data/portrait";
         <div class="line">  <span class="method">{e.method.padEnd(6)}</span> <span class="path">{e.path}</span><span class="dim"> {e.auth === "none" ? "" : `[${e.auth}]`} {e.desc}</span></div>
       ))}
       <div class="blank half"></div>
-      <div class="line dim">  CLI: {api.cli}</div>
+      <div class="line dim">  CLI: <a href={api.cli} class="link" target="_blank" rel="noopener">cli/arach.ts</a></div>
       <div class="blank"></div>
       <div class="line dim">---</div>
       <div class="blank"></div>

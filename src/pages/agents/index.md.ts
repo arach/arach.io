@@ -41,7 +41,7 @@ function render(): string {
     lines.push(`| ${e.method} | \`${e.path}\` | ${e.auth} | ${e.desc} |`);
   }
   lines.push("");
-  lines.push(`CLI: \`${api.cli}\``);
+  lines.push(`CLI: [cli/arach.ts](${api.cli})`);
   lines.push("");
 
   lines.push("## Projects");

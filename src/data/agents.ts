@@ -57,12 +57,9 @@ export const api = {
   endpoints: [
     { method: "GET", path: "/ping", auth: "none", desc: "Health check" },
     { method: "POST", path: "/message", auth: "agent", desc: "Send a message" },
-    { method: "GET", path: "/messages", auth: "admin", desc: "List recent messages" },
-    { method: "POST", path: "/tokens", auth: "admin", desc: "Create agent token" },
-    { method: "GET", path: "/tokens", auth: "admin", desc: "List tokens" },
-    { method: "DELETE", path: "/tokens/:id", auth: "admin", desc: "Revoke a token" },
+    { method: "GET", path: "/messages", auth: "agent", desc: "List messages" },
   ],
-  cli: "bun cli/arach.ts <command>",
+  cli: "https://github.com/arach/arach.io/tree/main/cli",
 };
 
 export const tech = [
