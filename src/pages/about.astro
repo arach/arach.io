@@ -15,7 +15,7 @@ const layoutProps = {
   <Header activeNav="about" />
   <main id="main-content" class="mx-auto flex flex-col w-full items-center px-4 py-12 pb-20" style="max-width: 1280px;">
     <!-- Full-size tactical about section -->
-    <div class="tactical-about-container shadow-2xl rounded-lg overflow-hidden">
+    <div class="tactical-about-container shadow-2xl rounded-lg">
         <div class="tactical-about">
           <!-- Thin border -->
           <div class="tactical-border"></div>
@@ -158,30 +158,30 @@ const layoutProps = {
       </div>
       
       <!-- Bio section below -->
-      <div class="mt-12 max-w-4xl mx-auto prose dark:prose-invert">
-        <h2 class="text-2xl font-bold mb-6" style="font-family: 'Krub', sans-serif;">Bio</h2>
-        <p class="text-lg leading-relaxed mb-6" style="font-family: 'Krub', sans-serif;">
+      <div class="mt-4 max-w-4xl mx-auto">
+        <h2 class="text-xl mb-4" style="font-family: 'Space Mono', monospace; font-weight: 400; letter-spacing: 0.05em; opacity: 0.7;">Bio</h2>
+        <p class="text-base leading-relaxed mb-4" style="font-family: 'Krub', sans-serif; font-weight: 300; opacity: 0.85;">
           With a 15-year track record in technology leadership in fast-growing startups, Arach has held various roles from Software Engineer to CTO, leading engineering for 4 venture-backed companies in NY and Montreal.
         </p>
-        <p class="text-lg leading-relaxed mb-6" style="font-family: 'Krub', sans-serif;">
+        <p class="text-base leading-relaxed mb-4" style="font-family: 'Krub', sans-serif; font-weight: 300; opacity: 0.85;">
           He co-founded Breathe Life in 2018 in Montreal, supported by Diagram Ventures and Real Ventures, and rapidly grew its InsurTech product until its acquisition by Zinnia in 2022. He joined Meta and worked on Creators initiatives on a standalone 0->1 product as well as on the blue app.
         </p>
-        <p class="text-lg leading-relaxed" style="font-family: 'Krub', sans-serif;">
+        <p class="text-base leading-relaxed" style="font-family: 'Krub', sans-serif; font-weight: 300; opacity: 0.85;">
           He is currently focused on coding every day and learning new things.
         </p>
-        
-        <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="tactical-stat-card">
-            <div class="stat-label">YEARS_IN_FIELD</div>
-            <div class="stat-value">15+</div>
+
+        <div class="mt-8 flex gap-0" style="border: 1px solid rgba(var(--color-accent), 0.2); font-family: 'Space Mono', monospace;">
+          <div class="flex-1 text-center py-4 px-3" style="border-right: 1px solid rgba(var(--color-accent), 0.2);">
+            <div class="text-xs mb-1 uppercase tracking-widest" style="opacity: 0.4;">YEARS_IN_FIELD</div>
+            <div class="text-2xl" style="color: rgb(var(--color-accent)); font-weight: 400;">15+</div>
           </div>
-          <div class="tactical-stat-card">
-            <div class="stat-label">VENTURES_LED</div>
-            <div class="stat-value">4</div>
+          <div class="flex-1 text-center py-4 px-3" style="border-right: 1px solid rgba(var(--color-accent), 0.2);">
+            <div class="text-xs mb-1 uppercase tracking-widest" style="opacity: 0.4;">VENTURES_LED</div>
+            <div class="text-2xl" style="color: rgb(var(--color-accent)); font-weight: 400;">4</div>
           </div>
-          <div class="tactical-stat-card">
-            <div class="stat-label">EXIT_STATUS</div>
-            <div class="stat-value">ACQUIRED</div>
+          <div class="flex-1 text-center py-4 px-3">
+            <div class="text-xs mb-1 uppercase tracking-widest" style="opacity: 0.4;">EXIT_STATUS</div>
+            <div class="text-2xl" style="color: rgb(var(--color-accent)); font-weight: 400;">ACQUIRED</div>
           </div>
         </div>
       </div>

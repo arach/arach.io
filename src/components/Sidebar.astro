@@ -1,0 +1,117 @@
+---
+import { SITE } from "@config";
+
+export interface Props {
+  activeNav?: string;
+}
+
+const { activeNav } = Astro.props;
+
+const navSections = [
+  {
+    title: "Content",
+    links: [
+      { href: "/posts/", label: "Ideas", id: "posts" },
+      { href: "/til/", label: "TIL", id: "til" },
+      { href: "/books/", label: "Books", id: "books" },
+    ],
+  },
+  {
+    title: "Meta",
+    links: [
+      { href: "/about/", label: "About", id: "about" },
+      { href: "/search/", label: "Search", id: "search" },
+      { href: "/resume/", label: "Resume", id: "resume" },
+    ],
+  },
+];
+---
+
+<!-- Sidebar overlay for mobile -->
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+<!-- Sidebar -->
+<aside class="template-sidebar" id="template-sidebar">
+  <div class="sidebar-logo">
+    <a href="/" style="text-decoration: none; color: inherit;">{SITE.title}</a>
+  </div>
+
+  {navSections.map(section => (
+    <div>
+      <div class="sidebar-section-title">{section.title}</div>
+      {section.links.map(link => (
+        <a
+          href={link.href}
+          class={`sidebar-link ${
+            activeNav === link.id ||
+            (activeNav === "posts" && link.id === "posts")
+              ? "active"
+              : ""
+          }`}
+        >
+          {link.label}
+        </a>
+      ))}
+    </div>
+  ))}
+
+  <div class="sidebar-footer">
+    <div class="sidebar-section-title">Links</div>
+    <a href="https://github.com/arach" class="sidebar-link sidebar-external" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+    <a href="https://linkedin.com/in/arach" class="sidebar-link sidebar-external" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+    <a href="https://arach.dev" class="sidebar-link sidebar-external" target="_blank" rel="noopener noreferrer">arach.dev ↗</a>
+  </div>
+</aside>
+
+<!-- Mobile hamburger for sidebar (docs template only, visibility controlled by CSS) -->
+<button
+  class="sidebar-mobile-toggle"
+  id="sidebar-mobile-toggle"
+  aria-label="Toggle sidebar"
+>
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+</button>
+
+<style>
+  .sidebar-mobile-toggle {
+    display: none;
+    position: fixed;
+    bottom: 6rem;
+    right: 1rem;
+    z-index: 998;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgb(var(--color-border));
+    background: rgb(var(--color-fill));
+    backdrop-filter: blur(8px);
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    color: rgb(var(--color-text-base));
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+</style>
+
+<script>
+  function setupSidebar() {
+    const toggle = document.getElementById("sidebar-mobile-toggle");
+    const sidebar = document.getElementById("template-sidebar");
+    const overlay = document.getElementById("sidebar-overlay");
+
+    if (!toggle || !sidebar || !overlay) return;
+
+    toggle.addEventListener("click", () => {
+      sidebar.classList.toggle("sidebar-open");
+      overlay.classList.toggle("active");
+    });
+
+    overlay.addEventListener("click", () => {
+      sidebar.classList.remove("sidebar-open");
+      overlay.classList.remove("active");
+    });
+  }
+
+  setupSidebar();
+  document.addEventListener("astro:after-swap", setupSidebar);
+</script>

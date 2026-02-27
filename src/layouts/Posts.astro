@@ -22,7 +22,7 @@ const canonicalURL = currentPage === 1
   : new URL(`/posts/${currentPage}/`, Astro.site).href;
 ---
 
-<Layout title={`Posts | ${SITE.title}`} canonicalURL={canonicalURL}>
+<Layout title={`Posts | ${SITE.title}`} canonicalURL={canonicalURL} activeNav="posts">
   <Header activeNav="posts" />
   <Main pageTitle="Posts" pageDesc="All the articles I've posted.">
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">

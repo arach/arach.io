@@ -12,31 +12,32 @@ const { noMarginTop = false } = Astro.props;
 ---
 
 <footer class={`professional-footer ${noMarginTop ? "" : "mt-auto"}`}>
-  <div class="footer-container">
+  <!-- Default / Docs footer -->
+  <div class="footer-container footer-default">
     <div class="footer-content">
       <div class="footer-section brand-section">
         <div class="brand">
           <h3 class="brand-name">ARACH.IO</h3>
         </div>
       </div>
-      
+
       <div class="footer-section links-section">
         <h4 class="section-title">Connect</h4>
         <div class="connect-inline">
           <Socials centered={false} />
         </div>
       </div>
-      
+
       <div class="footer-section nav-section">
         <h4 class="section-title">Navigate</h4>
         <nav class="footer-nav">
-          <a href="/posts/" class="footer-link">Blog</a>
+          <a href="/posts/" class="footer-link">Ideas</a>
           <a href="/books/" class="footer-link">Books</a>
           <a href="/about/" class="footer-link">About</a>
           <a href="/resume/" class="footer-link">Resume</a>
         </nav>
       </div>
-      
+
       <div class="footer-section legal-section">
         <h4 class="section-title">Misc</h4>
         <nav class="footer-nav">
@@ -44,6 +45,32 @@ const { noMarginTop = false } = Astro.props;
           <a href="/privacy/" class="footer-link">Privacy</a>
         </nav>
       </div>
+    </div>
+  </div>
+
+  <!-- Terminal footer — neo-industrial -->
+  <div class="footer-container footer-terminal">
+    <div class="terminal-footer-inner">
+      <span class="terminal-footer-label">ARACH.IO</span>
+      <span class="terminal-footer-sep"></span>
+      <span class="terminal-footer-links">
+        <a href="/posts/">IDEAS</a>
+        <a href="/til/">TIL</a>
+        <a href="/books/">BOOKS</a>
+        <a href="/about/">ABOUT</a>
+      </span>
+      <span class="terminal-footer-meta">&copy; {currentYear} &mdash; 37.7749&deg;N 122.4194&deg;W</span>
+    </div>
+  </div>
+
+  <!-- Industrial footer -->
+  <div class="footer-container footer-industrial">
+    <div class="industrial-footer-inner">
+      <span class="industrial-status">SYSTEM: NOMINAL</span>
+      <span class="industrial-sep">&bull;</span>
+      <span class="industrial-status">NETWORK: ONLINE</span>
+      <span class="industrial-sep">&bull;</span>
+      <span class="industrial-status">&copy; {currentYear} ARACH.IO</span>
     </div>
   </div>
 </footer>
@@ -155,18 +182,107 @@ const { noMarginTop = false } = Astro.props;
     .footer-content {
       @apply text-center;
     }
-    
+
     .brand-section,
     .section-title {
       @apply text-center;
     }
-    
+
     .footer-nav {
       @apply items-center;
     }
-    
+
     .connect-inline :global(.social-icons) {
       @apply flex-row items-center justify-center gap-3;
     }
+  }
+
+  /* === Template-specific footer visibility === */
+  .footer-terminal,
+  .footer-industrial {
+    display: none;
+  }
+
+  :global([data-template="terminal"]) .footer-default {
+    display: none;
+  }
+  :global([data-template="terminal"]) .footer-terminal {
+    display: block;
+    padding: 1.5rem 1rem;
+  }
+
+  :global([data-template="industrial"]) .footer-default {
+    display: none;
+  }
+  :global([data-template="industrial"]) .footer-industrial {
+    display: block;
+    padding: 1.25rem 1rem;
+  }
+
+  /* Terminal footer — neo-industrial */
+  .terminal-footer-inner {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: "IBM Plex Mono", "Fira Code", monospace;
+    font-size: 0.625rem;
+    letter-spacing: 0.08em;
+  }
+
+  .terminal-footer-label {
+    font-family: "Space Grotesk", "Inter", sans-serif;
+    font-weight: 500;
+    font-size: 0.6875rem;
+    letter-spacing: 0.04em;
+    opacity: 0.5;
+  }
+
+  .terminal-footer-sep {
+    width: 1px;
+    height: 0.75rem;
+    opacity: 0.15;
+    background: currentColor;
+  }
+
+  .terminal-footer-links {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .terminal-footer-links a {
+    opacity: 0.35;
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.15s;
+    font-size: 0.5625rem;
+    letter-spacing: 0.12em;
+  }
+
+  .terminal-footer-links a:hover {
+    opacity: 0.7;
+  }
+
+  .terminal-footer-meta {
+    margin-left: auto;
+    opacity: 0.2;
+    font-size: 0.5625rem;
+    letter-spacing: 0.06em;
+  }
+
+  /* Industrial footer */
+  .industrial-footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    font-family: "JetBrains Mono", "Fira Code", monospace;
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    opacity: 0.4;
+  }
+
+  .industrial-sep {
+    opacity: 0.3;
   }
 </style>

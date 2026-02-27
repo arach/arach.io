@@ -8,6 +8,7 @@ import type { CollectionEntry } from "astro:content";
 import { slugifyStr } from "@utils/slugify";
 import DownloadLink from "@components/DownloadLink.astro";
 import SeriesNavigationMinimal from "@components/SeriesNavigationMinimal";
+import TableOfContents from "@components/TableOfContents.astro";
 import { Icon } from 'astro-icon/components';
 import { SITE } from "@config";
 import { getCollection } from "astro:content";
@@ -92,7 +93,7 @@ if (thumbnailCrop) {
   if (thumbnailCrop.height) thumbnailStyle.height = thumbnailCrop.height;
 }
 
-const { Content } = await post.render();
+const { Content, headings } = await post.render();
 
 // Always use the generated OG image endpoint which includes the thumbnail if available
 const ogUrl = new URL(
@@ -212,10 +213,15 @@ const layoutProps = {
       </div>
     </div>
     
-    <div class="article-shell relative z-50">
-      <article id="article" role="article" class="prose prose-lg mx-auto w-full article-surface relative z-60">
-        <Content />
-      </article>
+    <div class="article-with-toc">
+      <div class="article-shell relative z-50">
+        <article id="article" role="article" class="prose prose-lg mx-auto w-full article-surface relative z-60">
+          <Content />
+        </article>
+      </div>
+      <aside class="toc-aside">
+        <TableOfContents headings={headings} />
+      </aside>
     </div>
 
     <div class="max-w-[700px] mx-auto">
@@ -461,6 +467,30 @@ const layoutProps = {
     /* First paragraph after title should have minimal top margin */
     html .prose > p:first-child {
       margin-top: 0 !important;
+    }
+  }
+
+  /* TOC grid layout */
+  .article-with-toc {
+    display: grid;
+    grid-template-columns: 1fr;
+    max-width: 100%;
+  }
+
+  @media (min-width: 1280px) {
+    .article-with-toc {
+      grid-template-columns: 1fr 200px;
+      gap: 2rem;
+    }
+  }
+
+  .toc-aside {
+    display: none;
+  }
+
+  @media (min-width: 1280px) {
+    .toc-aside {
+      display: block;
     }
   }
 

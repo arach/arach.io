@@ -9,7 +9,7 @@ export interface Props {
 const { activeNav } = Astro.props;
 
 const navItems = [
-  { href: "/posts/", label: "Blog" },
+  { href: "/posts/", label: "Ideas" },
   { href: "/til/", label: "TIL" },
   // { href: "/memos/", label: "Memos" }, // Hidden until we have 3+ memos
   { href: "/books/", label: "Books" },
@@ -27,6 +27,7 @@ const navItems = [
           <>
             <img src="/assets/arach.io-logo-photo.png" alt={SITE.title} class="logo-light" />
             <img src="/assets/arach.io-logo-photo-white.png" alt={SITE.title} class="logo-dark" />
+            <span class="logo-text-terminal"><span class="pl-user">arach@arach.io</span><span class="pl-sep1"></span><span class="pl-path">~</span><span class="pl-sep2"></span></span>
           </>
         ) : (
           <span class="logo-text">{SITE.title}</span>
@@ -46,7 +47,7 @@ const navItems = [
           <li>
             <a href={href} class={
               (activeNav === label.toLowerCase()) || 
-              (activeNav === "posts" && label === "Blog") 
+              (activeNav === "posts" && label === "Ideas")
                 ? "nav-link active" : "nav-link"
             }>
               {label}
@@ -158,6 +159,27 @@ const navItems = [
     font-weight: 600;
     color: rgb(var(--color-text-base));
     letter-spacing: -0.025em;
+  }
+
+  /* Terminal template: powerline-style prompt (visual styles in template-terminal.css) */
+  .logo-text-terminal {
+    display: none;
+    font-family: "Berkeley Mono", "Fira Code", monospace;
+    font-size: 0.8125rem;
+    font-weight: 400;
+    color: rgb(var(--color-text-base));
+    line-height: 1;
+  }
+
+  :global([data-template="terminal"]) .logo-text-terminal {
+    display: flex;
+    align-items: stretch;
+    height: 100%;
+  }
+
+  :global([data-template="terminal"]) .logo-light,
+  :global([data-template="terminal"]) .logo-dark {
+    display: none !important;
   }
 
   /* Navigation */
@@ -377,13 +399,13 @@ const navItems = [
       const currentTheme = htmlElement.getAttribute("data-theme");
       const newTheme = currentTheme === "light" ? "dark" : "light";
       const isDark = newTheme === "dark";
-      
+
       htmlElement.setAttribute("data-theme", newTheme);
       localStorage.setItem("theme", newTheme);
-      
-      // Dispatch custom event for ThemePickerCool to sync
-      window.dispatchEvent(new CustomEvent('theme-change', { 
-        detail: { isDark: isDark } 
+
+      // Dispatch custom event for TemplateSwitcher to sync
+      window.dispatchEvent(new CustomEvent('theme-change', {
+        detail: { isDark: isDark }
       }));
     });
     

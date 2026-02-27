@@ -44,7 +44,6 @@ function reflectPreference() {
       .querySelector("meta[name='theme-color']")
       ?.setAttribute("content", bgColor);
   }
-  // Logo switching is now handled by CSS classes
 }
 
 // set early so no page flashes / CSS is made aware
@@ -58,11 +57,10 @@ window.onload = () => {
   setTimeout(() => {
     document.documentElement.classList.remove("no-transition");
   }, 100);
-  
+
   function setThemeFeature() {
     // set on load so screen readers can get the latest value on the button
     reflectPreference();
-    // Theme button click is now handled in Header.astro to dispatch custom events
   }
 
   setThemeFeature();
@@ -77,9 +75,8 @@ window
   .addEventListener("change", ({ matches: isDark }) => {
     themeValue = isDark ? "dark" : "light";
     setPreference();
-    
-    // Dispatch custom event for ThemePickerCool to sync
-    window.dispatchEvent(new CustomEvent('theme-change', { 
-      detail: { isDark: isDark } 
+
+    window.dispatchEvent(new CustomEvent('theme-change', {
+      detail: { isDark: isDark }
     }));
   });

@@ -1,0 +1,73 @@
+---
+export interface Props {
+  headings: { depth: number; slug: string; text: string }[];
+}
+
+const { headings } = Astro.props;
+
+// Filter to h2 and h3 only
+const tocHeadings = headings.filter(h => h.depth === 2 || h.depth === 3);
+---
+
+{tocHeadings.length > 0 && (
+  <nav class="toc-nav" aria-label="Table of contents">
+    <div class="toc-title">On this page</div>
+    <ul class="toc-list">
+      {tocHeadings.map(heading => (
+        <li class={`toc-item toc-item-h${heading.depth}`}>
+          <a href={`#${heading.slug}`} class="toc-link" data-heading-slug={heading.slug}>
+            {heading.text}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+)}
+
+<script is:inline>
+function setupToc() {
+  const links = document.querySelectorAll('.toc-link');
+  if (!links.length) return;
+
+  const headingSlugs = Array.from(links).map(l => l.getAttribute('data-heading-slug'));
+  const headingElements = headingSlugs
+    .map(slug => document.getElementById(slug))
+    .filter(Boolean);
+
+  if (!headingElements.length) return;
+
+  let currentActive = null;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      // Find the topmost visible heading
+      const visible = entries.filter(e => e.isIntersecting);
+      if (visible.length > 0) {
+        // Pick the one closest to the top
+        const topEntry = visible.reduce((a, b) =>
+          a.boundingClientRect.top < b.boundingClientRect.top ? a : b
+        );
+        setActive(topEntry.target.id);
+      }
+    },
+    { rootMargin: '-80px 0px -66% 0px' }
+  );
+
+  headingElements.forEach(el => observer.observe(el));
+
+  function setActive(slug) {
+    if (currentActive === slug) return;
+    currentActive = slug;
+    links.forEach(link => {
+      if (link.getAttribute('data-heading-slug') === slug) {
+        link.classList.add('toc-active');
+      } else {
+        link.classList.remove('toc-active');
+      }
+    });
+  }
+}
+
+setupToc();
+document.addEventListener('astro:after-swap', setupToc);
+</script>
