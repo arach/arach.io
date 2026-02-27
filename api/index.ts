@@ -14,7 +14,12 @@ const app = new Hono<AgentContext>().basePath("/api/v1");
 
 app.use("*", cors());
 
-// Ensure tables exist on cold start
+// Health check — no auth, no DB
+app.get("/ping", (c) => {
+  return c.json({ ok: true, timestamp: new Date().toISOString() });
+});
+
+// Lazy DB init for all other routes
 let dbInitialized = false;
 app.use("*", async (_c, next) => {
   if (!dbInitialized) {
@@ -22,11 +27,6 @@ app.use("*", async (_c, next) => {
     dbInitialized = true;
   }
   await next();
-});
-
-// Health check — no auth
-app.get("/ping", (c) => {
-  return c.json({ ok: true, timestamp: new Date().toISOString() });
 });
 
 // Send a message — token auth
