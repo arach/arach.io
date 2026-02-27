@@ -1,8 +1,8 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { handle } from "hono/vercel";
-import { getDb, initDb } from "./db";
-import { tokenAuth, adminAuth, hashToken } from "./auth";
+import { getDb, initDb } from "./_db.js";
+import { tokenAuth, adminAuth, hashToken } from "./_auth.js";
 
 type AgentContext = {
   Variables: {

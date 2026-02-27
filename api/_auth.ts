@@ -1,5 +1,5 @@
 import { createMiddleware } from "hono/factory";
-import { getDb } from "./db";
+import { getDb } from "./_db.js";
 
 type AgentContext = {
   agent: { id: string; name: string };
