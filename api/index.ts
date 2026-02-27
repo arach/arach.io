@@ -58,8 +58,8 @@ app.post("/message", tokenAuth, async (c) => {
   return c.json({ id, agent_name: agent.name, created_at: new Date().toISOString() }, 201);
 });
 
-// List messages — token auth
-app.get("/messages", tokenAuth, async (c) => {
+// List messages — admin auth
+app.get("/messages", adminAuth, async (c) => {
   const limit = Math.min(Number(c.req.query("limit")) || 50, 100);
   const offset = Number(c.req.query("offset")) || 0;
   const db = getDb();
