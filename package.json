@@ -8,7 +8,8 @@
     "build": "bun run generate:pdf && astro build && jampack ./dist",
     "preview": "astro preview",
     "format": "prettier --write . --plugin=prettier-plugin-astro",
-    "format:check": "prettier --check . --plugin=prettier-plugin-astro"
+    "format:check": "prettier --check . --plugin=prettier-plugin-astro",
+    "arach": "bun cli/arach.ts"
   },
   "dependencies": {
     "@astro-community/astro-embed-twitter": "^0.5.11",

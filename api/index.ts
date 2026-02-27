@@ -112,6 +112,23 @@ app.post("/tokens", adminAuth, async (c) => {
   );
 });
 
+// List tokens — admin auth (metadata only, no hashes)
+app.get("/tokens", adminAuth, async (c) => {
+  const db = getDb();
+  const result = await db.execute(
+    `SELECT id, agent_name, created_at, revoked_at FROM tokens ORDER BY created_at DESC`
+  );
+
+  const tokens = result.rows.map((row) => ({
+    id: row.id,
+    agent_name: row.agent_name,
+    created_at: row.created_at,
+    revoked_at: row.revoked_at,
+  }));
+
+  return c.json({ tokens });
+});
+
 // Revoke a token — admin auth
 app.delete("/tokens/:id", adminAuth, async (c) => {
   const tokenId = c.req.param("id");
