@@ -2,6 +2,9 @@
   "buildCommand": "bun run build",
   "installCommand": "bun install",
   "framework": null,
+  "rewrites": [
+    { "source": "/api/v1/:path*", "destination": "/api/index" }
+  ],
   "redirects": [
     {
       "source": "/about-tactical",

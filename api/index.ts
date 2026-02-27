@@ -1,0 +1,132 @@
+import { Hono } from "hono";
+import { cors } from "hono/cors";
+import { handle } from "hono/vercel";
+import { getDb, initDb } from "./db";
+import { tokenAuth, adminAuth, hashToken } from "./auth";
+
+type AgentContext = {
+  Variables: {
+    agent: { id: string; name: string };
+  };
+};
+
+const app = new Hono<AgentContext>().basePath("/api/v1");
+
+app.use("*", cors());
+
+// Ensure tables exist on cold start
+let dbInitialized = false;
+app.use("*", async (_c, next) => {
+  if (!dbInitialized) {
+    await initDb();
+    dbInitialized = true;
+  }
+  await next();
+});
+
+// Health check — no auth
+app.get("/ping", (c) => {
+  return c.json({ ok: true, timestamp: new Date().toISOString() });
+});
+
+// Send a message — token auth
+app.post("/message", tokenAuth, async (c) => {
+  const agent = c.get("agent");
+  const body = await c.req.json<{
+    body: string;
+    metadata?: Record<string, unknown>;
+  }>();
+
+  if (!body.body || typeof body.body !== "string") {
+    return c.json({ error: "body is required and must be a string" }, 400);
+  }
+
+  const id = crypto.randomUUID();
+  const db = getDb();
+
+  await db.execute({
+    sql: `INSERT INTO messages (id, token_id, agent_name, body, metadata) VALUES (?, ?, ?, ?, ?)`,
+    args: [
+      id,
+      agent.id,
+      agent.name,
+      body.body,
+      body.metadata ? JSON.stringify(body.metadata) : null,
+    ],
+  });
+
+  return c.json({ id, agent_name: agent.name, created_at: new Date().toISOString() }, 201);
+});
+
+// List messages — token auth
+app.get("/messages", tokenAuth, async (c) => {
+  const limit = Math.min(Number(c.req.query("limit")) || 50, 100);
+  const offset = Number(c.req.query("offset")) || 0;
+  const db = getDb();
+
+  const result = await db.execute({
+    sql: `SELECT id, token_id, agent_name, body, metadata, created_at
+          FROM messages ORDER BY created_at DESC LIMIT ? OFFSET ?`,
+    args: [limit, offset],
+  });
+
+  const messages = result.rows.map((row) => ({
+    id: row.id,
+    token_id: row.token_id,
+    agent_name: row.agent_name,
+    body: row.body,
+    metadata: row.metadata ? JSON.parse(row.metadata as string) : null,
+    created_at: row.created_at,
+  }));
+
+  return c.json({ messages, limit, offset });
+});
+
+// Generate a new agent token — admin auth
+app.post("/tokens", adminAuth, async (c) => {
+  const { agent_name } = await c.req.json<{ agent_name: string }>();
+
+  if (!agent_name || typeof agent_name !== "string") {
+    return c.json({ error: "agent_name is required" }, 400);
+  }
+
+  const id = crypto.randomUUID();
+  const rawToken = crypto.randomUUID();
+  const hash = await hashToken(rawToken);
+  const db = getDb();
+
+  await db.execute({
+    sql: `INSERT INTO tokens (id, agent_name, token_hash) VALUES (?, ?, ?)`,
+    args: [id, agent_name, hash],
+  });
+
+  // Return the raw token only once — it cannot be retrieved again
+  return c.json(
+    {
+      id,
+      agent_name,
+      token: rawToken,
+      created_at: new Date().toISOString(),
+    },
+    201
+  );
+});
+
+// Revoke a token — admin auth
+app.delete("/tokens/:id", adminAuth, async (c) => {
+  const tokenId = c.req.param("id");
+  const db = getDb();
+
+  const result = await db.execute({
+    sql: `UPDATE tokens SET revoked_at = datetime('now') WHERE id = ? AND revoked_at IS NULL`,
+    args: [tokenId],
+  });
+
+  if (result.rowsAffected === 0) {
+    return c.json({ error: "Token not found or already revoked" }, 404);
+  }
+
+  return c.json({ id: tokenId, revoked: true });
+});
+
+export default handle(app);
