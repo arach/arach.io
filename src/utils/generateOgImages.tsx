@@ -118,3 +118,4 @@ export async function generateOgImageForTIL(til: CollectionEntry<"til">) {
   const svg = await satori(tilOgImage(til), options);
   return svgBufferToPngBuffer(svg);
 }
+

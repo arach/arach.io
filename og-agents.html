@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1200px;
+    height: 630px;
+    background: #0E0E0D;
+    font-family: 'JetBrains Mono', monospace;
+    color: #ECCF7C;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .dim { color: #917A44; }
+  .key { color: #CDAD60; font-weight: 500; }
+  .bright { color: #F8EABC; }
+  .muted { color: #917A44; }
+
+  /* Top title bar — window chrome */
+  .title-bar {
+    display: flex;
+    align-items: center;
+    height: 32px;
+    padding: 0 20px;
+    margin: 10px 10px 0 10px;
+    background: rgba(248, 234, 188, 0.06);
+    border: 1px solid #302A1E;
+    font-size: 10px;
+    flex-shrink: 0;
+    gap: 8px;
+  }
+
+  .title-bar .dots {
+    display: flex;
+    gap: 6px;
+    margin-right: 8px;
+  }
+
+  .title-bar .dots span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #917A44;
+    opacity: 0.5;
+  }
+
+  .title-bar .path {
+    color: #CDAD60;
+    font-weight: 500;
+    opacity: 0.7;
+  }
+
+  .title-bar .spacer { flex: 1; }
+
+  .title-bar .meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #917A44;
+  }
+
+  .title-bar .meta .sep { opacity: 0.4; }
+
+  .title-bar .meta .val {
+    font-weight: 600;
+    color: #CDAD60;
+  }
+
+
+  /* Main content area */
+  .main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid #302A1E;
+    border-top: none;
+    margin: 0 10px 0 10px;
+  }
+
+  /* Top section: two columns */
+  .top-row {
+    display: flex;
+    flex: 1;
+  }
+
+  .col-left {
+    flex: 5.5;
+    padding: 20px 24px 12px 20px;
+    overflow: hidden;
+  }
+
+  .col-right {
+    flex: 4.5;
+    padding: 20px 20px 12px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-left: 1px solid #302A1E;
+  }
+
+  /* Bottom section: paired rows */
+  .bottom-rows {
+    border-top: 1px solid #302A1E;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .paired-row {
+    display: flex;
+  }
+
+  .paired-row + .paired-row {
+    border-top: 1px solid #302A1E;
+  }
+
+  .paired-row .cell-left {
+    flex: 5.5;
+    padding: 10px 24px 10px 20px;
+  }
+
+  .paired-row .cell-right {
+    flex: 4.5;
+    padding: 10px 20px 10px 16px;
+    border-left: 1px solid #302A1E;
+  }
+
+  .paired-row .cell-left .prompt {
+    margin-left: -20px;
+    margin-right: -20px;
+    padding: 4px 20px;
+    margin-top: 0;
+  }
+
+  .paired-row .cell-right .prompt {
+    margin-left: -16px;
+    margin-right: -20px;
+    padding: 4px 20px 4px 16px;
+    margin-top: 0;
+  }
+
+  /* Prompts — left accent bar only */
+  .prompt {
+    font-size: 13px;
+    margin-bottom: 10px;
+    margin-top: 16px;
+    padding: 4px 20px;
+    margin-left: -20px;
+    margin-right: -20px;
+    border-left: 2.5px solid rgba(248, 234, 188, 0.45);
+  }
+
+  /* First prompt in each column doesn't need top margin */
+  .col-left > .prompt:first-child,
+  .col-right > .prompt:first-child {
+    margin-top: 0;
+  }
+
+  .col-right .prompt {
+    margin-left: -16px;
+    margin-right: -20px;
+    padding-left: 16px;
+    align-self: stretch;
+  }
+
+  /* Name — with scanline effect */
+  .name {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+    color: #F8EABC;
+    position: relative;
+  }
+
+  .name .scanlines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 2px,
+      rgba(0, 0, 0, 0.15) 2px,
+      rgba(0, 0, 0, 0.15) 4px
+    );
+  }
+
+  /* Bio */
+  .bio {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    margin-bottom: 12px;
+  }
+
+  .bio .line {
+    font-size: 11.5px;
+    color: #CDAD60;
+  }
+
+  /* Career */
+  .career {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: 10px;
+  }
+
+  .career .line {
+    font-size: 10.5px;
+    color: #CDAD60;
+    padding-left: 6px;
+  }
+
+  /* Stats */
+  .stats {
+    display: flex;
+    border: 1.5px solid rgba(248, 234, 188, 0.35);
+    margin-bottom: 0;
+    margin-left: 6px;
+    width: fit-content;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px 18px;
+    border-right: 1.5px solid rgba(248, 234, 188, 0.35);
+  }
+
+  .stat:last-child { border-right: none; }
+
+  .stat .k {
+    font-size: 8px;
+    color: #917A44;
+    letter-spacing: 0.05em;
+  }
+
+  .stat .v {
+    font-size: 14px;
+    font-weight: 700;
+    color: #F8EABC;
+  }
+
+  /* Separator */
+  .sep {
+    font-size: 11px;
+    color: #917A44;
+    margin-bottom: 6px;
+  }
+
+  /* API endpoints */
+  .endpoints {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin-bottom: 14px;
+  }
+
+  .endpoint {
+    font-size: 10.5px;
+    display: flex;
+    padding-left: 6px;
+  }
+
+  .endpoint .method {
+    font-weight: 600;
+    color: #ECCF7C;
+    width: 55px;
+    flex-shrink: 0;
+  }
+
+  .endpoint .path {
+    color: #CDAD60;
+  }
+
+  /* Projects */
+  .projects {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin-bottom: 14px;
+  }
+
+  .project {
+    font-size: 10.5px;
+    display: flex;
+  }
+
+  .project .num {
+    font-weight: 700;
+    color: #ECCF7C;
+    opacity: 0.9;
+    width: 22px;
+    flex-shrink: 0;
+  }
+
+  .project .proj-name {
+    font-weight: 600;
+    color: #F8EABC;
+    width: 72px;
+    flex-shrink: 0;
+  }
+
+  /* Sites */
+  .sites-list {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .site-entry {
+    font-size: 10.5px;
+    display: flex;
+  }
+
+  .site-entry .num {
+    font-weight: 700;
+    color: #ECCF7C;
+    opacity: 0.9;
+    width: 22px;
+    flex-shrink: 0;
+  }
+
+  .site-entry .site-name {
+    font-weight: 600;
+    color: #F8EABC;
+    width: 80px;
+    flex-shrink: 0;
+  }
+
+  /* Accounts */
+  .accounts-heading {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: #F8EABC;
+    margin-bottom: 4px;
+  }
+
+  .accounts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .account {
+    font-size: 10.5px;
+    display: flex;
+  }
+
+  .account .num {
+    font-weight: 700;
+    color: #ECCF7C;
+    opacity: 0.9;
+    width: 22px;
+    flex-shrink: 0;
+  }
+
+  .account .acct-name {
+    font-weight: 500;
+    color: #CDAD60;
+    width: 100px;
+    flex-shrink: 0;
+    opacity: 0.65;
+  }
+
+  .account .acct-handle {
+    color: #ECCF7C;
+    opacity: 0.7;
+  }
+
+  /* Cat entries */
+  .cat-entries {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .cat-entry {
+    font-size: 10.5px;
+    display: flex;
+  }
+
+  .cat-entry .num {
+    font-weight: 700;
+    color: #ECCF7C;
+    opacity: 0.9;
+    width: 22px;
+    flex-shrink: 0;
+  }
+
+  .cat-entry .cat-file {
+    font-weight: 600;
+    color: #F8EABC;
+    width: 90px;
+    flex-shrink: 0;
+  }
+
+  /* Portrait */
+  .portrait-heading {
+    width: 100%;
+  }
+
+  .portrait {
+    font-size: 8.5px;
+    line-height: 1.45;
+    color: #ECCF7C;
+    opacity: 0.7;
+    white-space: pre;
+    text-align: center;
+    letter-spacing: 0;
+  }
+
+  .right-footer {
+    margin-top: 6px;
+    text-align: center;
+  }
+
+  .right-footer .url {
+    font-size: 11px;
+    color: #ECCF7C;
+    opacity: 0.6;
+  }
+
+  /* Bottom status bar */
+  .status-bar {
+    display: flex;
+    align-items: center;
+    height: 36px;
+    padding: 0 20px;
+    margin: 0 10px 10px 10px;
+    background: rgba(248, 234, 188, 0.04);
+    border: 1px solid #302A1E;
+    border-top: none;
+    font-size: 10.5px;
+    flex-shrink: 0;
+    gap: 24px;
+  }
+
+  .status-bar .shortcut {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .status-bar .shortcut .badge {
+    font-weight: 700;
+    color: #F8EABC;
+    opacity: 0.85;
+  }
+
+  .status-bar .shortcut .label {
+    color: #917A44;
+  }
+
+  .status-bar .spacer {
+    flex: 1;
+  }
+
+  .status-bar .status-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 10px;
+    color: #917A44;
+  }
+
+  .status-bar .dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #6B8F5E;
+    margin-right: 5px;
+  }
+</style>
+</head>
+<body>
+  <!-- Top title bar -->
+  <div class="title-bar">
+    <div class="dots"><span></span><span></span><span></span></div>
+    <span class="path">~/dev/arach.io/agents</span>
+    <div class="spacer"></div>
+    <div class="meta">
+      <span>Time <span class="val">15y</span></span>
+      <span class="sep">·</span>
+      <span>Ships <span class="val">4</span></span>
+      <span class="sep">·</span>
+      <span>Stack <span class="val">TS · Swift · Astro</span></span>
+      <span class="sep">·</span>
+      <span>v<span class="val">4.2.0</span></span>
+    </div>
+  </div>
+
+  <div class="main">
+    <!-- Top: two columns (info + portrait) -->
+    <div class="top-row">
+      <div class="col-left">
+        <div class="prompt">
+          <span class="dim">❯</span> <span class="bright">arach info</span> <span class="dim">--agents-view</span>
+        </div>
+
+        <div class="name">ARACH TCHOUPANI<div class="scanlines"></div></div>
+
+        <div class="bio">
+          <div class="line">Engineer, founder, builder. San Francisco / Montreal.</div>
+          <div class="line">15 years shipping product across 4 ventures. Building</div>
+          <div class="line">voice-first tools and AI-powered leverage.</div>
+        </div>
+
+        <div class="career">
+          <div class="line">&nbsp;· Co-founded Breathe Life — InsurTech, acquired by Zinnia (2022)</div>
+          <div class="line">&nbsp;· SWE Manager at Meta — Bulletin &amp; Facebook Creators</div>
+          <div class="line">&nbsp;· CTO at Primary, Lot18 and PhotoShelter — fast-growing NY startups</div>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><span class="k">years</span><span class="v">15+</span></div>
+          <div class="stat"><span class="k">ventures</span><span class="v">4</span></div>
+          <div class="stat"><span class="k">exit</span><span class="v">1</span></div>
+          <div class="stat"><span class="k">raised</span><span class="v">$100M+</span></div>
+          <div class="stat"><span class="k">hired</span><span class="v">100+</span></div>
+        </div>
+
+        <div class="prompt" style="margin-bottom: 6px;">
+          <span class="dim">❯</span> <span class="bright">arach sites</span>
+        </div>
+        <div class="sites-list">
+          <div class="site-entry"><span class="num">1/</span><span class="site-name">arach.io</span><span class="dim">Blog, resume, writing</span></div>
+          <div class="site-entry"><span class="num">2/</span><span class="site-name">arach.dev</span><span class="dim">Portfolio, specs, all projects</span></div>
+        </div>
+      </div>
+
+      <div class="col-right">
+        <div class="prompt portrait-heading">
+          <span class="dim">❯</span> <span class="bright">arach info</span> <span class="dim">--agents-view --portrait</span>
+        </div>
+
+        <div class="portrait">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠤⠄⠒⠒⠛⠛⠉⠛⠛⠓⠲⠶⣦⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⡶⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠋⠹⣶⣤⡀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⣠⣾⣿⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢿⣿⣷⣄⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⣠⣾⣿⣿⡿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⣿⣿⣷⡄⠀⠀⠀⠀
+⠀⠀⠀⣴⣿⣿⣿⠟⠁⠀⠀⠀⠀⣀⣤⣤⣶⣶⣿⣿⣿⣷⣾⣶⣤⣤⣀⠀⠀⠀⠀⠈⢻⣿⣿⣿⣦⠀⠀⠀
+⠀⠀⣼⣿⣿⣿⡏⠀⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡄⠀⠀⠀⠀⢿⣿⣿⣿⣧⠀⠀
+⠀⣼⣿⣿⣿⣿⠀⠀⠀⠀⢼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⢸⣿⣿⣿⣿⣧⠀
+⢰⣿⣿⣿⣿⣿⠀⠀⠀⠰⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀⠀⠀⠀⢸⣿⣿⣿⣿⣿⡆
+⣼⣿⣿⣿⣿⣿⠀⠀⠀⢠⣿⡿⠿⠿⠿⠿⣿⣿⣿⣿⣿⣿⣿⠟⠟⠛⠛⠛⢿⣧⠀⠀⠀⣾⣿⣿⣿⣿⣿⣧
+⣿⣿⣿⣿⣿⣿⡆⠀⠀⡿⠉⢀⡤⣦⣤⡄⠀⢹⣿⣿⣿⣯⠀⠀⠶⠾⠟⢶⣄⠘⡇⠀⢠⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠃⠀⢸⣧⣶⡁⠀⣄⣀⣴⣤⣤⣿⣿⣿⣷⣥⣾⣤⣤⣂⣠⣿⣷⣷⠀⢘⣿⣿⣿⣿⣿⣿⣿
+⢹⣿⣿⣿⣿⣿⣇⡀⢸⣿⣿⣿⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⣿⣿⣿⣿⣿⣿⣿⡏
+⠸⣿⣿⣿⣿⣿⣿⣧⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢠⣿⣿⣿⣿⣿⣿⣿⠃
+⠀⢻⣿⣿⣿⣿⣿⣿⣆⢿⣿⣿⣿⣿⣿⣿⣿⣋⠻⣿⡿⠛⢻⣿⣿⣿⣿⣿⣿⣿⡧⣼⣿⣿⣿⣿⣿⣿⡟⠀
+⠀⠀⢻⣿⣿⣿⣿⣿⣿⢻⣿⣿⣿⣿⡿⢿⣿⣷⣤⣈⣤⣽⣿⣿⣿⣿⣿⣿⣿⣿⡇⣿⣿⣿⣿⣿⣿⡟⠀⠀
+⠀⠀⠀⠻⣿⣿⣿⣿⣿⣎⣿⣿⣿⣿⣶⣌⣉⣩⣭⣻⣭⣉⢉⣩⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠀⠀⠀
+⠀⠀⠀⠀⠙⢿⣿⣿⣿⣿⡎⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⢣⣿⣿⣿⣿⡿⠃⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠙⢿⣿⣿⢇⠈⠛⡟⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠏⢡⣿⣿⣿⠟⠋⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠳⣵⡀⠀⠘⠿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠋⠀⣤⣾⠿⠛⠁⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠀⠀⠀⠀⠀⠈⠉⠉⠁⠉⠀⠐⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</div>
+
+        <div class="right-footer">
+          <div class="url">arach.io/agents</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom: paired rows -->
+    <div class="bottom-rows">
+      <div class="paired-row">
+        <div class="cell-left">
+          <div class="prompt" style="margin-bottom: 6px;">
+            <span class="dim">❯</span> <span class="bright">arach projects</span> <span class="dim">--featured</span>
+          </div>
+          <div class="projects">
+            <div class="project"><span class="num">1/</span><span class="proj-name">Talkie</span><span class="dim">Voice-to-action. Push-to-talk, on-device Whisper.</span></div>
+            <div class="project"><span class="num">2/</span><span class="proj-name">Hudson</span><span class="dim">Chrome-style UI components for canvas apps.</span></div>
+          </div>
+        </div>
+        <div class="cell-right">
+          <div class="prompt" style="margin-bottom: 6px;">
+            <span class="dim">❯</span> <span class="bright">arach api</span> <span class="dim">--help</span>
+          </div>
+          <div class="endpoints">
+            <div class="endpoint"><span class="method">GET</span><span class="path">/ping</span></div>
+            <div class="endpoint"><span class="method">POST</span><span class="path">/message</span></div>
+            <div class="endpoint"><span class="method">GET</span><span class="path">/messages</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="paired-row">
+        <div class="cell-left">
+          <div class="prompt" style="margin-bottom: 6px;">
+            <span class="dim">❯</span> <span class="bright">arach accounts</span>
+          </div>
+          <div class="accounts-list">
+            <div class="account"><span class="num">1/</span><span class="bright">@arach</span><span class="dim" style="margin-left: 8px;">GH · X · IG</span></div>
+            <div class="account"><span class="num">2/</span><span class="bright">in/arach</span><span class="dim" style="margin-left: 8px;">LinkedIn</span></div>
+          </div>
+        </div>
+        <div class="cell-right">
+          <div class="prompt" style="margin-bottom: 6px;">
+            <span class="dim">❯</span> <span class="bright">arach data</span> <span class="dim">--formats</span>
+          </div>
+          <div class="cat-entries">
+            <div class="cat-entry"><span class="num">1/</span><span class="cat-file">arach.json</span><span class="dim">Structured — machine-readable</span></div>
+            <div class="cat-entry"><span class="num">2/</span><span class="cat-file">arach.md</span><span class="dim">Markdown — copy-pasteable</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom status bar -->
+  <div class="status-bar">
+    <div class="shortcut"><span class="badge">G</span><span class="label">GitHub</span></div>
+    <div class="shortcut"><span class="badge">X</span><span class="label">Twitter</span></div>
+    <div class="shortcut"><span class="badge">L</span><span class="label">LinkedIn</span></div>
+    <div class="shortcut"><span class="badge">E</span><span class="label">Email</span></div>
+    <div class="spacer"></div>
+    <div class="status-right">
+      <span><span class="dot"></span>online</span>
+      <span>SF / MTL</span>
+      <span>arach.io</span>
+    </div>
+  </div>
+</body>
+</html>
