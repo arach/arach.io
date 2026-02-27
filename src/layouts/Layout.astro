@@ -11,14 +11,7 @@ import "@fontsource/inter/700.css";
 import "@fontsource/inter/800.css";
 import "@fontsource/inter/900.css";
 import "@fontsource/inconsolata";
-import TemplateSwitcher from "@components/TemplateSwitcher";
-import AgentView from "@components/AgentView";
-import { getCollection } from "astro:content";
-
-const blogPosts = await getCollection("blog", ({ data }) => !data.draft);
-const agentPosts = blogPosts
-  .sort((a, b) => new Date(b.data.pubDatetime).getTime() - new Date(a.data.pubDatetime).getTime())
-  .map(p => ({ slug: p.slug, title: p.data.title }));
+import BottomToolbar from "@components/BottomToolbar";
 
 const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
 const googleAnalyticsId =
@@ -189,7 +182,6 @@ const socialImageURL = new URL(
         <slot />
       </div>
     </div>
-    <AgentView client:load posts={agentPosts} />
-    <TemplateSwitcher client:load />
+    <BottomToolbar client:load />
   </body>
 </html>

@@ -17,6 +17,7 @@ import Newsletter from "@components/Newsletter.astro";
 import getSortedPosts from "@utils/getSortedPosts";
 import { SOCIALS } from "@config";
 import socialIcons from "@assets/socialIcons";
+import { portrait } from "@data/portrait";
 
 const posts = await getCollection("blog");
 
@@ -95,6 +96,82 @@ const socialCount = SOCIALS.filter(social => social.active).length;
       </div>
     </section>
     
+    <section id="agent-home" class="agent-home">
+      <div class="ah-banner">
+        <h1 class="ah-banner-title">Agent View</h1>
+        <p class="ah-banner-desc">
+          You're looking at an agent-friendly view of arach.io.
+          Everything on the homepage is here — flattened for easy reading and parsing.
+        </p>
+        <div class="ah-banner-resources">
+          <a href="/agent.md"><strong>agent.md</strong> <span>— full site content as markdown</span></a>
+          <a href="/llms.txt"><strong>llms.txt</strong> <span>— structured site summary for LLMs</span></a>
+          <a href="/agents"><strong>/agents</strong> <span>— agent profile and API reference</span></a>
+          <a href="/agents/index.json"><strong>agents.json</strong> <span>— machine-readable data</span></a>
+          <a href="/rss.xml"><strong>rss.xml</strong> <span>— subscribe to updates</span></a>
+        </div>
+      </div>
+
+      <div class="ah-intro">
+        <div class="ah-profile">
+          <a href="/agents/author-portrait" class="ah-portrait-link">
+            <pre class="ah-portrait" set:html={portrait} />
+          </a>
+          <div>
+            <h2 class="ah-name">Arach Tchoupani</h2>
+            <p class="ah-bio">
+              Startup founder, engineering leader, and AI enthusiast.
+              Software engineer turning ideas into reality — from startups to Meta,
+              bridging the gap between technical execution and business vision.
+            </p>
+            <div class="ah-links">
+              <a href="https://arach.dev">arach.dev</a>
+              <a href="/about">About</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {featuredPosts.length > 0 && (
+        <div class="ah-section">
+          <h2 class="ah-heading">Featured</h2>
+          <ol class="ah-list">
+            {featuredPosts.map(({ data, slug }) => (
+              <li>
+                <a href={`/posts/${slug}/`} class="ah-post-link">
+                  <span class="ah-post-title">{data.title}</span>
+                  <span class="ah-post-date">{new Date(data.pubDatetime).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</span>
+                </a>
+                {data.description && <p class="ah-post-desc">{data.description}</p>}
+              </li>
+            ))}
+          </ol>
+        </div>
+      )}
+
+      <div class="ah-section">
+        <h2 class="ah-heading">Recent</h2>
+        <ol class="ah-list">
+          {recentPosts.slice(0, 6).map(({ data, slug }) => (
+            <li>
+              <a href={`/posts/${slug}/`} class="ah-post-link">
+                <span class="ah-post-title">{data.title}</span>
+                <span class="ah-post-date">{new Date(data.pubDatetime).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</span>
+              </a>
+              {data.description && <p class="ah-post-desc">{data.description}</p>}
+            </li>
+          ))}
+        </ol>
+        <a href="/posts/" class="ah-view-all">View all posts →</a>
+      </div>
+
+      <div class="ah-section ah-newsletter-note">
+        <h2 class="ah-heading">Newsletter</h2>
+        <p class="ah-bio">Subscribe for updates on engineering, startups, and AI.</p>
+        <a href="#newsletter" class="ah-view-all" onclick="document.querySelector('.newsletter-section')?.scrollIntoView({behavior:'smooth'}); return false;">Subscribe →</a>
+      </div>
+    </section>
+
     <section id="companies" class="companies-section">
       <CompanyLogos />
     </section>
@@ -335,6 +412,249 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     /* Hidden by default — Terminal template CSS reveals it */
     .hero-dithered-wrapper {
       display: none;
+    }
+
+    /* Agent home — hidden by default, shown in terminal template */
+    .agent-home {
+      display: none;
+    }
+
+    :global([data-template="terminal"]) .agent-home {
+      display: block;
+      padding: 2rem 0 0.5rem;
+    }
+
+    :global([data-template="terminal"]) .hero-section {
+      display: none !important;
+    }
+
+    /* Hide the regular card-based sections in agent mode — agent-home replaces them */
+    :global([data-template="terminal"]) #featured,
+    :global([data-template="terminal"]) #recent-posts,
+    :global([data-template="terminal"]) .all-posts-btn-wrapper,
+    :global([data-template="terminal"]) hr {
+      display: none !important;
+    }
+
+    .ah-banner {
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid rgb(var(--color-border));
+    }
+
+    .ah-banner-title {
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin: 0 0 0.375rem;
+    }
+
+    .ah-banner-desc {
+      font-size: 0.8125rem;
+      line-height: 1.6;
+      opacity: 0.55;
+      margin: 0 0 1rem;
+      max-width: 520px;
+    }
+
+    .ah-banner-resources {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .ah-banner-resources a {
+      font-size: 0.8125rem;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      align-items: baseline;
+      gap: 0.375rem;
+      padding: 0.25rem 0;
+    }
+
+    .ah-banner-resources a strong {
+      font-weight: 600;
+    }
+
+    .ah-banner-resources a span {
+      opacity: 0.4;
+      font-size: 0.75rem;
+    }
+
+    .ah-banner-resources a:hover {
+      text-decoration: underline;
+    }
+
+    .ah-banner-resources a:hover span {
+      opacity: 0.7;
+    }
+
+    .ah-intro {
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid rgb(var(--color-border));
+    }
+
+    .ah-profile {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.25rem;
+    }
+
+    .ah-portrait-link {
+      flex-shrink: 0;
+      text-decoration: none !important;
+      display: block;
+      line-height: 0;
+    }
+
+    .ah-portrait-link:hover .ah-portrait {
+      opacity: 0.7;
+    }
+
+    .ah-portrait {
+      font-size: 0.3rem;
+      line-height: 1.15;
+      margin: 0;
+      opacity: 0.45;
+      color: inherit;
+      transition: opacity 0.2s;
+      max-width: 120px;
+      overflow: hidden;
+    }
+
+    @media (max-width: 640px) {
+      .ah-portrait-link {
+        display: none;
+      }
+    }
+
+    .ah-name {
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin: 0 0 0.375rem;
+    }
+
+    .ah-bio {
+      font-size: 0.875rem;
+      line-height: 1.7;
+      opacity: 0.7;
+      margin: 0 0 0.75rem;
+      max-width: 600px;
+    }
+
+    .ah-links {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.8125rem;
+    }
+
+    .ah-links a {
+      opacity: 0.5;
+      text-decoration: none;
+    }
+
+    .ah-links a:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+
+    .ah-section {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid rgb(var(--color-border));
+    }
+
+    .ah-section:last-child {
+      border-bottom: none;
+    }
+
+    .ah-heading {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      opacity: 0.4;
+      margin: 0 0 0.75rem;
+    }
+
+    .ah-list {
+      list-style: none;
+      counter-reset: ah-counter;
+      padding: 0;
+      margin: 0;
+    }
+
+    .ah-list li {
+      counter-increment: ah-counter;
+      padding: 0.375rem 0 0.375rem 2rem;
+      position: relative;
+    }
+
+    .ah-list li::before {
+      content: counter(ah-counter);
+      position: absolute;
+      left: 0;
+      width: 1.5rem;
+      text-align: right;
+      font-size: 0.75rem;
+      font-weight: 600;
+      opacity: 0.3;
+    }
+
+    .ah-post-link {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .ah-post-link:hover .ah-post-title {
+      opacity: 1;
+      text-decoration: underline;
+    }
+
+    .ah-post-title {
+      font-size: 0.875rem;
+      font-weight: 500;
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .ah-post-date {
+      font-size: 0.75rem;
+      opacity: 0.4;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .ah-post-desc {
+      font-size: 0.75rem;
+      line-height: 1.5;
+      opacity: 0.45;
+      margin: 0.125rem 0 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .ah-view-all {
+      display: inline-block;
+      margin-top: 0.75rem;
+      font-size: 0.8125rem;
+      opacity: 0.5;
+      text-decoration: none;
+    }
+
+    .ah-view-all:hover {
+      opacity: 1;
+      text-decoration: underline;
     }
 
     .hero-image-wrapper {
