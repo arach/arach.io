@@ -146,6 +146,120 @@ app.delete("/tokens/:id", adminAuth, async (c) => {
   return c.json({ id: tokenId, revoked: true });
 });
 
+// Send a reply to an agent — admin auth
+app.post("/reply", adminAuth, async (c) => {
+  const { token_id, body, metadata, in_reply_to } = await c.req.json<{
+    token_id: string;
+    body: string;
+    metadata?: Record<string, unknown>;
+    in_reply_to?: string;
+  }>();
+
+  if (!token_id || typeof token_id !== "string") {
+    return c.json({ error: "token_id is required" }, 400);
+  }
+  if (!body || typeof body !== "string") {
+    return c.json({ error: "body is required and must be a string" }, 400);
+  }
+
+  const db = getDb();
+
+  // Look up agent_name from token
+  const tokenResult = await db.execute({
+    sql: `SELECT agent_name FROM tokens WHERE id = ? AND revoked_at IS NULL`,
+    args: [token_id],
+  });
+
+  if (tokenResult.rows.length === 0) {
+    return c.json({ error: "Token not found or revoked" }, 404);
+  }
+
+  const agent_name = tokenResult.rows[0].agent_name as string;
+  const id = crypto.randomUUID();
+
+  await db.execute({
+    sql: `INSERT INTO replies (id, token_id, agent_name, body, metadata, in_reply_to) VALUES (?, ?, ?, ?, ?, ?)`,
+    args: [
+      id,
+      token_id,
+      agent_name,
+      body,
+      metadata ? JSON.stringify(metadata) : null,
+      in_reply_to ?? null,
+    ],
+  });
+
+  return c.json(
+    { id, token_id, agent_name, body, in_reply_to: in_reply_to ?? null, created_at: new Date().toISOString() },
+    201
+  );
+});
+
+// List replies for a specific agent — admin auth
+app.get("/replies/:token_id", adminAuth, async (c) => {
+  const tokenId = c.req.param("token_id");
+  const limit = Math.min(Number(c.req.query("limit")) || 50, 100);
+  const offset = Number(c.req.query("offset")) || 0;
+  const db = getDb();
+
+  const result = await db.execute({
+    sql: `SELECT id, token_id, agent_name, body, metadata, in_reply_to, created_at
+          FROM replies WHERE token_id = ?
+          ORDER BY created_at DESC LIMIT ? OFFSET ?`,
+    args: [tokenId, limit, offset],
+  });
+
+  const replies = result.rows.map((row) => ({
+    id: row.id,
+    token_id: row.token_id,
+    agent_name: row.agent_name,
+    body: row.body,
+    metadata: row.metadata ? JSON.parse(row.metadata as string) : null,
+    in_reply_to: row.in_reply_to,
+    created_at: row.created_at,
+  }));
+
+  return c.json({ replies, limit, offset });
+});
+
+// Poll replies — token auth (agent reads their own replies)
+app.get("/replies", tokenAuth, async (c) => {
+  const agent = c.get("agent");
+  const limit = Math.min(Number(c.req.query("limit")) || 50, 100);
+  const offset = Number(c.req.query("offset")) || 0;
+  const after = c.req.query("after");
+  const db = getDb();
+
+  let sql: string;
+  const args: (string | number)[] = [agent.id];
+
+  if (after) {
+    sql = `SELECT id, token_id, agent_name, body, metadata, in_reply_to, created_at
+           FROM replies WHERE token_id = ? AND created_at > ?
+           ORDER BY created_at DESC LIMIT ? OFFSET ?`;
+    args.push(after, limit, offset);
+  } else {
+    sql = `SELECT id, token_id, agent_name, body, metadata, in_reply_to, created_at
+           FROM replies WHERE token_id = ?
+           ORDER BY created_at DESC LIMIT ? OFFSET ?`;
+    args.push(limit, offset);
+  }
+
+  const result = await db.execute({ sql, args });
+
+  const replies = result.rows.map((row) => ({
+    id: row.id,
+    token_id: row.token_id,
+    agent_name: row.agent_name,
+    body: row.body,
+    metadata: row.metadata ? JSON.parse(row.metadata as string) : null,
+    in_reply_to: row.in_reply_to,
+    created_at: row.created_at,
+  }));
+
+  return c.json({ replies, limit, offset });
+});
+
 // Convert Node.js req/res to fetch Request, pass to Hono, write back
 export default async function handler(req: IncomingMessage, res: ServerResponse) {
   const proto = req.headers["x-forwarded-proto"] || "https";

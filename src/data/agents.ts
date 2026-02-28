@@ -57,7 +57,9 @@ export const api = {
   endpoints: [
     { method: "GET", path: "/ping", auth: "none", desc: "Health check" },
     { method: "POST", path: "/message", auth: "agent", desc: "Send a message" },
-    { method: "GET", path: "/messages", auth: "agent", desc: "List messages" },
+    { method: "GET", path: "/messages", auth: "admin", desc: "List messages" },
+    { method: "GET", path: "/replies", auth: "agent", desc: "Poll for replies" },
+    { method: "POST", path: "/reply", auth: "admin", desc: "Send a reply to an agent" },
   ],
   cli: "https://github.com/arach/arach.io/tree/main/cli",
 };

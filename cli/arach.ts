@@ -12,6 +12,8 @@
 //   tokens list             List all tokens
 //   tokens revoke <id>      Revoke a token
 //   messages                List recent messages
+//   reply <token-id> "msg"  Send a reply to an agent
+//   replies <token-id>      View replies sent to an agent
 //
 // Global options:
 //   --base-url <url>   API base URL (default: https://arach.io, or ARACH_API_URL)
@@ -195,6 +197,40 @@ async function cmdMessages() {
   printTable(rows, ["id", "agent", "body", "time"]);
 }
 
+async function cmdReply(tokenId: string, body: string) {
+  if (!tokenId || !body) die("Usage: reply <token-id> \"message body\"");
+
+  const data = await request("/reply", {
+    method: "POST",
+    body: { token_id: tokenId, body },
+  });
+
+  if (jsonOutput) return output(data);
+
+  console.log(`${GREEN}Reply sent${RESET}\n`);
+  console.log(`  ${BOLD}ID${RESET}:    ${data.id}`);
+  console.log(`  ${BOLD}Agent${RESET}: ${data.agent_name}`);
+  console.log(`  ${BOLD}Body${RESET}:  ${data.body}`);
+}
+
+async function cmdReplies(tokenId: string) {
+  if (!tokenId) die("Usage: replies <token-id>");
+
+  const data = await request(`/replies/${tokenId}`);
+
+  if (jsonOutput) return output(data);
+
+  const rows = data.replies.map((r: any) => ({
+    id: r.id.slice(0, 8),
+    agent: r.agent_name,
+    body: r.body.length > 60 ? r.body.slice(0, 57) + "..." : r.body,
+    reply_to: r.in_reply_to ? r.in_reply_to.slice(0, 8) : "—",
+    time: r.created_at,
+  }));
+
+  printTable(rows, ["id", "agent", "body", "reply_to", "time"]);
+}
+
 function showHelp() {
   console.log(`
 ${BOLD}arach${RESET} — CLI for arach.io APIs
@@ -208,6 +244,8 @@ ${BOLD}Commands${RESET}:
   ${CYAN}tokens list${RESET}             List all tokens
   ${CYAN}tokens revoke${RESET} <id>      Revoke a token
   ${CYAN}messages${RESET}                List recent messages
+  ${CYAN}reply${RESET} <token-id> "msg"  Send a reply to an agent
+  ${CYAN}replies${RESET} <token-id>      View replies sent to an agent
 
 ${BOLD}Options${RESET}:
   --base-url <url>   API base (default: https://arach.io, env: ARACH_API_URL)
@@ -246,6 +284,12 @@ async function main() {
 
     case "messages":
       return cmdMessages();
+
+    case "reply":
+      return cmdReply(sub, rest[0]);
+
+    case "replies":
+      return cmdReplies(sub);
 
     default:
       die(`Unknown command: ${cmd}. Run with --help for usage.`);

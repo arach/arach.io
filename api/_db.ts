@@ -31,5 +31,14 @@ export async function initDb(): Promise<void> {
       metadata TEXT,
       created_at TEXT DEFAULT (datetime('now'))
     )`,
+    `CREATE TABLE IF NOT EXISTS replies (
+      id TEXT PRIMARY KEY,
+      token_id TEXT NOT NULL REFERENCES tokens(id),
+      agent_name TEXT NOT NULL,
+      body TEXT NOT NULL,
+      metadata TEXT,
+      in_reply_to TEXT REFERENCES messages(id),
+      created_at TEXT DEFAULT (datetime('now'))
+    )`,
   ]);
 }
