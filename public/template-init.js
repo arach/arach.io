@@ -12,6 +12,15 @@
     }
     html.setAttribute("data-template", template);
 
+    // Restore agent mode
+    var agentMode = localStorage.getItem("agent-mode");
+    var pageAgent = html.getAttribute("data-default-agent");
+    if (agentMode === "true" || (!agentMode && pageAgent === "true")) {
+      html.setAttribute("data-agent", "true");
+    } else {
+      html.setAttribute("data-agent", "false");
+    }
+
     // Set theme: terminal/industrial default to dark, classic defaults to light
     var savedTheme = localStorage.getItem("theme");
     if (!savedTheme) {

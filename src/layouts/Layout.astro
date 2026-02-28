@@ -29,6 +29,7 @@ export interface Props {
   scrollSmooth?: boolean;
   activeNav?: string;
   defaultTemplate?: string;
+  defaultAgent?: boolean;
 }
 
 const {
@@ -42,6 +43,7 @@ const {
   scrollSmooth = false,
   activeNav,
   defaultTemplate,
+  defaultAgent,
 } = Astro.props;
 
 const socialImageURL = new URL(
@@ -56,6 +58,7 @@ const socialImageURL = new URL(
   class={`${scrollSmooth ? "scroll-smooth min-w-screen" : "min-w-screen"}`}
   data-template="classic"
   {...defaultTemplate ? { "data-default-template": defaultTemplate } : {}}
+  {...defaultAgent ? { "data-default-agent": "true" } : {}}
 >
   <head>
     <meta charset="UTF-8" />

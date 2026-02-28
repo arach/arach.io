@@ -419,20 +419,20 @@ const socialCount = SOCIALS.filter(social => social.active).length;
       display: none;
     }
 
-    :global([data-template="terminal"]) .agent-home {
+    :global([data-agent="true"]) .agent-home {
       display: block;
       padding: 2rem 0 0.5rem;
     }
 
-    :global([data-template="terminal"]) .hero-section {
+    :global([data-agent="true"]) .hero-section {
       display: none !important;
     }
 
     /* Hide the regular card-based sections in agent mode — agent-home replaces them */
-    :global([data-template="terminal"]) #featured,
-    :global([data-template="terminal"]) #recent-posts,
-    :global([data-template="terminal"]) .all-posts-btn-wrapper,
-    :global([data-template="terminal"]) hr {
+    :global([data-agent="true"]) #featured,
+    :global([data-agent="true"]) #recent-posts,
+    :global([data-agent="true"]) .all-posts-btn-wrapper,
+    :global([data-agent="true"]) hr {
       display: none !important;
     }
 

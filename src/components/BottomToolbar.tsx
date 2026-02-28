@@ -60,17 +60,18 @@ export default function BottomToolbar() {
     window.dispatchEvent(new CustomEvent("theme-change", { detail: { isDark: newDark } }));
   };
 
-  const toggleAgent = () => {
-    if (current === "terminal") {
-      const prev = (localStorage.getItem("site-template-prev") as Template) || "classic";
-      applyTemplate(prev);
-    } else {
-      localStorage.setItem("site-template-prev", current);
-      applyTemplate("terminal");
-    }
-  };
+  const [isAgent, setIsAgent] = useState(false);
 
-  const isTerminal = current === "terminal";
+  useEffect(() => {
+    setIsAgent(document.documentElement.getAttribute("data-agent") === "true");
+  }, []);
+
+  const toggleAgent = () => {
+    const next = !isAgent;
+    setIsAgent(next);
+    document.documentElement.setAttribute("data-agent", String(next));
+    localStorage.setItem("agent-mode", String(next));
+  };
   const border = isDark ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.1)";
   const bg = isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.04)";
   const fg = isDark ? "rgba(255,255,255,0.6)" : "rgba(0,0,0,0.5)";
@@ -163,12 +164,12 @@ export default function BottomToolbar() {
           style={{
             ...itemBase,
             borderRadius: "0 7px 7px 0",
-            background: isTerminal ? activeBg : "transparent",
-            color: isTerminal ? fgActive : fg,
-            fontWeight: isTerminal ? 600 : 500,
+            background: isAgent ? activeBg : "transparent",
+            color: isAgent ? fgActive : fg,
+            fontWeight: isAgent ? 600 : 500,
           }}
         >
-          <svg width="12" height="12" viewBox="0 0 24 24" fill={isTerminal ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill={isAgent ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
             <line x1="8" y1="21" x2="16" y2="21" />
             <line x1="12" y1="17" x2="12" y2="21" />
