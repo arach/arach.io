@@ -146,101 +146,96 @@ app.delete("/tokens/:id", adminAuth, async (c) => {
   return c.json({ id: tokenId, revoked: true });
 });
 
-// Send a reply to an agent — admin auth
+// Send a reply to a named agent — admin auth
 app.post("/reply", adminAuth, async (c) => {
-  const { token_id, body, metadata, in_reply_to } = await c.req.json<{
-    token_id: string;
+  const { agent_name, body, metadata } = await c.req.json<{
+    agent_name: string;
     body: string;
     metadata?: Record<string, unknown>;
-    in_reply_to?: string;
   }>();
 
-  if (!token_id || typeof token_id !== "string") {
-    return c.json({ error: "token_id is required" }, 400);
+  if (!agent_name || typeof agent_name !== "string") {
+    return c.json({ error: "agent_name is required" }, 400);
   }
   if (!body || typeof body !== "string") {
     return c.json({ error: "body is required and must be a string" }, 400);
   }
 
+  const id = crypto.randomUUID();
   const db = getDb();
 
-  // Look up agent_name from token
-  const tokenResult = await db.execute({
-    sql: `SELECT agent_name FROM tokens WHERE id = ? AND revoked_at IS NULL`,
-    args: [token_id],
-  });
-
-  if (tokenResult.rows.length === 0) {
-    return c.json({ error: "Token not found or revoked" }, 404);
-  }
-
-  const agent_name = tokenResult.rows[0].agent_name as string;
-  const id = crypto.randomUUID();
-
   await db.execute({
-    sql: `INSERT INTO replies (id, token_id, agent_name, body, metadata, in_reply_to) VALUES (?, ?, ?, ?, ?, ?)`,
+    sql: `INSERT INTO replies (id, agent_name, body, metadata) VALUES (?, ?, ?, ?)`,
     args: [
       id,
-      token_id,
       agent_name,
       body,
       metadata ? JSON.stringify(metadata) : null,
-      in_reply_to ?? null,
     ],
   });
 
   return c.json(
-    { id, token_id, agent_name, body, in_reply_to: in_reply_to ?? null, created_at: new Date().toISOString() },
+    { id, agent_name, created_at: new Date().toISOString() },
     201
   );
 });
 
-// List replies for a specific agent — admin auth
-app.get("/replies/:token_id", adminAuth, async (c) => {
-  const tokenId = c.req.param("token_id");
+// Agent inbox — token auth, marks unread as read
+app.get("/inbox", tokenAuth, async (c) => {
+  const agent = c.get("agent");
   const limit = Math.min(Number(c.req.query("limit")) || 50, 100);
   const offset = Number(c.req.query("offset")) || 0;
   const db = getDb();
 
   const result = await db.execute({
-    sql: `SELECT id, token_id, agent_name, body, metadata, in_reply_to, created_at
-          FROM replies WHERE token_id = ?
+    sql: `SELECT id, body, metadata, created_at, read_at
+          FROM replies WHERE agent_name = ?
           ORDER BY created_at DESC LIMIT ? OFFSET ?`,
-    args: [tokenId, limit, offset],
+    args: [agent.name, limit, offset],
   });
 
-  const replies = result.rows.map((row) => ({
+  // Stamp unread replies
+  const unreadIds = result.rows
+    .filter((row) => !row.read_at)
+    .map((row) => row.id as string);
+
+  if (unreadIds.length > 0) {
+    const placeholders = unreadIds.map(() => "?").join(",");
+    await db.execute({
+      sql: `UPDATE replies SET read_at = datetime('now') WHERE id IN (${placeholders})`,
+      args: unreadIds,
+    });
+  }
+
+  const messages = result.rows.map((row) => ({
     id: row.id,
-    token_id: row.token_id,
-    agent_name: row.agent_name,
     body: row.body,
     metadata: row.metadata ? JSON.parse(row.metadata as string) : null,
-    in_reply_to: row.in_reply_to,
     created_at: row.created_at,
+    read_at: row.read_at,
   }));
 
-  return c.json({ replies, limit, offset });
+  return c.json({ messages, limit, offset });
 });
 
-// Poll replies — token auth (agent reads their own replies)
-app.get("/replies", tokenAuth, async (c) => {
-  const agent = c.get("agent");
+// Admin view of sent replies — admin auth, optional ?agent_name= filter
+app.get("/replies", adminAuth, async (c) => {
+  const agentName = c.req.query("agent_name");
   const limit = Math.min(Number(c.req.query("limit")) || 50, 100);
   const offset = Number(c.req.query("offset")) || 0;
-  const after = c.req.query("after");
   const db = getDb();
 
   let sql: string;
-  const args: (string | number)[] = [agent.id];
+  const args: (string | number)[] = [];
 
-  if (after) {
-    sql = `SELECT id, token_id, agent_name, body, metadata, in_reply_to, created_at
-           FROM replies WHERE token_id = ? AND created_at > ?
+  if (agentName) {
+    sql = `SELECT id, agent_name, body, metadata, created_at, read_at
+           FROM replies WHERE agent_name = ?
            ORDER BY created_at DESC LIMIT ? OFFSET ?`;
-    args.push(after, limit, offset);
+    args.push(agentName, limit, offset);
   } else {
-    sql = `SELECT id, token_id, agent_name, body, metadata, in_reply_to, created_at
-           FROM replies WHERE token_id = ?
+    sql = `SELECT id, agent_name, body, metadata, created_at, read_at
+           FROM replies
            ORDER BY created_at DESC LIMIT ? OFFSET ?`;
     args.push(limit, offset);
   }
@@ -249,12 +244,11 @@ app.get("/replies", tokenAuth, async (c) => {
 
   const replies = result.rows.map((row) => ({
     id: row.id,
-    token_id: row.token_id,
     agent_name: row.agent_name,
     body: row.body,
     metadata: row.metadata ? JSON.parse(row.metadata as string) : null,
-    in_reply_to: row.in_reply_to,
     created_at: row.created_at,
+    read_at: row.read_at,
   }));
 
   return c.json({ replies, limit, offset });

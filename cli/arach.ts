@@ -12,8 +12,8 @@
 //   tokens list             List all tokens
 //   tokens revoke <id>      Revoke a token
 //   messages                List recent messages
-//   reply <token-id> "msg"  Send a reply to an agent
-//   replies <token-id>      View replies sent to an agent
+//   reply <agent-name> "msg" Send a reply to an agent
+//   inbox <agent-name>      View replies sent to an agent
 //
 // Global options:
 //   --base-url <url>   API base URL (default: https://arach.io, or ARACH_API_URL)
@@ -197,12 +197,12 @@ async function cmdMessages() {
   printTable(rows, ["id", "agent", "body", "time"]);
 }
 
-async function cmdReply(tokenId: string, body: string) {
-  if (!tokenId || !body) die("Usage: reply <token-id> \"message body\"");
+async function cmdReply(agentName: string, body: string) {
+  if (!agentName || !body) die("Usage: reply <agent-name> \"message body\"");
 
   const data = await request("/reply", {
     method: "POST",
-    body: { token_id: tokenId, body },
+    body: { agent_name: agentName, body },
   });
 
   if (jsonOutput) return output(data);
@@ -210,13 +210,12 @@ async function cmdReply(tokenId: string, body: string) {
   console.log(`${GREEN}Reply sent${RESET}\n`);
   console.log(`  ${BOLD}ID${RESET}:    ${data.id}`);
   console.log(`  ${BOLD}Agent${RESET}: ${data.agent_name}`);
-  console.log(`  ${BOLD}Body${RESET}:  ${data.body}`);
 }
 
-async function cmdReplies(tokenId: string) {
-  if (!tokenId) die("Usage: replies <token-id>");
+async function cmdInbox(agentName: string) {
+  if (!agentName) die("Usage: inbox <agent-name>");
 
-  const data = await request(`/replies/${tokenId}`);
+  const data = await request(`/replies?agent_name=${encodeURIComponent(agentName)}`);
 
   if (jsonOutput) return output(data);
 
@@ -224,11 +223,11 @@ async function cmdReplies(tokenId: string) {
     id: r.id.slice(0, 8),
     agent: r.agent_name,
     body: r.body.length > 60 ? r.body.slice(0, 57) + "..." : r.body,
-    reply_to: r.in_reply_to ? r.in_reply_to.slice(0, 8) : "—",
+    read: r.read_at ? `${GREEN}yes${RESET}` : `${DIM}no${RESET}`,
     time: r.created_at,
   }));
 
-  printTable(rows, ["id", "agent", "body", "reply_to", "time"]);
+  printTable(rows, ["id", "agent", "body", "read", "time"]);
 }
 
 function showHelp() {
@@ -244,8 +243,8 @@ ${BOLD}Commands${RESET}:
   ${CYAN}tokens list${RESET}             List all tokens
   ${CYAN}tokens revoke${RESET} <id>      Revoke a token
   ${CYAN}messages${RESET}                List recent messages
-  ${CYAN}reply${RESET} <token-id> "msg"  Send a reply to an agent
-  ${CYAN}replies${RESET} <token-id>      View replies sent to an agent
+  ${CYAN}reply${RESET} <agent-name> "msg" Send a reply to an agent
+  ${CYAN}inbox${RESET} <agent-name>      View replies sent to an agent
 
 ${BOLD}Options${RESET}:
   --base-url <url>   API base (default: https://arach.io, env: ARACH_API_URL)
@@ -288,8 +287,8 @@ async function main() {
     case "reply":
       return cmdReply(sub, rest[0]);
 
-    case "replies":
-      return cmdReplies(sub);
+    case "inbox":
+      return cmdInbox(sub);
 
     default:
       die(`Unknown command: ${cmd}. Run with --help for usage.`);

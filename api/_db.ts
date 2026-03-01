@@ -33,12 +33,20 @@ export async function initDb(): Promise<void> {
     )`,
     `CREATE TABLE IF NOT EXISTS replies (
       id TEXT PRIMARY KEY,
-      token_id TEXT NOT NULL REFERENCES tokens(id),
       agent_name TEXT NOT NULL,
       body TEXT NOT NULL,
       metadata TEXT,
-      in_reply_to TEXT REFERENCES messages(id),
-      created_at TEXT DEFAULT (datetime('now'))
+      created_at TEXT DEFAULT (datetime('now')),
+      read_at TEXT
     )`,
   ]);
+
+  // Migration: add read_at to existing replies table
+  try {
+    await client.execute(
+      `ALTER TABLE replies ADD COLUMN read_at TEXT`
+    );
+  } catch {
+    // Column already exists — ignore
+  }
 }
