@@ -51,3 +51,7 @@ Video editing became conversational. "Make the intro snappier" turns into clip a
 Claude Code (Opus) orchestrates the whole thing — writing Remotion compositions, adjusting timecodes, refining transitions. Anthropic's models have vision built in, but for frame analysis at scale, MiniMax M2.7 through MCP is a no-brainer under their token plan. Parallel analysis of 7 frames costs almost nothing, and the MCP integration means it's just another tool in the conversation — no context switching, no separate workflow.
 
 Runs locally with Remotion and bun. No cloud rendering, no subscription editors. Just conversation.
+
+---
+
+[Thread on X](https://x.com/arach/status/2035002773847044099)
