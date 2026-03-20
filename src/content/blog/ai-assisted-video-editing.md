@@ -48,7 +48,7 @@ const response = await client.messages.create({
 });
 ```
 
-At roughly $0.003 per frame and ~60 frames per video, the entire analysis costs about 18 cents. The model returns structured descriptions like "Hudson navigates a platforming section, jumping between moving platforms" or "Score screen showing final results with 3-star rating." These descriptions become the editorial backbone — an AI storyboard that no human had to write.
+At roughly $0.003 per frame and ~60 frames per video, the entire analysis costs about 18 cents. The model returns structured descriptions like "VS Code with a TypeScript file open, refactoring a component" or "Terminal showing build output with successful compilation." These descriptions become the editorial backbone — an AI storyboard that no human had to write.
 
 The pipeline runs an editorial pass over these descriptions, identifying highlights, suggested clips, and dead time. The output is an Edit Decision List (EDL) — a JSON file with timestamps, scene metadata, and clip recommendations.
 
