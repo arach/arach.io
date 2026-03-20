@@ -4,7 +4,7 @@ author: Arach Tchoupani
 pubDatetime: 2026-03-20T12:00:00.000Z
 slug: ai-assisted-video-editing
 featured: true
-draft: true
+draft: false
 description: "How I used Claude Code, Claude's vision API, and Remotion to turn a raw screen recording into a 45-second highlight reel without ever pressing play on the source footage."
 tags:
   - AI
