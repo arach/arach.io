@@ -7,7 +7,7 @@ tags:
   - video editing
   - Remotion
   - Claude
-description: "Using MiniMax M2.7 vision + ffmpeg + Remotion to turn a 9-minute screen recording into a 45-second highlight reel without pressing play."
+description: "Using Claude Haiku vision + ffmpeg + Remotion to turn a 12-minute screen recording into a 45-second highlight reel without pressing play."
 ---
 
 Built a pipeline that turns raw screen recordings into highlight reels without watching the source. Used it on a 12-minute Hudson design session to produce a 45-second reel.
@@ -56,4 +56,4 @@ Same crop for every clip since the window doesn't move. Turns a desktop recordin
 
 Treating video as code changed the editing loop completely. Every edit is a code change, so `git diff` shows exactly what changed between versions. Claude Code translates "make the intro snappier" into clip array edits. Each layer caches results, so iteration only re-renders the composition.
 
-The pipeline is called Premotion. Standard Remotion compositions with MiniMax M2.7 for vision via MCP. Runs locally with ffmpeg and bun.
+The pipeline is called Premotion. About 700 lines of TypeScript for analysis, standard Remotion compositions. Runs locally with ffmpeg and one API key.
