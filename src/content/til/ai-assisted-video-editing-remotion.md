@@ -8,27 +8,27 @@ tags:
   - Remotion
   - MiniMax
   - Claude Code
-description: "Using MiniMax M2.7 vision + Remotion to turn a 9-minute screen recording into a 45-second highlight reel — entirely through conversation."
+description: "Using MiniMax M2.7 vision + Remotion to turn a 9-minute screen recording into a 45-second highlight reel by talking through it."
 ---
 
-Had a 9-minute screen recording of a design session in Hudson. Wanted a 45-second highlight reel. Never opened a video editor.
+I had a 9-minute screen recording of a design session in Hudson and wanted a 45-second highlight reel. I never opened a video editor.
 
-## Giving AI eyes into the video
+## Getting frames out of the video
 
-Video files can't go directly into vision models, so ffmpeg extracts keyframes. Then MiniMax M2.7 (via MCP `understand_image` tool) analyzes each one. I fed it 7 frames sampled across the timeline and asked it to describe what's on screen.
+Vision models can't take video files directly, so I pulled 7 keyframes with ffmpeg and sent each one to MiniMax M2.7 (via the MCP `understand_image` tool).
 
-The results were surprisingly precise — it identified the app name, specific design modules (Scout Radar, Scout Lattice, Scout Radio), the AI conversations happening in the terminal, even which slider the cursor was hovering over. From 7 frames, I had a complete narrative arc of the whole session.
+It picked up the app name, the specific modules on screen (Scout Radar, Scout Lattice, Scout Radio), terminal conversations, even which slider the cursor was on. Seven frames was enough to know what happened across the whole recording.
 
-## Video editing as conversation
+## Editing by talking
 
-This is the part that felt different. Instead of scrubbing a timeline, I described what I wanted:
+Instead of scrubbing a timeline, I just said what I wanted:
 
 - "Make a 45-second highlight reel capturing the good stuff"
 - "The transitions are too rough, make them smooth cross-dissolves"
-- "The S glyph is still inverted — push the timecode forward"
+- "The S glyph is still inverted, push the timecode forward"
 - "Squeeze everything in a bit more, I want to see the browser chrome"
 
-Each note turned into a code change in a Remotion composition. Clips are `Sequence` elements with overlapping cross-dissolves. The whole edit is a React component:
+Each note became a code change in a Remotion composition. Clips are `Sequence` elements with overlapping cross-dissolves. The whole edit is a React component:
 
 ```typescript
 const OVERLAP_FRAMES = 18; // ~0.6s cross-dissolve
@@ -42,15 +42,15 @@ const clipSequences = CLIPS.map((clip, i) => {
 });
 ```
 
-Opens with a typewriter prompt card, five content clips with eased transitions, music on a separate layer, tactical intro and outro. Every iteration is just another conversation turn.
+It opens with a typewriter prompt card, then five clips with eased cross-dissolves, music on its own layer, intro and outro. When I wanted something different I just said so and re-rendered.
 
-## What stuck with me
+## The loop
 
-Video editing became conversational. "Make the intro snappier" turns into clip array edits. "Center it more" becomes a constant change. The feedback loop is talk → render → watch → talk, and it's fast enough that you stay in flow.
+The actual workflow is: say what you want, render, watch, say what's wrong. "Make the intro snappier" changes the clip array. "Center it more" changes a constant. It's fast enough that you don't lose the thread.
 
-Claude Code (Opus) orchestrates the whole thing — writing Remotion compositions, adjusting timecodes, refining transitions. Anthropic's models have vision built in, but for frame analysis at scale, MiniMax M2.7 through MCP is a no-brainer under their token plan. Parallel analysis of 7 frames costs almost nothing, and the MCP integration means it's just another tool in the conversation — no context switching, no separate workflow.
+Claude Code (Opus) writes the Remotion compositions and adjusts timecodes. For the frame analysis I used MiniMax M2.7 through MCP because it's cheap under their [token plan](https://platform.minimax.io/subscribe/token-plan), seven frames in parallel costs almost nothing. And since it's MCP, it's just another tool call in the same conversation. No tab-switching.
 
-Runs locally with Remotion and bun. No cloud rendering, no subscription editors. Just conversation.
+The whole thing runs locally with Remotion and bun. I didn't sign up for anything or upload anything anywhere.
 
 ---
 
