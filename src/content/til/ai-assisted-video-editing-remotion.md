@@ -6,24 +6,29 @@ tags:
   - AI
   - video editing
   - Remotion
-  - Claude
-description: "Using Claude Haiku vision + ffmpeg + Remotion to turn a 12-minute screen recording into a 45-second highlight reel without pressing play."
+  - MiniMax
+  - Claude Code
+description: "Using MiniMax M2.7 vision + Remotion to turn a 9-minute screen recording into a 45-second highlight reel — entirely through conversation."
 ---
 
-Built a pipeline that turns raw screen recordings into highlight reels without watching the source. Used it on a 12-minute Hudson design session to produce a 45-second reel.
+Had a 9-minute screen recording of a design session in Hudson. Wanted a 45-second highlight reel. Never opened a video editor.
 
-## The pipeline
+## Giving AI eyes into the video
 
-Four layers, each feeding the next:
+Video files can't go directly into vision models, so ffmpeg extracts keyframes. Then MiniMax M2.7 (via MCP `understand_image` tool) analyzes each one. I fed it 7 frames sampled across the timeline and asked it to describe what's on screen.
 
-1. **ffmpeg scene detection** at adaptive thresholds (0.08 → 0.04 → 0.02) extracts up to 60 keyframes as 640px JPEGs
-2. **Pixel-diff scoring** at 2fps on 80x45 grayscale classifies segments as active/idle/transition
-3. **Claude Haiku vision** tags each keyframe with content type (`code-editor`, `terminal`, `ui-demo`, etc.) and a description, ~$0.003/frame
-4. **Editorial pass** produces an EDL (Edit Decision List) with highlights, suggested clips, and dead time
+The results were surprisingly precise — it identified the app name, specific design modules (Scout Radar, Scout Lattice, Scout Radio), the AI conversations happening in the terminal, even which slider the cursor was hovering over. From 7 frames, I had a complete narrative arc of the whole session.
 
-## Remotion composition
+## Video editing as conversation
 
-The EDL maps to a clip array. Each clip is a `Sequence` in Remotion with overlapping cross-dissolves:
+This is the part that felt different. Instead of scrubbing a timeline, I described what I wanted:
+
+- "Make a 45-second highlight reel capturing the good stuff"
+- "The transitions are too rough, make them smooth cross-dissolves"
+- "The S glyph is still inverted — push the timecode forward"
+- "Squeeze everything in a bit more, I want to see the browser chrome"
+
+Each note turned into a code change in a Remotion composition. Clips are `Sequence` elements with overlapping cross-dissolves. The whole edit is a React component:
 
 ```typescript
 const OVERLAP_FRAMES = 18; // ~0.6s cross-dissolve
@@ -37,23 +42,12 @@ const clipSequences = CLIPS.map((clip, i) => {
 });
 ```
 
-Opens with a `PromptCard` typewriter intro, then content clips with cubic-eased fades, then outro. Music and SFX on separate layers.
+Opens with a typewriter prompt card, five content clips with eased transitions, music on a separate layer, tactical intro and outro. Every iteration is just another conversation turn.
 
-## Crop framing
+## What stuck with me
 
-Measured the app window's pixel boundaries in the source (2550x1440) and turned them into constants:
+Video editing became conversational. "Make the intro snappier" turns into clip array edits. "Center it more" becomes a constant change. The feedback loop is talk → render → watch → talk, and it's fast enough that you stay in flow.
 
-```typescript
-const CROP_SCALE = 1.4;
-const CROP_CENTER_X = 0.37;
-const INNER_SCALE_X = 0.72;
-const INNER_SCALE_Y = 0.64;
-```
+MiniMax M2.7 through MCP meant zero context switching — the vision model is just another tool Claude Code can call. Parallel frame analysis (7 calls at once) made the initial video understanding take seconds, not minutes.
 
-Same crop for every clip since the window doesn't move. Turns a desktop recording into a clean product demo.
-
-## The surprise
-
-Treating video as code changed the editing loop completely. Every edit is a code change, so `git diff` shows exactly what changed between versions. Claude Code translates "make the intro snappier" into clip array edits. Each layer caches results, so iteration only re-renders the composition.
-
-The pipeline is called Premotion. About 700 lines of TypeScript for analysis, standard Remotion compositions. Runs locally with ffmpeg and one API key.
+The whole thing runs locally with Remotion and bun. No cloud rendering, no subscription editors. Just conversation.
