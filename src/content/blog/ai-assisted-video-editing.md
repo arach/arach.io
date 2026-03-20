@@ -28,7 +28,7 @@ The first step is turning a continuous video into something an AI can reason abo
 ffmpeg -i input.mp4 -vf "select='gt(scene,0.04)',showinfo" -f null -
 ```
 
-**Layer 2** does pixel-diff scoring. It downsamples the video to a tiny 80x45 grayscale grid at 2fps and compares consecutive frames pixel by pixel. This classifies every segment as idle (nothing happening), active (gameplay), or transition (scene change). The idle segments get skipped in later analysis — no point asking an AI to describe a frozen screen.
+**Layer 2** does pixel-diff scoring. It downsamples the video to a tiny 80x45 grayscale grid at 2fps and compares consecutive frames pixel by pixel. This classifies every segment as idle (nothing happening), active (meaningful screen changes), or transition (window switch). The idle segments get skipped in later analysis — no point asking an AI to describe a frozen screen.
 
 ## Seeing Through Claude's Eyes
 
