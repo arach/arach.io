@@ -121,7 +121,7 @@ Most iterations only touch step 3-5. The vision analysis and frame extraction ar
 
 ## What I Learned
 
-**Vision models are surprisingly good editors.** Claude Haiku's frame descriptions were accurate enough to build an EDL from scratch. It correctly identified gameplay highlights, menu screens, loading screens, and score displays. The main failure mode was over-describing simple frames, but that's easy to filter.
+**Vision models are surprisingly good editors.** Claude Haiku's frame descriptions were accurate enough to build an EDL from scratch. It correctly identified code editing sessions, UI demos, terminal output, and transition screens. The main failure mode was over-describing simple frames, but that's easy to filter.
 
 **Treating video as code changes everything.** Remotion's React-based approach means every edit is a code change. Version control, branching, diffing — all the tools we take for granted in software development suddenly apply to video editing. I can ask Claude Code to "try a version with faster cuts" and get a new composition in seconds.
 
