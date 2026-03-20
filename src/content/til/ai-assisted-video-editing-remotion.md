@@ -48,6 +48,6 @@ Opens with a typewriter prompt card, five content clips with eased transitions, 
 
 Video editing became conversational. "Make the intro snappier" turns into clip array edits. "Center it more" becomes a constant change. The feedback loop is talk → render → watch → talk, and it's fast enough that you stay in flow.
 
-MiniMax M2.7 through MCP meant zero context switching — the vision model is just another tool Claude Code can call. Parallel frame analysis (7 calls at once) made the initial video understanding take seconds, not minutes.
+The setup is Claude Opus as the brain and MiniMax M2.7 as the eyes. Opus orchestrates the edit — writing Remotion compositions, adjusting timecodes, refining transitions. M2.7 handles vision through MCP, analyzing frames in parallel (7 calls at once) so the initial video understanding takes seconds. Neither could do this alone; together they turn a conversation into a rendered video.
 
-The whole thing runs locally with Remotion and bun. No cloud rendering, no subscription editors. Just conversation.
+Runs locally with Remotion and bun. No cloud rendering, no subscription editors. Just conversation.
