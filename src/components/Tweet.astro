@@ -72,8 +72,21 @@ const cleanTweetText = (text: string) => {
         {tweet.mediaDetails.map((media: any) => (
           media.type === 'photo' ? (
             <img src={media.media_url_https} alt="" class="tweet-media-img" loading="lazy" />
-          ) : media.type === 'video' || media.type === 'animated_gif' ? (
-            <img src={media.media_url_https} alt="" class="tweet-media-img" loading="lazy" />
+          ) : media.type === 'video' ? (
+            <a href={`https://x.com/${tweet.user.screen_name}/status/${tweetId}`} target="_blank" rel="noopener" class="tweet-video-link">
+              <img src={media.media_url_https} alt="" class="tweet-media-img" loading="lazy" />
+              <div class="tweet-play-btn">▶</div>
+            </a>
+          ) : media.type === 'animated_gif' ? (
+            <video
+              src={media.video_info?.variants?.[0]?.url}
+              poster={media.media_url_https}
+              autoplay
+              loop
+              muted
+              playsinline
+              class="tweet-media-video"
+            />
           ) : null
         ))}
       </div>
@@ -198,6 +211,41 @@ const cleanTweetText = (text: string) => {
     object-fit: cover;
     border-radius: 4px;
     border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .tweet-media-video {
+    width: 100%;
+    max-height: 400px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .tweet-video-link {
+    position: relative;
+    display: block;
+    text-decoration: none;
+  }
+
+  .tweet-play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 48px;
+    height: 48px;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1.25rem;
+    padding-left: 3px;
+    transition: background 0.15s;
+  }
+
+  .tweet-video-link:hover .tweet-play-btn {
+    background: rgba(0, 0, 0, 0.8);
   }
 
   .tweet-footer {
