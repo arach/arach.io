@@ -1,0 +1,53 @@
+---
+author: Arach Tchoupani
+pubDatetime: 2026-03-24T10:00:00.000Z
+title: Speaker-labeled subtitles from a screen recording in under 10 seconds
+tags:
+  - AI
+  - video editing
+  - Vox
+  - Remotion
+  - Fabric
+description: "Using Vox for transcription, Pyannote for speaker diarization, and a Fabric container to get styled, speaker-labeled captions onto video — all local."
+---
+
+I had a 5-minute Lattices voice demo — me talking to the window manager, it talking back. Needed subtitles that show **who** is speaking, not just what was said.
+
+## The pipeline
+
+Three tools, each doing one thing:
+
+1. **[Vox](https://voxd.cc)** transcribes the audio with word-level timestamps. 5 minutes of audio → 1,021 words with timing in 6 seconds. Runs as a local daemon on CoreML.
+
+2. **Pyannote** does speaker diarization — figures out which voice segments belong to which speaker. Found 2 speakers across 38 segments.
+
+3. **Merge** — for each transcription segment, find the diarization segment with the most overlap, assign the speaker label. Output:
+
+```json
+[
+  {"start": 3.1, "end": 6.6, "speaker": "arach", "text": "Hey, can you show me what you're capable of?"},
+  {"start": 184.4, "end": 188.9, "speaker": "lattices", "text": "You've got four main terminals visible..."}
+]
+```
+
+## Containerizing Pyannote with Fabric
+
+Pyannote's dependency story is rough — specific PyTorch + torchaudio + huggingface_hub versions, a gated HuggingFace model, system libraries. We hit every compatibility issue.
+
+[Fabric](https://fab.run) solved it. Built a container image that bakes in all deps + the model weights at build time:
+
+```bash
+container run -v "/path/to/audio:/data" fabric-diarize:local diarize /data/recording.wav
+```
+
+No token, no pip install, no downloads at runtime. The image is a frozen, tested dependency set. The version conflicts we debugged for 20 minutes are sealed inside it forever.
+
+## Rendering in Remotion
+
+The caption JSON feeds into a Remotion composition. Each speaker gets a color (blue for me, amber for Lattices) with a typewriter reveal. The component looks up the active caption by matching the current video timestamp against the transcript segments — no hardcoded strings.
+
+## The fix that made it work
+
+Vox was returning empty word timestamps on long audio. Traced it to FluidAudio's `ChunkProcessor` discarding `tokenDurations` when merging chunks. The short-audio path worked fine. Sent the diagnosis to the Vox agent via relay, it bumped the upstream dep, rebuilt — fixed. Now every transcription gets word timing.
+
+Before the fix we were falling back to Whisper (minutes). After: 6 seconds, local, no model download.
