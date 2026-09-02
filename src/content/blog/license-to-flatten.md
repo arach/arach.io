@@ -6,7 +6,7 @@ slug: license-to-flatten
 description: "Uber just cut 10% of staff and 20% of managers to fund robotaxis. Elon gave the industry license to flatten. AI moved the budget from humans to data centres. The shortage comes later."
 tags: ["AI", "Future of Work", "Leadership", "Corporate Strategy", "Engineering Management"]
 featured: true
-thumbnail: "/assets/images/torn-org-chart.jpg"
+thumbnail: "../../assets/images/torn-org-chart.jpg"
 draft: false
 series:
   name: "AI's Impact on Corporate Strategy"
