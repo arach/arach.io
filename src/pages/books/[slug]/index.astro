@@ -2,7 +2,7 @@
 import { type CollectionEntry, getCollection } from "astro:content";
 import BookPosts from "@layouts/Books.astro";
 import BookDetails from "@layouts/BookDetails.astro";
-import getSortedContent from "@utils/getSortedContent";
+import getSortedBooks from "@utils/getSortedBooks";
 import getPageNumbers from "@utils/getPageNumbers";
 import getPagination from "@utils/getPagination";
 import getContentWithRT from "@utils/getContentWithRT";
@@ -37,7 +37,7 @@ const books = await getCollection(
   }
 );
 
-const sortedBooks = getSortedContent(books);
+const sortedBooks = getSortedBooks(books);
 
 const pagination = getPagination({
   posts: sortedBooks.map(book => ({

@@ -1,0 +1,1956 @@
+/* ==========================================================================
+   CLASSIC TEMPLATE — Technical editorial
+   Cyanotype: cool paper, navy ink, blueprint grid, mono labels, one cobalt accent.
+   Scoped to [data-template="classic"] so terminal/industrial are untouched.
+   Sizes are in px on purpose: some pages change the root font size.
+   ========================================================================== */
+
+@font-face {
+  font-family: "Geist";
+  src: url("/fonts/Geist-1.3.0/variable-woff/GeistVF.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/fonts/GeistMono-1.3.0/variable-woff/GeistMonoVF.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+html[data-template="classic"],
+html[data-template="classic"][data-theme="light"] {
+  --color-fill: 244, 245, 247;
+  --color-text-base: 11, 22, 64;
+  --color-accent: 35, 64, 240;
+  --color-card: 255, 255, 255;
+  --color-card-muted: 233, 236, 244;
+  --color-border: 214, 220, 236;
+
+  --cl-ink: rgb(11, 22, 64);
+  --cl-muted: rgba(11, 22, 64, 0.64);
+  --cl-faint: rgba(11, 22, 64, 0.42);
+  --cl-rule: rgba(11, 22, 64, 0.12);
+  --cl-rule-strong: rgba(11, 22, 64, 0.85);
+  --cl-grid: rgba(35, 64, 240, 0.07);
+  --cl-accent: rgb(35, 64, 240);
+  --cl-on-accent: rgb(255, 255, 255);
+
+  /* DitheredPortrait reads these: light = paper dots, dark = ink dots */
+  --term-bg: #F4F5F7;
+  --term-text: #4F66F2;
+
+  --cl-wide: 1120px;
+  --cl-gutter: 24px;
+
+  --font-sans: "Geist", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: var(--font-sans);
+  --font-body: var(--font-sans);
+  --font-mono: "Geist Mono", "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+
+html[data-template="classic"][data-theme="dark"] {
+  --color-fill: 10, 24, 62;
+  --color-text-base: 226, 234, 255;
+  --color-accent: 128, 160, 255;
+  --color-card: 16, 32, 78;
+  --color-card-muted: 22, 40, 92;
+  --color-border: 44, 66, 128;
+
+  --cl-ink: rgb(226, 234, 255);
+  --cl-muted: rgba(226, 234, 255, 0.66);
+  --cl-faint: rgba(226, 234, 255, 0.42);
+  --cl-rule: rgba(226, 234, 255, 0.14);
+  --cl-rule-strong: rgba(226, 234, 255, 0.7);
+  --cl-grid: rgba(160, 190, 255, 0.09);
+  --cl-accent: rgb(128, 160, 255);
+  --cl-on-accent: rgb(10, 24, 62);
+
+  /* swapped so the photo's light areas sink into the page, features become pale dots */
+  --term-bg: #8FA6F5;
+  --term-text: #0A183E;
+}
+
+/* ── Base ── */
+html[data-template="classic"] body {
+  font-family: var(--font-sans);
+  letter-spacing: -0.005em;
+}
+
+html[data-template="classic"] h1,
+html[data-template="classic"] h2,
+html[data-template="classic"] h3,
+html[data-template="classic"] h4 {
+  font-family: var(--font-sans);
+}
+
+html[data-template="classic"] ::selection {
+  background: var(--cl-accent);
+  color: var(--cl-on-accent);
+}
+
+html[data-template="classic"] a:hover {
+  opacity: 1;
+}
+
+.ch-accent {
+  color: var(--cl-accent);
+}
+
+/* ── Header ── */
+html[data-template="classic"] .header,
+html[data-template="classic"][data-theme="dark"] .header {
+  position: sticky;
+  background: rgba(var(--color-fill), 0.86);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--cl-rule);
+}
+
+html[data-template="classic"] .header .container {
+  max-width: calc(var(--cl-wide) + 2 * var(--cl-gutter));
+  height: 60px;
+  padding: 0 var(--cl-gutter);
+}
+
+html[data-template="classic"] .header .logo img {
+  display: none !important;
+}
+
+html[data-template="classic"] .header .logo::before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  margin-right: 10px;
+  border: 2px solid var(--cl-accent);
+  border-radius: 2px;
+}
+
+html[data-template="classic"] .header .logo::after {
+  content: "arach";
+  font-family: var(--font-sans);
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  color: var(--cl-ink);
+}
+
+html[data-template="classic"] .header .nav-list {
+  gap: 4px;
+}
+
+html[data-template="classic"] .header .nav-link,
+html[data-template="classic"] .header .nav-link.active,
+html[data-template="classic"][data-theme="dark"] .header .nav-link.active {
+  padding: 8px 10px;
+  font-family: var(--font-mono) !important;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cl-muted);
+  background: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  animation: none;
+}
+
+html[data-template="classic"] .header .nav-link:hover {
+  color: var(--cl-ink);
+  background: none;
+}
+
+html[data-template="classic"] .header .nav-link.active {
+  color: var(--cl-accent);
+}
+
+html[data-template="classic"] .header .nav-link.active::before {
+  content: "[";
+  margin-right: 4px;
+}
+
+html[data-template="classic"] .header .nav-link.active::after {
+  content: "]";
+  margin-left: 4px;
+}
+
+html[data-template="classic"] .header .nav-actions {
+  margin-left: 8px;
+  padding-left: 12px;
+  border-left: 1px solid var(--cl-rule);
+}
+
+html[data-template="classic"] .header .icon-btn {
+  width: 32px;
+  height: 32px;
+  color: var(--cl-muted);
+  border-radius: 0;
+}
+
+html[data-template="classic"] .header .icon-btn:hover,
+html[data-template="classic"] .header .icon-btn.active {
+  color: var(--cl-ink);
+  background: none;
+}
+
+html[data-template="classic"] .header .icon-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+@media (max-width: 768px) {
+  html[data-template="classic"] .header .nav-list,
+  html[data-template="classic"][data-theme="dark"] .header .nav-list {
+    left: var(--cl-gutter);
+    right: var(--cl-gutter);
+    background: rgb(var(--color-card));
+    border: 1px solid var(--cl-rule-strong);
+    border-radius: 0;
+    box-shadow: none;
+    /* don't animate visibility: the closed menu must hide immediately */
+    transition: opacity 0.18s ease, transform 0.18s ease;
+  }
+
+  /* closed menu hides instantly, so shrinking the window never shows it fading out */
+  html[data-template="classic"] .header .menu-toggle[aria-expanded="false"] + .nav-list {
+    transition: none;
+  }
+}
+
+/* ── Homepage: swap the card layout for the technical column ── */
+.classic-home {
+  display: none;
+}
+
+html[data-template="classic"]:not([data-agent="true"]) .classic-home {
+  display: block;
+}
+
+html[data-template="classic"] .index-main > .hero-section,
+html[data-template="classic"] .index-main > #companies,
+html[data-template="classic"] .index-main > #featured,
+html[data-template="classic"] .index-main > #recent-posts,
+html[data-template="classic"] .index-main > .all-posts-btn-wrapper,
+html[data-template="classic"] .index-main > hr {
+  display: none !important;
+}
+
+html[data-template="classic"] .index-main {
+  margin-top: 0;
+}
+
+html[data-template="classic"] .index-main > section {
+  max-width: calc(var(--cl-wide) + 2 * var(--cl-gutter));
+  padding-left: var(--cl-gutter);
+  padding-right: var(--cl-gutter);
+}
+
+/* Blueprint grid behind the intro, full-bleed, fading out */
+.ch-intro {
+  position: relative;
+  isolation: isolate;
+  padding: 104px 0 72px;
+}
+
+.ch-intro::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  background-image:
+    linear-gradient(var(--cl-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--cl-grid) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: center top;
+  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent);
+  mask-image: linear-gradient(to bottom, #000 55%, transparent);
+  pointer-events: none;
+}
+
+.ch-fig {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 36px;
+  font-family: var(--font-mono) !important;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cl-muted);
+}
+
+.ch-fig-rule {
+  width: 28px;
+  height: 1px;
+  background: var(--cl-accent);
+}
+
+html[data-template="classic"] .ch-title {
+  max-width: 900px;
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: clamp(44px, 7.2vw, 92px);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -0.052em;
+  color: var(--cl-ink);
+}
+
+.ch-lede {
+  max-width: 520px;
+  margin: 32px 0 0;
+  font-size: 19px;
+  line-height: 1.5;
+  letter-spacing: -0.012em;
+  color: var(--cl-ink);
+}
+
+.ch-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 36px;
+}
+
+.ch-btn,
+html[data-template="classic"] .ch-actions .cal-booking-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 42px;
+  padding: 0 18px !important;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  text-decoration: none;
+  border-radius: 6px !important;
+  backdrop-filter: none !important;
+  transform: none !important;
+  transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease !important;
+}
+
+.ch-btn-primary {
+  background: var(--cl-accent);
+  color: var(--cl-on-accent);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 1px 2px rgba(20, 30, 120, 0.3);
+}
+
+.ch-btn-primary:hover {
+  background: var(--cl-ink);
+  color: rgb(var(--color-fill));
+}
+
+html[data-template="classic"] .ch-actions .cal-booking-button {
+  background: transparent !important;
+  color: var(--cl-ink) !important;
+  border: 1px solid var(--cl-rule-strong) !important;
+  box-shadow: none !important;
+}
+
+html[data-template="classic"] .ch-actions .cal-booking-button:hover {
+  background: var(--cl-ink) !important;
+  color: rgb(var(--color-fill)) !important;
+}
+
+html[data-template="classic"] .ch-actions .cal-booking-button svg {
+  width: 14px;
+  height: 14px;
+  margin-left: 0;
+  stroke: currentColor;
+  fill: none;
+  animation: none;
+}
+
+.ch-previously {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  margin: 72px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid var(--cl-rule);
+  font-family: var(--font-mono) !important;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.ch-previously dt {
+  color: var(--cl-accent);
+}
+
+.ch-previously dd {
+  margin: 0;
+  color: var(--cl-muted);
+}
+
+/* Writing index */
+.ch-writing {
+  padding: 24px 0 96px;
+}
+
+.ch-section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-top: 14px;
+  border-top: 1px solid var(--cl-rule-strong);
+  margin-bottom: 28px;
+}
+
+html[data-template="classic"] .ch-label {
+  margin: 0;
+  font-family: var(--font-mono) !important;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cl-muted);
+}
+
+.ch-more {
+  font-family: var(--font-mono) !important;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cl-muted);
+  text-decoration: none;
+}
+
+.ch-more:hover {
+  color: var(--cl-accent);
+}
+
+.ch-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ch-list li + li {
+  border-top: 1px solid var(--cl-rule);
+}
+
+.ch-item {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  column-gap: 16px;
+  row-gap: 6px;
+  align-items: baseline;
+  padding: 20px 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.ch-item-index,
+.ch-item-date {
+  font-family: var(--font-mono) !important;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  font-variant-numeric: tabular-nums;
+  color: var(--cl-faint);
+  transition: color 0.18s ease;
+}
+
+.ch-item-title {
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.03em;
+  color: var(--cl-ink);
+  transition: color 0.18s ease;
+}
+
+.ch-item-desc {
+  grid-column: 2 / 3;
+  max-width: 620px;
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--cl-muted);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.ch-item:hover .ch-item-title,
+.ch-item:hover .ch-item-index {
+  color: var(--cl-accent);
+}
+
+@media (max-width: 640px) {
+  .ch-intro {
+    padding: 64px 0 48px;
+  }
+
+  .ch-lede {
+    font-size: 17px;
+  }
+
+  .ch-previously {
+    margin-top: 48px;
+  }
+
+  .ch-item {
+    grid-template-columns: 1fr auto;
+  }
+
+  .ch-item-index {
+    display: none;
+  }
+
+  .ch-item-title {
+    font-size: 19px;
+  }
+
+  .ch-item-desc {
+    grid-column: 1 / -1;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+}
+
+/* ── Newsletter: a ruled row, not a card ── */
+html[data-template="classic"] .newsletter-section {
+  padding-top: 0;
+  padding-bottom: 96px;
+}
+
+html[data-template="classic"] .newsletter-form > div {
+  padding: 14px 0 0;
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--cl-rule-strong);
+  border-radius: 0;
+}
+
+html[data-template="classic"] .newsletter-form h3 {
+  margin: 0 0 18px;
+  font-family: var(--font-mono) !important;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cl-muted);
+}
+
+html[data-template="classic"] .newsletter-form h3::before {
+  content: "( 03 ) ";
+  color: var(--cl-accent);
+}
+
+html[data-template="classic"] .newsletter-form p {
+  font-size: 15px;
+  color: var(--cl-ink);
+  opacity: 1;
+}
+
+html[data-template="classic"] .newsletter-form form {
+  max-width: 520px;
+}
+
+html[data-template="classic"] .newsletter-form input {
+  height: 42px;
+  padding: 0 14px;
+  font-size: 14px;
+  background: rgb(var(--color-card));
+  border: 1px solid var(--cl-rule);
+  border-radius: 6px;
+  box-shadow: none;
+}
+
+html[data-template="classic"] .newsletter-form input:focus {
+  border-color: var(--cl-ink);
+  --tw-ring-shadow: none;
+}
+
+html[data-template="classic"] .newsletter-form button {
+  height: 42px;
+  padding: 0 18px;
+  font-size: 14px;
+  border-radius: 6px;
+  background: var(--cl-ink);
+  color: rgb(var(--color-fill));
+}
+
+html[data-template="classic"] .newsletter-form button:hover {
+  background: var(--cl-accent);
+  opacity: 1;
+}
+
+/* ── Article pages ── */
+html[data-template="classic"] .post-title-wired {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  letter-spacing: -0.04em;
+  line-height: 1.02;
+  color: var(--cl-ink);
+}
+
+html[data-template="classic"] .article-surface {
+  background: transparent;
+}
+
+html[data-template="classic"] .date-time-row {
+  margin-bottom: 40px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--cl-rule-strong);
+  font-family: var(--font-mono) !important;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cl-muted);
+}
+
+html[data-template="classic"] article.prose {
+  --tw-prose-body: rgba(var(--color-text-base), 0.88);
+  --tw-prose-headings: var(--cl-ink);
+  --tw-prose-bold: var(--cl-ink);
+  --tw-prose-quotes: var(--cl-ink);
+  --tw-prose-quote-borders: var(--cl-accent);
+  --tw-prose-hr: var(--cl-rule);
+  --tw-prose-counters: var(--cl-accent);
+  --tw-prose-bullets: var(--cl-accent);
+  font-family: var(--font-sans);
+  font-size: 18px;
+  line-height: 1.68;
+  letter-spacing: -0.008em;
+}
+
+html[data-template="classic"] article.prose h2,
+html[data-template="classic"] article.prose h3,
+html[data-template="classic"] article.prose h4 {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+}
+
+html[data-template="classic"] article.prose h2 {
+  font-size: 30px;
+  margin-top: 56px;
+}
+
+html[data-template="classic"] article.prose h3 {
+  font-size: 22px;
+}
+
+html[data-template="classic"] article.prose a,
+html[data-template="classic"][data-theme="dark"] article.prose a {
+  color: var(--cl-ink) !important;
+  text-decoration: underline;
+  text-decoration-color: var(--cl-accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+html[data-template="classic"] article.prose a:hover,
+html[data-template="classic"][data-theme="dark"] article.prose a:hover {
+  color: var(--cl-accent) !important;
+}
+
+html[data-template="classic"] article.prose code {
+  font-family: var(--font-mono) !important;
+}
+
+html[data-template="classic"] article.prose img {
+  border-radius: 2px;
+}
+
+/* ── Footer ── */
+html[data-template="classic"] .professional-footer {
+  background: transparent;
+  border-top: 1px solid var(--cl-rule-strong);
+}
+
+html[data-template="classic"] .professional-footer .footer-container {
+  max-width: calc(var(--cl-wide) + 2 * var(--cl-gutter));
+  margin: 0 auto;
+}
+
+html[data-template="classic"] .professional-footer .brand-name {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+}
+
+html[data-template="classic"] .professional-footer .section-title {
+  font-family: var(--font-mono) !important;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cl-accent);
+}
+
+html[data-template="classic"] .professional-footer .footer-link {
+  color: var(--cl-muted);
+}
+
+html[data-template="classic"] .professional-footer .footer-link:hover {
+  color: var(--cl-ink);
+}
+
+html[data-template="classic"] .newsletter-form > div > p:last-child {
+  font-size: 12px;
+  color: var(--cl-faint);
+}
+
+/* ── Brands: ruled spec cells, logos in full colour, role + period always visible ── */
+.ch-brands {
+  padding: 8px 0 72px;
+}
+
+html[data-template="classic"] .ch-brands .companies-container {
+  padding: 0;
+  text-align: left;
+}
+
+html[data-template="classic"] .ch-brands .companies-title {
+  display: none;
+}
+
+html[data-template="classic"] .ch-brands .companies-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--cl-rule);
+  background: rgba(var(--color-card), 0.55);
+}
+
+html[data-template="classic"] .ch-brands .company-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+  min-height: 188px;
+  padding: 0;
+  border-left: 1px solid var(--cl-rule);
+}
+
+html[data-template="classic"] .ch-brands .company-item:first-child {
+  border-left: 0;
+}
+
+html[data-template="classic"] .ch-brands .company-item img,
+html[data-template="classic"] .ch-brands .company-item img.meta-logo,
+html[data-template="classic"] .ch-brands .company-item img.primary-logo,
+html[data-template="classic"] .ch-brands .company-item[data-company="Starbucks"] img {
+  align-self: center;
+  width: auto;
+  height: 40px;
+  max-width: 72%;
+  margin: 44px auto 0;
+  object-fit: contain;
+  opacity: 1;
+  filter: none;
+  mix-blend-mode: multiply;
+  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+html[data-template="classic"] .ch-brands .company-item[data-company="Starbucks"] img {
+  height: 30px;
+}
+
+html[data-template="classic"] .ch-brands .company-item img.primary-logo {
+  height: 52px;
+  margin-top: 38px;
+}
+
+html[data-template="classic"] .ch-brands .company-item:hover img {
+  transform: translateY(-2px);
+}
+
+html[data-template="classic"] .ch-brands .company-tooltip,
+html[data-template="classic"][data-theme="dark"] .ch-brands .company-tooltip {
+  position: static;
+  transform: none;
+  opacity: 1;
+  margin: 24px 0 0;
+  padding: 12px 16px 14px;
+  white-space: normal;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--cl-rule);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+html[data-template="classic"] .ch-brands .company-tooltip .role {
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--cl-ink);
+}
+
+html[data-template="classic"] .ch-brands .company-tooltip .period {
+  margin-top: 4px;
+  font-family: var(--font-mono) !important;
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  color: var(--cl-accent);
+}
+
+/* Dark: logos sit on light plates so the colours you picked still read */
+html[data-template="classic"][data-theme="dark"] .ch-brands .company-item img {
+  mix-blend-mode: normal;
+}
+
+html[data-template="classic"][data-theme="dark"] .ch-brands .companies-row {
+  background: rgb(244, 245, 247);
+  border-color: rgb(244, 245, 247);
+}
+
+html[data-template="classic"][data-theme="dark"] .ch-brands .company-item {
+  border-left-color: rgba(11, 22, 64, 0.12);
+}
+
+html[data-template="classic"][data-theme="dark"] .ch-brands .company-tooltip {
+  border-top-color: rgba(11, 22, 64, 0.12);
+}
+
+html[data-template="classic"][data-theme="dark"] .ch-brands .company-tooltip .role {
+  color: rgb(11, 22, 64);
+}
+
+html[data-template="classic"][data-theme="dark"] .ch-brands .company-tooltip .period {
+  color: rgb(35, 64, 240);
+}
+
+@media (max-width: 900px) {
+  html[data-template="classic"] .ch-brands .companies-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  html[data-template="classic"] .ch-brands .company-item {
+    border-left: 0;
+    border-top: 1px solid var(--cl-rule);
+  }
+
+  html[data-template="classic"] .ch-brands .company-item:nth-child(-n + 2) {
+    border-top: 0;
+  }
+
+  html[data-template="classic"] .ch-brands .company-item:nth-child(even) {
+    border-left: 1px solid var(--cl-rule);
+  }
+}
+
+/* ── Hero figure ── */
+html[data-template="classic"] .ch-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
+  align-items: center;
+  gap: 48px;
+  padding-top: 72px;
+  padding-bottom: 56px;
+}
+
+.ch-figure {
+  position: relative;
+  margin: 0;
+}
+
+.ch-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  mix-blend-mode: multiply;
+}
+
+.ch-figure figcaption {
+  margin-top: 8px;
+  font-family: var(--font-mono) !important;
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cl-faint);
+  text-align: right;
+}
+
+/* Dark: invert the cyanotype so it reads as a blueprint */
+html[data-template="classic"][data-theme="dark"] .ch-figure img {
+  filter: invert(1) hue-rotate(180deg) saturate(0.6) brightness(1.1);
+  mix-blend-mode: screen;
+}
+
+@media (max-width: 900px) {
+  html[data-template="classic"] .ch-intro {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+
+  .ch-figure {
+    max-width: 320px;
+    margin: 0 auto;
+  }
+}
+
+/* Brand cell fixes: equal columns, centred logos, white logo backgrounds blend into the cell */
+html[data-template="classic"] .ch-brands .companies-row {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  background: transparent;
+}
+
+html[data-template="classic"] .ch-brands .company-item {
+  background: rgb(var(--color-card));
+}
+
+html[data-template="classic"] .ch-brands .company-item img,
+html[data-template="classic"] .ch-brands .company-item img.meta-logo,
+html[data-template="classic"] .ch-brands .company-item img.primary-logo,
+html[data-template="classic"] .ch-brands .company-item[data-company="Starbucks"] img {
+  margin: auto;
+  padding-top: 20px;
+  box-sizing: content-box;
+}
+
+html[data-template="classic"] .ch-brands .company-tooltip,
+html[data-template="classic"][data-theme="dark"] .ch-brands .company-tooltip {
+  width: 100%;
+  min-height: 72px;
+  margin-top: 20px;
+  left: auto;
+  bottom: auto;
+}
+
+html[data-template="classic"][data-theme="dark"] .ch-brands .company-item {
+  background: rgb(244, 245, 247);
+}
+
+html[data-template="classic"][data-theme="dark"] .ch-brands .company-item img {
+  mix-blend-mode: multiply;
+}
+
+@media (max-width: 900px) {
+  html[data-template="classic"] .ch-brands .companies-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 901px) {
+  html[data-template="classic"] .ch-intro {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 460px);
+  }
+}
+
+/* The intro is an isolated stacking context (for the grid), so give it the page colour
+   for the illustration's multiply blend to land on. */
+html[data-template="classic"] .ch-intro {
+  background: rgb(var(--color-fill));
+}
+
+html[data-template="classic"] .ch-brands .companies-row {
+  justify-items: stretch;
+  align-items: stretch;
+}
+
+html[data-template="classic"] .ch-brands .company-item {
+  width: 100%;
+}
+
+/* ==========================================================================
+   Refinement pass — lighter weights, hairline rules, quieter controls
+   ========================================================================== */
+html[data-template="classic"],
+html[data-template="classic"][data-theme="light"] {
+  --cl-rule-strong: rgba(11, 22, 64, 0.22);
+  --cl-grid: rgba(35, 64, 240, 0.045);
+}
+
+html[data-template="classic"][data-theme="dark"] {
+  --cl-rule-strong: rgba(226, 234, 255, 0.24);
+  --cl-grid: rgba(160, 190, 255, 0.06);
+}
+
+html[data-template="classic"] .header .logo::after {
+  font-weight: 400;
+}
+
+html[data-template="classic"] .header .logo::before {
+  border-width: 1.5px;
+}
+
+/* Identity row: dithered portrait + label */
+html[data-template="classic"] .ch-id {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 36px;
+}
+
+html[data-template="classic"] .ch-id .ch-fig {
+  display: block;
+  margin: 0;
+  line-height: 1.8;
+}
+
+/* Portrait: dither canvas renders at 2x and is shown at 144px for fine dots; colour photo fades in on hover */
+html[data-template="classic"] .ch-portrait {
+  position: relative;
+  flex: none;
+  width: 144px;
+  height: 144px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px var(--cl-rule), 0 0 0 5px rgb(var(--color-fill)), 0 0 0 6px var(--cl-rule);
+}
+
+html[data-template="classic"] .ch-portrait-img {
+  display: block !important;
+}
+
+html[data-template="classic"] .ch-portrait canvas,
+html[data-template="classic"] .ch-portrait-img > div {
+  width: 144px !important;
+  height: 144px !important;
+  image-rendering: auto !important;
+}
+
+html[data-template="classic"] .ch-portrait-color {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+
+html[data-template="classic"] .ch-portrait:hover .ch-portrait-color {
+  opacity: 1;
+}
+
+html[data-template="classic"] .ch-title {
+  font-size: clamp(40px, 6vw, 76px);
+  font-weight: 300;
+  letter-spacing: -0.045em;
+  line-height: 1.02;
+}
+
+html[data-template="classic"] .ch-lede {
+  font-size: 17px;
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--cl-muted);
+  max-width: 520px;
+}
+
+html[data-template="classic"] .ch-btn,
+html[data-template="classic"] .ch-actions .cal-booking-button {
+  height: 36px !important;
+  padding: 0 14px !important;
+  font-size: 13px !important;
+  font-weight: 450 !important;
+  border-radius: 999px !important;
+}
+
+html[data-template="classic"] .ch-actions .cal-booking-button {
+  border-color: var(--cl-rule-strong) !important;
+}
+
+html[data-template="classic"] .ch-figure {
+  max-width: 400px;
+  justify-self: end;
+}
+
+html[data-template="classic"] .ch-item-title {
+  font-size: 19px;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+}
+
+html[data-template="classic"] .ch-item-desc {
+  font-size: 13.5px;
+}
+
+html[data-template="classic"] .ch-brands .company-tooltip .role {
+  font-weight: 400;
+}
+
+/* Brand cells: fixed logo band + caption band so dividers and text line up across the row */
+html[data-template="classic"] .ch-brands .company-item {
+  display: grid;
+  grid-template-rows: 112px 1fr;
+  grid-template-columns: minmax(0, 1fr);
+  justify-content: stretch;
+  min-height: 0;
+}
+
+html[data-template="classic"] .ch-brands .company-item img,
+html[data-template="classic"] .ch-brands .company-item img.meta-logo,
+html[data-template="classic"] .ch-brands .company-item img.primary-logo,
+html[data-template="classic"] .ch-brands .company-item[data-company="Starbucks"] img {
+  align-self: center;
+  justify-self: center;
+  margin: 0;
+  padding: 0;
+}
+
+html[data-template="classic"] .ch-brands .company-tooltip,
+html[data-template="classic"][data-theme="dark"] .ch-brands .company-tooltip {
+  margin: 0;
+  min-height: 0;
+  padding: 14px 16px 16px;
+}
+
+/* ==========================================================================
+   Listing pages (Posts, Books, …) — page title + flat illustrated post cards
+   ========================================================================== */
+.pc-illustration {
+  display: none;
+}
+
+html[data-template="classic"] main#main-content:not(.index-main) {
+  max-width: calc(var(--cl-wide) + 2 * var(--cl-gutter));
+  padding: 0 var(--cl-gutter) 24px;
+}
+
+html[data-template="classic"] main#main-content:not(.index-main) > h1 {
+  margin-top: 64px;
+  font-family: var(--font-sans);
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 300;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  color: var(--cl-ink);
+}
+
+html[data-template="classic"] main#main-content:not(.index-main) > span {
+  display: block;
+  margin-top: 12px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--cl-rule-strong);
+  font-family: var(--font-mono) !important;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cl-muted);
+}
+
+html[data-template="classic"] main#main-content:not(.index-main) > p:empty {
+  margin: 0 0 32px;
+}
+
+/* Card: no chrome, hairline frame, illustration plate on white */
+html[data-template="classic"] article.group {
+  height: 100%;
+  border-radius: 0;
+  background: transparent;
+}
+
+html[data-template="classic"] article.group > div.absolute {
+  display: none;
+}
+
+html[data-template="classic"] article.group > div.relative {
+  flex: 1;
+  border-radius: 0;
+  border: 1px solid var(--cl-rule);
+  background: rgb(var(--color-card));
+  transition: border-color 0.25s ease;
+}
+
+html[data-template="classic"] article.group:hover > div.relative {
+  border-color: var(--cl-accent);
+}
+
+html[data-template="classic"] article.group > div.relative > div.p-4 {
+  padding: 0;
+  background: #fff;
+  border-bottom: 1px solid var(--cl-rule);
+}
+
+html[data-template="classic"] article.group .aspect-\[16\/9\] {
+  border-radius: 0;
+  box-shadow: none;
+  background: #fff;
+}
+
+html[data-template="classic"] article.group .has-illustration > img:not(.pc-illustration) {
+  display: none;
+}
+
+html[data-template="classic"] article.group .pc-illustration {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 3% 4%;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+html[data-template="classic"] article.group:hover .pc-illustration {
+  transform: scale(1.04);
+}
+
+html[data-template="classic"][data-theme="dark"] article.group > div.relative > div.p-4,
+html[data-template="classic"][data-theme="dark"] article.group .aspect-\[16\/9\] {
+  background: rgb(var(--color-fill));
+}
+
+html[data-template="classic"][data-theme="dark"] article.group .pc-illustration {
+  filter: invert(1) hue-rotate(180deg) saturate(0.6) brightness(1.1);
+  mix-blend-mode: screen;
+}
+
+html[data-template="classic"] article.group > div.relative > div.flex-1 {
+  padding: 18px 20px 20px;
+}
+
+html[data-template="classic"] article.group .mb-3 {
+  margin-bottom: 10px;
+  opacity: 1;
+  font-family: var(--font-mono) !important;
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cl-faint);
+}
+
+html[data-template="classic"] article.group .mb-3 svg {
+  display: none;
+}
+
+html[data-template="classic"] article.group h2,
+html[data-template="classic"] article.group h3 {
+  font-family: var(--font-sans);
+  font-size: 19px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  color: var(--cl-ink);
+}
+
+html[data-template="classic"] article.group p {
+  margin-top: 8px;
+  font-size: 13.5px;
+  font-style: normal;
+  line-height: 1.55;
+  opacity: 1;
+  color: var(--cl-muted);
+}
+
+html[data-template="classic"] article.group .mt-4 {
+  margin-top: 14px;
+  font-family: var(--font-mono) !important;
+  font-size: 10.5px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+html[data-template="classic"] article.group .mt-4 span {
+  color: var(--cl-faint);
+}
+
+html[data-template="classic"] article.group:hover .mt-4 span {
+  color: var(--cl-accent);
+}
+
+/* ==========================================================================
+   Dark mode: near-black + amber (light mode stays cyanotype)
+   ========================================================================== */
+html[data-template="classic"][data-theme="dark"] {
+  --color-fill: 11, 10, 9;
+  --color-text-base: 238, 232, 220;
+  --color-accent: 242, 172, 62;
+  --color-card: 20, 19, 17;
+  --color-card-muted: 28, 26, 23;
+  --color-border: 52, 48, 42;
+
+  --cl-ink: rgb(238, 232, 220);
+  --cl-muted: rgba(238, 232, 220, 0.62);
+  --cl-faint: rgba(238, 232, 220, 0.38);
+  --cl-rule: rgba(238, 232, 220, 0.1);
+  --cl-rule-strong: rgba(238, 232, 220, 0.2);
+  --cl-grid: rgba(242, 172, 62, 0.05);
+  --cl-accent: rgb(242, 172, 62);
+  --cl-on-accent: rgb(11, 10, 9);
+
+  /* portrait prints positive on a warm paper disc, like the brand plates (dark mode maps light pixels to --term-text) */
+  --term-bg: #3A2A12;
+  --term-text: #ECE6DA;
+}
+
+/* Inverting the navy ink lands on amber, so no hue shift needed */
+html[data-template="classic"][data-theme="dark"] .ch-figure img,
+html[data-template="classic"][data-theme="dark"] article.group .pc-illustration {
+  filter: invert(1) hue-rotate(-16deg) saturate(1.35) brightness(0.95);
+  mix-blend-mode: screen;
+}
+
+/* Brand plates: warm paper on black */
+html[data-template="classic"][data-theme="dark"] .ch-brands .companies-row,
+html[data-template="classic"][data-theme="dark"] .ch-brands .company-item {
+  background: rgb(236, 231, 222);
+  border-color: rgba(11, 10, 9, 0.1);
+}
+
+html[data-template="classic"][data-theme="dark"] .ch-brands .company-tooltip {
+  border-top-color: rgba(11, 10, 9, 0.1);
+}
+
+html[data-template="classic"][data-theme="dark"] .ch-brands .company-tooltip .role {
+  color: rgb(20, 18, 15);
+}
+
+html[data-template="classic"][data-theme="dark"] .ch-brands .company-tooltip .period {
+  color: rgb(168, 104, 18);
+}
+
+/* ==========================================================================
+   Pagination: thin mono, hairline arrows
+   ========================================================================== */
+html[data-template="classic"] .pagination-wrapper {
+  align-items: center;
+  gap: 28px;
+  margin-top: 56px;
+  font-family: var(--font-mono) !important;
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  color: var(--cl-faint);
+}
+
+html[data-template="classic"] .pagination-wrapper > a,
+html[data-template="classic"] .pagination-wrapper > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 !important;
+  font-weight: 300;
+  color: var(--cl-muted);
+  text-decoration: none;
+  transition: color 0.18s ease;
+}
+
+html[data-template="classic"] .pagination-wrapper > a:hover {
+  color: var(--cl-accent);
+}
+
+html[data-template="classic"] .pagination-wrapper > .disabled {
+  color: var(--cl-faint);
+  opacity: 0.5;
+}
+
+html[data-template="classic"] .pagination-wrapper svg {
+  display: none;
+}
+
+html[data-template="classic"] .pagination-wrapper [aria-label="Previous"]::before {
+  content: "←";
+}
+
+html[data-template="classic"] .pagination-wrapper [aria-label="Next"]::after {
+  content: "→";
+}
+
+/* ==========================================================================
+   Projects series (homepage)
+   ========================================================================== */
+.ch-projects {
+  padding: 24px 0 72px;
+}
+
+.ch-project {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: 48px;
+  align-items: center;
+  padding: 36px;
+  border: 1px solid var(--cl-rule);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 0.18s ease, background-color 0.18s ease;
+}
+
+.ch-project:hover {
+  border-color: var(--cl-accent);
+}
+
+.ch-project-mark {
+  color: var(--cl-ink);
+}
+
+.ch-project-kicker,
+.ch-project-features,
+.ch-project-cta {
+  font-family: var(--font-mono) !important;
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.ch-project-kicker {
+  margin: 0 0 14px;
+  color: var(--cl-muted);
+}
+
+html[data-template="classic"] .ch-project-name {
+  margin: 0;
+  font-size: clamp(30px, 4vw, 44px);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  color: var(--cl-ink);
+}
+
+.ch-project-tagline {
+  max-width: 520px;
+  margin: 14px 0 0;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--cl-muted);
+}
+
+.ch-project-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--cl-faint);
+}
+
+.ch-project-features li::before {
+  content: "+ ";
+  color: var(--cl-accent);
+}
+
+.ch-project-cta {
+  display: inline-block;
+  margin-top: 26px;
+  color: var(--cl-ink);
+  transition: color 0.18s ease;
+}
+
+.ch-project:hover .ch-project-cta {
+  color: var(--cl-accent);
+}
+
+@media (max-width: 720px) {
+  .ch-project {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+    padding: 24px;
+  }
+
+  .ch-project-mark {
+    width: 120px;
+  }
+}
+
+/* ==========================================================================
+   Type system: one sans (system-ui), one mono (ui-monospace), light weights.
+   Enforced on every page so stray Tailwind/inline families can't leak in.
+   ========================================================================== */
+html[data-template="classic"] {
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  --font-heading: var(--font-sans);
+  --font-body: var(--font-sans);
+}
+
+html[data-template="classic"] body {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 350;
+  line-height: 1.6;
+  letter-spacing: -0.003em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* zero-specificity sans everywhere; any more specific !important rule (mono labels) still wins */
+:where(html[data-template="classic"] body *) {
+  font-family: var(--font-sans) !important;
+}
+
+:where(html[data-template="classic"] body) :is(code, pre, kbd, samp, pre *, code *, .font-mono) {
+  font-family: var(--font-mono) !important;
+  font-weight: 350;
+}
+
+:where(html[data-template="classic"] body) :is(h1, h2, h3, h4, h5, h6) {
+  font-weight: 400;
+}
+
+html[data-template="classic"] :is(b, strong) {
+  font-weight: 550;
+}
+
+html[data-template="classic"] :is(.font-bold, .font-semibold, .font-extrabold) {
+  font-weight: 500 !important;
+}
+
+html[data-template="classic"] .font-medium {
+  font-weight: 450 !important;
+}
+
+/* Lists: book + TIL rows */
+html[data-template="classic"] main#main-content li.my-6 a.text-lg,
+html[data-template="classic"] main#main-content li.my-6 a .text-lg,
+html[data-template="classic"] main#main-content li a.text-lg {
+  font-size: 16px;
+  font-weight: 450 !important;
+  letter-spacing: -0.01em;
+}
+
+html[data-template="classic"] main#main-content li.my-6 p {
+  margin-top: 4px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--cl-muted);
+}
+
+html[data-template="classic"] main#main-content li.my-6 .text-sm {
+  font-size: 12px;
+}
+
+/* Long-form prose */
+html[data-template="classic"] .prose {
+  font-size: 17px;
+  font-weight: 330;
+  line-height: 1.7;
+  letter-spacing: -0.003em;
+}
+
+html[data-template="classic"] .prose :is(h2, h3, h4) {
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+html[data-template="classic"] .prose :is(strong, b) {
+  font-weight: 550;
+}
+
+/* Display sizes trimmed */
+html[data-template="classic"] .ch-title {
+  font-weight: 300;
+}
+
+html[data-template="classic"] main#main-content:not(.index-main) > h1 {
+  font-size: clamp(32px, 4.4vw, 48px);
+  font-weight: 300;
+}
+
+html[data-template="classic"] .ch-item-title {
+  font-size: 17px;
+}
+
+html[data-template="classic"] .ch-lede {
+  font-size: 16px;
+}
+
+/* Footer + header labels */
+html[data-template="classic"] footer :is(a, p, span, li) {
+  font-weight: 350;
+}
+
+html[data-template="classic"] :is(h1, h2, h3, h4).font-bold,
+html[data-template="classic"] :is(h1, h2, h3, h4).font-semibold,
+html[data-template="classic"] .book-title {
+  font-weight: 400 !important;
+  letter-spacing: -0.025em;
+}
+
+/* Resume: same light weights as the rest of the site */
+html[data-template="classic"] .tactical-resume :is(h1, h2, h3, h4, strong, b, [class]) {
+  font-weight: 400 !important;
+}
+
+html[data-template="classic"] .tactical-resume h1 {
+  font-weight: 300 !important;
+}
+
+/* Light system-ui needs looser tracking than the old Geist settings */
+html[data-template="classic"] :is(.ch-title, .post-title-wired, .ch-project-name),
+html[data-template="classic"] main#main-content:not(.index-main) > h1 {
+  letter-spacing: -0.032em !important;
+}
+
+/* ==========================================================================
+   Footer: signature block + two quiet columns + mono baseline
+   ========================================================================== */
+html[data-template="classic"] .professional-footer .footer-default {
+  display: none;
+}
+
+html[data-template="classic"] .professional-footer {
+  margin-top: 96px;
+  border-top: 1px solid var(--cl-rule-strong);
+}
+
+html[data-template="classic"] .professional-footer .footer-classic {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 160px 160px;
+  column-gap: 48px;
+  padding: 56px var(--cl-gutter) 0;
+}
+
+.fc-kicker,
+.fc-head,
+.fc-now-label,
+.fc-base {
+  font-family: var(--font-mono) !important;
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.fc-accent {
+  color: var(--cl-accent);
+}
+
+.fc-kicker {
+  margin: 0 0 18px;
+  color: var(--cl-muted);
+}
+
+html[data-template="classic"] .fc-name {
+  margin: 0;
+  font-size: clamp(30px, 4vw, 44px);
+  font-weight: 250;
+  line-height: 1;
+  letter-spacing: -0.032em;
+  color: var(--cl-ink);
+}
+
+.fc-line {
+  max-width: 420px;
+  margin: 18px 0 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--cl-muted);
+}
+
+.fc-now {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 28px;
+  padding: 14px 18px 14px 16px;
+  border-left: 1px solid var(--cl-accent);
+  text-decoration: none;
+  transition: background-color 0.18s ease;
+}
+
+.fc-now:hover {
+  background: var(--cl-grid);
+}
+
+.fc-now-label {
+  color: var(--cl-faint);
+}
+
+.fc-now-name {
+  font-size: 15px;
+  color: var(--cl-ink);
+}
+
+.fc-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 4px;
+}
+
+.fc-head {
+  margin: 0 0 6px;
+  color: var(--cl-faint);
+}
+
+html[data-template="classic"] .fc-col a {
+  width: fit-content;
+  font-size: 14px;
+  color: var(--cl-muted);
+  text-decoration: none;
+  transition: color 0.18s ease;
+}
+
+html[data-template="classic"] .fc-col a:hover {
+  color: var(--cl-accent);
+}
+
+.fc-base {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 28px;
+  margin-top: 56px;
+  padding: 18px 0 28px;
+  border-top: 1px solid var(--cl-rule);
+  color: var(--cl-faint);
+}
+
+.fc-base-mid {
+  margin-right: auto;
+}
+
+html[data-template="classic"] .fc-base a {
+  color: var(--cl-faint);
+  text-decoration: none;
+  transition: color 0.18s ease;
+}
+
+html[data-template="classic"] .fc-base a:hover {
+  color: var(--cl-accent);
+}
+
+@media (max-width: 720px) {
+  html[data-template="classic"] .professional-footer .footer-classic {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 40px;
+    padding-top: 44px;
+  }
+
+  .fc-sign {
+    grid-column: 1 / -1;
+  }
+
+  .fc-base {
+    margin-top: 0;
+  }
+
+  .fc-base {
+    gap: 8px 20px;
+  }
+}
+
+/* base.css boxes every <footer>/<section> (px-6, max-width 1200/768); the classic grid owns width instead */
+html[data-template="classic"] footer.professional-footer,
+html[data-template="classic"] :is(.ab, .pj) > section {
+  max-width: none;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* ==========================================================================
+   Resume: site palette instead of tactical cyan/grey
+   ========================================================================== */
+html[data-template="classic"] .tactical-resume[class] {
+  --primary-rgb: 35, 64, 240;
+  --highlight-rgb: 35, 64, 240;
+  --bg-rgb: 244, 245, 247;
+  --surface-rgb: 255, 255, 255;
+  --text-rgb: 11, 22, 64;
+  --text-muted-rgb: 84, 94, 128;
+  --border-rgb: 11, 22, 64;
+}
+
+html[data-template="classic"][data-theme="dark"] .tactical-resume[class] {
+  --primary-rgb: 242, 172, 62;
+  --highlight-rgb: 242, 172, 62;
+  --bg-rgb: 11, 10, 9;
+  --surface-rgb: 22, 20, 18;
+  --text-rgb: 238, 232, 220;
+  --text-muted-rgb: 160, 152, 140;
+  --border-rgb: 238, 232, 220;
+}
+
+html[data-template="classic"] .tactical-resume .resume-header {
+  background: transparent;
+  border-color: var(--cl-rule);
+}
+
+html[data-template="classic"] .tactical-resume :is(.resume-header, .section-header)::before,
+html[data-template="classic"] .tactical-resume .resume-header::after {
+  display: none;
+}
+
+html[data-template="classic"] .tactical-resume .resume-name {
+  text-transform: none;
+  letter-spacing: -0.032em;
+  font-size: clamp(32px, 4.4vw, 48px);
+}
+
+html[data-template="classic"] .tactical-resume :is(.resume-title, .resume-location, .section-header) {
+  font-family: var(--font-mono) !important;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+html[data-template="classic"] .tactical-resume :is(.experience-card, .compact-card, .skill-card) {
+  background: rgba(var(--surface-rgb), 0.55);
+  border-color: var(--cl-rule);
+  border-left: 1px solid var(--cl-rule);
+  box-shadow: none;
+}
+
+html[data-template="classic"] .tactical-resume :is(.experience-card, .compact-card):hover {
+  border-left-color: var(--cl-accent);
+  box-shadow: inset 2px 0 0 var(--cl-accent);
+}
+
+html[data-template="classic"] .tactical-resume :is(.experience-card, .compact-card)::before {
+  background: rgb(var(--color-fill));
+  border-width: 1px;
+  border-color: rgba(var(--primary-rgb), 0.5);
+}
+
+html[data-template="classic"] .tactical-resume :is(.experience-section, .volunteer-section)::before {
+  background: var(--cl-rule);
+}
+
+html[data-template="classic"] .tactical-resume :is(.experience-section, .volunteer-section)::after {
+  background: transparent;
+}
+
+html[data-template="classic"] .tactical-resume .section-header::after {
+  background: var(--cl-rule);
+}
+
+html[data-template="classic"] .tactical-resume .bullet-highlight {
+  color: var(--cl-accent);
+}
+
+html[data-template="classic"] .tactical-resume .card-bullets li::before {
+  color: rgba(var(--primary-rgb), 0.55);
+}
+
+html[data-template="classic"] .tactical-resume :is(.detail-badge, .compact-badge) {
+  background: rgba(var(--primary-rgb), 0.06);
+  border-color: rgba(var(--primary-rgb), 0.18);
+  color: var(--cl-ink);
+  border-radius: 0;
+}
+
+html[data-template="classic"] .tactical-resume .tech-badge {
+  background: transparent;
+  border-color: var(--cl-rule);
+  color: var(--cl-muted);
+  border-radius: 0;
+}
+
+html[data-template="classic"] .tactical-resume .experience-card:hover :is(.tech-badge, .detail-badge) {
+  border-color: rgba(var(--primary-rgb), 0.35);
+  color: var(--cl-ink);
+  background: transparent;
+}
+
+html[data-template="classic"] .tactical-resume .card-status {
+  background: rgba(var(--primary-rgb), 0.1);
+  border-color: rgba(var(--primary-rgb), 0.3);
+  color: var(--cl-accent);
+  border-radius: 0;
+}
+
+html[data-template="classic"] .tactical-resume .skill-fill {
+  background: rgba(var(--primary-rgb), 0.7);
+}
+
+html[data-template="classic"] .tactical-resume .skill-bar {
+  background: var(--cl-rule);
+}
+
+html[data-template="classic"] .tactical-resume :is(.resume-title, .resume-location) {
+  letter-spacing: 0.1em;
+}
+
+/* Resume: thinner, crisper, square */
+html[data-template="classic"] .tactical-resume :is(.detail-badge, .compact-badge, .tech-badge, .card-status) {
+  border-radius: 0;
+  padding: 3px 8px;
+  border-width: 1px;
+  font-family: var(--font-mono) !important;
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+}
+
+html[data-template="classic"] .tactical-resume :is(.detail-badge, .compact-badge) {
+  background: transparent;
+  border-color: rgba(var(--primary-rgb), 0.28);
+}
+
+html[data-template="classic"] .tactical-resume .card-status {
+  background: transparent;
+  letter-spacing: 0.14em;
+}
+
+html[data-template="classic"] .tactical-resume :is(.experience-card, .compact-card, .skill-card, .resume-header) {
+  border-radius: 0;
+  background: transparent;
+}
+
+html[data-template="classic"] .tactical-resume :is(.card-bullets li, .compact-description) {
+  font-weight: 300 !important;
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+
+html[data-template="classic"] .tactical-resume :is(.card-company, .compact-title) {
+  font-weight: 350 !important;
+  letter-spacing: -0.02em;
+}
+
+html[data-template="classic"] .tactical-resume :is(.card-meta, .card-title, .compact-meta) {
+  font-weight: 300 !important;
+  font-size: 13px;
+}
+
+html[data-template="classic"] .tactical-resume .bullet-highlight {
+  font-weight: 300 !important;
+}
+
+html[data-template="classic"] .tactical-resume .download-btn {
+  border-radius: 0;
+  font-family: var(--font-mono) !important;
+  font-weight: 300 !important;
+}
+
+html[data-template="classic"] .tactical-resume :is(.card-bullets li, .compact-description) {
+  font-size: 14px;
+}
+
+html[data-template="classic"] .tactical-resume :is(.card-meta, .card-title, .compact-meta) {
+  font-size: 12.5px;
+}
+
+html[data-template="classic"] .tactical-resume :is(.detail-badge, .compact-badge, .tech-badge) {
+  font-size: 10px;
+  letter-spacing: 0;
+}
+
+html[data-template="classic"] .tactical-resume .bullet-link {
+  font-weight: 300 !important;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--cl-rule-strong);
+}
+
+@media (max-width: 640px) {
+  html[data-template="classic"] .tactical-resume .resume-divider {
+    display: none;
+  }
+
+  html[data-template="classic"] .tactical-resume .resume-subtitle {
+    flex-direction: column;
+    gap: 6px;
+  }
+}

@@ -18,6 +18,8 @@ import getSortedPosts from "@utils/getSortedPosts";
 import { SOCIALS } from "@config";
 import socialIcons from "@assets/socialIcons";
 import { portrait } from "@data/portrait";
+import { PROJECTS, currentProject } from "@data/projects";
+import LatticeMark from "@components/LatticeMark.astro";
 
 const posts = await getCollection("blog");
 
@@ -49,13 +51,12 @@ const socialCount = SOCIALS.filter(social => social.active).length;
         </div>
         <div class="hero-content">
           <h1 class="hero-title animate-in">
-            Startup Founder, Engineering Leader,<br /> and AI Enthusiast
+            I build the tools I wish existed.
           </h1>
 
           <p class="hero-description animate-in-slow">
-            Hi, I'm <strong>Arach</strong>. I'm a software engineer who loves
-            turning ideas into reality. From Startups to Meta, I've learned how 
-            to bridge the gap between technical execution and business vision.
+            Hi, I'm <strong>Arach</strong>. Fifteen years of shipping — founding
+            companies, a stretch at Meta, and now I'm back in the editor, building with my agents.
           </p>
 
           <div class="cta-buttons animate-in">
@@ -120,9 +121,9 @@ const socialCount = SOCIALS.filter(social => social.active).length;
           <div>
             <h2 class="ah-name">Arach Tchoupani</h2>
             <p class="ah-bio">
-              Startup founder, engineering leader, and AI enthusiast.
-              Software engineer turning ideas into reality — from startups to Meta,
-              bridging the gap between technical execution and business vision.
+              I build the tools I wish existed. Fifteen years of shipping —
+              founding companies, a stretch at Meta, and now I'm back in the
+              editor every day.
             </p>
             <div class="ah-links">
               <a href="https://arach.dev">arach.dev</a>
@@ -169,6 +170,84 @@ const socialCount = SOCIALS.filter(social => social.active).length;
         <h2 class="ah-heading">Newsletter</h2>
         <p class="ah-bio">Subscribe for updates on engineering, startups, and AI.</p>
         <a href="#newsletter" class="ah-view-all" onclick="document.querySelector('.newsletter-section')?.scrollIntoView({behavior:'smooth'}); return false;">Subscribe →</a>
+      </div>
+    </section>
+
+    <section id="classic-home" class="classic-home">
+      <div class="ch-intro">
+        <div class="ch-intro-text">
+        <div class="ch-id">
+          <div class="ch-portrait">
+            <DitheredPortrait client:load src="/assets/arach-dither-src.jpg" width={240} height={240} algorithm="atkinson" pixelSize={1} threshold={128} colorLight="#F4F5F7" colorDark="#2340F0" className="ch-portrait-img" />
+            <img class="ch-portrait-color" src="/assets/arach.jpg" alt="" width="400" height="400" loading="lazy" />
+          </div>
+          <p class="ch-fig"><span class="ch-accent">FIG.01</span> Arach Tchoupani<br />Builder, ex-Meta</p>
+        </div>
+        <h1 class="ch-title">I build the tools I&nbsp;wish existed.</h1>
+        <p class="ch-lede">
+          Fifteen years of shipping — founding companies, a stretch at Meta,
+          and now I'm <span class="ch-accent">back in the editor</span>, building with my agents.
+        </p>
+        <div class="ch-actions">
+          <a href="https://arach.dev" class="ch-btn ch-btn-primary">Explorations <span aria-hidden="true">↗</span></a>
+          <CalBooking client:load />
+        </div>
+        </div>
+        <figure class="ch-figure">
+          <img src="/assets/illustrations/keyswitch-cyanotype.jpg" alt="Exploded technical sketch of a mechanical keyboard switch" width="896" height="1120" />
+          <figcaption><span class="ch-accent">FIG.02</span> Key switch, exploded</figcaption>
+        </figure>
+      </div>
+
+      <div class="ch-brands">
+        <div class="ch-section-head">
+          <h2 class="ch-label"><span class="ch-accent">( 01 )</span> Previously</h2>
+          <span class="ch-more">2014 — 2023</span>
+        </div>
+        <CompanyLogos />
+      </div>
+
+      <div class="ch-projects">
+        <div class="ch-section-head">
+          <h2 class="ch-label"><span class="ch-accent">( 02 )</span> Projects</h2>
+          <span class="ch-more">No.&nbsp;{String(PROJECTS.length).padStart(2, "0")} — a series</span>
+        </div>
+        <a href={`/projects/${currentProject.slug}/`} class="ch-project">
+          <div class="ch-project-mark"><LatticeMark /></div>
+          <div class="ch-project-body">
+            <p class="ch-project-kicker"><span class="ch-accent">No.{String(PROJECTS.length).padStart(2, "0")}</span> {currentProject.kind}</p>
+            <h3 class="ch-project-name">{currentProject.name}</h3>
+            <p class="ch-project-tagline">{currentProject.tagline}</p>
+            <ul class="ch-project-features">
+              {currentProject.features.slice(0, 4).map(f => <li>{f.name}</li>)}
+            </ul>
+            <span class="ch-project-cta">Read the introduction →</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="ch-writing">
+        <div class="ch-section-head">
+          <h2 class="ch-label"><span class="ch-accent">( 03 )</span> Writing</h2>
+          <a href="/posts/" class="ch-more">All posts →</a>
+        </div>
+        <ol class="ch-list">
+          {sortedPosts.slice(0, 8).map(({ data, slug }, i) => {
+            const d = new Date(data.pubDatetime);
+            return (
+              <li>
+                <a href={`/posts/${slug}/`} class="ch-item">
+                  <span class="ch-item-index">{String(i + 1).padStart(2, "0")}</span>
+                  <span class="ch-item-title">{data.title}</span>
+                  <time class="ch-item-date" datetime={d.toISOString()}>
+                    {`${d.getUTCFullYear()}.${String(d.getUTCMonth() + 1).padStart(2, "0")}`}
+                  </time>
+                  {data.description && <span class="ch-item-desc">{data.description}</span>}
+                </a>
+              </li>
+            );
+          })}
+        </ol>
       </div>
     </section>
 

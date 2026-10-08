@@ -29,17 +29,17 @@ const { pdfUrl } = Astro.props;
     contact={resumeData.contact}
   />
 
-  <!-- Experience Section - Operational History -->
+  <!-- Experience -->
   <section class="experience-section">
-    <h2 class="section-header"><span>OPERATIONAL HISTORY</span></h2>
+    <h2 class="section-header"><span>Experience</span></h2>
     {resumeData.experience.map((exp, index) => (
       <TacticalResumeCard experience={exp} index={index} client:visible />
     ))}
   </section>
 
-  <!-- Education Section - Training -->
+  <!-- Education -->
   <section class="education-section">
-    <h2 class="section-header"><span>TRAINING</span></h2>
+    <h2 class="section-header"><span>Education</span></h2>
     {resumeData.education.map((edu) => (
       <div class="compact-card">
         <div class="compact-header">
@@ -52,9 +52,9 @@ const { pdfUrl } = Astro.props;
     ))}
   </section>
 
-  <!-- Volunteer Section - Allied Operations -->
+  <!-- Community -->
   <section class="volunteer-section">
-    <h2 class="section-header"><span>ALLIED OPERATIONS</span></h2>
+    <h2 class="section-header"><span>Community</span></h2>
     {resumeData.volunteer.map((vol) => (
       <div class="compact-card" data-featured={vol.featured ? "true" : "false"}>
         <div class="compact-header">
@@ -78,7 +78,7 @@ const { pdfUrl } = Astro.props;
           <polyline points="7 10 12 15 17 10"></polyline>
           <line x1="12" y1="15" x2="12" y2="3"></line>
         </svg>
-        DOWNLOAD_PDF
+        Download PDF
       </a>
     </div>
   )}

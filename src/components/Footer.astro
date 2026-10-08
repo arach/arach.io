@@ -1,6 +1,8 @@
 ---
 import Hr from "./Hr.astro";
 import Socials from "./Socials.astro";
+import { accounts } from "@data/agents";
+import { PROJECTS, currentProject } from "@data/projects";
 
 const currentYear = new Date().getFullYear();
 
@@ -9,6 +11,8 @@ export interface Props {
 }
 
 const { noMarginTop = false } = Astro.props;
+const elsewhere = accounts.filter(a => a.name !== "Instagram");
+const projectNo = String(PROJECTS.length).padStart(2, "0");
 ---
 
 <footer class={`professional-footer ${noMarginTop ? "" : "mt-auto"}`}>
@@ -45,6 +49,46 @@ const { noMarginTop = false } = Astro.props;
           <a href="/privacy/" class="footer-link">Privacy</a>
         </nav>
       </div>
+    </div>
+  </div>
+
+  <!-- Classic footer: signature + index -->
+  <div class="footer-container footer-classic">
+    <div class="fc-sign">
+      <p class="fc-kicker"><span class="fc-accent">FIG.∞</span> Signed</p>
+      <p class="fc-name">Arach Tchoupani</p>
+      <p class="fc-line">
+        I build the tools I wish existed, then write about what I learned.
+        Engineer, founder, back in the editor, building with my agents.
+      </p>
+      <a href={`/projects/${currentProject.slug}/`} class="fc-now">
+        <span class="fc-now-label">Now introducing</span>
+        <span class="fc-now-name"><span class="fc-accent">No.{projectNo}</span> {currentProject.name} →</span>
+      </a>
+    </div>
+
+    <nav class="fc-col" aria-label="Footer">
+      <p class="fc-head">Index</p>
+      <a href="/posts/">Ideas</a>
+      <a href="/til/">TIL</a>
+      <a href="/books/">Books</a>
+      <a href="/about/">About</a>
+      <a href="/resume/">Resume</a>
+    </nav>
+
+    <div class="fc-col">
+      <p class="fc-head">Elsewhere</p>
+      {elsewhere.map(a => (
+        <a href={a.href}>{a.name === "X / Twitter" ? "X" : a.name}</a>
+      ))}
+      <a href="/rss.xml">RSS</a>
+    </div>
+
+    <div class="fc-base">
+      <span>© {currentYear} Arach Tchoupani</span>
+      <span class="fc-base-mid" aria-hidden="true"></span>
+      <a href="/privacy/">Privacy</a>
+      <a href="#" class="fc-top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Top ↑</a>
     </div>
   </div>
 
@@ -199,7 +243,8 @@ const { noMarginTop = false } = Astro.props;
 
   /* === Template-specific footer visibility === */
   .footer-terminal,
-  .footer-industrial {
+  .footer-industrial,
+  .footer-classic {
     display: none;
   }
 

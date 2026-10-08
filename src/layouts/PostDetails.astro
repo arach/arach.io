@@ -40,6 +40,7 @@ const {
   author,
   description,
   thumbnail,
+  heroImage,
   readingTime,
   canonicalURL,
   pubDatetime,
@@ -48,8 +49,12 @@ const {
   thumbnailCrop,
 } = post.data;
 
-// Handle both string URLs and Astro image objects
-const thumbnailSrc = typeof thumbnail === 'string' ? thumbnail : thumbnail?.src;
+const resolveImageSrc = (img: typeof thumbnail) =>
+  typeof img === "string" ? img : img?.src;
+
+// Cards use thumbnail. The post banner can be a different heroImage.
+const thumbnailSrc = resolveImageSrc(thumbnail);
+const heroSrc = resolveImageSrc(heroImage) || thumbnailSrc;
 
 // Build thumbnail crop styles
 let thumbnailStyle: Record<string, string> = {};
@@ -125,26 +130,12 @@ const layoutProps = {
   <main id="main-content" class="relative z-0 bg-skin-fill" style="background: rgb(var(--color-fill));">
     <!-- Series tag removed - now handled by minimal navigation -->
     
-    <!-- Go back button -->
-    <div class="mb-4 mt-6">
-      <button
-        class="go-back-btn-inline"
-        onclick="(() => (history.length === 1) ? window.location = '/' : history.back())()"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
-          ><path
-            d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"
-          ></path>
-        </svg><span>back</span>
-      </button>
-    </div>
-
     <!-- Hero Image with overlapping title -->
-    {thumbnailSrc && (
+    {heroSrc && (
       <div class="hero-image-wrapper">
         <div class="hero-image-container">
           <img
-            src={thumbnailSrc}
+            src={heroSrc}
             alt={title}
             class="hero-image"
             loading="eager"
@@ -171,7 +162,7 @@ const layoutProps = {
     )}
 
     <!-- Fallback title if no thumbnail -->
-    {!thumbnailSrc && (
+    {!heroSrc && (
       <div class="title-with-series mb-4">
         <h1 transition:name={slugifyStr(title)} class="post-title-wired">{title}</h1>
         {showSeriesNav && (
@@ -260,6 +251,7 @@ const layoutProps = {
   /* Hero wrapper for overlapping title */
   .hero-image-wrapper {
     position: relative;
+    margin-top: 1rem;
     margin-bottom: 1.5rem;
   }
 
@@ -299,7 +291,7 @@ const layoutProps = {
 
   .title-overlay {
     background: linear-gradient(to top, rgb(var(--color-fill)) 20%, rgb(var(--color-fill) / 0.15) 60%, rgb(var(--color-fill) / 0) 100%);
-    padding: 3rem 0 0.5rem 0;
+    padding: 2rem 0 0.5rem 0;
   }
 
   .title-overlay .post-title-wired {
