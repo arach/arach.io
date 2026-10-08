@@ -133,6 +133,8 @@ export default function DitheredPortrait({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const grayscaleRef = useRef<Float32Array | null>(null);
   const [loaded, setLoaded] = useState(false);
+  const [themeReady, setThemeReady] = useState(false);
+  const [drawn, setDrawn] = useState(false);
   const [controlsOpen, setControlsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [algorithm, setAlgorithm] = useState<DitherAlgorithm>(initialAlgorithm);
@@ -148,6 +150,7 @@ export default function DitheredPortrait({
     const style = getComputedStyle(document.documentElement);
     const text = style.getPropertyValue("--term-text").trim();
     const bg = style.getPropertyValue("--term-bg").trim();
+    setThemeReady(true);
     if (!text || !bg) return;
     // In dark mode: text is the lighter color (amber), bg is darker
     // In light mode: bg is the lighter color (cream), text is darker
@@ -277,11 +280,13 @@ export default function DitheredPortrait({
         );
       }
     }
+    setDrawn(true);
   }, [algorithm, pixelSize, threshold, activeLight, activeDark]);
 
   useEffect(() => {
-    if (loaded) render();
-  }, [loaded, render]);
+    // Wait for the theme colours so the first paint is the final one
+    if (loaded && themeReady) render();
+  }, [loaded, themeReady, render]);
 
   const handleCopy = async () => {
     const canvas = canvasRef.current;
@@ -321,31 +326,30 @@ export default function DitheredPortrait({
         lineHeight: 0,
       }}
     >
-      {/* Loading state */}
-      {!loaded && (
-        <div
-          style={{
-            width,
-            height,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            background: activeDark,
-            color: activeLight,
-            fontFamily: "monospace",
-            fontSize: "1.5rem",
-          }}
-        >
-          <span style={{ animation: "blink 1.2s step-end infinite" }}>█</span>
-        </div>
-      )}
+      {/* Server-rendered so the photo starts downloading with the HTML, not after hydration */}
+      <img src={src} alt="" aria-hidden="true" decoding="async" style={{ display: "none" }} />
+
+      {/* Placeholder: theme background straight from CSS, so it's right before hydration */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: `var(--term-bg, ${colorDark})`,
+          opacity: drawn ? 0 : 0.35,
+          transition: "opacity 0.6s ease",
+        }}
+      />
 
       <canvas
         ref={canvasRef}
         width={width}
         height={height}
+        className="dp-canvas"
+        data-drawn={drawn ? "true" : "false"}
         style={{
-          display: loaded ? "block" : "none",
+          position: "relative",
+          display: "block",
           width: `${width}px`,
           height: `${height}px`,
           imageRendering: "pixelated",

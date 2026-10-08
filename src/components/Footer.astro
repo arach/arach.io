@@ -11,7 +11,7 @@ export interface Props {
 }
 
 const { noMarginTop = false } = Astro.props;
-const elsewhere = accounts.filter(a => a.name !== "Instagram");
+const elsewhere = accounts.filter(a => a.name !== "Instagram" && a.name !== "Email");
 const projectNo = String(PROJECTS.length).padStart(2, "0");
 ---
 
@@ -59,7 +59,7 @@ const projectNo = String(PROJECTS.length).padStart(2, "0");
       <p class="fc-name">Arach Tchoupani</p>
       <p class="fc-line">
         I build the tools I wish existed, then write about what I learned.
-        Engineer, founder, back in the editor, building with my agents.
+        Engineer, founder, gearing up for my next venture.
       </p>
       <a href={`/projects/${currentProject.slug}/`} class="fc-now">
         <span class="fc-now-label">Now introducing</span>
@@ -82,6 +82,7 @@ const projectNo = String(PROJECTS.length).padStart(2, "0");
         <a href={a.href}>{a.name === "X / Twitter" ? "X" : a.name}</a>
       ))}
       <a href="/rss.xml">RSS</a>
+      <a href="/about/#contact">Connect</a>
     </div>
 
     <div class="fc-base">

@@ -10,12 +10,13 @@ import { projects, accounts } from "@data/agents";
 const layoutProps = {
   title: "About - Arach Tchoupani",
   description:
-    "Engineer and founder. Fifteen years building products and the teams behind them, now back in the editor every day, building with my agents.",
+    "Engineer and founder. Fifteen years building products and the teams behind them, now building software I wish existed and gearing up for my next venture.",
 };
 
 const experience = resumeData.experience;
 const building = projects.filter(p => p.href);
-const contacts = accounts.filter(a => a.name !== "Instagram");
+// No direct email: conversations start through the booking flow
+const contacts = accounts.filter(a => a.name !== "Instagram" && a.name !== "Email");
 const education = resumeData.education[0];
 const outside = resumeData.volunteer;
 ---
@@ -47,8 +48,8 @@ const outside = resumeData.volunteer;
       <p class="ab-lede">
         I'm an engineer and founder. For fifteen years I've built products and
         the teams behind them, at seed-stage startups in New York and Montreal,
-        a company I co-founded, and Meta. These days I'm
-        <span class="ch-accent">back in the editor</span>, building with my agents.
+        a company I co-founded, and Meta. I've been building software I wish
+        existed, and now I'm gearing up for my <span class="ch-accent">next venture</span>.
       </p>
 
       <dl class="ab-stats">
@@ -147,22 +148,34 @@ const outside = resumeData.volunteer;
       </ol>
     </section>
 
-    <section class="ab-section ab-contact">
+    <section class="ab-section ab-contact" id="contact">
       <div class="ch-section-head">
         <h2 class="ch-label"><span class="ch-accent">( 05 )</span> Say hello</h2>
+        <span class="ch-more"><span class="ab-dot" aria-hidden="true"></span>Open to conversations</span>
       </div>
-      <ul class="ab-links">
-        {contacts.map(a => (
-          <li>
-            <a href={a.href}>
-              <span class="ab-link-name">{a.name}</span>
-              <span class="ab-link-handle">{a.handle}</span>
-            </a>
-          </li>
-        ))}
-      </ul>
-      <div class="ch-actions">
-        <CalBooking client:load />
+      <div class="ab-invite">
+        <div>
+          <p class="ab-invite-title">Building something ambitious? <span class="ab-invite-soft">Let's talk.</span></p>
+          <p class="ab-invite-text">
+            I'm gearing up for my next venture. If you're working on something
+            interesting, assembling a founding team, or want to compare notes on
+            agents and tools, I'd like to hear from you.
+          </p>
+          <div class="ch-actions ab-invite-actions">
+            <CalBooking client:load />
+            <span class="ab-invite-note">Request a time · confirmed by Arach</span>
+          </div>
+        </div>
+        <ul class="ab-links">
+          {contacts.map(a => (
+            <li>
+              <a href={a.href}>
+                <span class="ab-link-name">{a.name === "X / Twitter" ? "X" : a.name}</span>
+                <span class="ab-link-handle">{a.handle} <span class="ab-link-arrow" aria-hidden="true">↗</span></span>
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   </main>
@@ -395,21 +408,116 @@ const outside = resumeData.volunteer;
     color: var(--ab-faint);
   }
 
-  .ab-links {
+  .ab-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-right: 8px;
+    border-radius: 50%;
+    background: var(--ab-accent);
+    box-shadow: 0 0 0 3px rgba(var(--color-accent), 0.18);
+    vertical-align: 1px;
+    animation: ab-pulse 2.4s ease-in-out infinite;
+  }
+
+  @keyframes ab-pulse {
+    50% { box-shadow: 0 0 0 6px rgba(var(--color-accent), 0); }
+  }
+
+  .ab-invite {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: 56px;
+    padding: 40px;
+    border: 1px solid var(--ab-rule);
+    background:
+      linear-gradient(var(--cl-grid, transparent) 1px, transparent 1px) 0 0 / 24px 24px,
+      linear-gradient(90deg, var(--cl-grid, transparent) 1px, transparent 1px) 0 0 / 24px 24px;
+  }
+
+  .ab-invite-title {
+    margin: 0;
+    font-size: clamp(26px, 3.2vw, 36px);
+    font-weight: 300;
+    line-height: 1.15;
+    letter-spacing: -0.032em;
+    color: var(--ab-ink);
+  }
+
+  .ab-invite-soft {
+    display: block;
+    color: var(--ab-accent);
+  }
+
+  .ab-invite-text {
+    max-width: 520px;
+    margin: 18px 0 0;
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--ab-muted);
+  }
+
+  .ab-invite-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: 28px;
+  }
+
+  .ab .ab-invite .ab-invite-actions :global(.cal-booking-button) {
+    border-radius: 0 !important;
+    background: var(--ab-accent) !important;
+    border-color: var(--ab-accent) !important;
+    color: var(--cl-on-accent, #fff) !important;
+    box-shadow: none !important;
+  }
+
+  .ab .ab-invite .ab-invite-actions :global(.cal-booking-button:hover) {
+    filter: brightness(1.08);
+  }
+
+  .ab-invite-note {
+    margin-left: 6px;
+    font-family: var(--ab-mono) !important;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ab-faint);
+  }
+
+  .ab-links {
+    display: flex;
+    flex-direction: column;
+    align-self: end;
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
   .ab-links a {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
+    display: grid;
+    grid-template-columns: 88px minmax(0, 1fr);
+    align-items: baseline;
+    gap: 12px;
     padding: 14px 0;
     border-top: 1px solid var(--ab-rule);
-    margin-right: 24px;
+  }
+
+  .ab-links li:last-child a {
+    border-bottom: 1px solid var(--ab-rule);
+  }
+
+  .ab-link-arrow {
+    display: inline-block;
+    margin-left: 4px;
+    color: var(--ab-faint);
+    transition: transform 0.18s ease, color 0.18s ease;
+  }
+
+  .ab-links a:hover .ab-link-arrow {
+    color: var(--ab-accent);
+    transform: translate(2px, -2px);
   }
 
   .ab-link-name {
@@ -446,6 +554,18 @@ const outside = resumeData.volunteer;
 
     .ab-stats dd {
       font-size: 16px;
+    }
+
+    .ab-invite {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 36px;
+      padding: 28px 20px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ab-dot {
+      animation: none;
     }
   }
 </style>
