@@ -3,6 +3,7 @@ title: Shipped my first NPM package - meet SpeakEasy 🎤
 pubDatetime: 2025-08-06T08:00:00Z
 description: The journey of creating and publishing SpeakEasy, a unified text-to-speech library with smart caching and multiple provider support.
 slug: my-first-npm-package-speakeasy
+draft: true
 tags:
   - npm
   - open source
