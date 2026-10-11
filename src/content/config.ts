@@ -22,6 +22,9 @@ const blog = defineCollection({
         .optional(),
       description: z.string(),
       canonicalURL: z.string().optional(),
+      noindex: z.boolean().default(false),
+      publicationPending: z.boolean().default(false),
+      article: z.boolean().default(false),
       readingTime: z.string().optional(),
       series: z.object({
         name: z.string(),

@@ -43,6 +43,9 @@ const {
   heroImage,
   readingTime,
   canonicalURL,
+  noindex,
+  publicationPending,
+  article,
   pubDatetime,
   modDatetime,
   tags,
@@ -103,16 +106,19 @@ const { Content, headings } = await post.render();
 // Always use the generated OG image endpoint which includes the thumbnail if available
 const ogUrl = new URL(
   `/posts/${post.slug}/og.png`,
-  Astro.url.origin
+  Astro.site ?? Astro.url.origin
 ).href;
 
 const layoutProps = {
   title: `${title} | ${SITE.title}`,
   author,
   description,
-  pubDatetime,
+  pubDatetime: publicationPending ? undefined : pubDatetime,
   modDatetime,
   canonicalURL,
+  noindex,
+  article,
+  createdDatetime: publicationPending ? pubDatetime : undefined,
   ogImage: ogUrl,
   scrollSmooth: true,
 };
@@ -187,12 +193,13 @@ const layoutProps = {
     <!-- Date/Reading time + Actions row -->
     <div class="flex items-center justify-between gap-4 date-time-row max-w-[700px] mx-auto">
       <div class="flex items-center gap-4">
-        <Datetime
+        {publicationPending && <span class="reading-time">Design note prepared</span>}
+        {publicationPending ? <time class="reading-time" datetime={pubDatetime.toISOString()}>{pubDatetime.toLocaleDateString("en-US", {year: "numeric", month: "short", day: "numeric"})}</time> : <Datetime
           pubDatetime={pubDatetime}
           modDatetime={modDatetime}
           size="sm"
           className=""
-        />
+        />}
         <span class="reading-time">
           <Icon name="lucide:clock" class="reading-time-icon" />
           <span class="reading-time-full">Estimated Reading Time: {readingTime}</span>
@@ -243,6 +250,9 @@ const layoutProps = {
 </Layout>
 
 <style>
+  :global(.canvas-demo) { margin: 2rem 0; }
+  :global(.canvas-demo iframe) { width: 100%; height: 1120px; border: 0; }
+  :global(.canvas-demo figcaption) { font-size: .85rem; line-height: 1.6; margin-top: .75rem; }
   /* Series navigation CSS removed - handled by minimal component */
   main {
     @apply mx-auto w-full pb-12 px-4 sm:px-6 lg:px-8;
