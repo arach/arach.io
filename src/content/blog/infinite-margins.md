@@ -1,11 +1,11 @@
 ---
 author: Arach Tchoupani
-pubDatetime: 2026-10-11T12:00:00Z
+pubDatetime: 2026-10-11T21:03:26Z
 title: "Infinite margins"
 description: "A design note on Linea’s scoped reading canvas: infinite margins for notes, explicit reading context, and a Spring landing at exact page fit."
 tags: [linea, design, reading]
 noindex: true
-publicationPending: true
+publicationPending: false
 article: true
 readingTime: "6 min"
 canonicalURL: "https://arach.io/posts/infinite-margins/"
@@ -13,7 +13,7 @@ canonicalURL: "https://arach.io/posts/infinite-margins/"
 
 I have been working on a canvas for Linea, the reader I am building. A small part of the interaction captures the idea: zoom back toward the page, and it catches at exactly the size where reading feels settled. This is the design note for the Linea blog, with a copy here.
 
-Cross-posted from the Linea design note, [Infinite margins](https://lineareads.com/blog/infinite-margins). The implementation described here is in review, rather than a release announcement.
+Cross-posted from the Linea design note, [Infinite margins](https://lineareads.com/blog/infinite-margins). This article describes the browser reader implementation.
 
 
 A difficult passage can ask for more space than the margin allows. A note grows past the paragraph. A diagram needs a third of a page. Another paper needs somewhere to sit beside the one you are reading.
@@ -74,6 +74,6 @@ This is the other half of the detent. If a "you are on a canvas" toolbar stayed 
 
 ## What exists now
 
-The canvas runs in Linea's browser reader and is in review. It has been checked against real EPUB and PDF documents in a browser. It has not been released, and it has not yet been signed off on a physical touchscreen, so I am not making claims about how the pinch feels on glass.
+The canvas runs in Linea's browser reader. It has been checked against real EPUB and PDF documents in a browser. It has not yet been signed off on a physical touchscreen, so I am not making claims about how the pinch feels on glass.
 
 Canvases are stored locally in the browser. The data model is written to be portable, so the Mac app can consume the same model. Hosting the same surface on the Mac remains separate work. That work, along with syncing canvases to an account and letting an agent place things on a canvas, is still ahead.
