@@ -29,6 +29,8 @@ export default defineConfig({
           '/search',
           '/resume',
           '/privacy',
+          '/posts/infinite-margins', // Full Linea cross-post: article-level noindex.
+          '/experiments/', // Explanatory demos are utility pages.
         ];
         if (excludePatterns.some(pattern => page.includes(pattern))) {
           return false;
