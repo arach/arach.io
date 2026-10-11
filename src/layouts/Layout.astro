@@ -30,6 +30,9 @@ export interface Props {
   activeNav?: string;
   defaultTemplate?: string;
   defaultAgent?: boolean;
+  noindex?: boolean;
+  article?: boolean;
+  createdDatetime?: Date;
 }
 
 const {
@@ -44,6 +47,9 @@ const {
   activeNav,
   defaultTemplate,
   defaultAgent,
+  noindex = false,
+  article = false,
+  createdDatetime,
 } = Astro.props;
 
 const socialImageURL = new URL(
@@ -73,16 +79,32 @@ const socialImageURL = new URL(
     <meta name="title" content={title} />
     <meta name="description" content={description} />
     <meta name="author" content={author} />
+    {noindex && <meta name="robots" content="noindex,follow" />}
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={article ? "article" : "website"} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content={socialImageURL} />
     <meta property="og:locale" content="en_US" />
     <meta property="og:site_name" content={SITE.title} />
+    {article && <script is:inline type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: title.replace(` | ${SITE.title}`, ""),
+      description,
+      author: { "@type": "Person", name: author, url: SITE.website },
+      publisher: { "@type": "Person", name: SITE.author, url: SITE.website },
+      mainEntityOfPage: canonicalURL,
+      url: canonicalURL,
+      image: socialImageURL,
+      ...(pubDatetime ? { datePublished: pubDatetime.toISOString() } : {}),
+      ...(createdDatetime ? { dateCreated: createdDatetime.toISOString().slice(0, 10) } : {}),
+      ...(modDatetime ? { dateModified: modDatetime.toISOString() } : {}),
+      inLanguage: "en",
+    }).replace(/</g, "\\u003c")} />}
 
     <!-- Article Published/Modified time -->
     {

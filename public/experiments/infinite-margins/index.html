@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,follow"><meta name="description" content="Try Linea's scoped reading margins and Spring page-fit landing in an explanatory, local demo.">
+<title>Try the infinite margins · Linea</title>
+<link rel="stylesheet" href="./demo.css">
+</head>
+<body><main>
+<header><p class="eyebrow">Linea · an interaction sketch</p><h1>Room for the thought. A place to return.</h1><p>Zoom out to see the margins. Come back to the page and feel it catch at fit.</p></header>
+<div class="controls"><div class="actions"><button id="margins">Open margins</button><button id="replay">Replay Spring arrival</button><button id="fit">Fit page</button></div><label><input type="checkbox" id="reduce"> Reduce motion</label></div>
+<section id="stage" tabindex="0" aria-label="Reading canvas demonstration" aria-describedby="instructions">
+<div id="world"><article id="page"><div id="page-scroll"><div class="column"><p class="eyebrow">An original reading fragment · chapter one</p><h2>Making room for a thought</h2><p>A page gives a thought somewhere to rest. We follow a line, then another, until a sentence asks us to pause. The pause is part of the reading.</p><p>At the edge of the page, there is room for a question. A word to return to. A small connection that is not quite ready to become an answer.</p><p><u>Good tools make that movement feel ordinary.</u> We can step away, put something beside the text, and return without having to find our place again.</p><p>The page is still here. The margins belong to the same read.</p></div></div><div id="shield" aria-hidden="true"></div></article><aside id="notes" aria-label="Notes for the chosen scope"></aside><svg id="ink" aria-hidden="true" viewBox="0 0 170 130"><path d="M12 84Q36 7 102 25Q164 42 147 97Q126 132 65 105Q12 86 12 65M39 62Q65 50 94 70M97 70L86 52M97 70L79 78"/></svg></div>
+<div class="veil top"></div><div class="veil bottom"></div><i class="line top" aria-hidden="true"></i><i class="line bottom" aria-hidden="true"></i><i class="line left" aria-hidden="true"></i><i class="line right" aria-hidden="true"></i>
+<div id="scope-controls" class="canvas-chrome"><label>Margins for <select id="scope"><option value="page">Page 12</option><option value="chapter" selected>Chapter one</option><option value="book">This book</option><option value="books">Two chosen books</option></select></label><span id="members">One chapter in Notes on attention</span><button id="add-note">Add a sample note</button></div>
+<button id="overview" class="canvas-chrome" aria-label="Show the page and its margins"><svg viewBox="0 0 100 45" aria-hidden="true"><rect x="21" y="6" width="50" height="33"/><rect x="77" y="13" width="15" height="12"/><rect id="map-view" x="16" y="2" width="60" height="41"/></svg>Overview</button>
+<div id="zoom" class="canvas-chrome" role="group" aria-label="Canvas zoom"><button id="minus" aria-label="Zoom out">−</button><output id="percentage" aria-label="Canvas zoom level">64%</output><button id="plus" aria-label="Zoom in">+</button><button id="zoom-fit">Fit</button></div>
+</section>
+<p id="status" role="status" aria-live="polite">Margins open · chapter one</p>
+<p id="instructions">Use the buttons, or focus the canvas: <kbd>+</kbd>/<kbd>−</kbd> zoom, <kbd>0</kbd> fits, <kbd>M</kbd> opens the margins, arrow keys pan. Control or Command + wheel zooms; plain wheel pans the margins. The first inward crossing over the page catches at 100%. Pause for 300ms, then start a fresh zoom to go deeper. Outward zoom continues without a gesture hold.</p>
+<p class="disclosure">Explanatory demo with sample text, not a live Linea document. Notes stay in this tab only. Page 12 represents a physical PDF page; text chapters use chapter scope. The two-book scope is an explicit sample pair. The ink is illustrative. The browser implementation is under review; account sync, native hosting and canvas agent mutations are separate work.</p>
+<noscript><p>This demo needs JavaScript. The interaction lands at exact page fit with a small Spring rebound, then hides the canvas controls. A fresh inward gesture after a pause can magnify further. Notes belong to the selected page, chapter, book or chosen books.</p></noscript>
+</main><script type="module" src="./app.js"></script></body></html>
