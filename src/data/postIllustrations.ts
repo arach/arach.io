@@ -1,6 +1,8 @@
 // Cyanotype sketches in /public/assets/illustrations/posts/<slug>.jpg.
 // The classic template shows these in place of post thumbnails on listing pages.
 export const POST_ILLUSTRATIONS = new Set([
+  "introducing-linea",
+  "infinite-margins",
   "2048ish-agentic-game-experiment",
   "ai-assisted-development-2025-update",
   "ai-restored-cto-personal-leverage",
