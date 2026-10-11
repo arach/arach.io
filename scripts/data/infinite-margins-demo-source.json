@@ -1,9 +1,9 @@
 {
   "canonicalRepository": "https://github.com/arach/linea",
   "canonicalDirectory": "public/experiments/infinite-margins",
-  "canonicalRevision": "88a025a41e4ba7ddf6d1bdb12f64aa1229d519f1",
+  "canonicalRevision": "a5c6dc78c65247d7b5d5c5c73e04bf78b14da809",
   "files": {
-    "index.html": "6e3773b1c1a49a732be27c37feddadc831d7fd22deeeb4589dc944f8fc79fd8e",
+    "index.html": "3d991d498cd7dad963267910e80b28fb69644643b95e45308c54258576191680",
     "app.js": "e9018b9bd75fb61931a51bc2104e37e5c9aa9437137aaf2ab4613090b89e96ef",
     "demo.css": "80edbc9701b31ff875e12590c4e962661ce0e10e8bce1c695a470cbd999f6206",
     "motion.js": "dbbd32ce2187708b321b842652df5e58a84059e52563640d81e3e7e2e2aca8a7"
