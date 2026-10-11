@@ -475,18 +475,16 @@ const layoutProps = {
     }
   }
 
-  /* TOC grid layout */
+  /* Reading column: one centered measure shared by title, metadata and body.
+     The TOC sits in the outer margin and never moves the article. */
   .article-with-toc {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     max-width: 100%;
   }
 
-  @media (min-width: 1280px) {
-    .article-with-toc {
-      grid-template-columns: 1fr 200px;
-      gap: 2rem;
-    }
+  .article-shell {
+    min-width: 0;
   }
 
   .toc-aside {
@@ -494,9 +492,45 @@ const layoutProps = {
   }
 
   @media (min-width: 1280px) {
+    .article-with-toc {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 700px) minmax(0, 1fr);
+      column-gap: 2rem;
+    }
+
+    .article-shell {
+      grid-column: 2;
+    }
+
     .toc-aside {
       display: block;
+      grid-column: 3;
+      min-width: 0;
     }
+
+    /* Terminal runs a full-width body inside a 900px page, so it keeps the
+       article-plus-rail split instead of a centered measure. */
+    :global([data-template="terminal"]) .article-with-toc {
+      grid-template-columns: minmax(0, 1fr) 200px;
+    }
+
+    :global([data-template="terminal"]) .article-shell {
+      grid-column: 1;
+    }
+
+    :global([data-template="terminal"]) .toc-aside {
+      grid-column: 2;
+    }
+  }
+
+  /* Metadata wraps instead of overflowing the measure on narrow screens */
+  .date-time-row,
+  .date-time-row .metadata-details {
+    flex-wrap: wrap;
+    row-gap: .5rem;
+  }
+
+  .date-time-row .metadata-details {
+    min-width: 0;
   }
 
   /* Flexible content layout system */
