@@ -1,10 +1,10 @@
 ---
 author: Arach Tchoupani
-pubDatetime: 2026-10-11T12:00:00Z
+pubDatetime: 2026-10-11T21:03:26Z
 title: "Introducing Linea"
 description: "The reading app I’m building for difficult material: read, listen, and ask about a passage while keeping the source and your place together."
 tags: [linea, reading, design, AI]
-publicationPending: true
+publicationPending: false
 article: true
 readingTime: "5 min"
 canonicalURL: "https://arach.io/posts/introducing-linea/"
@@ -48,7 +48,7 @@ Some of the work is unglamorous. Reading order, extraction, chapter boundaries, 
 
 The visual direction is quiet: good type, paper, ink, and controls close to the thing they affect. I want the interface to have a little personality without demanding attention from every corner.
 
-The newer Four Lines treatment puts the reader's controls at its edges. The browser version is in review, along with a canvas that opens around the live reading workspace. Zoom out and there is room for a note, a drawing, or a research link. Return to page fit and the canvas controls disappear.
+The newer Four Lines treatment puts the reader's controls at its edges. In the browser, a canvas opens around the live reading workspace. Zoom out and there is room for a note, a drawing, or a research link. Return to page fit and the canvas controls disappear.
 
 I like what that does to the relationship between reading and thinking. You can stay with one passage, then step back far enough to work around it.
 
@@ -60,6 +60,6 @@ There is a small Spring landing when you return to page fit. I wrote a separate 
 
 Read, listen, and passage-based questions are working parts of Linea. The [site](https://lineareads.com/) has the current ways to try it, and the [docs](https://lineareads.com/docs) explain the reading views, formats, and provider setup. Cloud voice and AI features have their own access requirements and costs.
 
-The new browser canvas is still in review. Its notes, ink, and camera positions are stored locally in the browser. Bringing that canvas into the native app, syncing canvas work to an account, and letting an agent edit it are separate work ahead.
+The canvas is implemented in the browser reader. Its notes, ink, and camera positions are stored locally in the browser. Bringing that canvas into the native app, syncing canvas work to an account, and letting an agent edit it are separate work ahead.
 
 I'm introducing Linea now because the product has a clear shape: a place to stay with something until you understand it. Sometimes that means hearing the paragraph. Sometimes it means asking a question or drawing in the margin. I want those to feel like natural moves within the same read.
