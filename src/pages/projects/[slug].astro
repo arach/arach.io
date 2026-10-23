@@ -3,6 +3,7 @@ import Layout from "@layouts/Layout.astro";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import LatticeMark from "@components/LatticeMark.astro";
+import ScoutMark from "@components/ScoutMark.astro";
 import { PROJECTS, type Project } from "@data/projects";
 
 export function getStaticPaths() {
@@ -40,6 +41,7 @@ const introduced = new Date(project.introduced);
           </div>
         </div>
         {project.slug === "lattices" && <div class="pj-mark"><LatticeMark /></div>}
+        {project.slug === "scout" && <div class="pj-mark"><ScoutMark /></div>}
       </div>
     </section>
 

@@ -232,10 +232,10 @@ export function initConsoleArt() {
 ║                           OPERATIONAL HISTORY                                ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
-%c[2024-PRESENT] jdi.sh - Founder
-%c  Technical sabbatical to rebuild hands-on skills
-  Building Talkie (usetalkie.com) - native voice-to-action app
-  Deep dive into AI-native development workflows
+%c[2024-PRESENT] Scout - Founder
+%c  Turning AI agents into trusted teammates (openscout.app)
+  On the way: Talkie, Lattices, Linea
+  Back to hands-on building after a decade of leadership
 
 %c[2022-2023] Meta - Engineering Manager
 %c  • 3 teams, 12 engineers

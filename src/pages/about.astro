@@ -10,11 +10,11 @@ import { projects, accounts } from "@data/agents";
 const layoutProps = {
   title: "About - Arach Tchoupani",
   description:
-    "Engineer and founder. Fifteen years building products and the teams behind them, now building software I wish existed and gearing up for my next venture.",
+    "Founder of Scout, turning AI agents into trusted teammates. Fifteen years building products and the teams behind them, at startups in New York and Montreal, a company I co-founded, and Meta.",
 };
 
 const experience = resumeData.experience;
-const building = projects.filter(p => p.href);
+const building = projects.filter(p => p.href && p.name !== "Scout");
 // No direct email: conversations start through the booking flow
 const contacts = accounts.filter(a => a.name !== "Instagram" && a.name !== "Email");
 const education = resumeData.education[0];
@@ -41,15 +41,16 @@ const outside = resumeData.volunteer;
           />
           <img class="ch-portrait-color" src="/assets/arach.jpg" alt="Arach Tchoupani" width="400" height="400" loading="lazy" />
         </div>
-        <p class="ch-fig"><span class="ch-accent">FIG.01</span> Arach Tchoupani<br />Engineer, founder</p>
+        <p class="ch-fig"><span class="ch-accent">FIG.01</span> Arach Tchoupani<br />Founder, Scout</p>
       </div>
 
       <h1 class="ab-title">About</h1>
       <p class="ab-lede">
         I'm an engineer and founder. For fifteen years I've built products and
         the teams behind them, at seed-stage startups in New York and Montreal,
-        a company I co-founded, and Meta. I've been building software I wish
-        existed, and now I'm gearing up for my <span class="ch-accent">next venture</span>.
+        a company I co-founded, and Meta. Now I'm building
+        <a href="https://openscout.app" class="ch-accent">Scout</a>, which turns
+        AI agents into trusted teammates.
       </p>
 
       <dl class="ab-stats">
@@ -66,16 +67,20 @@ const outside = resumeData.volunteer;
       </div>
       <div class="ab-prose">
         <p>
-          After a decade of leading engineering orgs, I took a technical
-          sabbatical in 2024 to get back to building things myself. Most of my
-          time goes into <a href="https://usetalkie.com">Talkie</a>, a native
-          voice-to-action app, and the small tools I make along the way. I
-          also help friendly startups as a fractional tech lead.
+          I'm building <a href="https://openscout.app">Scout</a>. It lets people
+          and AI agents from every vendor work as one team: agents ask each
+          other for work and check each other's output, a person sets the
+          direction and approves what matters, and every request, approval and
+          result lands in one record you keep. It's open source.
         </p>
         <p>
-          What I keep coming back to is AI-native development: what changes
-          when one person working with agents has the leverage of a whole team.
-          I write about it <a href="/posts/">here</a>.
+          Everything before it led here. After a decade of leading engineering
+          orgs, I took a technical sabbatical in 2024 to get back to building
+          things myself. <a href="https://usetalkie.com">Talkie</a> gave my
+          agents my voice, <a href="/projects/lattices/">Lattices</a> gave them
+          my desktop, and running many of them at once showed me what was
+          missing: a way for them to work together, and for me to trust what
+          they ship. I write about what I learn <a href="/posts/">here</a>.
         </p>
       </div>
     </section>
@@ -105,7 +110,7 @@ const outside = resumeData.volunteer;
 
     <section class="ab-section">
       <div class="ch-section-head">
-        <h2 class="ch-label"><span class="ch-accent">( 03 )</span> Building</h2>
+        <h2 class="ch-label"><span class="ch-accent">( 03 )</span> On the way to Scout</h2>
         <a href="https://arach.dev" class="ch-more">arach.dev ↗</a>
       </div>
       <ul class="ab-grid">
@@ -155,10 +160,10 @@ const outside = resumeData.volunteer;
       </div>
       <div class="ab-invite">
         <div>
-          <p class="ab-invite-title">Building something ambitious? <span class="ab-invite-soft">Let's talk.</span></p>
+          <p class="ab-invite-title">Working with AI agents? <span class="ab-invite-soft">Let's talk.</span></p>
           <p class="ab-invite-text">
-            I'm gearing up for my next venture. If you're working on something
-            interesting, assembling a founding team, or want to compare notes on
+            If your team runs agents from more than one vendor, wants to trust
+            what they ship, or you'd like to try Scout or compare notes on
             agents and tools, I'd like to hear from you.
           </p>
           <div class="ch-actions ab-invite-actions">
