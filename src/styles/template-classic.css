@@ -1038,10 +1038,11 @@ html[data-template="classic"] .ch-portrait:hover .ch-portrait-color {
 }
 
 html[data-template="classic"] .ch-title {
-  font-size: clamp(40px, 6vw, 76px);
+  font-size: clamp(36px, 4.6vw, 60px);
   font-weight: 300;
   letter-spacing: -0.045em;
-  line-height: 1.02;
+  line-height: 1.04;
+  text-wrap: balance;
 }
 
 html[data-template="classic"] .ch-lede {
