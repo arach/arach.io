@@ -53,7 +53,7 @@ const TOOLS: Tool[] = [
   { name: "cmux", url: "https://cmux.com/pricing", runs: { own: true, maker: true }, tier: "rising", repo: { slug: "manaflow-ai/cmux", stars: 28690 }, has: ["free"], note: "Free Mac app; cloud VMs are paid early access." },
   { name: "Orchestrator", url: "https://orchestrator.inc/pricing/", runs: { own: true, maker: true }, tier: "rising", repo: { slug: "OrchestratorInc/agent-orchestrator", stars: 14092 }, has: ["worktrees", "review", "free"], note: "Free local plan; cloud Starter is $20." },
   { name: "Paradev", url: "https://paradev.com/", runs: { own: true, maker: true }, tier: "major", repo: { slug: "ParadevAI/Paradev", stars: 15919 }, has: ["worktrees", "conductorImport"], note: "Cloud is in beta. Pro is $20 per user." },
-  { name: "Replicas", url: "https://replicas.dev/", runs: { own: false, maker: true }, tier: "major", has: ["phone"], note: "Hosted workspaces; clients don't mean local execution. $50 a month." },
+  { name: "Replicas", url: "https://replicas.dev/", runs: { own: false, maker: true }, tier: "rising", has: ["phone"], note: "Hosted workspaces; clients don't mean local execution. $50 a month." },
   { name: "Superconductor", url: "https://www.superconductor.com/pricing", runs: { own: false, maker: true }, tier: "rising", has: ["review", "free"], note: "Hosted, with PR review. Its pricing page and docs disagree on Pro." },
 ];
 

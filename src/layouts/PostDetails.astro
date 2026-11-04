@@ -58,7 +58,7 @@ const resolveImageSrc = (img: typeof thumbnail) =>
 
 // Cards use thumbnail. The post banner can be a different heroImage.
 const thumbnailSrc = resolveImageSrc(thumbnail);
-const heroSrc = resolveImageSrc(heroImage) || thumbnailSrc;
+const heroSrc = post.data.hideHero ? undefined : resolveImageSrc(heroImage) || thumbnailSrc;
 
 // Build thumbnail crop styles
 let thumbnailStyle: Record<string, string> = {};
