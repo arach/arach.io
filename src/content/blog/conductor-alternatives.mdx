@@ -32,11 +32,11 @@ Export your Cloud data, or move those workspaces to local, before the 13th.
 
 A few people have asked me for help navigating this, so here is a summary of the research I've done and shared with them. If there's anything you'd like me to discuss, or anything I missed, DM me on [X](https://x.com/arach).
 
-People answered his post with what they use instead. I went through those replies, kept the tools with real documentation, and checked each claim below against the maker's own pages on November 4. I haven't used these tools hands-on, and listing one is not an endorsement.
+I've spent the past few months on agent-to-agent tools, and I keep comparison sheets on these products as I go. This post folds them together. I checked each claim below against the maker's own pages on November 4, and listing a tool is not an endorsement.
 
 ## Majors and up-and-comers
 
-I sort these into two groups. The split is my judgment, not a measured ranking. Local means the agents run on your machines; cloud means the maker's computers. Free means a plan you can keep using without paying; a trial doesn't count. A dot means the tool's own pages back it, as of November 4; a blank means they didn't say. Stars are from GitHub on the same day, rounded.
+I sort these into two groups. The split is my judgment, not a measured ranking. Cloud means the maker runs agents on its own computers; every tool here also has a desktop, phone or web client. Remote means you can reach your own other machines, such as a server or a box over SSH. Free means a plan you can keep using without paying; a trial doesn't count. License is the open-source license in the public repository, and a dash means there is no public repository. A dot means the tool's own pages back it, as of November 4; a blank means they didn't say. Stars are from GitHub on the same day, rounded.
 
 <ConductorMatrix />
 
@@ -68,7 +68,7 @@ Desktop, phone and web clients for daemons running on your machines. The app is 
 
 <ToolEntry name="Paradev" url="https://paradev.com/" group="Major" runs="Local and cloud" price="Free; Pro $20 per user">
 
-Formerly Superset. Local worktrees and a beta cloud. The Free plan covers one user with local workspaces, the desktop app and the CLI. Pro is $20 per user per month and includes 320 GB-hours per seat, which is 40 hours at 8 GB. Models cost extra ([pricing](https://paradev.com/pricing)). It documents a path from Conductor for local worktrees and Cloud; see below.
+Formerly Superset. Local worktrees and a beta cloud. The Free plan covers one user with local workspaces, the desktop app and the CLI. Pro is $20 per user per month and adds remote access, automations and the phone app. Cloud workspaces start on Team, at $60 per user per month with 150 hours per seat. Models cost extra ([pricing](https://paradev.com/pricing)). The pricing page changed on November 4; earlier that day it listed 40 cloud hours on Pro. It documents a path from Conductor for local worktrees and Cloud; see below.
 
 </ToolEntry>
 
@@ -76,7 +76,7 @@ Formerly Superset. Local worktrees and a beta cloud. The Free plan covers one us
 
 <ToolEntry name="cmux" url="https://cmux.com/pricing" group="Up-and-comer" runs="Local and cloud" price="Free app, Pro from $50">
 
-A free Mac terminal workspace, and local agents use your own API keys at no cost. Persistent [cloud VMs](https://cmux.com/docs/cloud) are paid early access. Pro starts at $50 a month, and the pricing page has also shown a $15 Plus tier with one saved cloud VM. It doesn't say how model costs work on cloud VMs, and I couldn't confirm automatic worktrees per task.
+A free Mac terminal workspace, and local agents use your own API keys at no cost. Persistent [cloud VMs](https://cmux.com/docs/cloud) are paid early access. Pro starts at $50 a month, and the pricing page has also shown a $15 Plus tier with one saved cloud VM. On cloud VMs, the agents use your team's own accounts through [CodeRouter](https://cmux.com/docs/coderouter). I couldn't confirm automatic worktrees per task.
 
 </ToolEntry>
 
@@ -94,7 +94,7 @@ Parallel CLI agents on macOS, Windows and Linux, with worktrees, diffs and a PR 
 
 <ToolEntry name="Traycer" url="https://docs.traycer.ai/guides/review-agent-changes" group="Up-and-comer" runs="Local" price="Free for individuals">
 
-A desktop workspace with worktrees, review and your own [remote hosts](https://docs.traycer.ai/concepts/hosts/remote-hosts), under an [MIT license](https://raw.githubusercontent.com/traycerai/traycer/main/LICENSE). Team Sync adds sharing for $20 per user per month ([pricing](https://docs.traycer.ai/account/pricing)). Provider costs are separate. Optional Traycer inference adds 20% and includes no monthly credits, and the automatic judge can spend credits.
+A desktop workspace with worktrees, review and your own [remote hosts](https://docs.traycer.ai/concepts/hosts/remote-hosts), under an [MIT license](https://raw.githubusercontent.com/traycerai/traycer/main/LICENSE). Free already shares tasks with people you invite, and Sync shares a task with the whole team for $20 per user per month ([pricing](https://docs.traycer.ai/account/pricing)). Provider costs are separate. Optional Traycer inference adds 20% and includes no monthly credits, and the automatic judge can spend credits.
 
 Stable [1.5.3](https://github.com/traycerai/traycer/releases/tag/desktop-v1.5.3) shipped on November 3. An [open report](https://github.com/traycerai/traycer/issues/3429) describes memory and queue issues; I didn't reproduce it.
 
@@ -128,18 +128,69 @@ The maker [posted](https://x.com/sergeykarayev/status/2118067017878302855) "Free
 
 ## A shout-out to Amp
 
-[Amp](https://ampcode.com/) plays a different game from the tools above: it is a coding agent with its own development environment. It still answers the same need. Each thread gets an orb, a machine Amp sets up with your code, tools and plugins, so the agent keeps working after you close your laptop ([manual](https://ampcode.com/manual)). Orbs can be Amp-hosted or self-hosted, and your Mac can serve as a runner. You can start one from your phone and follow up from your Mac or the terminal.
+[Amp](https://ampcode.com/) plays a different game from the tools above: it is a coding agent with its own development environment. It still answers the same need. A thread can run in an orb, a machine Amp sets up with your code, tools and plugins, so the agent keeps working after you close your laptop ([manual](https://ampcode.com/manual)). It can also run on a runner or in a local CLI session ([threads](https://ampcode.com/docs/threads)). Orbs can be Amp-hosted or self-hosted, and your Mac can serve as a runner. You can start one from your phone and follow up from your Mac or the terminal.
 
-The Hobby plan is free. Amp-hosted orbs are pay-as-you-go, self-hosted orbs and your own runners cost nothing, and you can bring your ChatGPT or Claude subscription or your own keys with no Amp token fees. Megawatt is $20 a month with 45,000 orb minutes ([pricing](https://ampcode.com/pricing)).
+The Hobby plan is free. Amp-hosted orbs are pay-as-you-go. Self-hosted orbs and your own runners are free on every plan except Enterprise. You can bring your ChatGPT or Claude subscription or your own keys, with no Amp token fees. Megawatt is $20 a month with 45,000 minutes on Amp-hosted orbs ([pricing](https://ampcode.com/pricing)).
+
+Amp is also the one tool here that imports Conductor chats. Its co-founder Karl Clement [posted](https://x.com/karlclement/status/2118108530926567430) the steps: update Amp and run `amp threads import conductor --all`, or open Settings, Imports, Import in the Mac app. Move Conductor Cloud chats to your Mac first (right-click, Transfer to local) before November 20. Amp is also offering [three free months of Megawatt](https://ampcode.com/code/AMP-VW9Y-LIHU) to people without a paid Amp plan.
 
 ## What moves over
 
 Two tools document a path from Conductor. Paradev can adopt your existing local worktrees, though scripts need converting ([local migration](https://docs.paradev.com/migrate-from-conductor)). Moving off Conductor Cloud means transferring workspaces to local, or pushing branches and recreating the environments ([Cloud migration](https://docs.paradev.com/migrate-from-conductor-cloud)). Archiving an adopted worktree in Conductor can delete its shared folder, so be careful there. [Replicas](https://docs.replicas.dev/migrate/conductor-cloud) moves Conductor Cloud workspaces, setup scripts, secrets, routines and team into its own cloud workspaces. It doesn't take local worktrees.
 
-Conductor chats can't be imported anywhere, and resuming a CLI session depends on compatible saved sessions. [Traycer](https://docs.traycer.ai/first-run) and [Boxes](https://boxes.dev/help/start-and-continue-threads#import-threads-from-your-computer) can import local conversation history from your model provider, but that isn't the same as importing Conductor chats or Cloud exports.
+Only [Amp](https://x.com/karlclement/status/2118108530926567430) imports Conductor chats; see above. Paradev and Replicas both say they can't, and resuming a CLI session depends on compatible saved sessions. [Traycer](https://docs.traycer.ai/first-run) and [Boxes](https://boxes.dev/help/start-and-continue-threads#import-threads-from-your-computer) can import local conversation history from your model provider, but that isn't the same as importing Conductor chats or Cloud exports.
 
-## Who spoke up on X
+## What the makers said
 
-Makers posted offers for [Orca](https://x.com/orca_build/status/2118054072242827366), [Orchestrator](https://x.com/agent_wrapper/status/2118072185663435262), [Superconductor](https://x.com/sergeykarayev/status/2118067017878302855) and [Boxes.dev](https://x.com/drewregitsky/status/2118064826287272237). Paradev's account [replied](https://x.com/ParadevAI/status/2118068933660196997) with a link and "Something like this?". A [Traycer post](https://x.com/GillTanveer89/status/2118071855840157883) names the product, but nothing shows its author works there. Users recommended [T3 Code](https://x.com/gabrielbuzziv/status/2118079565373276523) and [Paseo](https://x.com/jeremybuff/status/2118058133205737667). One [lead](https://x.com/SaaiArora/status/2118057403438825507) may point at Replicas, but it doesn't name the product. Cloudroom, cmux and Emdash are here on their documentation alone.
+Plenty of makers answered Charlie's post with an offer. Here are the tools in this post, plus Agentastic, in their own words.
+
+<div class="not-prose grid gap-x-4 md:grid-cols-2">
+  <Tweet id="2118054072242827366" />
+  <Tweet id="2118055566530756780" />
+  <Tweet id="2118072185663435262" />
+  <Tweet id="2118071855840157883" />
+  <Tweet id="2118067017878302855" />
+  <Tweet id="2118064826287272237" />
+  <Tweet id="2118056748674404771" />
+  <Tweet id="2118108530926567430" />
+</div>
+
+Paradev's account also [replied](https://x.com/ParadevAI/status/2118094744316453358) with its guide for moving off Conductor Cloud. Users recommended [T3 Code](https://x.com/gabrielbuzziv/status/2118079565373276523) and [Paseo](https://x.com/jeremybuff/status/2118058133205737667). Cloudroom, cmux and Emdash are here on their documentation alone.
+
+Founders and teams also pitched these in the thread. I haven't checked them yet:
+
+<ul class="not-prose grid gap-x-6 gap-y-1 text-sm sm:grid-cols-2 lg:grid-cols-4">
+  <li><a href="https://x.com/pranavctl/status/2118071493343240517">Aether</a> <span class="opacity-60">@pranavctl</span></li>
+  <li><a href="https://x.com/prasad_pilla/status/2118055037348036879">Alan</a> <span class="opacity-60">@prasad_pilla</span></li>
+  <li><a href="https://x.com/anmelano/status/2118084230924337246">AQ</a> <span class="opacity-60">@anmelano</span></li>
+  <li><a href="https://x.com/codeanand/status/2118109224630894703">Brahma</a> <span class="opacity-60">@codeanand</span></li>
+  <li><a href="https://x.com/codz_com/status/2118086596817772970">Codz</a> <span class="opacity-60">@codz_com</span></li>
+  <li><a href="https://x.com/bra1n_dump/status/2118090480105976153">Happy</a> <span class="opacity-60">@bra1n_dump</span></li>
+  <li><a href="https://x.com/eimen0/status/2118089159839781080">Leverage</a> <span class="opacity-60">@eimen0</span></li>
+  <li><a href="https://x.com/d2ac__/status/2118086050371563924">Nyte</a> <span class="opacity-60">@d2ac__</span></li>
+  <li><a href="https://x.com/hudson_gri/status/2118062759460139169">Prized</a> <span class="opacity-60">@hudson_gri</span></li>
+  <li><a href="https://x.com/svemyh/status/2118071611010277613">Reason Machines</a> <span class="opacity-60">@svemyh</span></li>
+  <li><a href="https://x.com/Win22James/status/2118110120945352794">TalentOS</a> <span class="opacity-60">@Win22James</span></li>
+  <li><a href="https://x.com/benjaminakar/status/2118102713451864166">Tembo</a> <span class="opacity-60">@benjaminakar</span></li>
+  <li><a href="https://x.com/harithaelango/status/2118091814259523876">Vorflux</a> <span class="opacity-60">@harithaelango</span></li>
+</ul>
+
+## Add your tool
+
+If you build one of these, or one I missed, DM me on [X](https://x.com/arach) with the details below. Link your own page for each answer, and I'll add the tool once those pages back it.
+
+```text
+Tool:
+Website:
+Public repository and license:
+Where agents run (local, your cloud, or both):
+Reach your own remote machines (SSH, a server):
+A worktree or sandbox per task:
+Review diffs or pull requests in the app:
+Phone client (iOS, Android, web):
+Free plan (not a trial), and paid prices:
+Moving from Conductor (link to the docs):
+Agents it runs (Claude Code, Codex, others):
+```
 
 Prices and dates are as each maker's pages stated them on November 4, 2026. They will change.

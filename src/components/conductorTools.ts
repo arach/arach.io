@@ -9,7 +9,6 @@ export type Need =
   | "worktrees"
   | "review"
   | "phone"
-  | "openSource"
   | "free"
   | "conductorImport";
 
@@ -25,6 +24,8 @@ export type Tool = {
   tier: Tier;
   /** GitHub stars on the public repository, read 2026-11-04. Absent when the maker publishes no repository. */
   repo?: { slug: string; stars: number };
+  /** The open-source license, read from the repository. Absent when there is no public repository. */
+  license?: string;
   has: Need[];
   /** One line on the tool. */
   note: string;
@@ -43,7 +44,6 @@ export const NEEDS: { id: Need; label: string; hint: string }[] = [
   { id: "worktrees", label: "A worktree per task", hint: "Parallel agents that don't step on each other" },
   { id: "review", label: "Review or a PR workflow in the app", hint: "Diffs and pull requests without leaving it" },
   { id: "phone", label: "A phone client", hint: "Check on agents away from the desk" },
-  { id: "openSource", label: "An open-source license", hint: "Only where the license itself was confirmed" },
   { id: "free", label: "Free to start", hint: "A free app or a free plan" },
   { id: "conductorImport", label: "Move my Conductor work across", hint: "A documented migration path from Conductor" },
 ];
@@ -53,7 +53,6 @@ export const SHORT: Record<Need, string> = {
   worktrees: "Worktrees",
   review: "Review",
   phone: "Phone",
-  openSource: "Open source",
   free: "Free to start",
   conductorImport: "Conductor import",
 };
@@ -63,20 +62,20 @@ export const TIER_LABEL: Record<Tier, string> = { major: "Majors", rising: "Up-a
 export const TOOLS: Tool[] = [
   {
     id: "emdash", name: "Emdash", url: "https://emdash.com/", runs: { own: true, maker: false }, tier: "rising",
-    repo: { slug: "generalaction/emdash", stars: 6185 }, has: ["remote", "worktrees", "review", "openSource", "free"],
+    repo: { slug: "generalaction/emdash", stars: 6185 }, has: ["remote", "worktrees", "review", "free"], license: "Apache 2.0",
     note: "macOS, Windows and Linux; remote over SSH.",
     price: "Free.",
     caveat: "The stable v1 and the 2.0 waitlist are separate things.",
   },
   {
     id: "orca", name: "Orca", url: "https://www.onorca.dev/", runs: { own: true, maker: false }, tier: "major",
-    repo: { slug: "stablyai/orca", stars: 115383 }, has: ["remote", "worktrees", "review", "phone", "openSource", "free"],
+    repo: { slug: "stablyai/orca", stars: 115383 }, has: ["remote", "worktrees", "review", "phone", "free"], license: "MIT",
     note: "Desktop and mobile; remote means your machines.",
     price: "Free, MIT.",
   },
   {
     id: "paseo", name: "Paseo", url: "https://paseo.sh/docs", runs: { own: true, maker: false }, tier: "major",
-    repo: { slug: "getpaseo/paseo", stars: 23068 }, has: ["remote", "phone", "openSource", "free"],
+    repo: { slug: "getpaseo/paseo", stars: 23068 }, has: ["remote", "worktrees", "review", "phone", "free"], license: "Apache 2.0",
     note: "Free app; clients drive daemons on your machines. Hub Pro is $15 per seat.",
     price: "Free and open source. The optional Hub Pro is $15 per seat per month.",
     models: "Model and machine costs stay yours.",
@@ -84,23 +83,23 @@ export const TOOLS: Tool[] = [
   },
   {
     id: "t3-code", name: "T3 Code", url: "https://t3.codes/", runs: { own: true, maker: false }, tier: "major",
-    repo: { slug: "pingdotgg/t3code", stars: 46433 }, has: ["remote", "worktrees", "review", "phone", "openSource", "free"],
+    repo: { slug: "pingdotgg/t3code", stars: 46433 }, has: ["remote", "worktrees", "review", "phone", "free"], license: "MIT",
     note: "Remote over LAN, Tailscale, SSH or T3's tunnels. Early.",
     price: "Free. A paid plan raises the machine limit.",
     caveat: "T3 Connect, the easy remote route, uses T3's cloud tunnels and needs a sign-in. The repository warns that the project is early.",
   },
   {
     id: "traycer", name: "Traycer", url: "https://docs.traycer.ai/account/pricing", runs: { own: true, maker: false }, tier: "rising",
-    repo: { slug: "traycerai/traycer", stars: 1653 }, has: ["remote", "worktrees", "review", "openSource", "free"],
-    note: "Free for individuals; Team Sync is $20 per user.",
-    price: "Free for individuals. Team Sync is $20 per user per month.",
+    repo: { slug: "traycerai/traycer", stars: 1653 }, has: ["remote", "worktrees", "review", "phone", "free"], license: "MIT",
+    note: "Free for individuals; Sync is $20 per user.",
+    price: "Free for individuals. Sync is $20 per user per month.",
     models: "Provider costs are separate. Optional Traycer inference adds 20% and includes no monthly credits.",
     historyImport: true,
     caveat: "The automatic judge can spend credits. An open report describes memory and queue issues; I didn't reproduce it.",
   },
   {
     id: "boxes", name: "Boxes.dev", url: "https://boxes.dev/", runs: { own: false, maker: true }, tier: "rising",
-    has: [],
+    has: ["review", "phone"],
     note: "Hosted Linux computers. Starter is $19 per seat.",
     price: "Starter is $19 per seat with 50 box-hours, four awake devboxes and a Template. Extra usage is $0.60 per box-hour; a standard hour is 4 vCPU and 8 GiB.",
     models: "Models cost extra.",
@@ -109,7 +108,7 @@ export const TOOLS: Tool[] = [
   },
   {
     id: "cloudroom", name: "Cloudroom", url: "https://www.cloudroom.dev/docs/faq", runs: { own: true, maker: true }, tier: "rising",
-    repo: { slug: "davidondrej/cloudroom", stars: 1359 }, has: ["remote", "worktrees", "openSource", "free"],
+    repo: { slug: "davidondrej/cloudroom", stars: 1359 }, has: ["remote", "worktrees", "review", "phone", "free"], license: "Apache 2.0",
     note: "Open-source Core on your own server; GPUs only on its cloud. Free plan; Pro is $50.",
     price: "Free plan with 3,000 cloud credits a month. Pro is US$50 a month.",
     models: "Compute credits don't cover models.",
@@ -117,15 +116,15 @@ export const TOOLS: Tool[] = [
   },
   {
     id: "cmux", name: "cmux", url: "https://cmux.com/pricing", runs: { own: true, maker: true }, tier: "rising",
-    repo: { slug: "manaflow-ai/cmux", stars: 28690 }, has: ["openSource", "free"],
+    repo: { slug: "manaflow-ai/cmux", stars: 28690 }, has: ["remote", "phone", "free"], license: "GPL 3.0",
     note: "Free Mac app; cloud VMs are paid early access.",
     price: "Free app. Pro starts at $50 a month, and the pricing page has also shown a $15 Plus tier with one saved cloud VM.",
-    models: "Local agents use your own API keys at no cost. The pricing page doesn't say how model costs work on cloud VMs.",
+    models: "Local agents use your own API keys at no cost. On cloud VMs, agents use your team's accounts through CodeRouter.",
     caveat: "Cloud VMs are paid early access. I couldn't confirm automatic worktrees per task.",
   },
   {
     id: "orchestrator", name: "Orchestrator", url: "https://orchestrator.inc/pricing/", runs: { own: true, maker: true }, tier: "rising",
-    repo: { slug: "OrchestratorInc/agent-orchestrator", stars: 14092 }, has: ["worktrees", "review", "openSource", "free"],
+    repo: { slug: "OrchestratorInc/agent-orchestrator", stars: 14092 }, has: ["remote", "worktrees", "review", "phone", "free"], license: "Apache 2.0",
     note: "Free local plan; cloud Starter is $20.",
     price: "Free local plan. Starter is $20.",
     models: "I couldn't establish whether cloud includes model costs.",
@@ -133,15 +132,15 @@ export const TOOLS: Tool[] = [
   },
   {
     id: "paradev", name: "Paradev", url: "https://paradev.com/", runs: { own: true, maker: true }, tier: "major",
-    repo: { slug: "ParadevAI/Paradev", stars: 15919 }, has: ["worktrees", "openSource", "free", "conductorImport"],
-    note: "Free for one user, locally. Cloud is in beta. Pro is $20 per user.",
-    price: "Free for one user on local workspaces. Pro is $20 per user per month and includes 320 GB-hours per seat, which is 40 hours at 8 GB.",
+    repo: { slug: "ParadevAI/Paradev", stars: 15919 }, has: ["remote", "worktrees", "review", "phone", "free", "conductorImport"], license: "MIT",
+    note: "Free for one user, locally. Pro is $20 per user; the beta cloud starts on Team.",
+    price: "Free for one user on local workspaces. Pro is $20 per user per month. Cloud workspaces start on Team, at $60 per user per month with 150 hours per seat.",
     models: "Models cost extra.",
     caveat: "The cloud is in beta. Scripts need converting, and archiving an adopted worktree in Conductor can delete its shared folder.",
   },
   {
     id: "replicas", name: "Replicas", url: "https://replicas.dev/", runs: { own: false, maker: true }, tier: "rising",
-    has: ["phone", "conductorImport"],
+    has: ["review", "phone", "conductorImport"],
     note: "Hosted workspaces, with a move from Conductor Cloud. $50 a month.",
     price: "Developer is $50 a month and includes $50 of usage.",
     models: "You bring your own model credentials.",
@@ -149,7 +148,7 @@ export const TOOLS: Tool[] = [
   },
   {
     id: "superconductor", name: "Superconductor", url: "https://www.superconductor.com/pricing", runs: { own: false, maker: true }, tier: "rising",
-    has: ["review", "free"],
+    has: ["review", "phone", "free"],
     note: "Hosted, with PR review. Pro from $50 for 20,000 credits.",
     price: "The free plan includes 20,000 credits, and compute costs 100 credits an hour at 1 vCPU and 2 GB. Pro starts at $50 a month for 20,000 credits and rises with the credits you pick.",
     models: "Model tokens can come out of credits. Bring your own tokens and credits go only to the cloud computers.",

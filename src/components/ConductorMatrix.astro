@@ -1,7 +1,7 @@
 ---
 /**
- * The Conductor alternatives as one quick visual: GitHub stars, where the
- * agents run (local, cloud) and which features each tool's own pages back.
+ * The Conductor alternatives as one quick visual: GitHub stars and license, whether the
+ * maker runs agents in its cloud and which features each tool's own pages back.
  * Majors come first, then up-and-comers, under a slim divider row, so both
  * groups share one set of columns.
  */
@@ -12,7 +12,6 @@ const COL: Record<Need, string> = {
   worktrees: "Worktrees",
   review: "Review",
   phone: "Phone",
-  openSource: "Open source",
   free: "Free",
   conductorImport: "Conductor import",
 };
@@ -29,8 +28,8 @@ const SPAN = 3 + NEEDS.length;
       <tr>
         <th scope="col" class="tool">Tool</th>
         <th scope="col" class="group-start stars">Stars</th>
-        <th scope="col" class="group-start">Local</th>
-        <th scope="col">Cloud</th>
+        <th scope="col" class="license">License</th>
+        <th scope="col" class="group-start">Cloud</th>
         {NEEDS.map((n, i) => (
           <th scope="col" class={i === 0 ? "group-start" : undefined} title={n.label}>{COL[n.id]}</th>
         ))}
@@ -56,11 +55,12 @@ const SPAN = 3 + NEEDS.length;
                 <span class="none" title="No public repository" aria-label="No public repository">–</span>
               )}
             </td>
-            {[t.runs.own, t.runs.maker].map((on, i) => (
-              <td class={i === 0 ? "group-start" : undefined}>
-                {on ? <span class="dot" aria-label="Yes" /> : <span class="sr-only">No</span>}
-              </td>
-            ))}
+            <td class="license">
+              {t.license ?? <span class="none" title="No public repository" aria-label="No public repository">–</span>}
+            </td>
+            <td class="group-start">
+              {t.runs.maker ? <span class="dot" aria-label="Yes" /> : <span class="sr-only">No</span>}
+            </td>
             {NEEDS.map((n, i) => (
               <td class={i === 0 ? "group-start" : undefined}>
                 {t.has.includes(n.id) ? <span class="dot" aria-label="Yes" /> : <span class="sr-only">Not stated</span>}
@@ -120,6 +120,11 @@ const SPAN = 3 + NEEDS.length;
     text-align: right;
     white-space: nowrap;
     font-variant-numeric: tabular-nums;
+  }
+  .conductor-matrix .license {
+    text-align: left;
+    white-space: nowrap;
+    opacity: 0.8;
   }
   .conductor-matrix a {
     text-decoration: underline;
