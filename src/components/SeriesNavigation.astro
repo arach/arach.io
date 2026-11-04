@@ -17,7 +17,7 @@ const seriesPosts = currentPost.data.series ? allPosts
   )
   .sort((a, b) => (a.data.series?.order || 0) - (b.data.series?.order || 0)) : [];
 
-const currentIndex = seriesPosts.findIndex(post => post.slug === currentPost.slug);
+const currentIndex = seriesPosts.findIndex(post => post.id === currentPost.id);
 const previousPost = currentIndex > 0 ? seriesPosts[currentIndex - 1] : null;
 const nextPost = currentIndex < seriesPosts.length - 1 ? seriesPosts[currentIndex + 1] : null;
 
@@ -56,7 +56,7 @@ const showSeriesNav = currentPost.data.series && seriesPosts.length > 1;
 
   <div class="series-list">
     {seriesPosts.map((post, index) => {
-      const isCurrent = post.slug === currentPost.slug;
+      const isCurrent = post.id === currentPost.id;
       const isCompleted = index < currentIndex;
       
       // Create short titles for minimized view
@@ -66,7 +66,7 @@ const showSeriesNav = currentPost.data.series && seriesPosts.length > 1;
         'ai-theater-vs-real-transformation': 'theater vs transformation'
       };
       
-      const shortTitle = shortTitles[post.slug] || post.data.title.toLowerCase().slice(0, 20);
+      const shortTitle = shortTitles[post.id] || post.data.title.toLowerCase().slice(0, 20);
       
       return (
         <div class={`series-item ${isCurrent ? 'current' : ''} ${isCompleted ? 'completed' : ''}`}>
@@ -82,10 +82,10 @@ const showSeriesNav = currentPost.data.series && seriesPosts.length > 1;
               </>
             ) : (
               <>
-                <a href={`/posts/${post.slug}/`} class="series-link series-full-title">
+                <a href={`/posts/${post.id}/`} class="series-link series-full-title">
                   {post.data.title}
                 </a>
-                <a href={`/posts/${post.slug}/`} class="series-link series-short-title">
+                <a href={`/posts/${post.id}/`} class="series-link series-short-title">
                   {shortTitle}
                 </a>
               </>
@@ -98,13 +98,13 @@ const showSeriesNav = currentPost.data.series && seriesPosts.length > 1;
 
   <div class="series-navigation-buttons">
     {previousPost && (
-      <a href={`/posts/${previousPost.slug}/`} class="series-nav-button prev">
+      <a href={`/posts/${previousPost.id}/`} class="series-nav-button prev">
         <span class="nav-direction">← Previous</span>
         <span class="nav-title">{previousPost.data.title}</span>
       </a>
     )}
     {nextPost && (
-      <a href={`/posts/${nextPost.slug}/`} class="series-nav-button next">
+      <a href={`/posts/${nextPost.id}/`} class="series-nav-button next">
         <span class="nav-direction">Next →</span>
         <span class="nav-title">{nextPost.data.title}</span>
       </a>

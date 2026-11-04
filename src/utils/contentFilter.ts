@@ -1,7 +1,7 @@
 import { SITE } from "@config";
-import type { CollectionEntry, ContentEntryMap } from "astro:content";
+import type { CollectionEntry, DataEntryMap } from "astro:content";
 
-const contentFilter = <T extends keyof ContentEntryMap>({
+const contentFilter = <T extends keyof DataEntryMap>({
   data,
 }: CollectionEntry<T>) => {
   const isPublishTimePassed =

@@ -37,7 +37,7 @@ const canonicalURL = currentPage === 1
   >
     <ul>
       {
-        paginatedItems.map(({ data, slug }) => (
+        paginatedItems.map(({ data, id: slug }) => (
           <BookCard href={`/books/${slug}/`} frontmatter={data} />
         ))
       }

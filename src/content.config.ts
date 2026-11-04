@@ -1,8 +1,10 @@
 import { SITE } from "@config";
-import { defineCollection, z } from "astro:content";
+import { defineCollection } from "astro:content";
+import { glob } from "astro/loaders";
+import { z } from "astro/zod";
 
 const blog = defineCollection({
-  type: "content",
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/blog" }),
   schema: ({ image }) =>
     z.object({
       author: z.string().default(SITE.author),
@@ -46,7 +48,7 @@ const blog = defineCollection({
 });
 
 const book = defineCollection({
-  type: "content",
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/book" }),
   schema: ({ image }) =>
     z.object({
       addedDatetime: z.date(),
@@ -76,7 +78,7 @@ const book = defineCollection({
 });
 
 const memo = defineCollection({
-  type: "content",
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/memo" }),
   schema: ({ image }) =>
     z.object({
       title: z.string(),
@@ -90,7 +92,7 @@ const memo = defineCollection({
 });
 
 const til = defineCollection({
-  type: "content",
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/til" }),
   schema: ({ image }) =>
     z.object({
       author: z.string().default(SITE.author),
@@ -110,32 +112,10 @@ const til = defineCollection({
     }),
 });
 
-// Define posts collection to avoid deprecation warning
-const posts = defineCollection({
-  type: "content",
-  schema: ({ image }) =>
-    z.object({
-      author: z.string().default(SITE.author),
-      pubDatetime: z.date(),
-      modDatetime: z.date().optional().nullable(),
-      title: z.string(),
-      tags: z.array(z.string()).default(["others"]),
-      description: z.string(),
-      draft: z.boolean().optional(),
-      ogImage: image()
-        .refine(img => img.width >= 1200 && img.height >= 630, {
-          message: "OpenGraph image must be at least 1200 X 630 pixels!",
-        })
-        .or(z.string())
-        .optional(),
-      canonicalURL: z.string().optional(),
-    }),
-});
 
 export const collections = {
   blog: blog,
   book: book,
   memo: memo,
   til: til,
-  posts: posts,
 };

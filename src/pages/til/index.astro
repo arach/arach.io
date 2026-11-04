@@ -23,7 +23,7 @@ const socialImageURL = new URL(
     <ul class="til-list">
       {
         sortedTILs.map(
-          ({ data, slug }, index) =>
+          ({ data, id: slug }, index) =>
             data.draft !== true && (
               <Card href={`/til/${slug}/`} frontmatter={data} />
             )

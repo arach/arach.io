@@ -1,5 +1,4 @@
 import { defineConfig } from "astro/config";
-import tailwind from "@astrojs/tailwind";
 import react from "@astrojs/react";
 import remarkToc from "remark-toc";
 import sitemap from "@astrojs/sitemap";
@@ -15,9 +14,6 @@ export default defineConfig({
   site: SITE.website,
   adapter: vercel(),
   integrations: [
-    tailwind({
-      applyBaseStyles: false,
-    }),
     react(),
     mdx(),
     sitemap({

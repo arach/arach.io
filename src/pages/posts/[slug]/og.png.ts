@@ -16,8 +16,8 @@ export const GET: APIRoute = async (context) => {
   // Get all posts
   const posts = await getCollection("blog");
   
-  // Find the post that matches this slug - use the actual post.slug, not slugified title
-  const post = posts.find(p => p.slug === slug);
+  // Find the post that matches this slug - use the actual post.id, not slugified title
+  const post = posts.find(p => p.id === slug);
   
   if (!post || post.data.draft) {
     return new Response("Not found", { status: 404 });
@@ -41,6 +41,6 @@ export async function getStaticPaths() {
   );
 
   return posts.map(post => ({
-    params: { slug: post.slug },
+    params: { slug: post.id },
   }));
 }

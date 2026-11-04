@@ -16,7 +16,7 @@ export async function getStaticPaths() {
   const memosWithRT = await getContentWithRT("memo", memos);
 
   const memoResult = memosWithRT.map((memo: any) => ({
-    params: { slug: memo.slug },
+    params: { slug: memo.id },
     props: { memo },
   }));
 
@@ -42,7 +42,7 @@ const sortedMemos = getSortedContent(memos);
 const pagination = getPagination({
   posts: sortedMemos.map((memo: CollectionEntry<"memo">) => ({
     id: memo.id,
-    slug: memo.slug,
+    slug: memo.id,
     body: memo.body,
     collection: memo.collection,
     data: {

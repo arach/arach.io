@@ -34,7 +34,7 @@ export const GET: APIRoute = async () => {
   lines.push("");
   for (const p of sorted) {
     const date = new Date(p.data.pubDatetime).toISOString().slice(0, 10);
-    lines.push(`- [${p.data.title}](https://arach.io/posts/${p.slug}/): ${p.data.description || ""} (${date})`);
+    lines.push(`- [${p.data.title}](https://arach.io/posts/${p.id}/): ${p.data.description || ""} (${date})`);
   }
   lines.push("");
 

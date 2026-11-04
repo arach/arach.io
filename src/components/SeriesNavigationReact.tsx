@@ -133,14 +133,14 @@ const SeriesNavigationReact: React.FC<SeriesNavigationProps> = ({
       </div>
       <div className="space-y-0">
         {seriesPosts.map((post, index) => {
-          const isCurrent = post.slug === currentPost.slug;
-          const shortTitle = shortTitles[post.slug] || post.data.title.toLowerCase().slice(0, 20);
+          const isCurrent = post.id === currentPost.id;
+          const shortTitle = shortTitles[post.id] || post.data.title.toLowerCase().slice(0, 20);
            const isHovered = isNavHovered && hoveredIndex === index;
           const orderPrefix = getOrderPrefix(post);
           
           return (
             <motion.div 
-              key={post.slug} 
+              key={post.id} 
               className="py-0.5 px-0.5 group relative"
                onMouseEnter={() => !isCurrent && setHoveredIndex(index)}
               whileHover={{ x: isNavHovered ? 2 : 0 }}
@@ -171,7 +171,7 @@ const SeriesNavigationReact: React.FC<SeriesNavigationProps> = ({
                 </div>
               ) : (
                 <a
-                  href={`/posts/${post.slug}/`}
+                  href={`/posts/${post.id}/`}
                   className="text-skin-base hover:text-skin-accent transition-all duration-200 block no-underline"
                   style={{ 
                     fontSize: isNavHovered ? (isHovered ? '0.65rem' : '0.6rem') : '0.7rem', 
