@@ -523,13 +523,13 @@ const layoutProps = {
     }
   }
 
-  /* Wide posts: a 960px column for tables and interactive pieces. The page
-     cap leaves no room for a TOC rail beside it, so wide posts use one
-     centered column and no rail. */
+  /* Wide posts: the column takes the full page frame, the same width as the
+     header, for tables and interactive pieces. There is no room left for a
+     TOC rail, so wide posts use one column and no rail. */
   .post-wide .title-with-series,
   .post-wide .date-time-row,
   .post-wide #article {
-    max-width: 960px;
+    max-width: none;
   }
 
   .post-wide .article-with-toc {
