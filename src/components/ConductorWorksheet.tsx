@@ -8,60 +8,14 @@ import React, { useMemo, useState } from "react";
  * "not stated" never counts as a match.
  */
 
-type Need =
-  | "remote"
-  | "worktrees"
-  | "review"
-  | "phone"
-  | "openSource"
-  | "free"
-  | "conductorImport";
-
-type Tool = {
-  name: string;
-  url: string;
-  runs: { own: boolean; maker: boolean };
-  tier: Tier;
-  /** GitHub stars on the public repository, read 2026-11-04. Absent when the maker publishes no repository. */
-  repo?: { slug: string; stars: number };
-  has: Need[];
-  note: string;
-};
-
-/** The author's editorial split: established names people already move to (majors), and newer or smaller tools (up-and-comers). */
-type Tier = "major" | "rising";
-
-const NEEDS: { id: Need; label: string; hint: string }[] = [
-  { id: "remote", label: "Reach my own remote machines", hint: "A desktop at home, a server, a box over SSH" },
-  { id: "worktrees", label: "A worktree per task", hint: "Parallel agents that don't step on each other" },
-  { id: "review", label: "Review or a PR workflow in the app", hint: "Diffs and pull requests without leaving it" },
-  { id: "phone", label: "A phone client", hint: "Check on agents away from the desk" },
-  { id: "openSource", label: "An open-source license", hint: "Only where the license itself was confirmed" },
-  { id: "free", label: "Free to start", hint: "A free app or a free plan" },
-  { id: "conductorImport", label: "Bring my Conductor worktrees across", hint: "A documented migration path" },
-];
-
-const TOOLS: Tool[] = [
-  { name: "Emdash", url: "https://emdash.com/", runs: { own: true, maker: false }, tier: "rising", repo: { slug: "generalaction/emdash", stars: 6185 }, has: ["remote", "worktrees", "review", "free"], note: "macOS, Windows and Linux; remote over SSH." },
-  { name: "Orca", url: "https://www.onorca.dev/", runs: { own: true, maker: false }, tier: "major", repo: { slug: "stablyai/orca", stars: 115383 }, has: ["remote", "worktrees", "review", "phone", "openSource", "free"], note: "Desktop and mobile; remote means your machines." },
-  { name: "Paseo", url: "https://paseo.sh/docs", runs: { own: true, maker: false }, tier: "major", repo: { slug: "getpaseo/paseo", stars: 23068 }, has: ["remote", "phone"], note: "Clients drive daemons on your machines. Hub Pro is $15 per seat." },
-  { name: "T3 Code", url: "https://t3.codes/", runs: { own: true, maker: false }, tier: "major", repo: { slug: "pingdotgg/t3code", stars: 46433 }, has: ["remote", "worktrees", "review", "phone", "free"], note: "Remote access runs through T3's cloud tunnels. Early." },
-  { name: "Traycer", url: "https://docs.traycer.ai/account/pricing", runs: { own: true, maker: false }, tier: "rising", repo: { slug: "traycerai/traycer", stars: 1653 }, has: ["remote", "worktrees", "review", "openSource", "free"], note: "Free for individuals; Team Sync is $20 per user." },
-  { name: "Boxes.dev", url: "https://boxes.dev/", runs: { own: false, maker: true }, tier: "rising", has: [], note: "Hosted Linux computers. Starter is $19 per seat." },
-  { name: "Cloudroom", url: "https://www.cloudroom.dev/docs/faq", runs: { own: true, maker: true }, tier: "rising", repo: { slug: "davidondrej/cloudroom", stars: 1359 }, has: ["remote", "worktrees", "openSource"], note: "Open-source Core on your own server; GPUs only on its cloud. Pro is $50." },
-  { name: "cmux", url: "https://cmux.com/pricing", runs: { own: true, maker: true }, tier: "rising", repo: { slug: "manaflow-ai/cmux", stars: 28690 }, has: ["free"], note: "Free Mac app; cloud VMs are paid early access." },
-  { name: "Orchestrator", url: "https://orchestrator.inc/pricing/", runs: { own: true, maker: true }, tier: "rising", repo: { slug: "OrchestratorInc/agent-orchestrator", stars: 14092 }, has: ["worktrees", "review", "free"], note: "Free local plan; cloud Starter is $20." },
-  { name: "Paradev", url: "https://paradev.com/", runs: { own: true, maker: true }, tier: "major", repo: { slug: "ParadevAI/Paradev", stars: 15919 }, has: ["worktrees", "conductorImport"], note: "Cloud is in beta. Pro is $20 per user." },
-  { name: "Replicas", url: "https://replicas.dev/", runs: { own: false, maker: true }, tier: "rising", has: ["phone"], note: "Hosted workspaces; clients don't mean local execution. $50 a month." },
-  { name: "Superconductor", url: "https://www.superconductor.com/pricing", runs: { own: false, maker: true }, tier: "rising", has: ["review", "free"], note: "Hosted, with PR review. Its pricing page and docs disagree on Pro." },
-];
+import { NEEDS, SHORT, TIER_LABEL, TOOLS, formatStars, runsLabel, type Need, type Tier, type Tool } from "./conductorTools";
 
 type Where = "either" | "own" | "maker";
 
 const WHERE: { id: Where; label: string }[] = [
   { id: "either", label: "Either" },
-  { id: "own", label: "On my machines" },
-  { id: "maker", label: "On the maker's computers" },
+  { id: "own", label: "Local" },
+  { id: "maker", label: "Cloud" },
 ];
 
 type Which = "both" | Tier;
@@ -71,24 +25,6 @@ const WHICH: { id: Which; label: string }[] = [
   { id: "major", label: "Majors" },
   { id: "rising", label: "Up-and-comers" },
 ];
-
-const TIER_LABEL: Record<Tier, string> = { major: "Majors", rising: "Up-and-comers" };
-
-const SHORT: Record<Need, string> = {
-  remote: "Remote machines",
-  worktrees: "Worktrees",
-  review: "Review",
-  phone: "Phone",
-  openSource: "Open source",
-  free: "Free to start",
-  conductorImport: "Conductor import",
-};
-
-const formatStars = (n: number) =>
-  n < 1000 ? `${n}` : n < 10000 ? `${(n / 1000).toFixed(1)}k` : `${Math.round(n / 1000)}k`;
-
-const runsLabel = (t: Tool) =>
-  t.runs.own && t.runs.maker ? "Yours or theirs" : t.runs.own ? "Your machines" : "Their computers";
 
 export default function ConductorWorksheet() {
   const [where, setWhere] = useState<Where>("either");

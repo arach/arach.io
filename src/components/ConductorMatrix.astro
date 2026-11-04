@@ -1,0 +1,139 @@
+---
+/**
+ * One tier of the Conductor alternatives as a quick visual: where the agents
+ * run (local, cloud) and which worksheet features each tool's own pages back,
+ * plus rounded GitHub stars. Reads the same data as the worksheet.
+ */
+import { NEEDS, TOOLS, formatStars, type Need, type Tier } from "./conductorTools";
+
+interface Props {
+  tier: Tier;
+}
+
+const { tier } = Astro.props;
+
+const COL: Record<Need, string> = {
+  remote: "Remote",
+  worktrees: "Worktrees",
+  review: "Review",
+  phone: "Phone",
+  openSource: "Open source",
+  free: "Free",
+  conductorImport: "Conductor import",
+};
+
+const rows = TOOLS.filter(t => t.tier === tier).sort((a, b) => (b.repo?.stars ?? -1) - (a.repo?.stars ?? -1));
+---
+
+<div class="conductor-matrix not-prose my-6 overflow-x-auto">
+  <table>
+    <thead>
+      <tr>
+        <th scope="col" class="tool">Tool</th>
+        <th scope="col" class="group-start">Local</th>
+        <th scope="col">Cloud</th>
+        {NEEDS.map((n, i) => (
+          <th scope="col" class={i === 0 ? "group-start" : undefined} title={n.label}>{COL[n.id]}</th>
+        ))}
+        <th scope="col" class="group-start stars">Stars</th>
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map(t => (
+        <tr>
+          <th scope="row" class="tool">
+            <a href={t.url} target="_blank" rel="noopener">{t.name}</a>
+          </th>
+          {[t.runs.own, t.runs.maker].map((on, i) => (
+            <td class={i === 0 ? "group-start" : undefined}>
+              {on ? <span class="dot" aria-label="Yes" /> : <span class="sr-only">No</span>}
+            </td>
+          ))}
+          {NEEDS.map((n, i) => (
+            <td class={i === 0 ? "group-start" : undefined}>
+              {t.has.includes(n.id) ? <span class="dot" aria-label="Yes" /> : <span class="sr-only">Not stated</span>}
+            </td>
+          ))}
+          <td class="group-start stars">
+            {t.repo ? (
+              <a href={`https://github.com/${t.repo.slug}`} target="_blank" rel="noopener" title={`${t.repo.stars.toLocaleString("en-US")} stars`}>
+                {formatStars(t.repo.stars)}
+              </a>
+            ) : (
+              <span class="none" title="No public repository" aria-label="No public repository">–</span>
+            )}
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .conductor-matrix {
+    position: relative;
+    width: 0;
+    min-width: 100%;
+  }
+  .conductor-matrix table {
+    width: 100%;
+    min-width: 44rem;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+  }
+  .conductor-matrix th,
+  .conductor-matrix td {
+    padding: 0.55rem 0.5rem;
+    border-bottom: 1px solid rgb(var(--color-border));
+    text-align: center;
+    vertical-align: middle;
+  }
+  .conductor-matrix thead th {
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    line-height: 1.2;
+    vertical-align: bottom;
+  }
+  .conductor-matrix .tool {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    text-align: left;
+    font-weight: 500;
+    white-space: nowrap;
+    background: rgb(var(--color-fill));
+  }
+  .conductor-matrix thead .tool {
+    font-weight: 400;
+  }
+  .conductor-matrix .group-start {
+    border-left: 1px solid rgb(var(--color-border));
+  }
+  .conductor-matrix .stars {
+    text-align: right;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .conductor-matrix a {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
+  .conductor-matrix .stars a {
+    text-decoration: none;
+    opacity: 0.8;
+  }
+  .conductor-matrix .none {
+    opacity: 0.5;
+  }
+  .conductor-matrix .dot {
+    display: inline-block;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    background: rgb(var(--color-text-base));
+  }
+</style>
