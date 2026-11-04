@@ -1,16 +1,11 @@
 ---
 /**
- * One tier of the Conductor alternatives as a quick visual: where the agents
- * run (local, cloud) and which worksheet features each tool's own pages back,
- * plus rounded GitHub stars. Reads the same data as the worksheet.
+ * The Conductor alternatives as one quick visual: GitHub stars, where the
+ * agents run (local, cloud) and which features each tool's own pages back.
+ * Majors come first, then up-and-comers, under a slim divider row, so both
+ * groups share one set of columns.
  */
-import { NEEDS, TOOLS, formatStars, type Need, type Tier } from "./conductorTools";
-
-interface Props {
-  tier: Tier;
-}
-
-const { tier } = Astro.props;
+import { NEEDS, TIER_LABEL, TOOLS, formatStars, type Need, type Tier } from "./conductorTools";
 
 const COL: Record<Need, string> = {
   remote: "Remote",
@@ -22,7 +17,10 @@ const COL: Record<Need, string> = {
   conductorImport: "Conductor import",
 };
 
-const rows = TOOLS.filter(t => t.tier === tier).sort((a, b) => (b.repo?.stars ?? -1) - (a.repo?.stars ?? -1));
+const TIERS: Tier[] = ["major", "rising"];
+const byStars = (tier: Tier) =>
+  TOOLS.filter(t => t.tier === tier).sort((a, b) => (b.repo?.stars ?? -1) - (a.repo?.stars ?? -1));
+const SPAN = 3 + NEEDS.length;
 ---
 
 <div class="conductor-matrix not-prose my-6 overflow-x-auto">
@@ -30,42 +28,48 @@ const rows = TOOLS.filter(t => t.tier === tier).sort((a, b) => (b.repo?.stars ??
     <thead>
       <tr>
         <th scope="col" class="tool">Tool</th>
+        <th scope="col" class="group-start stars">Stars</th>
         <th scope="col" class="group-start">Local</th>
         <th scope="col">Cloud</th>
         {NEEDS.map((n, i) => (
           <th scope="col" class={i === 0 ? "group-start" : undefined} title={n.label}>{COL[n.id]}</th>
         ))}
-        <th scope="col" class="group-start stars">Stars</th>
       </tr>
     </thead>
-    <tbody>
-      {rows.map(t => (
-        <tr>
-          <th scope="row" class="tool">
-            <a href={t.url} target="_blank" rel="noopener">{t.name}</a>
-          </th>
-          {[t.runs.own, t.runs.maker].map((on, i) => (
-            <td class={i === 0 ? "group-start" : undefined}>
-              {on ? <span class="dot" aria-label="Yes" /> : <span class="sr-only">No</span>}
-            </td>
-          ))}
-          {NEEDS.map((n, i) => (
-            <td class={i === 0 ? "group-start" : undefined}>
-              {t.has.includes(n.id) ? <span class="dot" aria-label="Yes" /> : <span class="sr-only">Not stated</span>}
-            </td>
-          ))}
-          <td class="group-start stars">
-            {t.repo ? (
-              <a href={`https://github.com/${t.repo.slug}`} target="_blank" rel="noopener" title={`${t.repo.stars.toLocaleString("en-US")} stars`}>
-                {formatStars(t.repo.stars)}
-              </a>
-            ) : (
-              <span class="none" title="No public repository" aria-label="No public repository">–</span>
-            )}
-          </td>
+    {TIERS.map(tier => (
+      <tbody>
+        <tr class="tier">
+          <th scope="colgroup" class="tool">{TIER_LABEL[tier]}</th>
+          <td colspan={SPAN} />
         </tr>
-      ))}
-    </tbody>
+        {byStars(tier).map(t => (
+          <tr>
+            <th scope="row" class="tool">
+              <a href={t.url} target="_blank" rel="noopener">{t.name}</a>
+            </th>
+            <td class="group-start stars">
+              {t.repo ? (
+                <a href={`https://github.com/${t.repo.slug}`} target="_blank" rel="noopener" title={`${t.repo.stars.toLocaleString("en-US")} stars`}>
+                  {formatStars(t.repo.stars)}
+                </a>
+              ) : (
+                <span class="none" title="No public repository" aria-label="No public repository">–</span>
+              )}
+            </td>
+            {[t.runs.own, t.runs.maker].map((on, i) => (
+              <td class={i === 0 ? "group-start" : undefined}>
+                {on ? <span class="dot" aria-label="Yes" /> : <span class="sr-only">No</span>}
+              </td>
+            ))}
+            {NEEDS.map((n, i) => (
+              <td class={i === 0 ? "group-start" : undefined}>
+                {t.has.includes(n.id) ? <span class="dot" aria-label="Yes" /> : <span class="sr-only">Not stated</span>}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    ))}
   </table>
 </div>
 
@@ -128,6 +132,21 @@ const rows = TOOLS.filter(t => t.tier === tier).sort((a, b) => (b.repo?.stars ??
   }
   .conductor-matrix .none {
     opacity: 0.5;
+  }
+  .conductor-matrix tr.tier th,
+  .conductor-matrix tr.tier td {
+    padding-top: 1.1rem;
+    padding-bottom: 0.3rem;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.55;
+    border-left: 0;
+  }
+  .conductor-matrix tbody:first-of-type tr.tier th,
+  .conductor-matrix tbody:first-of-type tr.tier td {
+    padding-top: 0.6rem;
   }
   .conductor-matrix .dot {
     display: inline-block;

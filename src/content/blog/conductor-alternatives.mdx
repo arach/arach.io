@@ -11,54 +11,40 @@ thumbnail: "../../assets/images/conductor-departures.png"
 readingTime: "6 min"
 canonicalURL: "https://arach.io/posts/conductor-alternatives/"
 ---
-import ConductorWorksheet from '../../components/ConductorWorksheet.tsx';
 import ConductorTimeline from '../../components/ConductorTimeline.astro';
 import Tweet from '../../components/Tweet.astro';
 import ToolEntry from '../../components/ToolEntry.astro';
 import ConductorMatrix from '../../components/ConductorMatrix.astro';
 
+Charlie Holtz, the founder of Conductor, announced today (November 4) that Conductor is joining Meta:
 
-Charlie Holtz announced on November 4 that Conductor is joining Meta:
-
-<div class="max-w-xl">
+<div class="mx-auto max-w-xl">
   <Tweet id="2118045232218743264" />
 </div>
 
-If you run your coding agents in Conductor, here is the schedule from the [announcement](https://www.conductor.build/announcement):
+Conductor was one of the first agentic development environments I used, and a huge inspiration for a new way of working with multiple models without swapping context between them. They're a pioneer, and I can't wait to see what they do next.
+
+In the meantime, here is the timeline they've laid out in the [announcement](https://www.conductor.build/announcement):
 
 <ConductorTimeline />
 
 Export your Cloud data, or move those workspaces to local, before the 13th.
 
+A few people have asked me for help navigating this, so here is a summary of the research I've done and shared with them. If there's anything you'd like me to discuss, or anything I missed, DM me on [X](https://x.com/arach).
+
 People answered his post with what they use instead. I went through those replies, kept the tools with real documentation, and checked each claim below against the maker's own pages on November 4. I haven't used these tools hands-on, and listing one is not an endorsement.
 
 ## Majors and up-and-comers
 
-I sort these into two groups. The split is my judgment, not a measured ranking. Local means the agents run on your machines; cloud means the maker's computers. A dot means the tool's own pages back the feature, as of November 4; a blank means they didn't say. Stars are from GitHub on the same day, rounded.
+I sort these into two groups. The split is my judgment, not a measured ranking. Local means the agents run on your machines; cloud means the maker's computers. Free means a plan you can keep using without paying; a trial doesn't count. A dot means the tool's own pages back it, as of November 4; a blank means they didn't say. Stars are from GitHub on the same day, rounded.
 
-### Majors
-
-The established names people are already moving to.
-
-<ConductorMatrix tier="major" />
-
-### Up-and-comers
-
-Newer, smaller or still filling in. Some are worth a look anyway.
-
-<ConductorMatrix tier="rising" />
+<ConductorMatrix />
 
 Stars measure attention, not quality, and a hosted tool's paying users never show up in them.
 
-## Work out what you need
-
-Tick what matters to you, and the list narrows to the tools whose own pages back all of it. The details for each tool follow below.
-
-<ConductorWorksheet client:load />
-
 ## Where the agents run
 
-Most of these tools have desktop, phone or web clients, and a client doesn't tell you where the agents execute. Each entry below says it: local (your machines), cloud (the maker's computers), or both. Paradev, cmux, Orchestrator and Cloudroom do both. Replicas, Boxes.dev and Superconductor run only on the maker's computers. The worksheet's first question filters on this.
+Most of these tools have desktop, phone or web clients, and a client doesn't tell you where the agents execute. Each entry below says it: local (your machines), cloud (the maker's computers), or both. Paradev, cmux, Orchestrator and Cloudroom do both. Replicas, Boxes.dev and Superconductor run only on the maker's computers.
 
 ## A closer look at the majors
 
@@ -80,9 +66,9 @@ Desktop, phone and web clients for daemons running on your machines. The app is 
 
 </ToolEntry>
 
-<ToolEntry name="Paradev" url="https://paradev.com/" group="Major" runs="Local and cloud" price="Pro $20 per user">
+<ToolEntry name="Paradev" url="https://paradev.com/" group="Major" runs="Local and cloud" price="Free; Pro $20 per user">
 
-Formerly Superset. Local worktrees and a beta cloud. Pro is $20 per user per month and includes 320 GB-hours per seat, which is 40 hours at 8 GB. Models cost extra ([pricing](https://paradev.com/pricing)). It documents a path from Conductor for local worktrees and Cloud; see below.
+Formerly Superset. Local worktrees and a beta cloud. The Free plan covers one user with local workspaces, the desktop app and the CLI. Pro is $20 per user per month and includes 320 GB-hours per seat, which is 40 hours at 8 GB. Models cost extra ([pricing](https://paradev.com/pricing)). It documents a path from Conductor for local worktrees and Cloud; see below.
 
 </ToolEntry>
 
@@ -114,9 +100,9 @@ Stable [1.5.3](https://github.com/traycerai/traycer/releases/tag/desktop-v1.5.3)
 
 </ToolEntry>
 
-<ToolEntry name="Cloudroom" url="https://www.cloudroom.dev/pricing" group="Up-and-comer" runs="Local and cloud" price="Pro US$50 a month">
+<ToolEntry name="Cloudroom" url="https://www.cloudroom.dev/pricing" group="Up-and-comer" runs="Local and cloud" price="Free; Pro US$50 a month">
 
-Runs agents locally or hosted. Its open-source Core runs on your own Ubuntu 24.04 server, while GPUs, Cloud loops and computer use run only on Cloudroom Cloud ([FAQ](https://www.cloudroom.dev/docs/faq)). Compute credits don't cover models. Its local diff and worktree features don't mean the cloud has the same ones ([local threads](https://www.cloudroom.dev/docs/local-threads)).
+Runs agents locally or hosted. Its open-source Core runs on your own Ubuntu 24.04 server, while GPUs, Cloud loops and computer use run only on Cloudroom Cloud ([FAQ](https://www.cloudroom.dev/docs/faq)). The Free plan includes 3,000 cloud credits a month and unlimited local agents; Pro is US$50 a month ([pricing](https://www.cloudroom.dev/pricing)). Compute credits don't cover models. Its local diff and worktree features don't mean the cloud has the same ones ([local threads](https://www.cloudroom.dev/docs/local-threads)).
 
 </ToolEntry>
 
