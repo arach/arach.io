@@ -115,6 +115,14 @@ export const TOOLS: Tool[] = [
     caveat: "Core runs on your own Ubuntu 24.04 server. GPUs, Cloud loops and computer use run only on Cloudroom Cloud, and local diff and worktree features don't mean the cloud has them.",
   },
   {
+    id: "capy", name: "Capy", url: "https://capy.ai/", runs: { own: true, maker: true }, tier: "rising",
+    has: ["remote", "worktrees", "review", "phone"],
+    note: "Cloud VMs or worktrees on your own computer, with PRs, CI fixes and a review agent. Lite is $20.",
+    price: "Lite is $20 a month with $20 of credits, Pro $100 and Max from $200, with no seat fees. Lite's first week costs $1.",
+    models: "Your own subscriptions and keys cost nothing on any plan; threads on your own computer have no machine-time charge.",
+    caveat: "No phone app; capy.ai works in a phone browser.",
+  },
+  {
     id: "cmux", name: "cmux", url: "https://cmux.com/pricing", runs: { own: true, maker: true }, tier: "rising",
     repo: { slug: "manaflow-ai/cmux", stars: 28690 }, has: ["remote", "phone", "free"], license: "GPL 3.0",
     note: "Free Mac app; cloud VMs are paid early access.",
