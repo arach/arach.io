@@ -1,0 +1,69 @@
+---
+author: Arach Tchoupani
+pubDatetime: 2026-11-04T21:45:00Z
+title: "Where to go after Conductor"
+description: "Conductor is shutting down. The alternatives people named, sorted by where your agents run, with prices and migration limits from each maker's own pages."
+tags: [AI Agents, coding agents, tools]
+article: true
+readingTime: "6 min"
+canonicalURL: "https://arach.io/posts/conductor-alternatives/"
+---
+
+Conductor announced that it is joining Meta. If you run your coding agents in it, here is the schedule ([announcement](https://www.conductor.build/announcement)):
+
+- **November 4:** new sign-ups and downloads stop.
+- **November 13:** Conductor Cloud becomes read-only.
+- **November 20:** Cloud shuts down and data deletion begins.
+- **Early 2027:** the local app winds down. Model updates and critical fixes continue until then.
+
+Export your Cloud data, or move those workspaces to local, before the 13th.
+
+When Conductor announced, people on X answered with what they use instead. I went through that thread, kept the tools with real documentation, and checked each claim below against the maker's own pages on November 4. I haven't used these tools hands-on, and listing one is not an endorsement.
+
+## Decide where your agents run
+
+The first question is where the agents execute, not which apps you get. Most of these tools have desktop, phone and web clients. Some of those clients drive your own machines. Others drive the maker's computers. Those answer different needs, so the list is split that way.
+
+## On your own machines
+
+**[Emdash](https://emdash.com/)** runs parallel CLI agents on macOS, Windows and Linux, with worktrees, diffs and a PR workflow, locally or over SSH. The app is free. The stable v1 and the 2.0 waitlist are separate things. [Repository](https://github.com/generalaction/emdash).
+
+**[omux](https://github.com/onurozcan/omux)** is a workspace for Claude Code and Codex on Apple Silicon Macs, with optional worktrees and diff notes. The source is MIT, and the [maker's post](https://x.com/omuxapp/status/2118073188043411614) says it is free and needs no account. I couldn't confirm remote execution, and there isn't much evidence of adoption yet.
+
+**[Orca](https://www.onorca.dev/)** has desktop and mobile clients, worktrees, review, and access to your own remote machines. It is a free MIT app. Remote access here means your machines, not managed compute. [Repository](https://github.com/stablyai/orca).
+
+**[Paseo](https://paseo.sh/docs)** gives you desktop, phone and web clients for daemons running on your machines. The optional hosted [Hub](https://paseo.sh/hub) manages triggers, not agent compute. Hub Pro is $15 per seat per month, and model and machine costs stay yours.
+
+**[T3 Code](https://t3.codes/)** is a free desktop, mobile and web agent interface with review and remote access to your own hosts. Worktrees are covered in its [user docs](https://github.com/pingdotgg/t3code). [Remote access](https://github.com/pingdotgg/t3code/blob/main/docs/user/remote-access.md) runs through T3 Connect, which uses T3's cloud tunnels and a sign-in, and a paid plan raises the machine limit. The repository warns that the project is early.
+
+**[Traycer](https://docs.traycer.ai/guides/review-agent-changes)** is a desktop workspace with worktrees, review and your own [remote hosts](https://docs.traycer.ai/concepts/hosts/remote-hosts). It is free for individuals under an [MIT license](https://raw.githubusercontent.com/traycerai/traycer/main/LICENSE). Team Sync adds sharing for $20 per user per month ([pricing](https://docs.traycer.ai/account/pricing)). Provider costs are separate. Optional Traycer inference adds 20% and includes no monthly credits, and the automatic judge can spend credits. Stable [1.5.3](https://github.com/traycerai/traycer/releases/tag/desktop-v1.5.3) shipped on November 3. An [open report](https://github.com/traycerai/traycer/issues/3429) describes memory and queue issues; I didn't reproduce it.
+
+## On the maker's computers
+
+Several of these also run locally. What sets them apart is the hosted compute.
+
+**[Boxes.dev](https://boxes.dev/)** gives Claude Code and Codex their own hosted Linux computers. Starter is $19 per paid seat per month, with 50 box-hours and four awake devboxes plus a Template. A standard hour is 4 vCPU and 8 GiB, and extra usage is $0.60 per box-hour. Larger boxes and an awake Template use more, and models cost extra ([billing](https://boxes.dev/help/plans-and-box-hours)).
+
+**[Cloudroom](https://www.cloudroom.dev/pricing)** runs agents locally or hosted. Its open-source Core runs on your own Ubuntu 24.04 server, while GPUs, Cloud loops and computer use run only on Cloudroom Cloud ([FAQ](https://www.cloudroom.dev/docs/faq)). Pro is US$50 a month plus tax, and compute credits don't cover models. Its local diff and worktree features don't mean the cloud has the same ones ([local threads](https://www.cloudroom.dev/docs/local-threads)).
+
+**[cmux](https://cmux.com/pricing)** is a free Mac terminal workspace, and local agents use your own API keys at no cost. Persistent [cloud VMs](https://cmux.com/docs/cloud) are paid early access. Pro starts at $50 a month, and the pricing page has also shown a $15 Plus tier with one saved cloud VM. It doesn't say how model costs work on cloud VMs, and I couldn't confirm automatic worktrees per task.
+
+**[Orchestrator](https://orchestrator.inc/pricing/)** runs local worktrees with PR and CI feedback loops. The local plan is free, and cloud Starter is $20 a month. [Hosted execution](https://docs.orchestrator.inc/guides/cloud/) needs an enabled build and account access. I couldn't establish whether cloud includes model costs.
+
+**[Paradev](https://paradev.com/)**, formerly Superset, runs local worktrees and a beta cloud. Pro is $20 per user per month and includes 320 GB-hours per seat, which is 40 hours at 8 GB. Models cost extra ([pricing](https://paradev.com/pricing)).
+
+**[Replicas](https://replicas.dev/)** runs hosted Linux workspaces. It has desktop and mobile clients, but the agents run on its computers. Developer is $50 a month including $50 of usage ([billing](https://docs.replicas.dev/admin/billing)), and you bring your own model [credentials](https://docs.replicas.dev/admin/credentials).
+
+**[Superconductor](https://www.superconductor.com/docs/implementations)** runs hosted agent environments and PR review. Its [pricing page](https://www.superconductor.com/pricing) lists Pro at $100 a month, while its [docs](https://www.superconductor.com/docs/pricing) still say Pro starts at $50, so check before you buy. The free plan includes 20,000 credits, and compute costs 100 credits an hour at 1 vCPU and 2 GB. Model tokens can come out of credits; bring your own tokens and credits go only to the cloud computers. The maker [posted](https://x.com/sergeykarayev/status/2118067017878302855) "Free Pro until end of the year for CC customers!", and the pricing page gives no terms for it.
+
+## What moves over
+
+Paradev is the only one with a documented path from Conductor. It can adopt your existing local worktrees, though scripts need converting ([local migration](https://docs.paradev.com/migrate-from-conductor)). Moving off Conductor Cloud means transferring workspaces to local, or pushing branches and recreating the environments ([Cloud migration](https://docs.paradev.com/migrate-from-conductor-cloud)). Archiving an adopted worktree in Conductor can delete its shared folder, so be careful there.
+
+Conductor chats can't be imported anywhere, and resuming a CLI session depends on compatible saved sessions. [Traycer](https://docs.traycer.ai/first-run) and [Boxes](https://boxes.dev/help/start-and-continue-threads#import-threads-from-your-computer) can import local conversation history from your model provider, but that isn't the same as importing Conductor chats or Cloud exports.
+
+## Who spoke up on X
+
+Makers posted offers for [omux](https://x.com/omuxapp/status/2118073188043411614), [Orca](https://x.com/orca_build/status/2118054072242827366), [Orchestrator](https://x.com/agent_wrapper/status/2118072185663435262), [Superconductor](https://x.com/sergeykarayev/status/2118067017878302855) and [Boxes.dev](https://x.com/drewregitsky/status/2118064826287272237). Paradev's account [replied](https://x.com/ParadevAI/status/2118068933660196997) with a link and "Something like this?". A [Traycer post](https://x.com/GillTanveer89/status/2118071855840157883) names the product, but nothing shows its author works there. Users recommended [T3 Code](https://x.com/gabrielbuzziv/status/2118079565373276523) and [Paseo](https://x.com/jeremybuff/status/2118058133205737667). One [lead](https://x.com/SaaiArora/status/2118057403438825507) may point at Replicas, but it doesn't name the product. Cloudroom, cmux and Emdash are here on their documentation alone.
+
+Prices and dates are as each maker's pages stated them on November 4, 2026. They will change.
