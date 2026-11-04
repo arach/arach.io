@@ -29,7 +29,7 @@ export const GET: APIRoute = async () => {
     lines.push("");
     for (const p of featured) {
       const date = new Date(p.data.pubDatetime).toISOString().slice(0, 10);
-      lines.push(`- [${p.data.title}](https://arach.io/posts/${p.slug}/) — ${date}`);
+      lines.push(`- [${p.data.title}](https://arach.io/posts/${p.id}/) — ${date}`);
       if (p.data.description) {
         lines.push(`  ${p.data.description}`);
       }
@@ -43,7 +43,7 @@ export const GET: APIRoute = async () => {
     lines.push("");
     for (const p of recent) {
       const date = new Date(p.data.pubDatetime).toISOString().slice(0, 10);
-      lines.push(`- [${p.data.title}](https://arach.io/posts/${p.slug}/) — ${date}`);
+      lines.push(`- [${p.data.title}](https://arach.io/posts/${p.id}/) — ${date}`);
       if (p.data.description) {
         lines.push(`  ${p.data.description}`);
       }

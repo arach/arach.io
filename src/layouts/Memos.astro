@@ -34,7 +34,7 @@ const canonicalURL = currentPage === 1
   <Main pageTitle="Memos" pageDesc="Short notes and thoughts on various topics">
     <ul>
       {
-        paginatedItems.map(({ data, slug }) => (
+        paginatedItems.map(({ data, id: slug }) => (
           <MemoCard href={`/memos/${slug}/`} frontmatter={data} />
         ))
       }

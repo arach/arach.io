@@ -155,14 +155,14 @@ const SeriesNavigationMinimal: React.FC<SeriesNavigationMinimalProps> = ({
             {/* Series Items - Minimal Terminal Style */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
               {seriesPosts.map((post, index) => {
-                const isCurrent = post.slug === currentPost.slug;
+                const isCurrent = post.id === currentPost.id;
                 const postNumber = post.data.series?.order ?? index + 1;
                 const isHovered = hoveredIndex === index;
-                const shortTitle = shortTitles[post.slug] || post.data.title.toLowerCase().slice(0, 25);
+                const shortTitle = shortTitles[post.id] || post.data.title.toLowerCase().slice(0, 25);
 
                 return (
                   <motion.div
-                    key={post.slug}
+                    key={post.id}
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.03 }}
@@ -211,7 +211,7 @@ const SeriesNavigationMinimal: React.FC<SeriesNavigationMinimalProps> = ({
                       </div>
                     ) : (
                       <a
-                        href={`/posts/${post.slug}/`}
+                        href={`/posts/${post.id}/`}
                         onClick={(e) => e.stopPropagation()}
                         style={{
                           display: 'flex',

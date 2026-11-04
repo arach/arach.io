@@ -4,7 +4,7 @@ import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import Tag from "@components/Tag.astro";
 import Datetime from "@components/Datetime";
-import type { CollectionEntry } from "astro:content";
+import { type CollectionEntry, render } from "astro:content";
 import { slugifyStr } from "@utils/slugify";
 import ShareLinks from "@components/ShareLinks.astro";
 import DownloadLink from "@components/DownloadLink.astro";
@@ -28,11 +28,11 @@ const {
   tags,
 } = entry.data;
 
-const { Content } = await entry.render();
+const { Content } = await render(entry);
 
 const ogImageUrl = typeof ogImage === "string" ? ogImage : ogImage?.src;
 const ogUrl = new URL(
-  ogImageUrl ?? `/til/${entry.slug}/og.png`,
+  ogImageUrl ?? `/til/${entry.id}/og.png`,
   Astro.url.origin
 ).href;
 
@@ -80,7 +80,7 @@ const layoutProps = {
     </ul>
 
     <div class="my-6 flex justify-center">
-      <DownloadLink collection="til" slug={entry.slug} />
+      <DownloadLink collection="til" slug={entry.id} />
     </div>
 
     <div

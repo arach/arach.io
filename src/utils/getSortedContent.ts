@@ -1,8 +1,8 @@
-import type { CollectionEntry, ContentEntryMap } from "astro:content";
+import type { CollectionEntry, DataEntryMap } from "astro:content";
 import contentFilter from "./contentFilter";
 
-// Make the function generic with a type parameter T that is a key of ContentEntryMap
-const getSortedContent = <T extends keyof ContentEntryMap>(
+// Make the function generic with a type parameter T that is a key of DataEntryMap
+const getSortedContent = <T extends keyof DataEntryMap>(
   items: CollectionEntry<T>[]
 ) => {
   return items

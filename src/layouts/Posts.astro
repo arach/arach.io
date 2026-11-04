@@ -27,7 +27,7 @@ const canonicalURL = currentPage === 1
   <Main pageTitle="Posts" pageDesc="All the articles I've posted.">
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
       {
-        paginatedPosts.map(({ data, slug }) => (
+        paginatedPosts.map(({ data, id: slug }) => (
           <PostCard href={`/posts/${slug}/`} frontmatter={data} />
         ))
       }

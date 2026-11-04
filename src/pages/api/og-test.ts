@@ -16,7 +16,7 @@ export const GET: APIRoute = async ({ url }) => {
   const posts = await getCollection("blog");
   
   // Find the post that matches this slug
-  const post = posts.find(p => slugifyStr(p.data.title) === slug || p.slug === slug);
+  const post = posts.find(p => slugifyStr(p.data.title) === slug || p.id === slug);
   
   if (!post || post.data.draft) {
     return new Response("Post not found", { status: 404 });

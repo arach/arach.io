@@ -5,7 +5,7 @@ export const GET: APIRoute = async ({ params }) => {
   const { slug } = params;
   
   const tils = await getCollection('til');
-  const til = tils.find(t => t.slug === slug);
+  const til = tils.find(t => t.id === slug);
   
   if (!til) {
     return new Response('Not found', { status: 404 });
@@ -38,6 +38,6 @@ export const GET: APIRoute = async ({ params }) => {
 export async function getStaticPaths() {
   const tils = await getCollection('til');
   return tils.map(til => ({
-    params: { slug: til.slug }
+    params: { slug: til.id }
   }));
 }

@@ -11,7 +11,7 @@ import SeriesNavigationMinimal from "@components/SeriesNavigationMinimal";
 import TableOfContents from "@components/TableOfContents.astro";
 import { Icon } from 'astro-icon/components';
 import { SITE } from "@config";
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 
 export interface Props {
   post: CollectionEntry<"blog">;
@@ -28,7 +28,7 @@ const seriesPosts = post.data.series ? allPosts
   )
   .sort((a, b) => (a.data.series?.order || 0) - (b.data.series?.order || 0)) : [];
 
-const currentIndex = seriesPosts.findIndex(p => p.slug === post.slug);
+const currentIndex = seriesPosts.findIndex(p => p.id === post.id);
 const previousPost = currentIndex > 0 ? seriesPosts[currentIndex - 1] : null;
 const nextPost = currentIndex < seriesPosts.length - 1 ? seriesPosts[currentIndex + 1] : null;
 
@@ -93,11 +93,11 @@ if (thumbnailCrop) {
   if (thumbnailCrop.height) thumbnailStyle.height = thumbnailCrop.height;
 }
 
-const { Content, headings } = await post.render();
+const { Content, headings } = await render(post);
 
 // Always use the generated OG image endpoint which includes the thumbnail if available
 const ogUrl = new URL(
-  `/posts/${post.slug}/og.png`,
+  `/posts/${post.id}/og.png`,
   Astro.url.origin
 ).href;
 
@@ -209,7 +209,7 @@ const layoutProps = {
         </span>
       </div>
       <div class="flex items-center gap-3">
-        <DownloadLink collection="blog" slug={post.slug} />
+        <DownloadLink collection="blog" slug={post.id} />
       </div>
     </div>
     
@@ -230,7 +230,7 @@ const layoutProps = {
       </ul>
 
       <div class="my-6 flex justify-center">
-        <DownloadLink collection="blog" slug={post.slug} />
+        <DownloadLink collection="blog" slug={post.id} />
       </div>
 
       <div class="flex justify-end">

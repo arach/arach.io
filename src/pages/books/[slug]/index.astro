@@ -16,7 +16,7 @@ export async function getStaticPaths() {
   const booksWithRT = await getContentWithRT("book", books);
 
   const bookResult = booksWithRT.map((book: any) => ({
-    params: { slug: book.slug },
+    params: { slug: book.id },
     props: { book },
   }));
 
@@ -42,7 +42,7 @@ const sortedBooks = getSortedContent(books);
 const pagination = getPagination({
   posts: sortedBooks.map(book => ({
     id: book.id,
-    slug: book.slug,
+    slug: book.id,
     body: book.body,
     collection: book.collection,
     data: {

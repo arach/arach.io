@@ -34,7 +34,7 @@ const canonicalURL = currentPage === 1
     <h1 slot="title" transition:name={tag}>{`Tag:${tag}`}</h1>
     <ul>
       {
-        paginatedPosts.map(({ data, slug }) => (
+        paginatedPosts.map(({ data, id: slug }) => (
           <Card href={`/posts/${slug}/`} frontmatter={data} />
         ))
       }

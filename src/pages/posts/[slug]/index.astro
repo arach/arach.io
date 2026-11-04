@@ -16,7 +16,7 @@ export async function getStaticPaths() {
   const postsWithRT = await getPostsWithRT(posts);
 
   const postResult = postsWithRT.map(post => ({
-    params: { slug: post.slug },
+    params: { slug: post.id },
     props: { post },
   }));
 

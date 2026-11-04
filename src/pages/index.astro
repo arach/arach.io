@@ -136,7 +136,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
         <div class="ah-section">
           <h2 class="ah-heading">Featured</h2>
           <ol class="ah-list">
-            {featuredPosts.map(({ data, slug }) => (
+            {featuredPosts.map(({ data, id: slug }) => (
               <li>
                 <a href={`/posts/${slug}/`} class="ah-post-link">
                   <span class="ah-post-title">{data.title}</span>
@@ -152,7 +152,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
       <div class="ah-section">
         <h2 class="ah-heading">Recent</h2>
         <ol class="ah-list">
-          {recentPosts.slice(0, 6).map(({ data, slug }) => (
+          {recentPosts.slice(0, 6).map(({ data, id: slug }) => (
             <li>
               <a href={`/posts/${slug}/`} class="ah-post-link">
                 <span class="ah-post-title">{data.title}</span>
@@ -185,7 +185,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
               <span class="featured-short">Featured</span>
             </h2>
             <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {featuredPosts.map(({ data, slug }) => (
+              {featuredPosts.map(({ data, id: slug }) => (
                 <PostCard
                   href={`/posts/${slug}/`}
                   frontmatter={data}
@@ -205,7 +205,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
           <h2 class="section-title">Recent Posts</h2>
           <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {recentPosts.map(
-              ({ data, slug }, index) =>
+              ({ data, id: slug }, index) =>
                 index < 6 && (
                   <PostCard
                     href={`/posts/${slug}/`}
