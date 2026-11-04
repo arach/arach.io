@@ -104,7 +104,7 @@ export default function ResumeHeader({ name, title, location, oneLiner, location
     ...asciiArt.map((line, i) => ({ text: line, type: 'ascii' as const, delay: 700 + i * 50 })),
     { text: '', type: 'system', delay: 1000 },
     { text: `[DATA] Designation: ${name.toUpperCase()}`, type: 'data', delay: 1100 },
-    { text: `[DATA] Classification: ${title.toUpperCase()}`, type: 'data', delay: 1300 },
+    { text: `[DATA] Classification: ${title}`, type: 'data', delay: 1300 },
     { text: `[DATA] ${oneLiner}`, type: 'highlight', delay: 1500 },
     { text: `[DATA] Status: ${locationLine}`, type: 'info', delay: 1700 },
     { text: '', type: 'system', delay: 1900 },
@@ -218,12 +218,12 @@ export default function ResumeHeader({ name, title, location, oneLiner, location
           onClick={handleNameClick}
           title="Cmd+Click for console mode"
         >
-          {name.replace(' ', '_').toUpperCase()}
+          {name}
         </h1>
         <div className="resume-subtitle">
-          <span className="resume-title">{title.toUpperCase()}</span>
+          <span className="resume-title">{title}</span>
           <span className="resume-divider">|</span>
-          <span className="resume-location">{location.toUpperCase().replace(/ /g, '_')}</span>
+          <span className="resume-location">{location}</span>
         </div>
 
         <div className="comm-channels">
@@ -247,7 +247,6 @@ export default function ResumeHeader({ name, title, location, oneLiner, location
           )}
         </div>
 
-        <div className="tactical-id">{docId}</div>
       </header>
     );
   }

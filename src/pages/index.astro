@@ -18,6 +18,9 @@ import getSortedPosts from "@utils/getSortedPosts";
 import { SOCIALS } from "@config";
 import socialIcons from "@assets/socialIcons";
 import { portrait } from "@data/portrait";
+import { PROJECTS, currentProject, ON_THE_WAY } from "@data/projects";
+import LatticeMark from "@components/LatticeMark.astro";
+import ScoutMark from "@components/ScoutMark.astro";
 
 const posts = await getCollection("blog");
 
@@ -49,18 +52,19 @@ const socialCount = SOCIALS.filter(social => social.active).length;
         </div>
         <div class="hero-content">
           <h1 class="hero-title animate-in">
-            Startup Founder, Engineering Leader,<br /> and AI Enthusiast
+            Turning AI agents into trusted teammates.
           </h1>
 
           <p class="hero-description animate-in-slow">
-            Hi, I'm <strong>Arach</strong>. I'm a software engineer who loves
-            turning ideas into reality. From Startups to Meta, I've learned how 
-            to bridge the gap between technical execution and business vision.
+            Hi, I'm <strong>Arach</strong>. I'm building Scout, where people and
+            AI agents from every vendor work as one team. Fifteen years of
+            shipping, founding companies and a stretch at Meta, and everything
+            I've built since led here.
           </p>
 
           <div class="cta-buttons animate-in">
-            <LinkButton href="https://arach.dev" className="cta-primary">
-              Explorations
+            <LinkButton href="https://openscout.app" className="cta-primary">
+              Scout
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="ml-3.5 h-4 w-4"
@@ -120,12 +124,12 @@ const socialCount = SOCIALS.filter(social => social.active).length;
           <div>
             <h2 class="ah-name">Arach Tchoupani</h2>
             <p class="ah-bio">
-              Startup founder, engineering leader, and AI enthusiast.
-              Software engineer turning ideas into reality — from startups to Meta,
-              bridging the gap between technical execution and business vision.
+              I'm building Scout, which turns AI agents into trusted teammates.
+              Fifteen years of shipping, founding companies and a stretch at
+              Meta, and everything I've built since led here.
             </p>
             <div class="ah-links">
-              <a href="https://arach.dev">arach.dev</a>
+              <a href="https://openscout.app">openscout.app</a>
               <a href="/about">About</a>
             </div>
           </div>
@@ -169,6 +173,102 @@ const socialCount = SOCIALS.filter(social => social.active).length;
         <h2 class="ah-heading">Newsletter</h2>
         <p class="ah-bio">Subscribe for updates on engineering, startups, and AI.</p>
         <a href="#newsletter" class="ah-view-all" onclick="document.querySelector('.newsletter-section')?.scrollIntoView({behavior:'smooth'}); return false;">Subscribe →</a>
+      </div>
+    </section>
+
+    <section id="classic-home" class="classic-home">
+      <div class="ch-intro">
+        <div class="ch-intro-text">
+        <div class="ch-id">
+          <div class="ch-portrait">
+            <DitheredPortrait client:load src="/assets/arach-dither-src.jpg" width={240} height={240} algorithm="atkinson" pixelSize={1} threshold={128} colorLight="#F4F5F7" colorDark="#2340F0" className="ch-portrait-img" />
+            <img class="ch-portrait-color" src="/assets/arach.jpg" alt="" width="400" height="400" loading="lazy" />
+          </div>
+          <p class="ch-fig"><span class="ch-accent">FIG.01</span> Arach Tchoupani<br />Founder, Scout</p>
+        </div>
+        <h1 class="ch-title">Turning AI agents into trusted teammates.</h1>
+        <p class="ch-lede">
+          I'm building <span class="ch-accent">Scout</span>, where people and AI
+          agents from every vendor work as one team. Fifteen years of shipping,
+          founding companies and a stretch at Meta, and everything I've built
+          since led here.
+        </p>
+        <div class="ch-actions">
+          <a href="https://openscout.app" class="ch-btn ch-btn-primary">openscout.app <span aria-hidden="true">↗</span></a>
+          <CalBooking client:load />
+        </div>
+        </div>
+        <figure class="ch-figure">
+          <img src="/assets/illustrations/keyswitch-cyanotype.jpg" alt="Exploded technical sketch of a mechanical keyboard switch" width="896" height="1120" />
+          <figcaption><span class="ch-accent">FIG.02</span> Key switch, exploded</figcaption>
+        </figure>
+      </div>
+
+      <div class="ch-brands">
+        <div class="ch-section-head">
+          <h2 class="ch-label"><span class="ch-accent">( 01 )</span> Previously</h2>
+          <span class="ch-more">2014 — 2023</span>
+        </div>
+        <CompanyLogos />
+      </div>
+
+      <div class="ch-projects">
+        <div class="ch-section-head">
+          <h2 class="ch-label"><span class="ch-accent">( 02 )</span> Building</h2>
+          <a href="https://openscout.app" class="ch-more">openscout.app ↗</a>
+        </div>
+        <a href={`/projects/${currentProject.slug}/`} class="ch-project">
+          <div class="ch-project-mark">{currentProject.slug === "scout" ? <ScoutMark /> : <LatticeMark />}</div>
+          <div class="ch-project-body">
+            <p class="ch-project-kicker"><span class="ch-accent">No.{String(PROJECTS.length).padStart(2, "0")}</span> {currentProject.kind}</p>
+            <h3 class="ch-project-name">{currentProject.name}</h3>
+            <p class="ch-project-tagline">{currentProject.tagline}</p>
+            <ul class="ch-project-features">
+              {currentProject.features.slice(0, 4).map(f => <li>{f.name}</li>)}
+            </ul>
+            <span class="ch-project-cta">Read the introduction →</span>
+          </div>
+        </a>
+
+        <div class="ch-way">
+          <p class="ch-way-label">On the way to {currentProject.name}</p>
+          <ol class="ch-list">
+            {ON_THE_WAY.map((p, i) => (
+              <li>
+                <a href={p.href} class="ch-item">
+                  <span class="ch-item-index">{String(i + 1).padStart(2, "0")}</span>
+                  <span class="ch-item-title">{p.name}</span>
+                  <span class="ch-item-date">{p.kind}</span>
+                  <span class="ch-item-desc">{p.desc}</span>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </div>
+
+      <div class="ch-writing">
+        <div class="ch-section-head">
+          <h2 class="ch-label"><span class="ch-accent">( 03 )</span> Writing</h2>
+          <a href="/posts/" class="ch-more">All posts →</a>
+        </div>
+        <ol class="ch-list">
+          {sortedPosts.slice(0, 8).map(({ data, id: slug }, i) => {
+            const d = new Date(data.pubDatetime);
+            return (
+              <li>
+                <a href={`/posts/${slug}/`} class="ch-item">
+                  <span class="ch-item-index">{String(i + 1).padStart(2, "0")}</span>
+                  <span class="ch-item-title">{data.title}</span>
+                  <time class="ch-item-date" datetime={d.toISOString()}>
+                    {`${d.getUTCFullYear()}.${String(d.getUTCMonth() + 1).padStart(2, "0")}`}
+                  </time>
+                  {data.description && <span class="ch-item-desc">{data.description}</span>}
+                </a>
+              </li>
+            );
+          })}
+        </ol>
       </div>
     </section>
 

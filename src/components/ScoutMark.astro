@@ -1,0 +1,55 @@
+---
+// Hairline Scout mark: the rounded outer hex ring over a filled inner hex,
+// geometry from the canonical Scout app icon.
+export interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props;
+---
+
+<svg class={`scout-mark ${className}`} viewBox="0 0 224 236" aria-hidden="true">
+  <path
+    class="sm-ring"
+    d="M103.01 13.21 Q112 8 120.99 13.21 L198.01 57.79 Q207 63 207 73.39 L207 162.61 Q207 173 198.01 178.21 L120.99 222.79 Q112 228 103.01 222.79 L25.99 178.21 Q17 173 17 162.61 L17 73.39 Q17 63 25.99 57.79 Z"
+  />
+  <path class="sm-core" d="M112 70 154 94v48l-42 24-42-24V94Z" />
+</svg>
+
+<style>
+  .scout-mark {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .sm-ring {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 0.75;
+    stroke-linejoin: round;
+    opacity: 0.7;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .sm-core {
+    fill: var(--cl-accent, rgb(var(--color-accent)));
+    fill-opacity: 0.16;
+    stroke: var(--cl-accent, rgb(var(--color-accent)));
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+    transform-origin: 112px 118px;
+    animation: sm-breathe 6s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  }
+
+  @keyframes sm-breathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.12); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sm-core {
+      animation: none;
+    }
+  }
+</style>

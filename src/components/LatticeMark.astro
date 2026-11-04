@@ -1,0 +1,72 @@
+---
+// Hairline 3x3 lattice: the lit L path, with one accent cell travelling along it.
+export interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props;
+const cells = [0, 1, 2].flatMap(r => [0, 1, 2].map(c => ({ r, c })));
+const lit = (r: number, c: number) => c === 0 || r === 2;
+---
+
+<svg class={`lattice-mark ${className}`} viewBox="0 0 120 120" aria-hidden="true">
+  {cells.map(({ r, c }) => (
+    <rect
+      x={4 + c * 40}
+      y={4 + r * 40}
+      width="32"
+      height="32"
+      rx="7"
+      class={lit(r, c) ? "lm-lit" : "lm-dim"}
+    />
+  ))}
+  <rect x="4" y="4" width="32" height="32" rx="7" class="lm-cursor" />
+</svg>
+
+<style>
+  .lattice-mark {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .lm-dim,
+  .lm-lit {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 0.75;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .lm-dim {
+    opacity: 0.22;
+    stroke-dasharray: 2 3;
+  }
+
+  .lm-lit {
+    opacity: 0.7;
+  }
+
+  .lm-cursor {
+    fill: var(--cl-accent, rgb(var(--color-accent)));
+    fill-opacity: 0.16;
+    stroke: var(--cl-accent, rgb(var(--color-accent)));
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+    animation: lm-walk 6s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  }
+
+  @keyframes lm-walk {
+    0%, 12% { transform: translate(0, 0); }
+    24%, 36% { transform: translate(0, 40px); }
+    48%, 60% { transform: translate(0, 80px); }
+    72%, 84% { transform: translate(40px, 80px); }
+    96%, 100% { transform: translate(80px, 80px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lm-cursor {
+      animation: none;
+    }
+  }
+</style>

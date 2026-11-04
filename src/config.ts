@@ -3,7 +3,7 @@ import type { Site, SocialObjects } from "./types";
 export const SITE: Site = {
   website: "https://arach.io/", // replace this with your deployed domain
   author: "Arach Tchoupani",
-  desc: "Arach Tchoupani - Engineer & Entrepreneur",
+  desc: "Arach Tchoupani - Founder of Scout, turning AI agents into trusted teammates",
   title: "Arach.io",
   ogImage: "/og.png",
   lightAndDarkMode: true,
@@ -52,7 +52,7 @@ export const SOCIALS: SocialObjects = [
     name: "Mail",
     href: "mailto:arach@tchoupani.com",
     linkTitle: `Send an email to ${SITE.title}`,
-    active: true,
+    active: false,
   },
   {
     name: "Twitter",

@@ -14,6 +14,7 @@ const blog = defineCollection({
       featured: z.boolean().optional(),
       draft: z.boolean().optional(),
       thumbnail: image().or(z.string()).optional(),
+      heroImage: image().or(z.string()).optional(),
       tags: z.array(z.string()).default(["others"]),
       ogImage: image()
         .refine(img => img.width >= 1200 && img.height >= 630, {
@@ -23,6 +24,9 @@ const blog = defineCollection({
         .optional(),
       description: z.string(),
       canonicalURL: z.string().optional(),
+      noindex: z.boolean().default(false),
+      publicationPending: z.boolean().default(false),
+      article: z.boolean().default(false),
       readingTime: z.string().optional(),
       series: z.object({
         name: z.string(),

@@ -1,5 +1,6 @@
 import { slugifyStr } from "@utils/slugify";
 import Datetime from "./Datetime";
+import { postIllustration } from "@data/postIllustrations";
 import type { CollectionEntry } from "astro:content";
 
 export interface Props {
@@ -23,6 +24,7 @@ export default function PostCard({
 
   // Handle both image objects (with .src) and string URLs
   const thumbnailSrc = typeof thumbnail === 'string' ? thumbnail : thumbnail?.src || null;
+  const illustrationSrc = postIllustration(href);
 
   // Build image styles from thumbnailCrop
   const imageStyle: React.CSSProperties = {};
@@ -87,7 +89,10 @@ export default function PostCard({
 
       {/* Polaroid-style Thumbnail */}
       <div className="p-4 bg-white dark:bg-gray-900/50">
-        <div className="aspect-[16/9] w-full overflow-hidden bg-skin-card-muted shadow-inner rounded-sm">
+        <div className={`aspect-[16/9] w-full overflow-hidden bg-skin-card-muted shadow-inner rounded-sm${illustrationSrc ? " has-illustration" : ""}`}>
+          {illustrationSrc && (
+            <img src={illustrationSrc} alt="" className="pc-illustration" loading="lazy" />
+          )}
           {thumbnailSrc ? (
             <img
               src={thumbnailSrc}

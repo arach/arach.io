@@ -1,0 +1,32 @@
+---
+import ImaginePrompt from "./ImaginePrompt";
+import tornOrgChart from "../assets/images/torn-org-chart.jpg";
+import tornOrgChartSketch from "../assets/images/torn-org-chart-sketch.jpg";
+
+export interface Props {
+  prompt: string;
+  image: string;
+  aspectRatio?: string;
+  tool?: string;
+}
+
+const { prompt, image, aspectRatio = "16:9", tool = "image_gen" } = Astro.props;
+
+const images: Record<string, { src: string }> = {
+  "torn-org-chart": tornOrgChart,
+  "torn-org-chart-sketch": tornOrgChartSketch,
+};
+
+const resolved = images[image];
+if (!resolved) {
+  throw new Error(`Unknown Imagine image: ${image}`);
+}
+---
+
+<ImaginePrompt
+  client:load
+  prompt={prompt}
+  imageUrl={resolved.src}
+  aspectRatio={aspectRatio}
+  tool={tool}
+/>
