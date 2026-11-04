@@ -1,0 +1,22 @@
+---
+/**
+ * Conductor's shutdown schedule as a horizontal timeline. Dates come from
+ * Conductor's announcement, read 2026-11-04. Stacks to two columns on phones.
+ */
+const STEPS = [
+  { when: "November 4", what: "New sign-ups and downloads stop." },
+  { when: "November 13", what: "Conductor Cloud becomes read-only." },
+  { when: "November 20", what: "Cloud shuts down and data deletion begins." },
+  { when: "Early 2027", what: "The local app winds down. Model updates and critical fixes continue until then." },
+];
+---
+
+<ol class="not-prose my-8 grid grid-cols-2 gap-x-6 gap-y-6 text-skin-base sm:grid-cols-4" aria-label="Conductor shutdown schedule">
+  {STEPS.map(step => (
+    <li class="relative border-t border-skin-line pt-3">
+      <span class="absolute -top-[4px] left-0 h-[7px] w-[7px] rounded-full bg-skin-inverted" aria-hidden="true"></span>
+      <div class="text-xs uppercase tracking-wider opacity-70">{step.when}</div>
+      <div class="mt-1 text-sm leading-snug">{step.what}</div>
+    </li>
+  ))}
+</ol>

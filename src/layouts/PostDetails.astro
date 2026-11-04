@@ -46,6 +46,7 @@ const {
   noindex,
   publicationPending,
   article,
+  wide,
   pubDatetime,
   modDatetime,
   tags,
@@ -133,7 +134,7 @@ const layoutProps = {
 
   <!-- Series navigation moved to title area -->
 
-  <main id="main-content" class="relative z-0 bg-skin-fill" style="background: rgb(var(--color-fill));">
+  <main id="main-content" class:list={["relative z-0 bg-skin-fill", { "post-wide": wide }]} style="background: rgb(var(--color-fill));">
     <!-- Series tag removed - now handled by minimal navigation -->
     
     <!-- Hero Image with overlapping title -->
@@ -519,6 +520,35 @@ const layoutProps = {
 
     :global([data-template="terminal"]) .toc-aside {
       grid-column: 2;
+    }
+  }
+
+  /* Wide posts: a 960px column for tables and interactive pieces. The page
+     grows to 1440px so the TOC keeps a usable rail, and it only shows when
+     the rail has room. */
+  main.post-wide {
+    max-width: 1440px;
+  }
+
+  .post-wide .title-with-series,
+  .post-wide .date-time-row,
+  .post-wide #article {
+    max-width: 960px;
+  }
+
+  @media (min-width: 1280px) {
+    .post-wide .article-with-toc {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 960px) minmax(0, 1fr);
+    }
+
+    .post-wide .toc-aside {
+      display: none;
+    }
+  }
+
+  @media (min-width: 1536px) {
+    .post-wide .toc-aside {
+      display: block;
     }
   }
 

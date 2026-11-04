@@ -5,28 +5,61 @@ title: "Where to go after Conductor"
 description: "Conductor is shutting down. The alternatives people named, sorted by where your agents run, with prices and migration limits from each maker's own pages."
 tags: [AI Agents, coding agents, tools]
 article: true
+wide: true
 readingTime: "6 min"
 canonicalURL: "https://arach.io/posts/conductor-alternatives/"
 ---
 import ConductorWorksheet from '../../components/ConductorWorksheet.tsx';
+import ConductorTimeline from '../../components/ConductorTimeline.astro';
+import Tweet from '../../components/Tweet.astro';
 
 
-Conductor announced that it is joining Meta. If you run your coding agents in it, here is the schedule ([announcement](https://www.conductor.build/announcement)):
+Charlie Holtz announced on November 4 that Conductor is joining Meta:
 
-- **November 4:** new sign-ups and downloads stop.
-- **November 13:** Conductor Cloud becomes read-only.
-- **November 20:** Cloud shuts down and data deletion begins.
-- **Early 2027:** the local app winds down. Model updates and critical fixes continue until then.
+<div class="max-w-xl">
+  <Tweet id="2118045232218743264" />
+</div>
+
+If you run your coding agents in Conductor, here is the schedule from the [announcement](https://www.conductor.build/announcement):
+
+<ConductorTimeline />
 
 Export your Cloud data, or move those workspaces to local, before the 13th.
 
-When Conductor announced, people on X answered with what they use instead. I went through that thread, kept the tools with real documentation, and checked each claim below against the maker's own pages on November 4. I haven't used these tools hands-on, and listing one is not an endorsement.
+People answered his post with what they use instead. I went through those replies, kept the tools with real documentation, and checked each claim below against the maker's own pages on November 4. I haven't used these tools hands-on, and listing one is not an endorsement.
+
+## Majors and up-and-comers
+
+I sort these into two groups. The split is my judgment, not a measured ranking.
+
+- **Majors:** Orca, T3 Code, Paseo, Paradev and Replicas. These are the established names people are already moving to.
+- **Up-and-comers:** Emdash, cmux, Orchestrator, Traycer, Cloudroom, Superconductor, Boxes.dev and omux. They are newer, smaller or still filling in, and some are worth a look anyway.
+
+GitHub stars give one outside measure of attention. Counts are from November 4.
+
+| Tool | Group | GitHub stars |
+| --- | --- | --- |
+| [Orca](https://github.com/stablyai/orca) | Major | 115,383 |
+| [T3 Code](https://github.com/pingdotgg/t3code) | Major | 46,433 |
+| [Paseo](https://github.com/getpaseo/paseo) | Major | 23,068 |
+| [Paradev](https://github.com/ParadevAI/Paradev) | Major | 15,919 |
+| Replicas | Major | No public repository |
+| [cmux](https://github.com/manaflow-ai/cmux) | Up-and-comer | 28,690 |
+| [Orchestrator](https://github.com/OrchestratorInc/agent-orchestrator) | Up-and-comer | 14,092 |
+| [Emdash](https://github.com/generalaction/emdash) | Up-and-comer | 6,185 |
+| [Traycer](https://github.com/traycerai/traycer) | Up-and-comer | 1,653 |
+| [Cloudroom](https://github.com/davidondrej/cloudroom) | Up-and-comer | 1,359 |
+| [omux](https://github.com/onurozcan/omux) | Up-and-comer | 125 |
+| Boxes.dev | Up-and-comer | No public repository |
+| Superconductor | Up-and-comer | No public repository |
+
+Stars measure attention, not quality, and a hosted tool's paying users never show up in them.
 
 ## Work out what you need
 
 Tick what matters to you, and the list narrows to the tools whose own pages back all of it. The details for each tool follow below.
 
-<ConductorWorksheet client:visible />
+<ConductorWorksheet client:load />
 
 ## Decide where your agents run
 
