@@ -1,15 +1,7 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-
 /**
- * Shared facts for the Conductor alternatives post, used by the worksheet and
- * the side-by-side compare. Every string comes from the post or from the
- * makers' pages it cites, read 2026-11-04. A field left out means the post
- * doesn't state it; the UI shows "Not stated", never "No".
- *
- * The page URL carries the reader's picks as a query string, so a filtered
- * worksheet or a comparison can be shared:
- *   ?where=own&needs=remote,phone#worksheet
- *   ?compare=orca,paseo,paradev#compare
+ * Facts for the Conductor alternatives post, read by the matrix. Every string
+ * comes from the post or from the makers' pages it cites, read 2026-11-04. A
+ * tag left out means the pages don't state it, never that the tool lacks it.
  */
 
 export type Need =
@@ -34,7 +26,7 @@ export type Tool = {
   /** GitHub stars on the public repository, read 2026-11-04. Absent when the maker publishes no repository. */
   repo?: { slug: string; stars: number };
   has: Need[];
-  /** One line for the worksheet row. */
+  /** One line on the tool. */
   note: string;
   /** Pricing as the post states it. */
   price: string;
@@ -176,94 +168,3 @@ export const formatStars = (n: number) =>
 /** Joins names as a sentence: "Orca", "Orca and Paseo", "Orca, Paseo and Paradev". */
 export const listNames = (names: string[]) =>
   names.length <= 1 ? names.join("") : `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}`;
-
-/* ---------- URL state ---------- */
-
-export const MAX_COMPARE = 3;
-
-/** Fired after a component writes shared state into the URL, so the other island can follow. */
-export const STATE_EVENT = "conductor:state";
-
-const KEY_ORDER = ["where", "which", "needs", "compare"] as const;
-type Key = (typeof KEY_ORDER)[number];
-
-const SAFE = /^[a-zA-Z0-9,-]*$/;
-
-export function readParam(key: Key): string | null {
-  if (typeof window === "undefined") return null;
-  const v = new URLSearchParams(window.location.search).get(key);
-  return v !== null && SAFE.test(v) ? v : null;
-}
-
-export const readList = (key: Key) => (readParam(key) ?? "").split(",").filter(Boolean);
-
-/** The compare list from the URL: known ids only, no repeats, at most three. */
-export const readCompare = () =>
-  [...new Set(readList("compare"))].filter(id => TOOL_BY_ID.has(id)).slice(0, MAX_COMPARE);
-
-/**
- * Sets or clears our keys in the query string and leaves every other parameter
- * and the hash alone. Values are slugs, so commas stay literal and the link
- * reads cleanly. Uses replaceState, so picks don't pile up in the back button.
- */
-export function writeParams(values: Partial<Record<Key, string | null>>, notify = false) {
-  const url = new URL(window.location.href);
-  const ours = new Map<Key, string>();
-  for (const k of KEY_ORDER) {
-    const v = k in values ? values[k] : url.searchParams.get(k);
-    if (v) ours.set(k, v);
-    url.searchParams.delete(k);
-  }
-  const rest = url.searchParams.toString();
-  const mine = [...ours].map(([k, v]) => `${k}=${v}`).join("&");
-  const query = [mine, rest].filter(Boolean).join("&");
-  history.replaceState(history.state, "", `${url.pathname}${query ? `?${query}` : ""}${url.hash}`);
-  if (notify) window.dispatchEvent(new Event(STATE_EVENT));
-}
-
-export function toggleCompare(id: string) {
-  const current = readCompare();
-  const next = current.includes(id)
-    ? current.filter(x => x !== id)
-    : current.length < MAX_COMPARE
-      ? [...current, id]
-      : current;
-  writeParams({ compare: next.join(",") || null }, true);
-}
-
-/** The compare list, kept in step with the URL and the other island. */
-export function useCompareList(): string[] {
-  const [list, setList] = useState<string[]>([]);
-  useEffect(() => {
-    const sync = () => setList(readCompare());
-    sync();
-    window.addEventListener(STATE_EVENT, sync);
-    return () => window.removeEventListener(STATE_EVENT, sync);
-  }, []);
-  return list;
-}
-
-/** Copies the current URL with the given anchor. Status reads "Link copied" or a fallback for two seconds. */
-export function useCopyLink(anchor: string) {
-  const [status, setStatus] = useState("");
-  const timer = useRef<number | undefined>(undefined);
-  useEffect(() => () => window.clearTimeout(timer.current), []);
-  const copy = useCallback(() => {
-    const url = new URL(window.location.href);
-    url.hash = anchor;
-    const show = (s: string) => {
-      setStatus(s);
-      window.clearTimeout(timer.current);
-      timer.current = window.setTimeout(() => setStatus(""), 2000);
-    };
-    if (!navigator.clipboard) {
-      show("Copy it from the address bar");
-      return;
-    }
-    navigator.clipboard.writeText(url.toString()).then(
-      () => show("Link copied"),
-      () => show("Copy it from the address bar"),
-    );
-  }, [anchor]);
-  return { status, copy };
-}
