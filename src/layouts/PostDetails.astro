@@ -524,32 +524,24 @@ const layoutProps = {
   }
 
   /* Wide posts: a 960px column for tables and interactive pieces. The page
-     grows to 1440px so the TOC keeps a usable rail, and it only shows when
-     the rail has room. */
-  main.post-wide {
-    max-width: 1440px;
-  }
-
+     cap leaves no room for a TOC rail beside it, so wide posts use one
+     centered column and no rail. */
   .post-wide .title-with-series,
   .post-wide .date-time-row,
   .post-wide #article {
     max-width: 960px;
   }
 
-  @media (min-width: 1280px) {
-    .post-wide .article-with-toc {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 960px) minmax(0, 1fr);
-    }
-
-    .post-wide .toc-aside {
-      display: none;
-    }
+  .post-wide .article-with-toc {
+    grid-template-columns: minmax(0, 1fr);
   }
 
-  @media (min-width: 1536px) {
-    .post-wide .toc-aside {
-      display: block;
-    }
+  .post-wide .article-shell {
+    grid-column: 1;
+  }
+
+  .post-wide .toc-aside {
+    display: none;
   }
 
   /* Metadata wraps instead of overflowing the measure on narrow screens */
