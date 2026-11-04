@@ -120,22 +120,28 @@ html[data-template="classic"] .header .logo img {
   display: none !important;
 }
 
+/* Wordmark: "arach" in ink, ".io" in the accent. No mark in front. */
+html[data-template="classic"] .header .logo {
+  align-items: baseline;
+}
+
+html[data-template="classic"] .header .logo::before,
+html[data-template="classic"] .header .logo::after {
+  font-family: var(--font-sans);
+  font-size: 19px;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
 html[data-template="classic"] .header .logo::before {
-  content: "";
-  width: 12px;
-  height: 12px;
-  margin-right: 10px;
-  border: 2px solid var(--cl-accent);
-  border-radius: 2px;
+  content: "arach";
+  color: var(--cl-ink);
 }
 
 html[data-template="classic"] .header .logo::after {
-  content: "arach";
-  font-family: var(--font-sans);
-  font-size: 19px;
-  font-weight: 600;
-  letter-spacing: -0.04em;
-  color: var(--cl-ink);
+  content: ".io";
+  color: var(--cl-accent);
 }
 
 html[data-template="classic"] .header .nav-list {
@@ -977,14 +983,6 @@ html[data-template="classic"][data-theme="light"] {
 html[data-template="classic"][data-theme="dark"] {
   --cl-rule-strong: rgba(226, 234, 255, 0.24);
   --cl-grid: rgba(160, 190, 255, 0.06);
-}
-
-html[data-template="classic"] .header .logo::after {
-  font-weight: 400;
-}
-
-html[data-template="classic"] .header .logo::before {
-  border-width: 1.5px;
 }
 
 /* Identity row: dithered portrait + label */

@@ -1,0 +1,81 @@
+---
+/**
+ * One tool in the Conductor alternatives post: facts in a left rail, the
+ * notes beside them. Facts come from each maker's pages, read 2026-11-04.
+ */
+interface Props {
+  name: string;
+  url: string;
+  group: "Major" | "Up-and-comer";
+  runs: "Local" | "Local and cloud" | "Cloud";
+  price: string;
+}
+
+const { name, url, group, runs, price } = Astro.props;
+---
+
+<div class="tool-entry">
+  <div class="tool-meta">
+    <a href={url} class="tool-name" target="_blank" rel="noopener">{name}</a>
+    <span class:list={["tool-group", { "tool-group--major": group === "Major" }]}>{group}</span>
+    <span class="tool-fact">{runs}</span>
+    <span class="tool-fact">{price}</span>
+  </div>
+  <div class="tool-body"><slot /></div>
+</div>
+
+<style>
+  .tool-entry {
+    display: grid;
+    gap: 0.5rem 2rem;
+    padding: 1.25rem 0;
+    border-top: 1px solid rgb(var(--color-border));
+  }
+
+  .tool-entry:last-of-type {
+    border-bottom: 1px solid rgb(var(--color-border));
+  }
+
+  @media (min-width: 640px) {
+    .tool-entry {
+      grid-template-columns: 13rem minmax(0, 1fr);
+    }
+  }
+
+  .tool-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+    line-height: 1.4;
+  }
+
+  .tool-name {
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+  }
+
+  .tool-group {
+    font-size: 0.6875rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.6;
+  }
+
+  .tool-group--major {
+    opacity: 1;
+  }
+
+  .tool-fact {
+    font-size: 0.875rem;
+    opacity: 0.7;
+  }
+
+  .tool-body :global(p) {
+    margin: 0;
+  }
+
+  .tool-body :global(p + p) {
+    margin-top: 0.75rem;
+  }
+</style>

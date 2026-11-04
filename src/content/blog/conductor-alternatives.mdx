@@ -1,0 +1,159 @@
+---
+author: Arach Tchoupani
+pubDatetime: 2026-11-04T21:45:00Z
+title: "Where to go after Conductor"
+description: "Conductor is shutting down. The alternatives people named, split into majors and up-and-comers, with where the agents run, prices and migration limits from each maker's own pages."
+tags: [AI Agents, coding agents, tools]
+article: true
+wide: true
+hideHero: true
+thumbnail: "../../assets/images/conductor-departures.png"
+readingTime: "6 min"
+canonicalURL: "https://arach.io/posts/conductor-alternatives/"
+---
+import ConductorWorksheet from '../../components/ConductorWorksheet.tsx';
+import ConductorTimeline from '../../components/ConductorTimeline.astro';
+import Tweet from '../../components/Tweet.astro';
+import ToolEntry from '../../components/ToolEntry.astro';
+import ConductorMatrix from '../../components/ConductorMatrix.astro';
+
+
+Charlie Holtz announced on November 4 that Conductor is joining Meta:
+
+<div class="max-w-xl">
+  <Tweet id="2118045232218743264" />
+</div>
+
+If you run your coding agents in Conductor, here is the schedule from the [announcement](https://www.conductor.build/announcement):
+
+<ConductorTimeline />
+
+Export your Cloud data, or move those workspaces to local, before the 13th.
+
+People answered his post with what they use instead. I went through those replies, kept the tools with real documentation, and checked each claim below against the maker's own pages on November 4. I haven't used these tools hands-on, and listing one is not an endorsement.
+
+## Majors and up-and-comers
+
+I sort these into two groups. The split is my judgment, not a measured ranking. Local means the agents run on your machines; cloud means the maker's computers. A dot means the tool's own pages back the feature, as of November 4; a blank means they didn't say. Stars are from GitHub on the same day, rounded.
+
+### Majors
+
+The established names people are already moving to.
+
+<ConductorMatrix tier="major" />
+
+### Up-and-comers
+
+Newer, smaller or still filling in. Some are worth a look anyway.
+
+<ConductorMatrix tier="rising" />
+
+Stars measure attention, not quality, and a hosted tool's paying users never show up in them.
+
+## Work out what you need
+
+Tick what matters to you, and the list narrows to the tools whose own pages back all of it. The details for each tool follow below.
+
+<ConductorWorksheet client:load />
+
+## Where the agents run
+
+Most of these tools have desktop, phone or web clients, and a client doesn't tell you where the agents execute. Each entry below says it: local (your machines), cloud (the maker's computers), or both. Paradev, cmux, Orchestrator and Cloudroom do both. Replicas, Boxes.dev and Superconductor run only on the maker's computers. The worksheet's first question filters on this.
+
+## A closer look at the majors
+
+<ToolEntry name="Orca" url="https://www.onorca.dev/" group="Major" runs="Local" price="Free, MIT">
+
+Desktop and mobile clients, worktrees, review, and access to your own remote machines. Remote access here means your machines, not managed compute. [Repository](https://github.com/stablyai/orca).
+
+</ToolEntry>
+
+<ToolEntry name="T3 Code" url="https://t3.codes/" group="Major" runs="Local" price="Free">
+
+A desktop, mobile and web agent interface with review and remote access to your own hosts. Worktrees are covered in its [user docs](https://github.com/pingdotgg/t3code). [Remote access](https://github.com/pingdotgg/t3code/blob/main/docs/user/remote-access.md) can go over your LAN, Tailscale, another VPN, SSH or a public URL. T3 Connect is the easy route; it uses T3's cloud tunnels and a sign-in, and a paid plan raises its machine limit. It is MIT licensed. The repository warns that the project is early.
+
+</ToolEntry>
+
+<ToolEntry name="Paseo" url="https://paseo.sh/docs" group="Major" runs="Local" price="Free; Hub Pro $15 per seat">
+
+Desktop, phone and web clients for daemons running on your machines. The app is free and open source under Apache 2.0. The optional hosted [Hub](https://paseo.sh/hub) manages triggers, not agent compute. Hub Pro is $15 per seat per month, and model and machine costs stay yours.
+
+</ToolEntry>
+
+<ToolEntry name="Paradev" url="https://paradev.com/" group="Major" runs="Local and cloud" price="Pro $20 per user">
+
+Formerly Superset. Local worktrees and a beta cloud. Pro is $20 per user per month and includes 320 GB-hours per seat, which is 40 hours at 8 GB. Models cost extra ([pricing](https://paradev.com/pricing)). It documents a path from Conductor for local worktrees and Cloud; see below.
+
+</ToolEntry>
+
+## A closer look at the up-and-comers
+
+<ToolEntry name="cmux" url="https://cmux.com/pricing" group="Up-and-comer" runs="Local and cloud" price="Free app, Pro from $50">
+
+A free Mac terminal workspace, and local agents use your own API keys at no cost. Persistent [cloud VMs](https://cmux.com/docs/cloud) are paid early access. Pro starts at $50 a month, and the pricing page has also shown a $15 Plus tier with one saved cloud VM. It doesn't say how model costs work on cloud VMs, and I couldn't confirm automatic worktrees per task.
+
+</ToolEntry>
+
+<ToolEntry name="Orchestrator" url="https://orchestrator.inc/pricing/" group="Up-and-comer" runs="Local and cloud" price="Free local, Starter $20">
+
+Local worktrees with PR and CI feedback loops. [Hosted execution](https://docs.orchestrator.inc/guides/cloud/) needs an enabled build and account access. I couldn't establish whether cloud includes model costs.
+
+</ToolEntry>
+
+<ToolEntry name="Emdash" url="https://emdash.com/" group="Up-and-comer" runs="Local" price="Free">
+
+Parallel CLI agents on macOS, Windows and Linux, with worktrees, diffs and a PR workflow, locally or over SSH. The stable v1 and the 2.0 waitlist are separate things. [Repository](https://github.com/generalaction/emdash).
+
+</ToolEntry>
+
+<ToolEntry name="Traycer" url="https://docs.traycer.ai/guides/review-agent-changes" group="Up-and-comer" runs="Local" price="Free for individuals">
+
+A desktop workspace with worktrees, review and your own [remote hosts](https://docs.traycer.ai/concepts/hosts/remote-hosts), under an [MIT license](https://raw.githubusercontent.com/traycerai/traycer/main/LICENSE). Team Sync adds sharing for $20 per user per month ([pricing](https://docs.traycer.ai/account/pricing)). Provider costs are separate. Optional Traycer inference adds 20% and includes no monthly credits, and the automatic judge can spend credits.
+
+Stable [1.5.3](https://github.com/traycerai/traycer/releases/tag/desktop-v1.5.3) shipped on November 3. An [open report](https://github.com/traycerai/traycer/issues/3429) describes memory and queue issues; I didn't reproduce it.
+
+</ToolEntry>
+
+<ToolEntry name="Cloudroom" url="https://www.cloudroom.dev/pricing" group="Up-and-comer" runs="Local and cloud" price="Pro US$50 a month">
+
+Runs agents locally or hosted. Its open-source Core runs on your own Ubuntu 24.04 server, while GPUs, Cloud loops and computer use run only on Cloudroom Cloud ([FAQ](https://www.cloudroom.dev/docs/faq)). Compute credits don't cover models. Its local diff and worktree features don't mean the cloud has the same ones ([local threads](https://www.cloudroom.dev/docs/local-threads)).
+
+</ToolEntry>
+
+<ToolEntry name="Replicas" url="https://replicas.dev/" group="Up-and-comer" runs="Cloud" price="Developer $50 a month">
+
+Hosted Linux workspaces. It has desktop and mobile clients, but the agents run on its computers. The plan includes $50 of usage ([billing](https://docs.replicas.dev/admin/billing)), and you bring your own model [credentials](https://docs.replicas.dev/admin/credentials). It documents a [move from Conductor Cloud](https://docs.replicas.dev/migrate/conductor-cloud) for workspaces, setup scripts, secrets, routines and team.
+
+</ToolEntry>
+
+<ToolEntry name="Boxes.dev" url="https://boxes.dev/" group="Up-and-comer" runs="Cloud" price="Starter $19 per seat">
+
+Hosted Linux computers for Claude Code and Codex. Starter includes 50 box-hours and four awake devboxes plus a Template. A standard hour is 4 vCPU and 8 GiB, and extra usage is $0.60 per box-hour. Larger boxes and an awake Template use more, and models cost extra ([billing](https://boxes.dev/help/plans-and-box-hours)).
+
+</ToolEntry>
+
+<ToolEntry name="Superconductor" url="https://www.superconductor.com/docs/implementations" group="Up-and-comer" runs="Cloud" price="Free plan, Pro from $50">
+
+Hosted agent environments and PR review. Pro starts at $50 a month for 20,000 credits and rises with the credits you pick ([docs](https://www.superconductor.com/docs/pricing)); the [pricing page](https://www.superconductor.com/pricing) opens on the $100 tier. The free plan includes 20,000 credits, and compute costs 100 credits an hour at 1 vCPU and 2 GB. Model tokens can come out of credits; bring your own tokens and credits go only to the cloud computers.
+
+The maker [posted](https://x.com/sergeykarayev/status/2118067017878302855) "Free Pro until end of the year for CC customers!", and the pricing page gives no terms for it.
+
+</ToolEntry>
+
+## A shout-out to Amp
+
+[Amp](https://ampcode.com/) plays a different game from the tools above: it is a coding agent with its own development environment. It still answers the same need. Each thread gets an orb, a machine Amp sets up with your code, tools and plugins, so the agent keeps working after you close your laptop ([manual](https://ampcode.com/manual)). Orbs can be Amp-hosted or self-hosted, and your Mac can serve as a runner. You can start one from your phone and follow up from your Mac or the terminal.
+
+The Hobby plan is free. Amp-hosted orbs are pay-as-you-go, self-hosted orbs and your own runners cost nothing, and you can bring your ChatGPT or Claude subscription or your own keys with no Amp token fees. Megawatt is $20 a month with 45,000 orb minutes ([pricing](https://ampcode.com/pricing)).
+
+## What moves over
+
+Two tools document a path from Conductor. Paradev can adopt your existing local worktrees, though scripts need converting ([local migration](https://docs.paradev.com/migrate-from-conductor)). Moving off Conductor Cloud means transferring workspaces to local, or pushing branches and recreating the environments ([Cloud migration](https://docs.paradev.com/migrate-from-conductor-cloud)). Archiving an adopted worktree in Conductor can delete its shared folder, so be careful there. [Replicas](https://docs.replicas.dev/migrate/conductor-cloud) moves Conductor Cloud workspaces, setup scripts, secrets, routines and team into its own cloud workspaces. It doesn't take local worktrees.
+
+Conductor chats can't be imported anywhere, and resuming a CLI session depends on compatible saved sessions. [Traycer](https://docs.traycer.ai/first-run) and [Boxes](https://boxes.dev/help/start-and-continue-threads#import-threads-from-your-computer) can import local conversation history from your model provider, but that isn't the same as importing Conductor chats or Cloud exports.
+
+## Who spoke up on X
+
+Makers posted offers for [Orca](https://x.com/orca_build/status/2118054072242827366), [Orchestrator](https://x.com/agent_wrapper/status/2118072185663435262), [Superconductor](https://x.com/sergeykarayev/status/2118067017878302855) and [Boxes.dev](https://x.com/drewregitsky/status/2118064826287272237). Paradev's account [replied](https://x.com/ParadevAI/status/2118068933660196997) with a link and "Something like this?". A [Traycer post](https://x.com/GillTanveer89/status/2118071855840157883) names the product, but nothing shows its author works there. Users recommended [T3 Code](https://x.com/gabrielbuzziv/status/2118079565373276523) and [Paseo](https://x.com/jeremybuff/status/2118058133205737667). One [lead](https://x.com/SaaiArora/status/2118057403438825507) may point at Replicas, but it doesn't name the product. Cloudroom, cmux and Emdash are here on their documentation alone.
+
+Prices and dates are as each maker's pages stated them on November 4, 2026. They will change.

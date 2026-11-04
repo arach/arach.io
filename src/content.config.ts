@@ -27,6 +27,10 @@ const blog = defineCollection({
       noindex: z.boolean().default(false),
       publicationPending: z.boolean().default(false),
       article: z.boolean().default(false),
+      /** A wider reading column for posts built around tables and interactive pieces. */
+      wide: z.boolean().default(false),
+      /** Use the thumbnail for cards and the OG image only, with no banner on the post. */
+      hideHero: z.boolean().default(false),
       readingTime: z.string().optional(),
       series: z.object({
         name: z.string(),
