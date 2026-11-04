@@ -43,7 +43,6 @@ const NEEDS: { id: Need; label: string; hint: string }[] = [
 
 const TOOLS: Tool[] = [
   { name: "Emdash", url: "https://emdash.com/", runs: { own: true, maker: false }, tier: "rising", repo: { slug: "generalaction/emdash", stars: 6185 }, has: ["remote", "worktrees", "review", "free"], note: "macOS, Windows and Linux; remote over SSH." },
-  { name: "omux", url: "https://github.com/onurozcan/omux", runs: { own: true, maker: false }, tier: "rising", repo: { slug: "onurozcan/omux", stars: 125 }, has: ["worktrees", "openSource", "free"], note: "Apple Silicon Macs only. Worktrees are optional." },
   { name: "Orca", url: "https://www.onorca.dev/", runs: { own: true, maker: false }, tier: "major", repo: { slug: "stablyai/orca", stars: 115383 }, has: ["remote", "worktrees", "review", "phone", "openSource", "free"], note: "Desktop and mobile; remote means your machines." },
   { name: "Paseo", url: "https://paseo.sh/docs", runs: { own: true, maker: false }, tier: "major", repo: { slug: "getpaseo/paseo", stars: 23068 }, has: ["remote", "phone"], note: "Clients drive daemons on your machines. Hub Pro is $15 per seat." },
   { name: "T3 Code", url: "https://t3.codes/", runs: { own: true, maker: false }, tier: "major", repo: { slug: "pingdotgg/t3code", stars: 46433 }, has: ["remote", "worktrees", "review", "phone", "free"], note: "Remote access runs through T3's cloud tunnels. Early." },
@@ -109,17 +108,18 @@ export default function ConductorWorksheet() {
     setNeeds(new Set());
   };
 
-  const { matches, others } = useMemo(() => {
-    const placed = TOOLS.filter(
-      t => (where === "either" || t.runs[where]) && (which === "both" || t.tier === which),
-    );
+  const groups = useMemo(() => {
     const missing = (t: Tool) => [...needs].filter(n => !t.has.includes(n));
-    return {
-      matches: placed.filter(t => missing(t).length === 0),
-      others: placed
-        .map(t => ({ tool: t, missing: missing(t) }))
-        .filter(x => x.missing.length > 0),
-    };
+    const tiers: Tier[] = which === "both" ? ["major", "rising"] : [which];
+    return tiers.map(tier => {
+      const placed = TOOLS.filter(t => t.tier === tier && (where === "either" || t.runs[where]));
+      return {
+        tier,
+        total: placed.length,
+        matches: placed.filter(t => missing(t).length === 0),
+        others: placed.map(t => ({ tool: t, missing: missing(t) })).filter(x => x.missing.length > 0),
+      };
+    });
   }, [where, which, needs]);
 
   const chip = (on: boolean) =>
@@ -133,15 +133,22 @@ export default function ConductorWorksheet() {
   const filtered = where !== "either" || which !== "both" || needs.size > 0;
 
   return (
-    <div className="not-prose my-10 rounded border border-skin-line bg-skin-card-muted text-skin-base">
-      <div className="grid gap-5 border-b border-skin-line p-5 sm:p-6">
+    <div className="not-prose my-10 grid gap-4 text-skin-base">
+      <div className="grid gap-5 rounded border border-skin-line bg-skin-card-muted p-5 sm:p-6">
         <div className="grid gap-5 sm:grid-cols-[auto_minmax(0,1fr)] sm:gap-x-10">
           <Choice label="Where should the agents run?" name="where" options={WHERE} value={where} onChange={v => setWhere(v)} chip={chip} />
           <Choice label="Which tools?" name="which" options={WHICH} value={which} onChange={v => setWhich(v)} chip={chip} />
         </div>
 
         <div className="grid gap-2">
-          <div className="text-xs uppercase tracking-wider opacity-70">What do you need?</div>
+          <div className="flex items-baseline justify-between gap-4">
+            <div className="text-xs uppercase tracking-wider opacity-70">What do you need?</div>
+            {filtered && (
+              <button type="button" onClick={reset} className="text-xs underline decoration-1 underline-offset-2 opacity-70 hover:opacity-100">
+                Clear
+              </button>
+            )}
+          </div>
           <div className="flex flex-wrap gap-2">
             {NEEDS.map(n => (
               <button
@@ -160,62 +167,59 @@ export default function ConductorWorksheet() {
         </div>
       </div>
 
-      <div className="grid gap-1 p-5 sm:p-6" aria-live="polite">
-        <div className="mb-2 flex items-baseline justify-between gap-4">
-          <div className="text-xs uppercase tracking-wider opacity-70">
-            {matches.length === 1 ? "1 tool fits" : `${matches.length} tools fit`}
+      <div className="grid gap-4" aria-live="polite">
+        {groups.map(g => (
+          <div
+            key={g.tier}
+            role="region"
+            id={`results-${g.tier}`}
+            aria-label={TIER_LABEL[g.tier]}
+            className="rounded border border-skin-line bg-skin-card-muted p-5 sm:p-6"
+          >
+            <div className="mb-2 flex items-baseline justify-between gap-4 border-b border-skin-line pb-2">
+              <div role="heading" aria-level={3} className="text-base font-normal">
+                {TIER_LABEL[g.tier]}
+              </div>
+              <div className="text-xs uppercase tracking-wider opacity-70">
+                {g.matches.length} of {g.total} fit
+              </div>
+            </div>
+
+            {g.matches.length === 0 ? (
+              <p className="py-2 text-sm opacity-80">
+                {g.total === 0
+                  ? "None of these run there."
+                  : "No tool here has pages that back everything you picked."}
+              </p>
+            ) : (
+              <ul>
+                {g.matches.map(t => (
+                  <Row key={t.name} t={t} needs={needs} />
+                ))}
+              </ul>
+            )}
+
+            {g.others.length > 0 && (
+              <details className="mt-2 border-t border-skin-line pt-3 text-sm">
+                <summary className="cursor-pointer opacity-70">
+                  {g.others.length === 1 ? "1 more" : `${g.others.length} more`}, and what their pages don't state
+                </summary>
+                <ul className="mt-2 grid gap-1">
+                  {g.others.map(({ tool, missing }) => (
+                    <li key={tool.name} className="opacity-75">
+                      <span className="font-medium">{tool.name}:</span> {missing.map(m => SHORT[m].toLowerCase()).join(", ")}
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            )}
           </div>
-          {filtered && (
-            <button type="button" onClick={reset} className="text-xs underline decoration-1 underline-offset-2 opacity-70 hover:opacity-100">
-              Clear
-            </button>
-          )}
-        </div>
-
-        {matches.length === 0 ? (
-          <p className="py-2 text-sm opacity-80">
-            No tool's own pages back everything you picked. Drop the least important need, or check the makers' docs directly.
-          </p>
-        ) : (
-          <div className="grid gap-4">
-            {(["major", "rising"] as Tier[]).map(tier => {
-              const group = matches.filter(t => t.tier === tier);
-              if (group.length === 0) return null;
-              return (
-                <div key={tier} role="group" aria-label={TIER_LABEL[tier]}>
-                  <div role="heading" aria-level={3} className="mb-1 border-b border-skin-line pb-1 text-sm font-medium">
-                    {TIER_LABEL[tier]} <span className="font-normal opacity-60">{group.length}</span>
-                  </div>
-                  <ul>
-                    {group.map(t => (
-                      <Row key={t.name} t={t} needs={needs} />
-                    ))}
-                  </ul>
-                </div>
-              );
-            })}
-          </div>
-        )}
-
-        {others.length > 0 && (
-          <details className="mt-3 border-t border-skin-line pt-3 text-sm">
-            <summary className="cursor-pointer opacity-70">
-              {others.length === 1 ? "1 other tool" : `${others.length} other tools`}, and what their pages don't state
-            </summary>
-            <ul className="mt-2 grid gap-1">
-              {others.map(({ tool, missing }) => (
-                <li key={tool.name} className="opacity-75">
-                  <span className="font-medium">{tool.name}:</span> {missing.map(m => SHORT[m].toLowerCase()).join(", ")}
-                </li>
-              ))}
-            </ul>
-          </details>
-        )}
-
-        <p className="mt-4 text-xs opacity-60">
-          The majors and up-and-comers split is my own call. Stars are from GitHub on November 4, 2026. A tool counts only where its own pages say so, as of November 4, 2026. A missing tag means the pages didn't say, not that the tool can't.
-        </p>
+        ))}
       </div>
+
+      <p className="text-xs opacity-60">
+        The majors and up-and-comers split is my own call. Stars are from GitHub on November 4, 2026. A tool counts only where its own pages say so, as of November 4, 2026. A missing tag means the pages didn't say, not that the tool can't.
+      </p>
     </div>
   );
 }
