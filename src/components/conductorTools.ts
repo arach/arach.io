@@ -53,7 +53,7 @@ export const NEEDS: { id: Need; label: string; hint: string }[] = [
   { id: "phone", label: "A phone client", hint: "Check on agents away from the desk" },
   { id: "openSource", label: "An open-source license", hint: "Only where the license itself was confirmed" },
   { id: "free", label: "Free to start", hint: "A free app or a free plan" },
-  { id: "conductorImport", label: "Bring my Conductor worktrees across", hint: "A documented migration path" },
+  { id: "conductorImport", label: "Move my Conductor work across", hint: "A documented migration path from Conductor" },
 ];
 
 export const SHORT: Record<Need, string> = {
@@ -71,7 +71,7 @@ export const TIER_LABEL: Record<Tier, string> = { major: "Majors", rising: "Up-a
 export const TOOLS: Tool[] = [
   {
     id: "emdash", name: "Emdash", url: "https://emdash.com/", runs: { own: true, maker: false }, tier: "rising",
-    repo: { slug: "generalaction/emdash", stars: 6185 }, has: ["remote", "worktrees", "review", "free"],
+    repo: { slug: "generalaction/emdash", stars: 6185 }, has: ["remote", "worktrees", "review", "openSource", "free"],
     note: "macOS, Windows and Linux; remote over SSH.",
     price: "Free.",
     caveat: "The stable v1 and the 2.0 waitlist are separate things.",
@@ -84,18 +84,18 @@ export const TOOLS: Tool[] = [
   },
   {
     id: "paseo", name: "Paseo", url: "https://paseo.sh/docs", runs: { own: true, maker: false }, tier: "major",
-    repo: { slug: "getpaseo/paseo", stars: 23068 }, has: ["remote", "phone"],
-    note: "Clients drive daemons on your machines. Hub Pro is $15 per seat.",
-    price: "The optional Hub Pro is $15 per seat per month.",
+    repo: { slug: "getpaseo/paseo", stars: 23068 }, has: ["remote", "phone", "openSource", "free"],
+    note: "Free app; clients drive daemons on your machines. Hub Pro is $15 per seat.",
+    price: "Free and open source. The optional Hub Pro is $15 per seat per month.",
     models: "Model and machine costs stay yours.",
     caveat: "The hosted Hub manages triggers, not agent compute.",
   },
   {
     id: "t3-code", name: "T3 Code", url: "https://t3.codes/", runs: { own: true, maker: false }, tier: "major",
-    repo: { slug: "pingdotgg/t3code", stars: 46433 }, has: ["remote", "worktrees", "review", "phone", "free"],
-    note: "Remote access runs through T3's cloud tunnels. Early.",
+    repo: { slug: "pingdotgg/t3code", stars: 46433 }, has: ["remote", "worktrees", "review", "phone", "openSource", "free"],
+    note: "Remote over LAN, Tailscale, SSH or T3's tunnels. Early.",
     price: "Free. A paid plan raises the machine limit.",
-    caveat: "Remote access runs through T3's cloud tunnels and needs a sign-in. The repository warns that the project is early.",
+    caveat: "T3 Connect, the easy remote route, uses T3's cloud tunnels and needs a sign-in. The repository warns that the project is early.",
   },
   {
     id: "traycer", name: "Traycer", url: "https://docs.traycer.ai/account/pricing", runs: { own: true, maker: false }, tier: "rising",
@@ -125,7 +125,7 @@ export const TOOLS: Tool[] = [
   },
   {
     id: "cmux", name: "cmux", url: "https://cmux.com/pricing", runs: { own: true, maker: true }, tier: "rising",
-    repo: { slug: "manaflow-ai/cmux", stars: 28690 }, has: ["free"],
+    repo: { slug: "manaflow-ai/cmux", stars: 28690 }, has: ["openSource", "free"],
     note: "Free Mac app; cloud VMs are paid early access.",
     price: "Free app. Pro starts at $50 a month, and the pricing page has also shown a $15 Plus tier with one saved cloud VM.",
     models: "Local agents use your own API keys at no cost. The pricing page doesn't say how model costs work on cloud VMs.",
@@ -133,7 +133,7 @@ export const TOOLS: Tool[] = [
   },
   {
     id: "orchestrator", name: "Orchestrator", url: "https://orchestrator.inc/pricing/", runs: { own: true, maker: true }, tier: "rising",
-    repo: { slug: "OrchestratorInc/agent-orchestrator", stars: 14092 }, has: ["worktrees", "review", "free"],
+    repo: { slug: "OrchestratorInc/agent-orchestrator", stars: 14092 }, has: ["worktrees", "review", "openSource", "free"],
     note: "Free local plan; cloud Starter is $20.",
     price: "Free local plan. Starter is $20.",
     models: "I couldn't establish whether cloud includes model costs.",
@@ -141,7 +141,7 @@ export const TOOLS: Tool[] = [
   },
   {
     id: "paradev", name: "Paradev", url: "https://paradev.com/", runs: { own: true, maker: true }, tier: "major",
-    repo: { slug: "ParadevAI/Paradev", stars: 15919 }, has: ["worktrees", "conductorImport"],
+    repo: { slug: "ParadevAI/Paradev", stars: 15919 }, has: ["worktrees", "openSource", "conductorImport"],
     note: "Cloud is in beta. Pro is $20 per user.",
     price: "Pro is $20 per user per month and includes 320 GB-hours per seat, which is 40 hours at 8 GB.",
     models: "Models cost extra.",
@@ -149,19 +149,19 @@ export const TOOLS: Tool[] = [
   },
   {
     id: "replicas", name: "Replicas", url: "https://replicas.dev/", runs: { own: false, maker: true }, tier: "rising",
-    has: ["phone"],
-    note: "Hosted workspaces; clients don't mean local execution. $50 a month.",
+    has: ["phone", "conductorImport"],
+    note: "Hosted workspaces, with a move from Conductor Cloud. $50 a month.",
     price: "Developer is $50 a month and includes $50 of usage.",
     models: "You bring your own model credentials.",
-    caveat: "It has desktop and mobile clients, but the agents run on its computers.",
+    caveat: "It has desktop and mobile clients, but the agents run on its computers. Its Conductor guide covers Cloud work, not local worktrees, and it can't import chats.",
   },
   {
     id: "superconductor", name: "Superconductor", url: "https://www.superconductor.com/pricing", runs: { own: false, maker: true }, tier: "rising",
     has: ["review", "free"],
-    note: "Hosted, with PR review. Its pricing page and docs disagree on Pro.",
-    price: "The free plan includes 20,000 credits, and compute costs 100 credits an hour at 1 vCPU and 2 GB. Pro is $100 a month on the pricing page and from $50 in the docs.",
+    note: "Hosted, with PR review. Pro from $50 for 20,000 credits.",
+    price: "The free plan includes 20,000 credits, and compute costs 100 credits an hour at 1 vCPU and 2 GB. Pro starts at $50 a month for 20,000 credits and rises with the credits you pick.",
     models: "Model tokens can come out of credits. Bring your own tokens and credits go only to the cloud computers.",
-    caveat: "Check the Pro price before you buy. The maker's offer of free Pro for Conductor customers has no terms on the pricing page.",
+    caveat: "The maker's offer of free Pro for Conductor customers has no terms on the pricing page.",
   },
 ];
 
