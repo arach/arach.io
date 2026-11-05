@@ -108,10 +108,10 @@ export const TOOLS: Tool[] = [
   },
   {
     id: "cloudroom", name: "Cloudroom", url: "https://www.cloudroom.dev/docs/faq", runs: { own: true, maker: true }, tier: "rising",
-    repo: { slug: "davidondrej/cloudroom", stars: 1359 }, has: ["remote", "worktrees", "review", "phone", "free"], license: "Apache 2.0",
+    repo: { slug: "davidondrej/cloudroom", stars: 1364 }, has: ["remote", "worktrees", "review", "phone", "free"], license: "Apache 2.0",
     note: "Open-source Core on your own server; GPUs only on its cloud. Free plan; Pro is $50.",
-    price: "Free plan with 3,000 cloud credits a month. Pro is US$50 a month.",
-    models: "Compute credits don't cover models.",
+    price: "Free plan with 3,000 cloud credits a month. Pro is $50 a month for 50,000 credits, Super $150 and Ultra $500.",
+    models: "Models stay on your own Claude or Codex plan with no markup; credits pay only for the cloud computers.",
     caveat: "Core runs on your own Ubuntu 24.04 server. GPUs, Cloud loops and computer use run only on Cloudroom Cloud, and local diff and worktree features don't mean the cloud has them.",
   },
   {
