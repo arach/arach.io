@@ -68,7 +68,7 @@ Desktop, phone and web clients for daemons running on your machines. The app is 
 
 <ToolEntry name="Paradev" url="https://paradev.com/" group="Major" runs="Local and cloud" price="Free; Pro $20 per user">
 
-Formerly Superset. Local worktrees and a beta cloud. The Free plan covers one user with local workspaces, the desktop app and the CLI. Pro is $20 per user per month and adds remote access, automations and the phone app. Cloud workspaces start on Team, at $60 per user per month with 150 hours per seat. Models cost extra ([pricing](https://paradev.com/pricing)). The pricing page changed on November 4; earlier that day it listed 40 cloud hours on Pro. It documents a path from Conductor for local worktrees and Cloud; see below.
+Formerly Superset. Local worktrees and a beta cloud. The Free plan covers one user with local workspaces, the desktop app and the CLI. Pro is $20 per user per month and adds remote access, automations and the phone app. Cloud workspaces start on Team, at $60 per user per month with 150 hours per seat. Models cost extra ([pricing](https://paradev.com/pricing)). The pricing page changed on November 4; earlier that day it listed 40 cloud hours on Pro. Its [Conductor guide](https://docs.paradev.com/migrate-from-conductor) adopts your Conductor worktrees in place, with their branches and uncommitted changes. Chats don't come across; see below.
 
 </ToolEntry>
 
@@ -144,9 +144,17 @@ Amp is also the one tool here that imports Conductor chats. Its co-founder Karl 
 
 ## What moves over
 
-Two tools document a path from Conductor. Paradev can adopt your existing local worktrees, though scripts need converting ([local migration](https://docs.paradev.com/migrate-from-conductor)). Moving off Conductor Cloud means transferring workspaces to local, or pushing branches and recreating the environments ([Cloud migration](https://docs.paradev.com/migrate-from-conductor-cloud)). Archiving an adopted worktree in Conductor can delete its shared folder, so be careful there. [Replicas](https://docs.replicas.dev/migrate/conductor-cloud) moves Conductor Cloud workspaces, setup scripts, secrets, routines and team into its own cloud workspaces. It doesn't take local worktrees.
+Two tools document a path from Conductor.
 
-Only [Amp](https://x.com/karlclement/status/2118108530926567430) imports Conductor chats; see above. Paradev and Replicas both say they can't, and resuming a CLI session depends on compatible saved sessions. [Traycer](https://docs.traycer.ai/first-run) and [Boxes](https://boxes.dev/help/start-and-continue-threads#import-threads-from-your-computer) can import local conversation history from your model provider, but that isn't the same as importing Conductor chats or Cloud exports.
+Paradev adopts local Conductor workspaces where they sit ([local migration](https://docs.paradev.com/migrate-from-conductor)). Add the same repository folder Conductor used, not a new clone, then right-click the project and choose Import untracked worktrees. Nothing is copied or moved, and each workspace keeps its path, branch and uncommitted changes. Leave Run setup script off, since they're already set up. A worktree on a detached HEAD needs a branch before it shows up in the list.
+
+Scripts move from `conductor.json` or `.conductor/settings.toml` into `.paradev/config.json`. Setup stays `setup`, run stays `run`, and the archive script becomes `teardown`. The `CONDUCTOR_*` path and name variables become `SUPERSET_*`. `CONDUCTOR_PORT` has no equivalent: Paradev detects the ports each workspace listens on instead of assigning them. Once a workspace is imported, don't archive it in Conductor. That deletes the workspace directory, which is now your Paradev workspace too. Quit Conductor instead.
+
+Conductor Cloud has the shorter clock ([Cloud migration](https://docs.paradev.com/migrate-from-conductor-cloud)). Commit everything with `git add -A` and push every branch. A push leaves Git-ignored files such as `.env` behind, so copy those out yourself. Then either right-click the workspace, choose Transfer to local and import it as above, or continue in a Paradev cloud workspace. For the cloud route, create an environment with the repositories, variables and secrets your Conductor setup used, and commit `.paradev/config.json` to every base branch. Paradev starts a new working branch from the one you pushed, so an open pull request on the Conductor branch won't get the new commits. Routines become automations with Cloud as the device. Cloud workspaces need a paid plan and are in early access.
+
+[Replicas](https://docs.replicas.dev/migrate/conductor-cloud) moves Conductor Cloud workspaces, setup scripts, secrets, routines and team into its own cloud workspaces. It doesn't take local worktrees.
+
+Only [Amp](https://x.com/karlclement/status/2118108530926567430) imports Conductor chats; see above. Paradev says it can't, and points you to Conductor's Settings, Account, Export data for a record of them. On your Mac, Claude Code sessions are a partial exception. Conductor saves them in your usual `~/.claude` folder under the workspace's path, and an imported workspace keeps that path, so `claude --resume` in it lists the old conversations. Claude Code deletes sessions older than 30 days by default. Replicas says it can't import chats either. [Traycer](https://docs.traycer.ai/first-run) and [Boxes](https://boxes.dev/help/start-and-continue-threads#import-threads-from-your-computer) can import local conversation history from your model provider, but that isn't the same as importing Conductor chats or Cloud exports.
 
 ## What the makers said
 

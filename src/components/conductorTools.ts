@@ -144,7 +144,7 @@ export const TOOLS: Tool[] = [
     note: "Free for one user, locally. Pro is $20 per user; the beta cloud starts on Team.",
     price: "Free for one user on local workspaces. Pro is $20 per user per month. Cloud workspaces start on Team, at $60 per user per month with 150 hours per seat.",
     models: "Models cost extra.",
-    caveat: "The cloud is in beta. Scripts need converting, and archiving an adopted worktree in Conductor can delete its shared folder.",
+    caveat: "The cloud is in early access. Scripts need converting, chats don't import, and archiving an imported worktree in Conductor deletes it.",
   },
   {
     id: "replicas", name: "Replicas", url: "https://replicas.dev/", runs: { own: false, maker: true }, tier: "rising",
